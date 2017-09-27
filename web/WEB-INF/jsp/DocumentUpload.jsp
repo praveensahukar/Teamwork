@@ -7,6 +7,17 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<script src="jquery-1.12.4.js"></script>
+<script src="canvasjs.min.js"></script>
+<script src="jquery-2.1.1.js"></script>
+<script src="jquery-ui.min.js"></script>
+<script src="jquery.dataTables.min.js"></script>
+<script src="jquery.min.js"></script>
+<script src="jquery1.min.js"></script>
+<script src="prefixfree.min.js"></script>
+
+<link rel="stylesheet" href="jquery-ui.css">
+<link rel="stylesheet" href="jquery.dataTables.min.css">
 <!DOCTYPE html>
 <html>
 <head>

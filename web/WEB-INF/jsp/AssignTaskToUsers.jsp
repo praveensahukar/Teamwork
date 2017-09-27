@@ -13,9 +13,17 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <link rel="icon" href="Network-Security.png" type="image/x-icon">
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css"></script>
+<script src="jquery-1.12.4.js"></script>
+<script src="canvasjs.min.js"></script>
+<script src="jquery-2.1.1.js"></script>
+<script src="jquery-ui.min.js"></script>
+<script src="jquery.dataTables.min.js"></script>
+<script src="jquery.min.js"></script>
+<script src="jquery1.min.js"></script>
+<script src="prefixfree.min.js"></script>
+
+<link rel="stylesheet" href="jquery-ui.css">
+<link rel="stylesheet" href="jquery.dataTables.min.css">
 <head>
 <style>
 ul {
@@ -203,7 +211,7 @@ $(document).ready(function() {
 	   
             
                 
-            <table border="1" id="example" class="display" width="100%"  cellspacing="0">
+            <table id="example" class="display" width="100%"  cellspacing="0">
             <thead>
             <tr bgcolor="#a6a6a6">
             <th>Task Name </th>  <th> Engineer</th>

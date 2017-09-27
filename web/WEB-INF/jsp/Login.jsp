@@ -9,7 +9,17 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <link rel="icon" href="Network-Security.png" type="image/x-icon">
+<script src="jquery-1.12.4.js"></script>
+<script src="canvasjs.min.js"></script>
+<script src="jquery-2.1.1.js"></script>
+<script src="jquery-ui.min.js"></script>
+<script src="jquery.dataTables.min.js"></script>
+<script src="jquery.min.js"></script>
+<script src="jquery1.min.js"></script>
+<script src="prefixfree.min.js"></script>
 
+<link rel="stylesheet" href="jquery-ui.css">
+<link rel="stylesheet" href="jquery.dataTables.min.css">
 
 <!DOCTYPE html>
 <html>

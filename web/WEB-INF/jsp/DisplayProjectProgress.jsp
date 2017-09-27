@@ -7,9 +7,17 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css"></script>
+<script src="jquery-1.12.4.js"></script>
+<script src="canvasjs.min.js"></script>
+<script src="jquery-2.1.1.js"></script>
+<script src="jquery-ui.min.js"></script>
+<script src="jquery.dataTables.min.js"></script>
+<script src="jquery.min.js"></script>
+<script src="jquery1.min.js"></script>
+<script src="prefixfree.min.js"></script>
+
+<link rel="stylesheet" href="jquery-ui.css">
+<link rel="stylesheet" href="jquery.dataTables.min.css">
 <link rel="icon" href="Network-Security.png" type="image/x-icon">
 <head>
 <style>
@@ -157,36 +165,128 @@ body {
   font-size: 12px;
 }
 
-table {
-    border-collapse: collapse;
-    width: 100%;
+.scrollingtable {
+	box-sizing: border-box;
+	display: inline-block;
+	vertical-align: middle;
+	overflow: hidden;
+	width: 100%; /*set table width here if using fixed value*/
+	/*min-width: 100%;*/ /*set table width here if using %*/
+	height: 80%; /*set table height here; can be fixed value or %*/
+	/*min-height: 104px;*/ /*if using % height, make this at least large enough to fit scrollbar arrows + captions + thead*/
+	font-family: Verdana, Tahoma, sans-serif;
+	font-size: 15px;
+	line-height: 20px;
+	padding-top: 20px; /*this determines top caption height*/
+	padding-bottom: 20px; /*this determines bottom caption height*/
+	text-align: left;
 }
-
-th, td {
-    text-align: left;
-    padding: 8px;
+.scrollingtable * {box-sizing: border-box;}
+.scrollingtable > div {
+	position: relative;
+	border-top: 1px solid black; /*top table border*/
+	height: 100%;
+	padding-top: 20px; /*this determines column header height*/
 }
-
-tr:nth-child(even){background-color: #F7F7F7}
-
-th {
-    background-color: #a6a6a6;
-    color: white;
+.scrollingtable > div:before {
+	top: 0;
+	background: cornflowerblue; /*column header background color*/
 }
+.scrollingtable > div:before,
+.scrollingtable > div > div:after {
+	content: "";
+	position: absolute;
+	z-index: -1;
+	width: 100%;
+	height: 50%;
+	left: 0;
+}
+.scrollingtable > div > div {
+	/*min-height: 43px;*/ /*if using % height, make this at least large enough to fit scrollbar arrows*/
+	max-height: 100%;
+	overflow: scroll; /*set to auto if using fixed or % width; else scroll*/
+	overflow-x: hidden;
+	border: 1px solid black; /*border around table body*/
+}
+.scrollingtable > div > div:after {background: white;} /*match page background color*/
+.scrollingtable > div > div > table {
+	width: 100%;
+	border-spacing: 0;
+	margin-top: -20px; /*inverse of column header height*/
+	/*margin-right: 17px;*/ /*uncomment if using % width*/
+}
+.scrollingtable > div > div > table > caption {
+	position: absolute;
+	top: -20px; /*inverse of caption height*/
+	margin-top: -1px; /*inverse of border-width*/
+	width: 100%;
+	font-weight: bold;
+	text-align: center;
+}
+.scrollingtable > div > div > table > * > tr > * {padding: 0;}
+.scrollingtable > div > div > table > thead {
+	vertical-align: bottom;
+	white-space: nowrap;
+	text-align: center;
+}
+.scrollingtable > div > div > table > thead > tr > * > div {
+	display: inline-block;
+	padding: 0 6px 0 6px; /*header cell padding*/
+}
+.scrollingtable > div > div > table > thead > tr > :first-child:before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 20px; /*match column header height*/
+	border-left: 1px solid black; /*leftmost header border*/
+}
+.scrollingtable > div > div > table > thead > tr > * > div[label]:before,
+.scrollingtable > div > div > table > thead > tr > * > div > div:first-child,
+.scrollingtable > div > div > table > thead > tr > * + :before {
+	position: absolute;
+	top: 0;
+	white-space: pre-wrap;
+	color: black; /*header row font color*/
+}
+.scrollingtable > div > div > table > thead > tr > * > div[label]:before,
+.scrollingtable > div > div > table > thead > tr > * > div[label]:after {content: attr(label);}
+.scrollingtable > div > div > table > thead > tr > * + :before {
+	content: "";
+	display: block;
+	min-height: 20px; /*match column header height*/
+	padding-top: 1px;
+	border-left: 1px solid black; /*borders between header cells*/
+}
+.scrollingtable .scrollbarhead {float: right;}
+.scrollingtable .scrollbarhead:before {
+	position: absolute;
+	width: 100px;
+	top: -1px; /*inverse border-width*/
+	background: white; /*match page background color*/
+}
+.scrollingtable > div > div > table > tbody > tr:after {
+	content: "";
+	display: table-cell;
+	position: relative;
+	padding: 0;
+	border-top: 1px solid black;
+	top: -1px; /*inverse of border width*/
+}
+.scrollingtable > div > div > table > tbody {vertical-align: top;}
+.scrollingtable > div > div > table > tbody > tr {background: white;}
+.scrollingtable > div > div > table > tbody > tr > * {
+	border-bottom: 1px solid black;
+	padding: 0 6px 0 6px;
+	height: 20px; /*match column header height*/
+}
+.scrollingtable > div > div > table > tbody:last-of-type > tr:last-child > * {border-bottom: none;}
+.scrollingtable > div > div > table > tbody > tr:nth-child(even) {background: gainsboro;} /*alternate row color*/
+.scrollingtable > div > div > table > tbody > tr > * + * {border-left: 1px solid black;}
 
 </style>
 
-<script>
-$(document).ready(function() {
-    $('#example').DataTable( {
-        "scrollY":"300px",
-        "scrollCollapse": true,
-        "paging":         false,
-        "sorting": false,
-        
-    } );
-} );
-</script>
+
 
 <title>Project Progress</title>
 
@@ -200,9 +300,9 @@ $(document).ready(function() {
 	<div class="right">
             
             
-    <table border="1"  class="display" width="100%"  cellspacing="0">
+    <table>
         <thead>
-            <tr bgcolor="#a6a6a6">
+            <tr>
             <td ><h4 style="color: white; font-size: 15px">Project Name: ${ProjectData.projectname}</h2></td>
             <td ><h4 style="color: white; font-size: 15px">OPID: ${ProjectData.opid}</h4></h3></td>
             </tr>
@@ -228,18 +328,20 @@ $(document).ready(function() {
         
              
         
-          
-    <table border="1" id="example" class="display" width="100%"  cellspacing="0">
+       <div class="scrollingtable">
+		<div>
+			<div>   
+    <table >
         <thead>
-            <tr bgcolor="#a6a6a6">
-        <th style="color: white">Task Name </th>
-        <th style="color: white">Engineer Name </th>
-        <th style="color: white">Task Start Date</th>
-        <th style="color: white">Start End Date</th>
-        <th style="color: white">Hours</th>
-        <th style="color: white">Days</th>
-        <th style="color: white">Status</th>
-        <th style="color: white">Delay</th>
+            <tr >
+        <th><div label="Task Name"></div> </th>
+        <th><div label="Engineer Name"> </div></th>
+        <th><div label="Task Start Date"> </div></th>
+        <th><div label="Task End Date"> </div></th>
+        <th><div label="Hours"> </div></th>
+        <th><div label="Days"> </div></th>
+        <th><div label="Status"> </div></th>
+        <th><div label="Delay"> </div></th>
         </thead>
          <tbody>
     <c:forEach  items="${TaskDetails}" var="ProjectTaskList">  
@@ -281,6 +383,8 @@ $(document).ready(function() {
                      </td>
                  </tr>
              </table>
+               </div>
+			</div>  
             </td>
             
         </tr>
@@ -291,9 +395,9 @@ $(document).ready(function() {
 </table>
        
          
-<a href='#' onclick='javascript:window.open("http://localhost:8888/TeamWork/uploadfiles.do?pid=${ProjectData.projectid}", "_blank", "scrollbars=1,resizable=1,height=600,width=950");' title='Pop Up'>Document Upload</a>
+<a href='#' onclick='javascript:window.open("/TeamWork/uploadfiles.do?pid=${ProjectData.projectid}", "_blank", "scrollbars=1,resizable=1,height=600,width=950");' title='Pop Up'>Document Upload</a>
 <br>
-<a href='#' onclick='javascript:window.open("http://localhost:8888/TeamWork/Downloadfiles.do?pid=${ProjectData.projectid}", "_blank", "scrollbars=1,resizable=1,height=600,width=950");' title='Pop Up'>Document download</a> 
+<a href='#' onclick='javascript:window.open("/TeamWork/Downloadfiles.do?pid=${ProjectData.projectid}", "_blank", "scrollbars=1,resizable=1,height=600,width=950");' title='Pop Up'>Document download</a> 
 </div>
 
     </body>

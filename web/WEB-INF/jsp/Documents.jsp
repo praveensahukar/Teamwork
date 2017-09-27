@@ -15,6 +15,17 @@
   <meta name="keywords" content="website keywords, website keywords" />
   <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
   <link rel="stylesheet" type="text/css" href="style/style.css" />
+  <script src="jquery-1.12.4.js"></script>
+<script src="canvasjs.min.js"></script>
+<script src="jquery-2.1.1.js"></script>
+<script src="jquery-ui.min.js"></script>
+<script src="jquery.dataTables.min.js"></script>
+<script src="jquery.min.js"></script>
+<script src="jquery1.min.js"></script>
+<script src="prefixfree.min.js"></script>
+
+<link rel="stylesheet" href="jquery-ui.css">
+<link rel="stylesheet" href="jquery.dataTables.min.css">
   
 <style>
 html
@@ -404,7 +415,7 @@ table tr td
         <!-- insert the page content here -->
         <h1>Code Review Documents</h1>
         
-        <b style="color: black">1).</b><a href="http://localhost:8080/TeamWork/fileDownload.do?id=CodeReviewDocs">Download Code Review Documents</a><br><br>
+        <b style="color: black">1).</b><a href="/TeamWork/fileDownload.do?id=CodeReviewDocs">Download Code Review Documents</a><br><br>
         <br>
       <br>
       <br><br>

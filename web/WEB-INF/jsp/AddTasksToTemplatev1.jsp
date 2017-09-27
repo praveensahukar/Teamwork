@@ -4,37 +4,76 @@
 	<!DOCTYPE html>
 	<html lang="en">
 	<head>
-		<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-		<script src="listcontrol.js"></script>
+		<script src="jquery-1.12.4.js"></script>
+<script src="canvasjs.min.js"></script>
+<script src="jquery-2.1.1.js"></script>
+<script src="jquery-ui.min.js"></script>
+<script src="jquery.dataTables.min.js"></script>
+<script src="jquery.min.js"></script>
+<script src="jquery1.min.js"></script>
+<script src="prefixfree.min.js"></script>
+
+<link rel="stylesheet" href="jquery-ui.css">
+<link rel="stylesheet" href="jquery.dataTables.min.css">
                
-<style> 
-table {
-    border-collapse: collapse;
-    width: 100%;
-    float:left;
-    max-height: 100px;
-}
-th, td {
-    text-align: left;
-    padding: 8px;
-}
-tr:nth-child(even){background-color: #F7F7F7}
-th {
-    background-color: #ff3333;
-    color: white;
+<style type="text/css">
+    select {
+        width: 200px;
+        float: left;
+    }
+    .controls {
+        width: 40px;
+        float: left;
+        margin: 10px;
+    }
+    .controls a {
+        background-color: #222222;
+        border-radius: 4px;
+        border: 2px solid #000;
+        color: #ffffff;
+        padding: 2px;
+        font-size: 14px;
+        text-decoration: none;
+        display: inline-block;
+        text-align: center;
+        margin: 5px;
+        width: 20px;
+    }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js">
+    </script>
+    <script>
+    function moveAll(from, to) {
+        $('#'+from+' option').remove().appendTo('#'+to); 
+    }
+    
+    function moveSelected(from, to) {
+        $('#'+from+' option:selected').remove().appendTo('#'+to); 
+    }
+    function selectAll() {
+        $("select option").attr("selected","selected");
+    }
+    </script>
+       
+<style>
+.error {
+color: black;
+font-style: italic;
 }
 ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #ff6666;
+    background-color: #a6a6a6;
     width:1500px;
    
 }
+
 li {
     float: left;
 }
+
 li a {
     display: block;
     color: white;
@@ -42,18 +81,19 @@ li a {
     padding: 14px 16px;
     text-decoration: none;
 }
+
 li a:hover:not(.active) {
     background-color: #b30000;
 }
+
 .active {
-    background-color: #ff1a1a;
+    background-color: #cc0000;
 }
-</style>
-<style>
+</style><style>
 @import url(http://fonts.googleapis.com/css?family=Roboto:400,100);
 body {
-	color:#6a6f8c;
-	background:#c8c8c8;
+
+	background-image: url("grey.jpg");
   background-repeat: repeat-y;
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -64,7 +104,7 @@ body {
 .login-card {
   padding: 40px;
   width: 1420px;
-  height: auto;
+  height: 550px;
   background-color: #F7F7F7;
   margin: 0 auto 10px;
   border-radius: 2px;
@@ -77,7 +117,7 @@ body {
   font-size: 2.3em;
 }
 .login-card input[type=submit] {
-  width: 15%;
+  width: 50%;
   display: block;
   margin-bottom: 10px;
   position: relative;
@@ -86,7 +126,7 @@ body {
 .login-card input[type=text], input[type=password] {
   height: 44px;
   font-size: 16px;
-  width: auto;
+  width: 80px;
   margin-bottom: 10px;
   -webkit-appearance: none;
   background: #fff;
@@ -186,17 +226,7 @@ table.dataTable thead th:first-child {
   z-index: 1002;
   overflow: auto;
 }      
-</style>
-        
-        <script>
-$(document).ready(function() {
-    $('#example').DataTable( {
-        "scrollY":"200px",
-        "scrollCollapse": true,
-        "paging":         false
-    } );
-} );
-</script>
+</style>  
                    
         </head>
 	<body>
