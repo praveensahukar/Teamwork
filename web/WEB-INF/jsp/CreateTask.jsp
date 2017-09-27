@@ -7,6 +7,17 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <link rel="icon" href="Network-Security.png" type="image/x-icon">
+<script src="jquery-1.12.4.js"></script>
+<script src="canvasjs.min.js"></script>
+<script src="jquery-2.1.1.js"></script>
+<script src="jquery-ui.min.js"></script>
+<script src="jquery.dataTables.min.js"></script>
+<script src="jquery.min.js"></script>
+<script src="jquery1.min.js"></script>
+<script src="prefixfree.min.js"></script>
+
+<link rel="stylesheet" href="jquery-ui.css">
+<link rel="stylesheet" href="jquery.dataTables.min.css">
 <head>
 <style>
 .error {
@@ -194,9 +205,9 @@ form.reset();
 	   <form:form action="CreateTask.do" method="post" modelAttribute="TaskM" id="taskform">
 <table>
 
-<tr><td align="center"><h4>Task Name :</td><td><form:input placeholder="Enter Task Name" path="taskname" /></h4></td></tr>    
+<tr><td align="center"><h4>Task Name:</td><td><form:input placeholder="Enter Task Name" path="taskname" /></h4></td></tr>    
 <form:errors path="taskname" cssClass="error"/><br>
-<tr><td align="center"><h4>Description :</td><td><form:input placeholder="Enter Description" path="Description" /></h4></td></tr>  
+<tr><td align="center"><h4>Description:</td><td><form:input placeholder="Enter Description" path="Description" /></h4></td></tr>  
 <form:errors path="Description" cssClass="error"/><br>
 <tr></tr>
 <tr></tr>

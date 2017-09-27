@@ -5,7 +5,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script src="http://prog.linkstraffic.net/jquery/jquery-2.1.1.js"></script>
+<script src="jquery-1.12.4.js"></script>
+<script src="canvasjs.min.js"></script>
+<script src="jquery-2.1.1.js"></script>
+<script src="jquery-ui.min.js"></script>
+<script src="jquery.dataTables.min.js"></script>
+<script src="jquery.min.js"></script>
+<script src="jquery1.min.js"></script>
+<script src="prefixfree.min.js"></script>
+
+<link rel="stylesheet" href="jquery-ui.css">
+<link rel="stylesheet" href="jquery.dataTables.min.css">
 
 <style type="text/css">
     select {
@@ -95,7 +105,7 @@ body {
 .login-card {
   padding: 40px;
   width: 1420px;
-  height: auto;
+  height: 550px;
   background-color: #F7F7F7;
   margin: 0 auto 10px;
   border-radius: 2px;
