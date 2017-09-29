@@ -195,12 +195,13 @@ font-style: italic;
 }
 </style>
 
-  <title>Schedule Project</title>
-    </head>
-    <body>
+<title>Schedule Project</title>   
+</head>
+   
+<body>
 
-<%@include file="Header.jsp"%>
-	   <div class="login-card">
+    <%@include file="Header.jsp"%>
+	<div class="login-card">
 	   <div align="left">  <h2 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">Create New Project</h2><br></div>
 <form:form action="ScheduleProject.do" method="post" commandName="ProjectM">
 <div align="center">

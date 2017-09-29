@@ -240,6 +240,7 @@ table.dataTable thead th:first-child {
         <div class="login-card">
         
         <h2>Assign Weights To Selected Tasks</h2>
+        <h3>The total weight must be 100%</h3>
         
         <form:form action="AddTaskTemplate.do" method="post" modelAttribute="TaskW">
            <table>

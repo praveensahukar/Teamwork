@@ -6,7 +6,8 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <script src="jquery-1.12.4.js"></script>
 <script src="canvasjs.min.js"></script>
 <script src="jquery-2.1.1.js"></script>
@@ -287,53 +288,48 @@ body {
 </style>
 
 
-
 <title>Project Progress</title>
 
 </head>
-    <body>
-    
+
+<body>
   <%@include file="Header.jsp" %>
+  
+  <div class="login-card" >
         
-    <div class="login-card" >
-        <div align="center">  <h3 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">Project Details</h3></div>
-	<div class="right">
-            
+  <div align="center">  <h3 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">Project Details</h3></div>
+  <div class="right">
             
     <table>
-        <thead>
-            <tr>
-            <td ><h4 style="color: white; font-size: 15px">Project Name: ${ProjectData.projectname}</h2></td>
-            <td ><h4 style="color: white; font-size: 15px">OPID: ${ProjectData.opid}</h4></h3></td>
-            </tr>
-        </thead>
+    <thead>
+      <tr>
+        <td ><h4 style="color: white; font-size: 15px">Project Name: ${fn:escapeXml(ProjectData.projectname)}</h2></td>
+        <td ><h4 style="color: white; font-size: 15px">OPID: ${fn:escapeXml(ProjectData.opid)}</h4></h3></td>
+      </tr>
+    </thead>
 	   
-	<tr>
-            <td><h4 style="color: red; font-size: 15px">Lead Assigned: ${ProjectData.lead}</h4></td>
-            <td><h4 style="color: red; font-size: 15px">Project Status: ${ProjectData.status}</h4></td>
-        </tr>
+    <tr>
+        <td><h4 style="color: red; font-size: 15px">Lead Assigned: ${fn:escapeXml(ProjectData.lead)}</h4></td>
+        <td><h4 style="color: red; font-size: 15px">Project Status: ${fn:escapeXml(ProjectData.status)}</h4></td>
+    </tr>
         
+    <tr>
+        <td> <h4 style="color: red; font-size: 15px" >Start Date:
+        <fmt:formatDate type = "date" value = "${ProjectData.startdate}"/></h4></td>
+        <td> <h4 style="color: red; font-size: 15px" >End Date: 
+        <fmt:formatDate type = "date"  value = "${ProjectData.enddate}"/></h4></td>
+    </tr>
+    </table>
+        
+    <br>
+    </div>
+
+
+    <div class="scrollingtable">
+     
+    <table>
+      <thead>
         <tr>
-            
-            <td> <h4 style="color: red; font-size: 15px" >Start Date:
-                   <fmt:formatDate type = "date" value = "${ProjectData.startdate}"/></h4></td>
-            <td> <h4 style="color: red; font-size: 15px" >End Date: 
-                   <fmt:formatDate type = "date"  value = "${ProjectData.enddate}"/></h4></td>
-        </tr>
-        </table>
-        <br>
-	</div>
-
-
-        
-             
-        
-       <div class="scrollingtable">
-		<div>
-			<div>   
-    <table >
-        <thead>
-            <tr >
         <th><div label="Task Name"></div> </th>
         <th><div label="Engineer Name"> </div></th>
         <th><div label="Task Start Date"> </div></th>
@@ -342,64 +338,63 @@ body {
         <th><div label="Days"> </div></th>
         <th><div label="Status"> </div></th>
         <th><div label="Delay"> </div></th>
-        </thead>
-         <tbody>
-    <c:forEach  items="${TaskDetails}" var="ProjectTaskList">  
+      </thead>
+         
+      <tbody>
         
+        <c:forEach  items="${TaskDetails}" var="ProjectTaskList">  
         <fmt:formatDate value="${ProjectTaskList.taskstartdate}" var="SDate" type="both" dateStyle = "short" timeStyle = "short"/>
         <fmt:formatDate value="${ProjectTaskList.taskenddate}" var="EDate" type="both" dateStyle = "short" timeStyle = "short" />
         
         <tr> 
-            <td style="color: black">${ProjectTaskList.taskname}</td>
-            <td style="color: black">${ProjectTaskList.engname}</td>
-            <td style="color: black">${SDate}</td>
-	        <td style="color: black">${EDate}</td>
-            <td style="color: black">${ProjectTaskList.taskhours}</td>
-            <td style="color: black">${ProjectTaskList.taskdays}</td>
-           
+            <td style="color: black">${fn:escapeXml(ProjectTaskList.taskname)}</td>
+            <td style="color: black">${fn:escapeXml(ProjectTaskList.engname)}</td>
+            <td style="color: black">${fn:escapeXml(SDate)}</td>
+	    <td style="color: black">${fn:escapeXml(EDate)}</td>
+            <td style="color: black">${fn:escapeXml(ProjectTaskList.taskhours)}</td>
+            <td style="color: black">${fn:escapeXml(ProjectTaskList.taskdays)}</td>
             <td style="color: black">
             <div class="dropdown">
-            <button class="dropbtn1">${ProjectTaskList.status}</button>
+                <button class="dropbtn1">${fn:escapeXml(ProjectTaskList.status)}</button>
                 <div class="dropdown-content">
-                <a href="updateTaskStatus.do?pid=${ProjectTaskList.projectid}&tid=${ProjectTaskList.transid}&status=New">New</a>
-                <a href="updateTaskStatus.do?pid=${ProjectTaskList.projectid}&tid=${ProjectTaskList.transid}&status=Progress">Progress</a>
-                <a href="updateTaskStatus.do?pid=${ProjectTaskList.projectid}&tid=${ProjectTaskList.transid}&status=Completed">Completed</a> 
+                    <a href="updateTaskStatus.do?pid=${ProjectTaskList.projectid}&tid=${ProjectTaskList.transid}&status=New">New</a>
+                    <a href="updateTaskStatus.do?pid=${ProjectTaskList.projectid}&tid=${ProjectTaskList.transid}&status=Progress">Progress</a>
+                    <a href="updateTaskStatus.do?pid=${ProjectTaskList.projectid}&tid=${ProjectTaskList.transid}&status=Completed">Completed</a> 
                 </div>
-        </div> 
-        </td> 
-        <%--Individual task delay form --%>
-         <td style="color: black">
+            </div> 
+            </td> 
+        
+            <%--Individual task delay form --%>
+            <td style="color: black">
              <table>
                  <tr>
-                     <td>
-            <form action="updateTaskDelay.do" method="post">
-                <td>  <input type="text" placeholder="Delay Hours" name="taskDelayTime"/></td>
-               <input type="hidden" name="transId" value="${ProjectTaskList.transid}"/>
-               <input type="hidden" name="projectid" value="${ProjectData.projectid}"/>
-               <input type="hidden" name="AntiCSRFToken" value="${csrfPreventionSalt}"/> 
-               <td> <input type="submit" value="Update Delay"/></td>
-            
-            </form>
-                     </td>
+                    <td>
+                    <form action="updateTaskDelay.do" method="post">
+                        <td><input type="text" placeholder="Delay Hours" name="taskDelayTime"/></td>
+                        <input type="hidden" name="transId" value="${ProjectTaskList.transid}"/>
+                        <input type="hidden" name="projectid" value="${ProjectData.projectid}"/>
+                        <input type="hidden" name="AntiCSRFToken" value="${csrfPreventionSalt}"/> 
+                        <td><input type="submit" value="Update Delay"/></td>
+                    </form>
+                    </td>
                  </tr>
              </table>
-               </div>
-			</div>  
+            </div>
+	</div>  
             </td>
             
         </tr>
          
       
        </c:forEach>
-         </tbody>
-</table>
+      </tbody>
+    </table>
        
          
-<a href='#' onclick='javascript:window.open("/TeamWork/uploadfiles.do?pid=${ProjectData.projectid}", "_blank", "scrollbars=1,resizable=1,height=600,width=950");' title='Pop Up'>Document Upload</a>
-<br>
-<a href='#' onclick='javascript:window.open("/TeamWork/Downloadfiles.do?pid=${ProjectData.projectid}", "_blank", "scrollbars=1,resizable=1,height=600,width=950");' title='Pop Up'>Document download</a> 
-</div>
-
-    </body>
+    <a href='#' onclick='javascript:window.open("/TeamWork/uploadfiles.do?pid=${ProjectData.projectid}", "_blank", "scrollbars=1,resizable=1,height=600,width=950");' title='Pop Up'>Document Upload</a>
+    <br>
+    <a href='#' onclick='javascript:window.open("/TeamWork/Downloadfiles.do?pid=${ProjectData.projectid}", "_blank", "scrollbars=1,resizable=1,height=600,width=950");' title='Pop Up'>Document download</a> 
+    </div>
+  </body>
 
 </html>
