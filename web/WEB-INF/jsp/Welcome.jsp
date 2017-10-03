@@ -229,15 +229,8 @@ window.onload = function () {
 </head>
 <body>
      
-  <%! UserDataBean b1; String name1; String role1;%>
-    <% 
-        b1=(UserDataBean)session.getAttribute("Luser"); 
-        name1=b1.getUsername().toString();
-        role1=b1.getRole().toString();
-    %>
-    
-    
-    Welcome : <%=name1%>    
+
+        
               
      </div>
     </body>

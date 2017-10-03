@@ -7,7 +7,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <script src="jquery-1.12.4.js"></script>
 <script src="canvasjs.min.js"></script>
 <script src="jquery-2.1.1.js"></script>
@@ -322,8 +321,8 @@ body {
           <tbody>  
         <c:forEach  items="${AllTemplates}" var="template">     
             <tr>
-                <td> ${fn:escapeXml(template.templatename)}</td>
-                <td> ${fn:escapeXml(template.templateDesc)}</td>
+                <td> ${template.templatename}</td>
+                <td> ${template.templateDesc}</td>
                
                 <td><a href="DeleteTemplate.do?id=${template.templateid}">DELETE</td>
             </tr>

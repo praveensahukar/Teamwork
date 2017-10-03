@@ -6,7 +6,6 @@
 
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <link rel="icon" href="Network-Security.png" type="image/x-icon">
 <script src="jquery-1.12.4.js"></script>
@@ -209,15 +208,16 @@ th {
 <table>
     <form:hidden path="setid" value="${SysSettings.setid}" />
 <tr><td>Email Server &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;    <form:input placeholder="Enter upload path" path="mailserver" value="${SysSettings.mailserver}" /></h4></td></tr>    
-<tr><td>Email Server Port&nbsp; <form:input placeholder="Enter upload path" path="port" value="${fn:escapeXml(SysSettings.port)}" /></h4></td></tr>    
-<tr><td>Email Username  &nbsp;&nbsp;  <form:input placeholder="Enter upload path" path="mailuser" value="${fn:escapeXml(SysSettings.mailuser)}" /></h4></td></tr>    
-<tr><td>Email Password  &nbsp; &nbsp; <form:input placeholder="Enter upload path" path="mailpass" value="${fn:escapeXml(SysSettings.mailpass)}" /></h4></td></tr>    
-<tr><td>File upload path  &nbsp;&nbsp;&nbsp;&nbsp;<form:input placeholder="Enter upload path" path="uploadpath" value="${fn:escapeXml(SysSettings.uploadpath)}" /></h4></td></tr>    
+<tr><td>Email Server Port&nbsp; <form:input placeholder="Enter upload path" path="port" value="${SysSettings.port}" /></h4></td></tr>    
+<tr><td>Email Username  &nbsp;&nbsp;  <form:input placeholder="Enter upload path" path="mailuser" value="${SysSettings.mailuser}" /></h4></td></tr>    
+<tr><td>Email Password  &nbsp; &nbsp; <form:input placeholder="Enter upload path" path="mailpass" value="${SysSettings.mailpass}" /></h4></td></tr>    
+<tr><td>File upload path  &nbsp;&nbsp;&nbsp;&nbsp;<form:input placeholder="Enter upload path" path="uploadpath" value="${SysSettings.uploadpath}" /></h4></td></tr>    
 
 
 <input type="hidden" name="AntiCSRFToken" value="${csrfPreventionSalt}"/> 
 <tr><td align="center"><input type="submit" value="Update" class="login login-submit"/></td></tr>            
 </table>
+<center>${TaskSuccess}</center>
 </form:form>
 	   </div>
 <br> 

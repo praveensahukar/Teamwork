@@ -7,7 +7,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <script src="jquery-1.12.4.js"></script>
 <script src="canvasjs.min.js"></script>
 <script src="jquery-2.1.1.js"></script>
@@ -132,6 +131,7 @@ body {
 
 .login-submit {
   /* border: 1px solid #3079ed; */
+  top: 10px;
   width: 20%;
   border: 0px;
   color: #fff;
@@ -345,7 +345,7 @@ html {
 
         <div class="login-card">
 	   <div align="left">  <h2 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">All Projects</h2><br></div>
- <button class="login login-submit" id="btnExport" onclick="fnExcelReport();"> EXPORT TO EXCEL </button>
+           <div align="right" style="top: 10px"> <button  class="login login-submit" id="btnExport" onclick="fnExcelReport();"> EXPORT TO EXCEL </button></div>
      
            <div class="scrollingtable">
 		<div>
@@ -362,6 +362,7 @@ html {
                 <th><div label="End Date"></div>End Date</th>
                 <th><div label="Man Days"></div>Status</th>
                 <th><div label="Status"></div>Status</th>
+                <th><div label="Delete"></div>Delete Project</th>
            
             </tr>
         </thead>
@@ -375,15 +376,15 @@ html {
 	   
             <tr> 
                 
-                <td > <a href="showProgress.do?id=${project.projectid}"> ${fn:escapeXml(project.opid)}</a></td>
-	        <td >${fn:escapeXml(project.projectname)}</td>
-                <td >${fn:escapeXml(project.lead)}</td>
-                <td >${fn:escapeXml(SDate)}</td>
-                <td >${fn:escapeXml(EDate)}</td>
-                <td >${fn:escapeXml(project.mandays)}</td>
+                <td > <a href="showProgress.do?id=${project.projectid}"> ${project.opid}</a></td>
+	        <td >${project.projectname}</td>
+                <td >${project.lead}</td>
+                <td >${SDate}</td>
+                <td >${EDate}</td>
+                <td >${project.mandays}</td>
                 <td >
                     <div class="dropdown">
-                    <button class="dropbtn1">${fn:escapeXml(project.status)}</button>
+                    <button class="dropbtn1">${project.status}</button>
                       <div class="dropdown-content">
                         <a href="updateProjectStatus.do?pid=${project.projectid}&status=New">New</a>
                         <a href="updateProjectStatus.do?pid=${project.projectid}&status=Progress">Progress</a>
@@ -391,6 +392,7 @@ html {
                       </div>
                     </div> 
                 </td>
+                <td >  <div class="dropdown"><a href="DeleteProjects.do?pid=${project.projectid}"><button class="dropbtn1">Delete</button></a> </div></td>
 	   </tr>
            
 </c:forEach>

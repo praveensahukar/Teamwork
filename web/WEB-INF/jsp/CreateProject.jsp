@@ -195,13 +195,12 @@ font-style: italic;
 }
 </style>
 
-<title>Schedule Project</title>   
-</head>
-   
-<body>
+  <title>Schedule Project</title>
+    </head>
+    <body>
 
-    <%@include file="Header.jsp"%>
-	<div class="login-card">
+<%@include file="Header.jsp"%>
+	   <div class="login-card">
 	   <div align="left">  <h2 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">Create New Project</h2><br></div>
 <form:form action="ScheduleProject.do" method="post" commandName="ProjectM">
 <div align="center">
@@ -210,7 +209,9 @@ font-style: italic;
 <tr><td align="right"><h4>OPID :</td><td><form:input placeholder="Enter OPID" path="opid" /></h4></td></tr>
 <form:errors path="opid" cssClass="error"/>
 <tr><td align="right"><h4>Project Name :</td><td><form:input placeholder="Enter Project Name" path="projectname" /></h4></td></tr>  
+<form:errors path="projectname" cssClass="error"/>
 <tr><td align="right"><h4>Lead :</td>
+    <form:errors path="leadid" cssClass="error"/>
     <td><form:select path="leadid">
 	           <c:forEach  items="${AllLeads}" var="lead"> 
 	           <form:option class="login login-submit" value="${lead.userid}">${lead.username}</form:option>
@@ -218,8 +219,9 @@ font-style: italic;
     </td>
 </tr>
 <tr><td align="right"><h4>Start Date :</td><td><form:input placeholder="Enter Start Date" id="date" path="startdate" /></h4></td></tr>
+<form:errors path="startdate" cssClass="error"/>
 <tr><td align="right"><h4>End Date :</td><td><form:input placeholder="Enter Project Name" id="datepicker" path="enddate"/></h4></td></tr>
-
+<form:errors path="enddate" cssClass="error"/>
 <tr><td align="right"><h4>Template :</td>
     <td ><form:select  path="templateid">  
 	  <c:forEach items="${AllTemplates}" var="template">     

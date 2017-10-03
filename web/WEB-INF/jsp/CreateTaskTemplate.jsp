@@ -1,6 +1,5 @@
 <%@page import="com.Paladion.teamwork.beans.TemplateBean"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <link rel="icon" href="Network-Security.png" type="image/x-icon">
 <!DOCTYPE html>
@@ -241,13 +240,15 @@ table.dataTable thead th:first-child {
 <form:form name="selection" action="CreateTaskTemplate.do" method="post" modelAttribute="TemplateM" onSubmit="return selectAll()"> 
     <table>
     <tr><td ><h4>Template Name:</td><td>   <form:input placeholder="Enter template name" name="t1"  path="templatename" /> </h4></td></tr>     
+    <form:errors path="templatename" cssClass="error"/>
     <br><br>
      <tr><td ><h4>Description:  </td><td>   <form:input placeholder="Enter description" name="t2"  path="templateDesc" /></h4></td></tr>
-    <br><br>
+    <form:errors path="templateDesc" cssClass="error"/>
+     <br><br>
     
    <tr><td> <select  multiple size="10" id="from">
         <c:forEach  items="${AllTasks}" var="task">
-            <option value="${task.taskid}"> ${fn:escapeXml(task.taskname)}</option>
+            <option value="${task.taskid}"> ${task.taskname}</option>
         </c:forEach>
     </select>
     <div class="controls"> 
