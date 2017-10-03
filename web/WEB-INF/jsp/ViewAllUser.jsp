@@ -321,7 +321,7 @@ body {
     <tbody>
         <c:forEach  items="${AllUsers}" var="user">     
             <tr> 
-                <td> ${user.username}</td>
+                <td> ${fn:escapeXml(user.username)}</td>
                 <td><a href="GetUserDetails.do?id=${user.userid}">UPDATE</a></td>
                 <td><a href="DeleteUser.do?id=${user.userid}">DELETE</a></td>
             </tr>

@@ -321,8 +321,8 @@ body {
           <tbody>  
         <c:forEach  items="${AllTemplates}" var="template">     
             <tr>
-                <td> ${template.templatename}</td>
-                <td> ${template.templateDesc}</td>
+                <td> ${fn:escapeXml(template.templatename)}</td>
+                <td> ${fn:escapeXml(template.templateDesc)}</td>
                
                 <td><a href="DeleteTemplate.do?id=${template.templateid}">DELETE</td>
             </tr>

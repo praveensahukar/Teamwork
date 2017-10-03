@@ -220,12 +220,12 @@ $(document).ready(function() {
             
            <tbody>
              <c:forEach   varStatus="status"  items="${ProjectW.projectlist}"  var="task" >     
-             <tr align="center"> <td><c:out value="${task.taskname}"/></td> 
+             <tr align="center"> <td>${fn:escapeXml(task.taskname)}</td> 
 	
 	    <td>
 		<form:select path="projectlist[${status.index}].userid">
 	           <c:forEach  items="${AllEngineers}" var="engineer"> 
-	           <form:option value="${engineer.userid}" name="userid"><c:out value="${engineer.username}" /></form:option>
+	           <form:option value="${engineer.userid}" name="userid">${fn:escapeXml(engineer.username)}</form:option>
                    </c:forEach></form:select> </td>	
             
              <h4> <input style="" type="hidden" name="projectlist[${status.index}].taskname" value="${task.taskname}"/></h4>

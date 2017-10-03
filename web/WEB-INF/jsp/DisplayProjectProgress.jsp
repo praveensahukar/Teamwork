@@ -300,17 +300,17 @@ body {
 	<div class="right">
             
             
-    <table>
+    <table border="1">
         <thead>
             <tr>
-                <td ><h4 style="color: grey; font-size: 15px"><g style="color:black">Project Name:</g> ${ProjectData.projectname}</h2></td>
-            <td ><h4 style="color: grey; font-size: 15px"><g style="color:black">OPID:</g> ${ProjectData.opid}</h4></h3></td>
+                <td ><h4 style="color: grey; font-size: 15px"><g style="color:black">Project Name:</g> ${fn:escapeXml(ProjectData.projectname)}</h2></td>
+            <td ><h4 style="color: grey; font-size: 15px"><g style="color:black">OPID:</g> ${fn:escapeXml(ProjectData.opid)}</h4></h3></td>
             </tr>
         </thead>
 	   
 	<tr>
-            <td><h4 style="color: grey; font-size: 15px"><g style="color:black">Lead Assigned:</g> ${ProjectData.lead}</h4></td>
-            <td><h4 style="color: grey; font-size: 15px"><g style="color:black">Project Status: </g>${ProjectData.status}</h4></td>
+            <td><h4 style="color: grey; font-size: 15px"><g style="color:black">Lead Assigned:</g> ${fn:escapeXml(ProjectData.lead)}</h4></td>
+            <td><h4 style="color: grey; font-size: 15px"><g style="color:black">Project Status: </g>${fn:escapeXml(ProjectData.status)}</h4></td>
         </tr>
         
         <tr>
@@ -331,7 +331,7 @@ body {
        <div class="scrollingtable">
 		<div>
 			<div>   
-    <table >
+    <table border="1">
         <thead>
             <tr >
         <th><div label="Task Name"></div> </th>
@@ -350,16 +350,16 @@ body {
         <fmt:formatDate value="${ProjectTaskList.taskenddate}" var="EDate" type="both" dateStyle = "short" timeStyle = "short" />
         
         <tr> 
-            <td style="color: black">${ProjectTaskList.taskname}</td>
-            <td style="color: black">${ProjectTaskList.engname}</td>
-            <td style="color: black">${SDate}</td>
-	        <td style="color: black">${EDate}</td>
-            <td style="color: black">${ProjectTaskList.taskhours}</td>
-            <td style="color: black">${ProjectTaskList.taskdays}</td>
+            <td style="color: black">${fn:escapeXml(ProjectTaskList.taskname)}</td>
+            <td style="color: black">${fn:escapeXml(ProjectTaskList.engname)}</td>
+            <td style="color: black">${fn:escapeXml(SDate)}</td>
+	        <td style="color: black">${fn:escapeXml(EDate)}</td>
+            <td style="color: black">${fn:escapeXml(ProjectTaskList.taskhours)}</td>
+            <td style="color: black">${fn:escapeXml(ProjectTaskList.taskdays)}</td>
            
             <td style="color: black">
             <div class="dropdown">
-            <button class="dropbtn1">${ProjectTaskList.status}</button>
+            <button class="dropbtn1">${fn:escapeXml(ProjectTaskList.status)}</button>
                 <div class="dropdown-content">
                 <a href="updateTaskStatus.do?pid=${ProjectTaskList.projectid}&tid=${ProjectTaskList.transid}&status=New">New</a>
                 <a href="updateTaskStatus.do?pid=${ProjectTaskList.projectid}&tid=${ProjectTaskList.transid}&status=Progress">Progress</a>

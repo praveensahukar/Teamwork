@@ -353,7 +353,7 @@ $(document).ready(function (){
         TempName=TempB.getTemplatename().toString();
     %>
 	   
-	   <div align="center">  <h2> Select the Tasks for the <%=escape.html(TempName)%> Template</font></h2> </div>
+	   <div align="center">  <h2> Select the Tasks for the <%={fn:escapeXml(TempName)%> Template</font></h2> </div>
 	   
 	   <h4 >List of All the Tasks </h4>  
 	   

@@ -376,15 +376,15 @@ html {
 	   
             <tr> 
                 
-                <td > <a href="showProgress.do?id=${project.projectid}"> ${project.opid}</a></td>
-	        <td >${project.projectname}</td>
-                <td >${project.lead}</td>
-                <td >${SDate}</td>
-                <td >${EDate}</td>
-                <td >${project.mandays}</td>
+                <td > <a href="showProgress.do?id=${project.projectid}"> ${fn:escapeXml(project.opid)}</a></td>
+	        <td >${fn:escapeXml(project.projectname)}</td>
+                <td >${fn:escapeXml(project.lead)}</td>
+                <td >${fn:escapeXml(SDate)}</td>
+                <td >${fn:escapeXml(EDate)}</td>
+                <td >${fn:escapeXml(project.mandays)}</td>
                 <td >
                     <div class="dropdown">
-                    <button class="dropbtn1">${project.status}</button>
+                    <button class="dropbtn1">${fn:escapeXml(project.status)}</button>
                       <div class="dropdown-content">
                         <a href="updateProjectStatus.do?pid=${project.projectid}&status=New">New</a>
                         <a href="updateProjectStatus.do?pid=${project.projectid}&status=Progress">Progress</a>

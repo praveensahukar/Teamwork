@@ -327,8 +327,8 @@ body {
             
         <c:forEach  items="${AllTasks}" var="task">     
            <tr>
-                <td> ${task.taskname}</td>
-                <td> ${task.description}</td>
+                <td> ${fn:escapeXml(task.taskname)}</td>
+                <td> ${fn:escapeXml(task.description)}</td>
                 <td><a href="DeleteTask.do?id=${task.taskid}">DELETE</td>
            </tr> 
         </c:forEach>

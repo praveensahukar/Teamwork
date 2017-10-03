@@ -248,7 +248,7 @@ table.dataTable thead th:first-child {
     
    <tr><td> <select  multiple size="10" id="from">
         <c:forEach  items="${AllTasks}" var="task">
-            <option value="${task.taskid}"> ${task.taskname}</option>
+            <option value="${task.taskid}"> ${fn:escapeXml(task.taskname)}</option>
         </c:forEach>
     </select>
     <div class="controls"> 

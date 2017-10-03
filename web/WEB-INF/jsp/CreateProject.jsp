@@ -214,7 +214,7 @@ font-style: italic;
     <form:errors path="leadid" cssClass="error"/>
     <td><form:select path="leadid">
 	           <c:forEach  items="${AllLeads}" var="lead"> 
-	           <form:option class="login login-submit" value="${lead.userid}">${lead.username}</form:option>
+	           <form:option class="login login-submit" value="${lead.userid}">${fn:escapeXml(lead.username)}</form:option>
 	           </c:forEach></form:select>
     </td>
 </tr>
@@ -225,7 +225,7 @@ font-style: italic;
 <tr><td align="right"><h4>Template :</td>
     <td ><form:select  path="templateid">  
 	  <c:forEach items="${AllTemplates}" var="template">     
-	  <option class="login login-submit" value="${template.templateid}">${template.templatename}</option>
+	  <option class="login login-submit" value="${template.templateid}">${fn:escapeXml(template.templatename)}</option>
 	  </c:forEach></td>	  
 </form:select>
 
