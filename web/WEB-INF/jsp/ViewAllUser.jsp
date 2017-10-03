@@ -7,6 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <link rel="icon" href="Network-Security.png" type="image/x-icon">
 <script src="jquery-1.12.4.js"></script>
 <script src="canvasjs.min.js"></script>
@@ -321,7 +322,7 @@ body {
     <tbody>
         <c:forEach  items="${AllUsers}" var="user">     
             <tr> 
-                <td> ${user.username}</td>
+                <td> ${fn:escapeXml(user.username)}</td>
                 <td><a href="GetUserDetails.do?id=${user.userid}">UPDATE</a></td>
                 <td><a href="DeleteUser.do?id=${user.userid}">DELETE</a></td>
             </tr>

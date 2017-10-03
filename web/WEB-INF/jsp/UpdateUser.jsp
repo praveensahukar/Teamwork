@@ -1,6 +1,7 @@
 
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <link rel="icon" href="Network-Security.png" type="image/x-icon">
 <script src="jquery-1.12.4.js"></script>
 <script src="canvasjs.min.js"></script>
@@ -191,15 +192,15 @@ th {
 
     <form:form action="UpdateUserDetails.do" method="POST" modelAttribute="UserM">
         <table>
-           <tr><td align="center"><h4 >User Name:</td><td><form:input placeHolder="Enter the username"  path="username" value="${UserDetail.username}" /></td></tr>    
-            <tr><td align="center"><h4 >Email id</td><td><form:input placeHolder="Enter the email" path="email" value="${UserDetail.email}"/></td></tr>  
-            <tr><td align="center"><h4>Mobile</td><td><form:input placeHolder="Enter the mobile" path="phone" value="${UserDetail.phone}" /></td></tr>
-            <tr><td align="center"><h4 >Team</td><td><form:input placeHolder="Enter the team" path="team" value="${UserDetail.team}" /></td></tr>
+           <tr><td align="center"><h4 >User Name:</td><td><form:input placeHolder="Enter the username"  path="username" value="${fn:escapeXml(UserDetail.username)}" /></td></tr>    
+            <tr><td align="center"><h4 >Email id</td><td><form:input placeHolder="Enter the email" path="email" value="${fn:escapeXml(UserDetail.email)}"/></td></tr>  
+            <tr><td align="center"><h4>Mobile</td><td><form:input placeHolder="Enter the mobile" path="phone" value="${fn:escapeXml(UserDetail.phone)}" /></td></tr>
+            <tr><td align="center"><h4 >Team</td><td><form:input placeHolder="Enter the team" path="team" value="${fn:escapeXml(UserDetail.team)}" /></td></tr>
             <%-- <tr><td align="center"><h4 >Password</td><td><form:input type="password" placeHolder="Enter the password" path="password" /></td></tr> --%>
             <tr><td align="center"><h4 >Change Role</td><td>
                     
                    
-            <form:label path=""> ${UserDetail.role} </form:label>
+            <form:label path=""> ${fn:escapeXml(UserDetail.role)} </form:label>
             <form:select path="role" value="${UserDetail.role}">
             <form:option class="login login-submit" value="">Select</form:option>
 	    <form:option class="login login-submit" value="admin">Admin</form:option>
