@@ -1,5 +1,6 @@
 <%@page import="com.Paladion.teamwork.beans.TemplateBean"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <link rel="icon" href="Network-Security.png" type="image/x-icon">
 <!DOCTYPE html>
@@ -246,7 +247,7 @@ table.dataTable thead th:first-child {
     
    <tr><td> <select  multiple size="10" id="from">
         <c:forEach  items="${AllTasks}" var="task">
-            <option value="${task.taskid}"> ${task.taskname}</option>
+            <option value="${task.taskid}"> ${fn:escapeXml(task.taskname)}</option>
         </c:forEach>
     </select>
     <div class="controls"> 
