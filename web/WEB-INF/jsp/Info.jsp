@@ -386,11 +386,12 @@ table tr td
        <div id="menubar">
         <ul id="menu">
           <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
+          <li><a href="index.do">Home</a></li>
           <li class="selected"><a href="threatProfile.do">Threat Profile</a></li>
           <li><a href="Info.do">Information Gathering Sheet</a></li>
           <li><a href="Test_plan.do">Test plans</a></li>
-          <li><a href="Logout.do">Logout</a></li>
           <li><a href="Welcome.do">Teamwork</a></li>
+          <li><a href="Logout.do">Logout</a></li>
         </ul>
           
       </div>
@@ -441,7 +442,7 @@ table tr td
         <h1>How to fill Information Gathering Sheet?</h1>
         <div style="text-align:justify">  <p style="text-indent: 50px;width: 874px ">The Information Gathering Sheet is very important process, We need to fill this sheet so that Technical Lead can understand the application functionality, here we will be filling few information related to application like
                 application name, which programming language they are using for backend code, server version, how many user roles are present in the application and also a brief information about application architecture.</p></div>
-        <a href="/TeamWork/fileDownload.do?id=info">Download Information Gathering sheet</a>
+        <a href="./fileDownload.do?id=info">Download Information Gathering sheet</a>
         <br>
         <br>
         <br>
