@@ -218,6 +218,16 @@ font-style: italic;
 	           </c:forEach></form:select>
     </td>
 </tr>
+
+<tr><td align="center"><h4 >Team</td>
+    <td><form:select class="login login-submit" path="team">
+         <form:option class="login login-submit" value="">Select</form:option>
+	 <form:option class="login login-submit" value="codereview">Code Review</form:option>
+	 <form:option class="login login-submit" value="appsec">App Sec</form:option>
+         <form:option class="login login-submit" value="netpt">Network PT</form:option>
+    </form:select></td></tr>
+
+
 <tr><td align="right"><h4>Start Date :</td><td><form:input placeholder="Enter Start Date" id="date" path="startdate" /></h4></td></tr>
 <form:errors path="startdate" cssClass="error"/>
 <tr><td align="right"><h4>End Date :</td><td><form:input placeholder="Enter Project Name" id="datepicker" path="enddate"/></h4></td></tr>

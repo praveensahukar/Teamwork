@@ -145,7 +145,20 @@ int leadid;
     public void setLeadid(int leadid) {
         this.leadid = leadid;
     }
+    
+    
+    @Column(name = "team")
+String team;
 
+    public String getTeam() {
+        return team;
+    }
+
+    public void setTeam(String team) {
+        this.team = team;
+    }
+    
+    
 //    
 //@OneToMany(cascade = CascadeType.ALL)
 //@JoinTable(name = "project_transaction", joinColumns = { @JoinColumn(name = "projectid") })
@@ -158,6 +171,8 @@ int leadid;
 //public void setProjectstatusbean(Set <ProjectTransactionBean> projectstatusbean ) {
 //this.ptbean = projectstatusbean;
 //}
+
+    
 
    
 
