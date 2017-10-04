@@ -386,11 +386,12 @@ table tr td
        <div id="menubar">
         <ul id="menu">
           <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
+          <li><a href="index.do">Home</a></li>
           <li class="selected"><a href="threatProfile.do">Threat Profile</a></li>
           <li><a href="Info.do">Information Gathering Sheet</a></li>
           <li><a href="Test_plan.do">Test plans</a></li>
-          <li><a href="Logout.do">Logout</a></li>
           <li><a href="Welcome.do">Teamwork</a></li>
+          <li><a href="Logout.do">Logout</a></li>
         </ul>
           
       </div>
@@ -440,7 +441,7 @@ table tr td
         <!-- insert the page content here -->
         <h1>How to scan source code using automated scanners?</h1><br>
        
-        <a href="/TeamWork/fileDownload.do?id=videos">Code Scanner videos</a> 
+        <a href="./fileDownload.do?id=videos">Code Scanner videos</a> 
   <br>
   <br>
   <br>

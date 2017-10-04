@@ -386,6 +386,7 @@ table tr td
        <div id="menubar">
         <ul id="menu">
           <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
+          <li><a href="index.do">Home</a></li>
           <li class="selected"><a href="threatProfile.do">Threat Profile</a></li>
           <li><a href="Info.do">Information Gathering Sheet</a></li>
           <li><a href="Test_plan.do">Test plans</a></li>

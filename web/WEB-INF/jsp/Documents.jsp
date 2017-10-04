@@ -397,11 +397,12 @@ table tr td
        <div id="menubar">
         <ul id="menu">
           <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
+          <li><a href="index.do">Home</a></li>
           <li class="selected"><a href="threatProfile.do">Threat Profile</a></li>
           <li><a href="Info.do">Information Gathering Sheet</a></li>
           <li><a href="Test_plan.do">Test plans</a></li>
-          <li><a href="Logout.do">Logout</a></li>
           <li><a href="Welcome.do">Teamwork</a></li>
+          <li><a href="Logout.do">Logout</a></li>
         </ul>
           
       </div>
@@ -415,7 +416,7 @@ table tr td
         <!-- insert the page content here -->
         <h1>Code Review Documents</h1>
         
-        <b style="color: black">1).</b><a href="/TeamWork/fileDownload.do?id=CodeReviewDocs">Download Code Review Documents</a><br><br>
+        <b style="color: black">1).</b><a href="./fileDownload.do?id=CodeReviewDocs">Download Code Review Documents</a><br><br>
         <br>
       <br>
       <br><br>
