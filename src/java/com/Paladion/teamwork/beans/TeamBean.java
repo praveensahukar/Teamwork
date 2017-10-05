@@ -24,15 +24,15 @@ public class TeamBean implements Serializable {
 @Id
 @GenericGenerator(name="gen",strategy="increment")
 @GeneratedValue(generator="gen")
-@Column(name = "teamid", unique = true, nullable = false)
-int teamid;	 
+@Column(name = "teamId", unique = true, nullable = false)
+int teamId;	 
 
     public int getTeamid() {
-        return teamid;
+        return teamId;
     }
 
-    public void setTeamid(int teamid) {
-        this.teamid = teamid;
+    public void setTeamId(int teamId) {
+        this.teamId = teamId;
     }
     
 

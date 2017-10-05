@@ -63,6 +63,10 @@ public class ProjectValidator implements org.springframework.validation.Validato
 	{
 	    errors.rejectValue("templateid","templateid.required");
 	}
+        else if(pbean.getTeam().isEmpty())
+	{
+	    errors.rejectValue("team","team.required");
+	}
     }
     
 }
