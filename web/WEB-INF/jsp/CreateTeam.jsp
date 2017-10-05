@@ -200,12 +200,12 @@ form.reset();
    <%@include file="Header.jsp" %>
     
     <div class="login-card">
-	   <div align="left">  <h2 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">Create Task</h2><br></div>
+	   <div align="left">  <h2 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">Create Team</h2><br></div>
 
 	   <form:form action="CreateTeam.do" method="post" modelAttribute="TeamM" id="teamform">
 <table>
 
-<tr><td align="center"><h4>Task Name:</td><td><form:input placeholder="Enter Team Name" path="teamname" /></h4></td></tr>    
+<tr><td align="center"><h4>Team Name:</td><td><form:input placeholder="Enter Team Name" path="teamname" /></h4></td></tr>    
 <br>
 
 <tr></tr>
