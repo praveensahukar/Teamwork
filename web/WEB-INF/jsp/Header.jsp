@@ -9,6 +9,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
 <head>
    <style>
@@ -125,6 +126,7 @@
                 <div class="dropdown-content">
                 <a href="CreateUser.do">Create User</a>
                 <a href="ViewAllUser.do">View Users</a>
+                <a href="CreateTeam.do">Teams</a>
                 <a href="Administration.do">System Properties</a>
                 </div>
         </div> 

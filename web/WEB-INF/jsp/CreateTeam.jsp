@@ -1,13 +1,12 @@
 <%-- 
-    Document   : Login
-    Created on : 12 Apr, 2017, 8:31:39 PM
-    Author     : Administrator
+    Document   : CreateTeam
+    Created on : Oct 4, 2017, 10:22:56 PM
+    Author     : santosh.babar
 --%>
-<%@page import="net.tanesha.recaptcha.ReCaptchaFactory"%>
-<%@page import="net.tanesha.recaptcha.ReCaptcha"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <link rel="icon" href="Network-Security.png" type="image/x-icon">
 <script src="jquery-1.12.4.js"></script>
 <script src="canvasjs.min.js"></script>
@@ -20,17 +19,49 @@
 
 <link rel="stylesheet" href="jquery-ui.css">
 <link rel="stylesheet" href="jquery.dataTables.min.css">
-
-<!DOCTYPE html>
-<html>
-
 <head>
 <style>
+.error {
+color: black;
+font-style: italic;
+}
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #a6a6a6;
+    width:1500px;
+   
+}
+
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover:not(.active) {
+    background-color: #b30000;
+}
+
+.active {
+    background-color: #cc0000;
+}
+</style>
+<style>
+
 @import url(http://fonts.googleapis.com/css?family=Roboto:400,100);
 
 body {
 
-  background-image: url("grey.jpg");
+	background-image: url("grey.jpg");
   background-repeat: repeat-y;
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -40,35 +71,34 @@ body {
 }
 
 .login-card {
-  
-  top: 30%;
   padding: 40px;
-  width: 500px;
-  height:600px;
-  background-image: url("2.jpg");
+  width: 1420px;
+  height: 550px;
+  background-color: white;
   margin: 0 auto 10px;
-  border-radius: 0px;
+  border-radius: 2px;
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
   overflow: hidden;
 }
 
 .login-card h1 {
-  font-weight: 100;
+  font-weight: 1;
   text-align: center;
   font-size: 2.3em;
 }
 
 .login-card input[type=submit] {
-  width: 100%;
+  width: 20%;
   display: block;
   margin-bottom: 10px;
   position: relative;
+  float: center;
 }
 
 .login-card input[type=text], input[type=password] {
   height: 44px;
   font-size: 16px;
-  width: 100%;
+  width: 30%;
   margin-bottom: 10px;
   -webkit-appearance: none;
   background: #fff;
@@ -81,8 +111,9 @@ body {
 }
 
 .login-card input[type=text]:hover, input[type=password]:hover {
-  border: 1px solid #b9b9b9;
-  border-top: 1px solid #a0a0a0;
+  border: 2px solid #b9b9b9;
+  
+  border-top: 5px solid #a0a0a0;
   -moz-box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
   -webkit-box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
   box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
@@ -102,7 +133,7 @@ body {
 
 .login-submit {
   /* border: 1px solid #3079ed; */
-  width: 150px;
+  width: 50%;
   border: 0px;
   color: #fff;
   text-shadow: 0 1px rgba(0,0,0,0.1); 
@@ -114,7 +145,7 @@ body {
   /* border: 1px solid #2f5bb7; */
   border: 0px;
   text-shadow: 0 1px rgba(0,0,0,0.3);
-  background-color: #ff0000;
+  background-color: #ff8080;
   /* background-image: -webkit-gradient(linear, 0 0, 0 100%,   from(#4d90fe), to(#357ae8)); */
 }
 
@@ -137,58 +168,80 @@ body {
   text-align: center;
   font-size: 12px;
 }
-.error {
-color: black;
-font-style: italic;
+
+
+
+table {
+    border-collapse: collapse;
+    width: 100%;
 }
 
+th, td {
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even){}
+
+th {
+    background-color: #a6a6a6;
+    color: white;
+}
 </style>
 
-  <meta charset="UTF-8">
-
-  <title>Log-in</title>
-  
-  <link rel='stylesheet' href='http://codepen.io/assets/libs/fullpage/jquery-ui.css'>
-
-    <link rel="stylesheet" href="css/style.css" media="screen" type="text/css" />
-
+<script type="text/javascript">
+    var form = document.getElementById('taskform');
+form.reset();
+</script>
+<title>Create Task</title>
 </head>
-<br><br><br>
-  <div class="login-card">
-  <div align="center">
-<img src="PaladionLogo.png"/>
-    </div>
-    <h1>Log-in</h1><br>
-    <center><h4 style="color: #ff0000">${Message}</h4></center>
-<!-- UI goes here-->
-    <form:form action="Login.do" method="post" commandName="LoginM"> 
-        <form:errors path="email" cssClass="error"/><br>
-        Email ID:<form:input path="email" placeholder="Enter the username"/><br>
-        
-        Password:<form:password path="password" placeholder="Enter the password"/><br>
-        <form:errors path="password" cssClass="error"/>
-        <input type="hidden" name="csrfPreventionSalt" value="<c:out value='${csrfPreventionSalt}'/>"/>
-        <%
-          ReCaptcha c = ReCaptchaFactory.newReCaptcha("6LdILiQUAAAAADnLG0a6cHtsTag3ey10y652yvGK", "6LdlHOsSAAAAACe2WYaGCjU2sc95EZqCI9wLcLXY", true);
-          out.print(c.createRecaptchaHtml(null, null));
-          %> 
-        <div align="left"><button type="submit" name=login value="Login"class="login login-submit">Login</button></div><br>
-	   
-        
-    </body>
-    </form>
-    <form:form action="ForgotPassword.do" method="GET">
-        <div align="left">   <button type="submit" value="forgot" class="login login-submit">Forgot Password</button></a></div>
-    </form:form>
-  </form:form>
-	   
-  <!-- UI goes here-->
-<script src='http://codepen.io/assets/libs/fullpage/jquery_and_jqueryui.js'></script>
-  </div>
-  
- 
-  
-</html>
-</body>
+    <body>
+      
+   <%@include file="Header.jsp" %>
+    
+    <div class="login-card">
+	   <div align="left">  <h2 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">Create Task</h2><br></div>
 
+	   <form:form action="CreateTeam.do" method="post" modelAttribute="TeamM" id="teamform">
+<table>
+
+<tr><td align="center"><h4>Task Name:</td><td><form:input placeholder="Enter Team Name" path="teamname" /></h4></td></tr>    
+<br>
+
+<tr></tr>
+<tr></tr>
+<tr></tr>
+
+<input type="hidden" name="AntiCSRFToken" value="${csrfPreventionSalt}"/> 
+<tr><td align="center"><input type="submit" value="Create" class="login login-submit"/></td></tr>            
+</table>
+<center>${TaskSuccess}</center>
+</form:form>
+
+
+
+<table>
+        <thead>
+            <tr bgcolor="#a6a6a6">
+                <th><div label="Team Name"></div> </th>
+            <th><div label="Delete"></div> </th>
+        </tr>
+        </thead>
+    
+    
+    <tbody>           
+        <c:forEach  items="${AllTeams}" var="team">     
+           <tr>
+                <td> ${fn:escapeXml(team.teamname)}</td>
+                <td><a href="DeleteTeam.do?id=${team.teamid}">DELETE</td>
+           </tr> 
+        </c:forEach>
+                
+    </tbody>
+    </table>
+
+	   </div>
+<br>      
+    </body>
+</html>
 

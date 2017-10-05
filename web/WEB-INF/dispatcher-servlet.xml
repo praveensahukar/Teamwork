@@ -42,14 +42,14 @@
     <bean id="EmailService" class="com.Paladion.teamwork.services.EmailServiceImpl" />
     <bean id="CommonUtil" class="com.Paladion.teamwork.utils.CommonUtil" />
     <bean id="AdminService" class="com.Paladion.teamwork.services.AdminServiceImpl" />
-   
+    <bean id="TeamService" class="com.Paladion.teamwork.services.TeamServiceImpl" />
 
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close"> 
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
 
         <property name="url" value="jdbc:mysql://localhost/teamwork" /> 
         <property name="username" value="root" />
-        <property name="password" value="root" />
+        <property name="password" value="admin" />
 
        
 
@@ -69,6 +69,7 @@
                 <value>com.Paladion.teamwork.beans.ProjectTransactionBean</value>
                 <value>com.Paladion.teamwork.beans.EmailTemplateBean</value>
                 <value>com.Paladion.teamwork.beans.SystemBean</value>
+                <value>com.Paladion.teamwork.beans.TeamBean</value>
                
             </list>
         </property>
@@ -118,21 +119,21 @@
         <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
         </bean>
         
-        <bean id="Validator" class="com.Paladion.teamwork.utils.Validator">
-         </bean>
+        <bean id="TeamDAO" class="com.Paladion.teamwork.DAO.TeamDAOImpl">
+        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+        </bean>
+        
+        <bean id="Validator" class="com.Paladion.teamwork.utils.Validator"></bean>
          
-        <bean id="TaskValidator" class="com.Paladion.teamwork.utils.TaskValidator">
-         </bean>
+        <bean id="TaskValidator" class="com.Paladion.teamwork.utils.TaskValidator"></bean>
          
-        <bean id="userValidator" class="com.Paladion.teamwork.utils.userValidator">
-         </bean>
-         <bean id="TaskTemplateValidator" class="com.Paladion.teamwork.utils.TaskTemplateValidator">
-         </bean>
-         <bean id="ProjectValidator" class="com.Paladion.teamwork.utils.ProjectValidator">
-         </bean>
+        <bean id="userValidator" class="com.Paladion.teamwork.utils.userValidator"></bean>
+        
+        <bean id="TaskTemplateValidator" class="com.Paladion.teamwork.utils.TaskTemplateValidator"></bean>
+        
+        <bean id="ProjectValidator" class="com.Paladion.teamwork.utils.ProjectValidator"></bean>
          
-         <bean id="EmailBean" class="com.Paladion.teamwork.beans.EmailBean">
-         </bean>
+        <bean id="EmailBean" class="com.Paladion.teamwork.beans.EmailBean"></bean>
          
 <!--         <bean id="ProjectValidator" class="com.Paladion.teamwork.utils.ProjectValidator">
          </bean>-->

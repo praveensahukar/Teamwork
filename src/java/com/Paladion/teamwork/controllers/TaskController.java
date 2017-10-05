@@ -42,7 +42,7 @@ CommonUtil CU;
    
 @InitBinder
 protected void initBinder(WebDataBinder binder) {
-    binder.addValidators(TV);
+binder.addValidators(TV);
 }    
     
 @Autowired
