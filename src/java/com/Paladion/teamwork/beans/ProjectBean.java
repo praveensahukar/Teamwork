@@ -147,16 +147,16 @@ int leadid;
     }
     
     
-    @Column(name = "team")
-String team;
-
-    public String getTeam() {
-        return team;
-    }
-
-    public void setTeam(String team) {
-        this.team = team;
-    }
+//    @Column(name = "team")
+//String team;
+//
+//    public String getTeam() {
+//        return team;
+//    }
+//
+//    public void setTeam(String team) {
+//        this.team = team;
+//    }
     
     
 //    

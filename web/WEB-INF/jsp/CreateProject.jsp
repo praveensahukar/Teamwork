@@ -182,14 +182,7 @@ font-style: italic;
 <tr><td align="right"><h4>OPID :</td><td><form:input placeholder="Enter OPID" path="opid" /><form:errors path="opid" cssClass="error"/></h4></td></tr>
 <tr><td align="right"><h4>Project Name :</td><td><form:input placeholder="Enter Project Name" path="projectname" /><form:errors path="projectname" cssClass="error"/></h4></td></tr>  
 
-<tr><td align="right"><h4>Team :</td>
-    <td><form:select path="team">
-	           <c:forEach  items="${AllTeams}" var="team"> 
-	           <form:option class="login login-submit" value="${team.teamname}">${team.teamname}</form:option>
-	           </c:forEach></form:select>
-        <form:errors path="team" cssClass="error"/>
-    </td>
-</tr>
+
 
 <tr><td align="right"><h4>Lead :</td>
     <td><form:select path="leadid">
