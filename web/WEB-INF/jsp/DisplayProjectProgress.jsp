@@ -304,23 +304,27 @@ body {
     <table border="1">
         <thead>
             <tr>
-                <td ><h4 style="color: grey; font-size: 15px"><g style="color:black">Project Name:</g> ${fn:escapeXml(ProjectData.projectname)}</h2></td>
-            <td ><h4 style="color: grey; font-size: 15px"><g style="color:black">OPID:</g> ${fn:escapeXml(ProjectData.opid)}</h4></h3></td>
+                <td colspan="2"><h4 style="color: grey; font-size: 15px"><g style="color:black">Project Name:</g> ${fn:escapeXml(ProjectData.projectname)}</h2></td>
             </tr>
         </thead>
-	   
-	<tr>
+        
+            <tr>
+            <td><h4 style="color: grey; font-size: 15px"><g style="color:black">OPID:</g> ${fn:escapeXml(ProjectData.opid)}</h4></h3></td>
+            <td><h4 style="color: grey; font-size: 15px"><g style="color:black">Team:</g> ${fn:escapeXml(ProjectData.team)}</h4></td>
+            </tr>
+        
+            <tr>
             <td><h4 style="color: grey; font-size: 15px"><g style="color:black">Lead Assigned:</g> ${fn:escapeXml(ProjectData.lead)}</h4></td>
             <td><h4 style="color: grey; font-size: 15px"><g style="color:black">Project Status: </g>${fn:escapeXml(ProjectData.status)}</h4></td>
-        </tr>
+            </tr>
         
-        <tr>
+            <tr>
             
             <td> <h4 style="color: grey; font-size: 15px" ><g style="color:black">Start Date:</g>
                    <fmt:formatDate type = "date" value = "${ProjectData.startdate}"/></h4></td>
             <td> <h4 style="color: grey; font-size: 15px" ><g style="color:black">End Date: </g>
                    <fmt:formatDate type = "date"  value = "${ProjectData.enddate}"/></h4></td>
-        </tr>
+            </tr>
         </table>
         <br>
 	</div>

@@ -60,8 +60,7 @@ li a:hover:not(.active) {
 @import url(http://fonts.googleapis.com/css?family=Roboto:400,100);
 
 body {
-
-	background-image: url("grey.jpg");
+  background-image: url("grey.jpg");
   background-repeat: repeat-y;
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -173,7 +172,13 @@ body {
 
 table {
     border-collapse: collapse;
-    width: 100%;
+    width: 80%;
+}
+
+
+.table1 {
+    border-collapse: collapse;
+    width: 50%;
 }
 
 th, td {
@@ -195,53 +200,35 @@ form.reset();
 </script>
 <title>Create Task</title>
 </head>
-    <body>
-      
+   <body>   
    <%@include file="Header.jsp" %>
     
     <div class="login-card">
-	   <div align="left">  <h2 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">Create Team</h2><br></div>
+    <h2 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">Create Team</h2>
+    <form:form action="CreateTeam.do" method="post" modelAttribute="TeamM" id="teamform">
+    <table>
+    <tr><td align="center"><h4>Team Name:</td><td><form:input placeholder="Enter Team Name" path="teamname" /></h4></td></tr>    
+    <br>
+    <input type="hidden" name="AntiCSRFToken" value="${csrfPreventionSalt}"/> 
+    <tr><td align="center"><input type="submit" value="Create" class="login login-submit"/></td></tr>            
+    </table>
+    </form:form>
 
-	   <form:form action="CreateTeam.do" method="post" modelAttribute="TeamM" id="teamform">
-<table>
-
-<tr><td align="center"><h4>Team Name:</td><td><form:input placeholder="Enter Team Name" path="teamname" /></h4></td></tr>    
-<br>
-
-<tr></tr>
-<tr></tr>
-<tr></tr>
-
-<input type="hidden" name="AntiCSRFToken" value="${csrfPreventionSalt}"/> 
-<tr><td align="center"><input type="submit" value="Create" class="login login-submit"/></td></tr>            
-</table>
-<center>${TaskSuccess}</center>
-</form:form>
-
-
-
-<table>
-        <thead>
-            <tr bgcolor="#a6a6a6">
-                <th><div label="Team Name"></div> </th>
-            <th><div label="Delete"></div> </th>
-        </tr>
-        </thead>
-    
-    
-    <tbody>           
+    <table class="table1">
+        <tr>
+            <th><div label="Team Name">Team Name</div> </th>
+            <th><div label="Delete">Delete</div></th>
+        </tr>         
         <c:forEach  items="${AllTeams}" var="team">     
            <tr>
                 <td> ${fn:escapeXml(team.teamname)}</td>
                 <td><a href="DeleteTeam.do?id=${team.teamid}">DELETE</td>
            </tr> 
         </c:forEach>
-                
-    </tbody>
     </table>
 
-	   </div>
+</div>
 <br>      
-    </body>
+</body>
 </html>
 

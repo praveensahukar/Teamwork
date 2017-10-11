@@ -1,4 +1,4 @@
-/*
+;/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -147,16 +147,16 @@ int leadid;
     }
     
     
-//    @Column(name = "team")
-//String team;
-//
-//    public String getTeam() {
-//        return team;
-//    }
-//
-//    public void setTeam(String team) {
-//        this.team = team;
-//    }
+    @Column(name = "team")
+    String team;
+
+    public String getTeam() {
+        return team;
+    }
+
+    public void setTeam(String team) {
+        this.team = team;
+    }
     
     
 //    

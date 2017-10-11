@@ -31,8 +31,6 @@ public class TaskDAOImpl implements TaskDAO{
         this.sessionFactory = sessionFactory;
     }
 	
-	
-	
 	@Override
 	public void addTaskDao(TaskBean TB) {
 		

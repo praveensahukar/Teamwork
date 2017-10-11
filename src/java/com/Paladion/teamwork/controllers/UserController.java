@@ -10,6 +10,7 @@ import com.Paladion.teamwork.beans.SystemBean;
 import com.Paladion.teamwork.beans.UserDataBean;
 
 import com.Paladion.teamwork.services.LoginService;
+import com.Paladion.teamwork.services.TeamService;
 import com.Paladion.teamwork.services.UserService;
 import com.Paladion.teamwork.utils.CommonUtil;
 import com.Paladion.teamwork.utils.EmailUtil;
@@ -59,6 +60,10 @@ protected void initBinder(WebDataBinder binder) {
 UserService userService;
 
 @Autowired
+@Qualifier(value="TeamService")
+TeamService TService;
+
+@Autowired
 @Qualifier(value="CommonUtil")
 CommonUtil CU;
 	
@@ -74,7 +79,9 @@ CommonUtil CU;
     {   
         String[] authorizedRoles = {"admin","manager"};
         if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
-	return new ModelAndView("CreateUser");
+        ModelAndView result= new ModelAndView("CreateUser");
+        result.addObject("AllTeams",TService.getAllTeams());
+        return result;
     }
 	
     @RequestMapping(value="/CreateUser",method=RequestMethod.POST)
@@ -86,7 +93,9 @@ CommonUtil CU;
         if (result.hasErrors()) {
             //validates the user input, this is server side validation
             System.out.println("error!!!!!!!!");
-            return new ModelAndView("CreateUser");
+            ModelAndView model= new ModelAndView("CreateUser");
+            model.addObject("AllTeams",TService.getAllTeams());
+            return model;
         }
         System.out.println("in user controller create user post method");
     
@@ -97,7 +106,7 @@ CommonUtil CU;
             EmailBean ebean=new EmailBean();
             EmailUtil eutil=new EmailUtil();
             ebean.setTo(loginBean.getEmail());
-            String subject="Paladion TeamWork- User Account Invitation";
+            String subject="Paladion TeamWork- User Account Created";
             StringBuilder mess=new StringBuilder();
                 
             mess.append("Dear ").append(loginBean.getUsername())

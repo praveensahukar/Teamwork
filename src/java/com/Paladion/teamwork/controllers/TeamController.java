@@ -48,22 +48,25 @@ public TeamBean populate()
         String[] authorizedRoles = {"admin","manager"};
         if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
         ModelAndView result=new ModelAndView("CreateTeam");
-        //List<TeamBean> TeamList= TS.getAllTeams();
-        //result.addObject("AllTeams",TeamList);
+        List<TeamBean> TeamList= TS.getAllTeams();
+        result.addObject("AllTeams",TeamList);
         return result;
     }
      
      
      
 @RequestMapping(value="/CreateTeam",method=RequestMethod.POST)
-    public ModelAndView createTask(@ModelAttribute("TeamM")TeamBean TB, HttpServletRequest req) 
+    public ModelAndView createteam(@ModelAttribute("TeamM")TeamBean TB, HttpServletRequest req) 
     {
         String[] authorizedRoles = {"admin","manager"};
         if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
-        
-	System.out.println("\n inside create Team method ");
+       
 	TS.addTeam(TB); 	
-	return new ModelAndView( "CreateTeam","Message","Team Created Successfully"  );  
+	ModelAndView result=new ModelAndView("CreateTeam");
+        List<TeamBean> TeamList= TS.getAllTeams();
+        result.addObject("AllTeams",TeamList);
+        result.addObject("Message","Team Created Successfully!!");
+        return result;
     }	
     
     
@@ -89,7 +92,7 @@ public ModelAndView GetAllTasks(HttpServletRequest req)
         if(id!=0)
            {
                boolean value= TS.deleteTeam(id);
-               ModelAndView result=new ModelAndView("DisplayTasks");
+               ModelAndView result=new ModelAndView("CreateTeam");
                List<TeamBean> TBList= TS.getAllTeams();
                result.addObject("AllTeams",TBList);
                result.addObject("Message","Team Deleted Succefully");

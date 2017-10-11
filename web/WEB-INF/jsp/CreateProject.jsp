@@ -182,13 +182,24 @@ font-style: italic;
 <tr><td align="right"><h4>OPID :</td><td><form:input placeholder="Enter OPID" path="opid" /><form:errors path="opid" cssClass="error"/></h4></td></tr>
 <tr><td align="right"><h4>Project Name :</td><td><form:input placeholder="Enter Project Name" path="projectname" /><form:errors path="projectname" cssClass="error"/></h4></td></tr>  
 
-
+<tr><td align="right"><h4>Team :</td>
+    <td><form:select path="team">
+                 
+	           <c:forEach  items="${AllTeams}" var="team"> 
+	           <form:option class="login login-submit" value="${team.teamname}">${team.teamname}</form:option>
+	           </c:forEach>
+        </form:select>
+        <form:errors path="team" cssClass="error"/>
+    </td>
+</tr>
 
 <tr><td align="right"><h4>Lead :</td>
     <td><form:select path="leadid">
-	           <c:forEach  items="${AllLeads}" var="lead"> 
+                   
+	          <c:forEach  items="${AllLeads}" var="lead"> 
 	           <form:option class="login login-submit" value="${lead.userid}">${lead.username}</form:option>
-	           </c:forEach></form:select>
+	           </c:forEach>
+        </form:select>
         <form:errors path="leadid" cssClass="error"/>
     </td>
 </tr>
@@ -196,7 +207,8 @@ font-style: italic;
 <tr><td align="right"><h4>End Date :</td><td><form:input placeholder="Enter Project Name" id="datepicker" path="enddate"/><form:errors path="enddate" cssClass="error"/></h4></td></tr>
 
 <tr><td align="right"><h4>Template :</td>
-    <td><form:select  path="templateid">  
+    <td><form:select  path="templateid" itemLabel="Select"> 
+         <option class="login login-submit" value="">Select Template</option>
 	  <c:forEach items="${AllTemplates}" var="template">     
 	  <option class="login login-submit" value="${template.templateid}">${template.templatename}</option>
 	  </c:forEach>

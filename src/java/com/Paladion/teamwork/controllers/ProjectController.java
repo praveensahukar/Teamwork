@@ -17,9 +17,11 @@ import com.Paladion.teamwork.beans.TemplateBean;
 import com.Paladion.teamwork.beans.ProjectTransactionBean;
 import com.Paladion.teamwork.beans.ProjectTransactionWrapper;
 import com.Paladion.teamwork.beans.SystemBean;
+import com.Paladion.teamwork.beans.TeamBean;
 import com.Paladion.teamwork.beans.fileuploadBean;
 import com.Paladion.teamwork.services.AdminService;
 import com.Paladion.teamwork.services.ProjectService;
+import com.Paladion.teamwork.services.TeamService;
 import com.Paladion.teamwork.services.TemplateService;
 import com.Paladion.teamwork.services.UserService;
 import com.Paladion.teamwork.utils.CommonUtil;
@@ -88,6 +90,10 @@ UserService US;
 @Qualifier(value = "AdminService")
 AdminService Aservice;
 
+@Autowired()
+@Qualifier(value = "TeamService")
+TeamService TeamS;
+
 @Autowired
 @Qualifier(value="ProjectValidator")
 ProjectValidator projectBeanValidator;
@@ -104,7 +110,7 @@ protected void initProjectBeanBinder(WebDataBinder binder) {
 @ModelAttribute("ProjectM")
 public ProjectBean populate()
 {
-	   return new ProjectBean();
+    return new ProjectBean();
 }
 @ModelAttribute("filebean")
 public fileuploadBean populate1()
@@ -120,14 +126,17 @@ public fileuploadBean populate1()
         if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
         
         HttpSession sess=req.getSession(false);
-        List <TemplateBean> TemplateList;
-        List <UserDataBean> LeadList;
+//        List <TemplateBean> TemplateList;
+//        List <UserDataBean> LeadList;
+//        List <TeamBean> TeamList;
 	ModelAndView model=new ModelAndView("CreateProject");
 	try{
-	    TemplateList=TS.getAllTemplates();
-            LeadList=CU.getUsersByRole("lead",sess);
-            model.addObject("AllTemplates", TemplateList);
-            model.addObject("AllLeads", LeadList);
+//	    TemplateList=TS.getAllTemplates();
+//            LeadList=CU.getUsersByRole("lead",sess);
+           
+            model.addObject("AllTemplates", TS.getAllTemplates());
+            model.addObject("AllLeads", CU.getUsersByRole("lead",sess));
+            model.addObject("AllTeams",  TeamS.getAllTeams());
 	}
         catch(Exception ex){}
 	return model;
@@ -390,7 +399,7 @@ public fileuploadBean populate1()
     }
     
     
-    @RequestMapping(value="/uploadfiles",method=RequestMethod.GET)
+@RequestMapping(value="/uploadfiles",method=RequestMethod.GET)
 public ModelAndView uploaddocs(@RequestParam String pid,HttpServletRequest req)
 {
 HttpSession sess=req.getSession();
@@ -532,7 +541,6 @@ return new ModelAndView("downloadDocuments","SysSettings",Aservice.getSystemSett
     @RequestMapping(value="/GetAllProjectDetails",method=RequestMethod.GET)
     public void getAllProjectsDetails(HttpServletRequest req)
     {
-        
         HttpSession sess= req.getSession(false);
         UserDataBean sessuser=(UserDataBean) sess.getAttribute("Luser");
 	ModelAndView result=new ModelAndView("Welcome");

@@ -18,13 +18,11 @@ import org.hibernate.annotations.GenericGenerator;
  * @author santosh.babar
  */
 @Entity
-@Table(name = "tasks",catalog="teamwork")
+@Table(name = "teams",catalog="teamwork")
 public class TeamBean implements Serializable {
     
 @Id
-@GenericGenerator(name="gen",strategy="increment")
-@GeneratedValue(generator="gen")
-@Column(name = "teamId", unique = true, nullable = false)
+@Column(name = "teamid")
 int teamId;	 
 
     public int getTeamid() {

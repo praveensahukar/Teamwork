@@ -203,28 +203,31 @@ th {
 	   <form:form action="CreateUser.do" method="POST" modelAttribute="UserM">
 <table>
    
-<tr><td align="center"><h4 >User Name:</td>
+<tr><td align="center"><h4 >User Name :</td>
     <form:errors path="username" cssClass="error"/><br>
     <td><form:input placeHolder="Enter the Username"  path="username" htmlEscape="true" autocomplete="false"/></h4></td></tr>    
 <form:errors path="email" cssClass="error"/>
-<tr><td align="center"><h4 >Email id</td>
+<tr><td align="center"><h4 >Email id :</td>
     <td><form:input placeHolder="Enter the Email ID" path="email" htmlEscape="true" autocomplete="false"/></h4></td></tr>  
 <form:errors path="phone" cssClass="error"/>
-<tr><td align="center"><h4>Mobile</td>
+<tr><td align="center"><h4>Mobile :</td>
     <td><form:input placeHolder="Enter the Mobile Number" path="phone" htmlEscape="true" autocomplete="false" /></h4></td></tr>
 <form:errors path="team" cssClass="error"/>
-<tr><td align="center"><h4 >Team</td>
-    <td><form:select class="login login-submit" path="team">
-         <form:option class="login login-submit" value="">Select</form:option>
-	 <form:option class="login login-submit" value="codereview">Code Review</form:option>
-	 <form:option class="login login-submit" value="appsec">App Sec</form:option>
-         <form:option class="login login-submit" value="netpt">Network PT</form:option>
-    </form:select></td></tr>
+    <tr><td align="right"><h4>Team :</td>
+    <td><form:select path="team">
+             <form:option class="login login-submit" value="">Select</form:option>
+	           <c:forEach  items="${AllTeams}" var="team"> 
+	           <form:option class="login login-submit" value="${team.teamname}">${team.teamname}</form:option>
+	           </c:forEach>
+        </form:select>
+        
+    </td>
+</tr>
       <form:errors path="password" cssClass="error"/><br>
-<tr><td align="center"><h4 >Password</td>
+<tr><td align="center"><h4 >Password :</td>
     <td><form:input type="password" placeHolder="Enter the password" path="password" htmlEscape="true" autocomplete="false" /></h4></td></tr>
  <form:errors path="role" cssClass="error"/>
-<tr><td align="center"><h4 >Enter the Role</td>
+<tr><td align="center"><h4>Select the Role</td>
     <td>
     <form:select class="login login-submit" path="role">
         <form:option class="login login-submit" value="">Select</form:option>
