@@ -5,11 +5,11 @@
  */
 package com.Paladion.teamwork.DAO;
 
-import com.Paladion.teamwork.beans.MapTemplateTaskBean;
 import com.Paladion.teamwork.beans.ProjectBean;
 import com.Paladion.teamwork.beans.ProjectTransactionBean;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.*;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -135,24 +135,94 @@ public class ProjectDAOImpl implements ProjectDAO
   
         @Override
        public boolean updateTaskStatus(int transid, String status){
-           if(status.equalsIgnoreCase("new")||status.equalsIgnoreCase("progress")||status.equalsIgnoreCase("completed"))
+           
+        DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date1 = new Date();
+        System.out.println(df.format(date1));
+           
+           if(!status.equalsIgnoreCase("new") && !status.isEmpty())
            {
-            Session session = this.sessionFactory.openSession();
-            Transaction tx;
-            tx = session.beginTransaction();
-            String sql = "UPDATE projects_transaction SET status=? WHERE transid=?";
-            SQLQuery query = session.createSQLQuery(sql);
-            query.setParameter(0,status);
-            query.setParameter(1,transid);
-            query.executeUpdate();
-            tx.commit();
-            return true;
+            
+               
+               ProjectTransactionBean PTBean=this.getTransactionOnTransID(transid);
+               System.out.println(PTBean.getStartdate());
+               
+
+                 
+            if(status.equalsIgnoreCase("progress"))
+                
+            {               
+                Date date2 = PTBean.getTaskstartdate();
+              // Get msec from each, and subtract.
+                long diff = date1.getTime() - date2.getTime();
+                long diffSeconds = diff / 1000 % 60;
+                long diffMinutes = diff / (60 * 1000) % 60;
+                long diffHours = diff / (60 * 60 * 1000);
+                System.out.println("Time in seconds: " + diffSeconds + " seconds.");
+                System.out.println("Time in minutes: " + diffMinutes + " minutes.");
+                System.out.println("Time in hours: " + diffHours + " hours.");
+            
+                if(diffHours >= 2){
+                //Redirect to update the delay reason
+                }
+                PTBean.setStartdate(date1);
+               // this.updatePTB(PTBean);
+            }
+            
+            
+            if(status.equalsIgnoreCase("completed")){
+                
+                Date date2 = PTBean.getTaskenddate();
+              // Get msec from each, and subtract.
+                long diff = date1.getTime() - date2.getTime();
+                long diffSeconds = diff / 1000 % 60;
+                long diffMinutes = diff / (60 * 1000) % 60;
+                long diffHours = diff / (60 * 60 * 1000);
+                System.out.println("Time in seconds: " + diffSeconds + " seconds.");
+                System.out.println("Time in minutes: " + diffMinutes + " minutes.");
+                System.out.println("Time in hours: " + diffHours + " hours.");
+            
+                if(diffHours >= 2){
+                //Redirect to update the delay reason
+                }
+                PTBean.setEnddate(date1);
+               
+            }
+            
+            
+            
+            
+//            Session session = this.sessionFactory.openSession();
+//            Transaction tx;
+//            String sql;
+//          
+//            if(status.equalsIgnoreCase("progress")){
+//            sql = "UPDATE projects_transaction SET status=?, taskstartdate =? where transid=?";
+//            }
+//            
+//            else if(status.equalsIgnoreCase("completed")){
+//            sql = "UPDATE projects_transaction SET status=?, taskenddate =? where transid=?";
+//            }
+//            
+//            else{
+//                return false;
+//            }
+//            tx = session.beginTransaction();
+//            SQLQuery query = session.createSQLQuery(sql);
+//            query.setParameter(0,status);
+//            query.setParameter(1,dateobj);
+//            query.setParameter(2,transid);
+//            query.executeUpdate();
+//            tx.commit();
+//            return true;
            }           
            
            else{
                System.out.println("Invalid option selected");
                return false;
            }
+           
+           return true; // remove this
        }
        
        
@@ -170,8 +240,25 @@ public class ProjectDAOImpl implements ProjectDAO
             return true;
        }
        
-       
-       
+       public ProjectTransactionBean getTransactionOnTransID(int transid){
+           List<ProjectTransactionBean> PList;
+            Transaction tx = null;
+            Session session1 = sessionFactory.getCurrentSession();
+            tx = session1.beginTransaction();
+            Criteria criteria = session1.createCriteria(ProjectTransactionBean.class);
+            criteria.add(Restrictions.eq("transid", transid));
+//          criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+            PList = criteria.list();
+            tx.commit();
+            
+            if(PList.size()==1){
+            ProjectTransactionBean PTB = PList.get(0);
+            return PTB;
+            }
+            else{
+           return null;
+           }
+       }
        
        
        
@@ -206,20 +293,35 @@ public class ProjectDAOImpl implements ProjectDAO
 		Transaction tx = null;
 	        tx = session1.beginTransaction();
                 
-                String sql = "UPDATE projects_transaction SET taskstartdate=?, taskenddate=?, taskhours=?,taskdays=?, status=? WHERE transid=?";
+                String sql = "UPDATE projects_transaction SET taskstartdate=?, taskenddate=?, taskhours=?,taskdays=?, status=? , startdate = ?, enddate=? WHERE transid=?";
                 SQLQuery query = session1.createSQLQuery(sql);
                 query.setParameter(0,PTBean.getTaskstartdate());
                 query.setParameter(1,PTBean.getTaskenddate());
                 query.setParameter(2,PTBean.getTaskhours());
                 query.setParameter(3,PTBean.getTaskdays());
                 query.setParameter(4,PTBean.getStatus());
-                query.setParameter(5,PTBean.getTransid());
+                query.setParameter(5,PTBean.getStartdate());
+                query.setParameter(6,PTBean.getEnddate());
+                query.setParameter(7,PTBean.getTransid());
                 query.executeUpdate();
                 tx.commit();
 		System.out.println("Project transaction updated successfully");
         }
         
-    }
+    } 
+         @Override
+	public boolean deleteProject(int id)
+	{
+            Session session = this.sessionFactory.openSession();
+            String sql = "delete p.*, pt.* from projects p left join projects_transaction pt on p.projectid=pt.projectid where p.projectid=?";
+            SQLQuery query = session.createSQLQuery(sql);
+            query.setParameter(0, id);
+            query.executeUpdate();
+            return true;
+        }
+        
+        
+      
 
 
 

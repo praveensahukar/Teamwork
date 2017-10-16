@@ -346,13 +346,18 @@ body {
         <th><div label="Hours"> </div></th>
         <th><div label="Days"> </div></th>
         <th><div label="Status"> </div></th>
-        <th><div label="Delay"> </div></th>
+        <th><div label="Actual Start Date"> </div></th>
+        <th><div label="Actual End Date"> </div></th>
+        
         </thead>
          <tbody>
     <c:forEach  items="${TaskDetails}" var="ProjectTaskList">  
         
         <fmt:formatDate value="${ProjectTaskList.taskstartdate}" var="SDate" type="both" dateStyle = "short" timeStyle = "short"/>
         <fmt:formatDate value="${ProjectTaskList.taskenddate}" var="EDate" type="both" dateStyle = "short" timeStyle = "short" />
+        
+        <fmt:formatDate value="${ProjectTaskList.startdate}" var="ASDate" type="both" dateStyle = "short" timeStyle = "short"/>
+        <fmt:formatDate value="${ProjectTaskList.enddate}" var="AEDate" type="both" dateStyle = "short" timeStyle = "short" />
         
         <tr> 
             <td style="color: black">${fn:escapeXml(ProjectTaskList.taskname)}</td>
@@ -373,7 +378,7 @@ body {
         </div> 
         </td> 
         <%--Individual task delay form --%>
-         <td style="color: black">
+<!--         <td style="color: black">
              <table>
                  <tr>
                      <td>
@@ -390,7 +395,15 @@ body {
              </table>
                </div>
 			</div>  
-            </td>
+            </td>-->
+
+
+
+<td style="color: black">${fn:escapeXml(ASDate)}</td>
+	        <td style="color: black">${fn:escapeXml(AEDate)}</td>
+    
+    
+</td>
             
         </tr>
          

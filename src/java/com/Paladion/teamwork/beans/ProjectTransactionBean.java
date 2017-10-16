@@ -32,9 +32,10 @@ public class ProjectTransactionBean {
     int userid;
     float taskhours;
     String status;
-    Date taskstartdate, taskenddate;
+    Date taskstartdate, taskenddate, startdate, enddate;
     float taskdays;
     String engname;
+    String comments;
 
     public int getTransid() {
         return transid;
@@ -120,6 +121,30 @@ public class ProjectTransactionBean {
 	public void setProjectid(int projectid) {
 		this.projectid = projectid;
 	}
+
+    public Date getStartdate() {
+        return startdate;
+    }
+
+    public void setStartdate(Date startdate) {
+        this.startdate = startdate;
+    }
+
+    public Date getEnddate() {
+        return enddate;
+    }
+
+    public void setEnddate(Date enddate) {
+        this.enddate = enddate;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
     
     
 }

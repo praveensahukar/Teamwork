@@ -33,12 +33,16 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.apache.commons.lang.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -292,7 +296,7 @@ public fileuploadBean populate1()
     }
     
     //Update status of the individual task in the project
-    @RequestMapping(value="/updateTaskStatus",method=RequestMethod.GET)
+    @RequestMapping(value="/updateTask_Status",method=RequestMethod.GET)
     public ModelAndView updateTaskStatus(@RequestParam int pid,@RequestParam int tid, @RequestParam String status, HttpServletRequest req) throws ParseException
     {
         String[] authorizedRoles = {"admin","manager","lead","engineer"};
@@ -356,47 +360,7 @@ public fileuploadBean populate1()
     }
     
     //Update delay to individual tasks in a project
-    @RequestMapping(value="/updateTaskDelay",method=RequestMethod.POST)
-    public ModelAndView updateTaskDelay(HttpServletRequest req) throws ParseException
-    {
-        String[] authorizedRoles = {"admin","manager","lead","engineer"};
-        if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
-        
-        String tid=req.getParameter("transId");
-        String delay=req.getParameter("taskDelayTime");
-        String pid=req.getParameter("projectid");
-        int delayHours=Integer.parseInt(delay);
-        int projectId=Integer.parseInt(pid);
-        int transid=Integer.parseInt(tid);
-        List<ProjectTransactionBean> PTBList=PS.getProjectTransaction(projectId);
-        List<ProjectTransactionBean> PTBList2=new ArrayList<>();
-        for(ProjectTransactionBean PTBean: PTBList)
-        {
-            if(PTBean.getTransid()==transid)
-            {
-                float hours= PTBean.getTaskhours()+ delayHours;
-                PTBean.setTaskhours(hours);
-                PTBean.setTaskdays(hours/9);
-                PTBean.setStatus("Delayed");
-                PTBList2.add(PTBean);
-            }
-           if(PTBean.getTransid()>transid)
-           {
-                PTBList2.add(PTBean);
-            }  
-        }
-        List<ProjectTransactionBean> PTBList3=CU.updateDelayForTasks(PTBList2, delayHours);
-        PS.updateProjectTransaction(PTBList3);
-        ModelAndView result;
-        List<ProjectTransactionBean> PSBList;
-        ProjectBean PRDATA=PS.getProjectById(projectId);
-        PSBList = PS.getProjectTransaction(projectId);   
-        result=new ModelAndView("DisplayProjectProgress");
-        result.addObject("Message","Delay updated successfully");
-        result.addObject("ProjectData",PRDATA);
-        result.addObject("TaskDetails",PSBList);
-        return result;
-    }
+    
     
     
 @RequestMapping(value="/uploadfiles",method=RequestMethod.GET)
@@ -568,6 +532,121 @@ return new ModelAndView("downloadDocuments","SysSettings",Aservice.getSystemSett
         System.out.println("No of new projects : "+project_new);
 	
     }
+    
+    
+    @RequestMapping(value="/updateTaskDelay",method=RequestMethod.POST)
+    public ModelAndView updateTaskDelay(HttpServletRequest req) throws ParseException
+    {
+        String[] authorizedRoles = {"admin","manager","lead","engineer"};
+        if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
+        
+        String tid=req.getParameter("transId");
+        String delay=req.getParameter("taskDelayTime");
+        String pid=req.getParameter("projectid");
+        int delayHours=Integer.parseInt(delay);
+        int projectId=Integer.parseInt(pid);
+        int transid=Integer.parseInt(tid);
+        List<ProjectTransactionBean> PTBList=PS.getProjectTransaction(projectId);
+        List<ProjectTransactionBean> PTBList2=new ArrayList<>();
+        for(ProjectTransactionBean PTBean: PTBList)
+        {
+            if(PTBean.getTransid()==transid)
+            {
+                float hours= PTBean.getTaskhours()+ delayHours;
+                PTBean.setTaskhours(hours);
+                PTBean.setTaskdays(hours/9);
+                PTBean.setStatus("Delayed");
+                PTBList2.add(PTBean);
+            }
+           if(PTBean.getTransid()>transid)
+           {
+                PTBList2.add(PTBean);
+            }  
+        }
+        List<ProjectTransactionBean> PTBList3=CU.updateDelayForTasks(PTBList2, delayHours);
+        PS.updateProjectTransaction(PTBList3);
+        ModelAndView result;
+        List<ProjectTransactionBean> PSBList;
+        ProjectBean PRDATA=PS.getProjectById(projectId);
+        PSBList = PS.getProjectTransaction(projectId);   
+        result=new ModelAndView("DisplayProjectProgress");
+        result.addObject("Message","Delay updated successfully");
+        result.addObject("ProjectData",PRDATA);
+        result.addObject("TaskDetails",PSBList);
+        return result;
+    }
+    
+    
+     @RequestMapping(value="/updateTaskStatus",method=RequestMethod.GET)
+    public ModelAndView updateTask_Status(@RequestParam int pid,@RequestParam int tid, @RequestParam String status, HttpServletRequest req) throws ParseException
+    {
+         String[] authorizedRoles = {"admin","manager","lead","engineer"};
+        if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
+        List<ProjectTransactionBean> PTBList=PS.getProjectTransaction(pid);
+        List<ProjectTransactionBean> PTBList2=new ArrayList<>();
+        Date date2;
+        
+        
+        //Get current system time
+        DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date1 = new Date();
+        long diffHours=0;
+        
+        
+        for(ProjectTransactionBean PTBean: PTBList)
+        {
+            if(PTBean.getTransid()==tid)
+            {
+                if(status.equalsIgnoreCase("progress")){date2 = PTBean.getTaskstartdate();}
+                else{date2 = PTBean.getTaskenddate();}
+                
+                long diff = date1.getTime() - date2.getTime();
+                long diffMinutes = diff / (60 * 1000) % 60;
+                diffHours = diff / (60 * 60 * 1000);
+                
+                if(diffHours<2){ // The value for hours should be taken from sys settings.
+                   
+                    
+                        //Code to update the task delay reason.
+                }
+                
+                //updatedDate=DateUtils.addHours(date2, (int)diffHours);
+                
+                if(status.equalsIgnoreCase("completed")){
+                float hours= PTBean.getTaskhours()+ diffHours;
+                PTBean.setTaskhours(hours);
+                PTBean.setTaskdays(hours/9);
+                }
+              
+
+                    if(status.equalsIgnoreCase("progress")){PTBean.setStartdate(date1); PTBean.setStatus("Progress");}
+                else{PTBean.setEnddate(date1); PTBean.setStatus("Completed");}
+
+                PTBList2.add(PTBean);
+            }
+           if(PTBean.getTransid()>tid)
+           {
+               Date date3 = new Date(0);
+               PTBean.setStartdate(date3);
+               PTBean.setEnddate(date3);
+               PTBList2.add(PTBean);
+            }  
+        }
+        
+        List<ProjectTransactionBean> PTBList3=CU.updateDelayForTasks(PTBList2, (int)diffHours);
+        PS.updateProjectTransaction(PTBList3);
+        ModelAndView result;
+        List<ProjectTransactionBean> PSBList;
+        ProjectBean PRDATA=PS.getProjectById(pid);
+        PSBList = PS.getProjectTransaction(pid);   
+        result=new ModelAndView("DisplayProjectProgress");
+        result.addObject("Message","Delay updated successfully");
+        result.addObject("ProjectData",PRDATA);
+        result.addObject("TaskDetails",PSBList);
+        return result;
       
+    
+    
+    }
     
 }
