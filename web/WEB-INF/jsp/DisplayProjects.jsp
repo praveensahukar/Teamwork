@@ -392,7 +392,7 @@ html {
                       </div>
                     </div> 
                 </td>
-                <td >  <div class="dropdown"><a href="DeleteProjects.do?pid=${project.projectid}"><button class="dropbtn1">Delete</button></a> </div></td>
+                <td >  <div class="dropdown"><a href="deleteProject.do?pid=${project.projectid}"><button class="dropbtn1">Delete</button></a> </div></td>
 	   </tr>
            
 </c:forEach>

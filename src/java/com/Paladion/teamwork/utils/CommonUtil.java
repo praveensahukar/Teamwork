@@ -234,7 +234,10 @@ Date end = null;
          
          HashMap<Integer, List<ProjectTransactionBean>> hashMap = new HashMap<Integer, List<ProjectTransactionBean>>();
          List <ProjectTransactionBean> ResultList=new ArrayList();
-         
+         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+         String defaultDate = "1990-01-01 00:00:00";
+         Date parsedDate = formatter.parse(defaultDate);
+
          for(ProjectTransactionBean PTBean : PTBList)
          {
             if (!hashMap.containsKey(PTBean.getUserid())) {
@@ -266,7 +269,9 @@ Date end = null;
                     PTBean.setEngname(this.getUsernameFromSession(PTBean.getUserid(),sess));
                     TaskEndDate=calculateResponseTime(ProjectTime, PTBean.getTaskhours());
                     PTBean.setTaskenddate(TaskEndDate);
-                   }
+                    PTBean.setStartdate(parsedDate);
+                    PTBean.setEnddate(parsedDate);
+                  }
                 else
                   {
                     ProjectTime.setTime(TaskEndDate);
@@ -281,6 +286,8 @@ Date end = null;
                     TaskEndDate=calculateResponseTime(ProjectTime,PTBean.getTaskhours());
                     PTBean.setEngname(this.getUsernameFromSession(PTBean.getUserid(),sess));
                     PTBean.setTaskenddate(TaskEndDate);
+                     PTBean.setStartdate(parsedDate);
+                    PTBean.setEnddate(parsedDate);
                   }
                 ResultList.add(PTBean);
             }

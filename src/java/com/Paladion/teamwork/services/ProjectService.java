@@ -27,4 +27,5 @@ public interface ProjectService {
     public boolean updateProjectStatus(int projid, String status);
     public void updateProjectTransaction(List<ProjectTransactionBean>PTBList);
     public int[] getProjectsCount(HttpServletRequest req);
+    public boolean deleteProject(int projid);
 }

@@ -75,6 +75,13 @@ ProjectDAO PD;
         
     }
     
+        @Override
+    public boolean deleteProject(int projid) {
+    
+          return PD.deleteProject(projid);
+        
+    }
+    
       @Override
     public boolean updateProjectStatus(int projid, String status) {
     

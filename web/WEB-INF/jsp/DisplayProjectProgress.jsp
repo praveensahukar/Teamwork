@@ -31,11 +31,9 @@ ul {
     width:1500px;
    
 }
-
 li {
     float: left;
 }
-
 li a {
     display: block;
     color: white;
@@ -43,21 +41,16 @@ li a {
     padding: 14px 16px;
     text-decoration: none;
 }
-
 li a:hover:not(.active) {
     background-color: #b30000;
 }
-
 .active {
     background-color: #cc0000;
 }
 </style>
 <style>
-
 @import url(http://fonts.googleapis.com/css?family=Roboto:400,100);
-
 body {
-
 	background-image: url("grey.jpg");
   background-repeat: repeat-y;
   -webkit-background-size: cover;
@@ -66,7 +59,6 @@ body {
   background-size: cover;
   font-family: 'Roboto', sans-serif;
 }
-
 .login-card {
   padding: 40px;
   width: 1420px;
@@ -77,13 +69,11 @@ body {
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
   overflow: hidden;
 }
-
 .login-card h1 {
   font-weight: 1;
   text-align: center;
   font-size: 2.3em;
 }
-
 .login-card input[type=submit] {
   width: 100%;
   display: block;
@@ -91,7 +81,6 @@ body {
   position: relative;
   float: center;
 }
-
 .login-card input[type=text], input[type=password] {
   height: 30px;
   font-size: 16px;
@@ -106,7 +95,6 @@ body {
   box-sizing: border-box;
   -moz-box-sizing: border-box;
 }
-
 .login-card input[type=text]:hover, input[type=password]:hover {
   border: 2px solid #b9b9b9;
   
@@ -115,7 +103,6 @@ body {
   -webkit-box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
   box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
 }
-
 .login {
   text-align: center;
   font-size: 14px;
@@ -127,7 +114,6 @@ body {
 /* -webkit-user-select: none;
   user-select: none; */
 }
-
 .login-submit {
   /* border: 1px solid #3079ed; */
   width: 150px;
@@ -137,7 +123,6 @@ body {
   background-color: #a6a6a6;
   /* background-image: -webkit-gradient(linear, 0 0, 0 100%,   from(#4d90fe), to(#4787ed)); */
 }
-
 .login-submit:hover {
   /* border: 1px solid #2f5bb7; */
   border: 0px;
@@ -145,7 +130,6 @@ body {
   background-color: #ff8080;
   /* background-image: -webkit-gradient(linear, 0 0, 0 100%,   from(#4d90fe), to(#357ae8)); */
 }
-
 .login-card a {
   text-decoration: none;
   color: #666;
@@ -155,17 +139,14 @@ body {
   opacity: 0.6;
   transition: opacity ease 0.5s;
 }
-
 .login-card a:hover {
   opacity: 1;
 }
-
 .login-help {
   width: 100%;
   text-align: center;
   font-size: 12px;
 }
-
 .scrollingtable {
 	box-sizing: border-box;
 	display: inline-block;
@@ -284,7 +265,6 @@ body {
 .scrollingtable > div > div > table > tbody:last-of-type > tr:last-child > * {border-bottom: none;}
 .scrollingtable > div > div > table > tbody > tr:nth-child(even) {background: gainsboro;} /*alternate row color*/
 .scrollingtable > div > div > table > tbody > tr > * + * {border-left: 1px solid black;}
-
 </style>
 
 
@@ -354,10 +334,13 @@ body {
     <c:forEach  items="${TaskDetails}" var="ProjectTaskList">  
         
         <fmt:formatDate value="${ProjectTaskList.taskstartdate}" var="SDate" type="both" dateStyle = "short" timeStyle = "short"/>
+        
         <fmt:formatDate value="${ProjectTaskList.taskenddate}" var="EDate" type="both" dateStyle = "short" timeStyle = "short" />
         
         <fmt:formatDate value="${ProjectTaskList.startdate}" var="ASDate" type="both" dateStyle = "short" timeStyle = "short"/>
         <fmt:formatDate value="${ProjectTaskList.enddate}" var="AEDate" type="both" dateStyle = "short" timeStyle = "short" />
+        
+        
         
         <tr> 
             <td style="color: black">${fn:escapeXml(ProjectTaskList.taskname)}</td>
@@ -397,11 +380,13 @@ body {
 			</div>  
             </td>-->
 
+       
+        <td style="color: black">${fn:escapeXml(ASDate)}</td>
+       
 
-
-<td style="color: black">${fn:escapeXml(ASDate)}</td>
-	        <td style="color: black">${fn:escapeXml(AEDate)}</td>
-    
+       
+        <td style="color: black">${fn:escapeXml(AEDate)}</td>
+       
     
 </td>
             

@@ -130,14 +130,8 @@ public fileuploadBean populate1()
         if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
         
         HttpSession sess=req.getSession(false);
-//        List <TemplateBean> TemplateList;
-//        List <UserDataBean> LeadList;
-//        List <TeamBean> TeamList;
 	ModelAndView model=new ModelAndView("CreateProject");
 	try{
-//	    TemplateList=TS.getAllTemplates();
-//            LeadList=CU.getUsersByRole("lead",sess);
-           
             model.addObject("AllTemplates", TS.getAllTemplates());
             model.addObject("AllLeads", CU.getUsersByRole("lead",sess));
             model.addObject("AllTeams",  TeamS.getAllTeams());
@@ -256,7 +250,7 @@ public fileuploadBean populate1()
         
         PTBList1= CU.updateProjectTransaction(PTBList, PRDATA,req.getSession(false));
         PS.insertProjectTransaction(PTBList1);
-        //Uncomment below line to send scheduling mail to lead
+       
         CU.sendSchedulingMailToEngineers(PTBList1,req.getSession(false),PRDATA.getProjectname());
         ModelAndView result=new ModelAndView("DisplayProjectProgress");
         result.addObject("TaskDetails",PTBList1);
@@ -626,9 +620,7 @@ return new ModelAndView("downloadDocuments","SysSettings",Aservice.getSystemSett
             }
            if(PTBean.getTransid()>tid)
            {
-               Date date3 = new Date(0);
-               PTBean.setStartdate(date3);
-               PTBean.setEnddate(date3);
+               
                PTBList2.add(PTBean);
             }  
         }
@@ -647,6 +639,18 @@ return new ModelAndView("downloadDocuments","SysSettings",Aservice.getSystemSett
       
     
     
+    }
+    
+    
+    @RequestMapping(value="/deleteProject",method=RequestMethod.GET)
+    public ModelAndView delete_Project(@RequestParam int pid, HttpServletRequest req) throws ParseException
+    {
+    if(PS.deleteProject(pid)){
+        return new ModelAndView("redirect:/Welcome.do","Message","Project Deleted Successfully");
+    }
+    else{
+        return new ModelAndView("Error","Message","Something Went Wrong");
+    }
     }
     
 }

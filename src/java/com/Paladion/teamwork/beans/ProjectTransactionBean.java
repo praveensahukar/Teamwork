@@ -127,6 +127,7 @@ public class ProjectTransactionBean {
     }
 
     public void setStartdate(Date startdate) {
+        
         this.startdate = startdate;
     }
 
