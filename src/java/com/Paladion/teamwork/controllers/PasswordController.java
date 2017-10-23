@@ -95,7 +95,7 @@ public class PasswordController {
             if(PS.validatePassword(password)){
             boolean state=PS.ResetPassword(otp,email,password);
             ModelAndView result=new ModelAndView("Login");
-            result.addObject("Message","Password updated succefully.");
+            result.addObject("Message","Password updated successfully.");
             return result;
             }
             else{

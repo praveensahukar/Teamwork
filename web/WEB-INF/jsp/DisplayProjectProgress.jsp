@@ -4,6 +4,9 @@
     Author     : root
 --%>
 
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.text.DateFormat"%>
+<%@page import="java.util.Date"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -275,7 +278,14 @@ body {
     <body>
     
   <%@include file="Header.jsp" %>
+  
+  
+  
+   
+   
         
+ 
+   
     <div class="login-card" >
         <div align="center">  <h3 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">Project Details</h3></div>
 	<div class="right">
@@ -303,7 +313,9 @@ body {
             <td> <h4 style="color: grey; font-size: 15px" ><g style="color:black">Start Date:</g>
                    <fmt:formatDate type = "date" value = "${ProjectData.startdate}"/></h4></td>
             <td> <h4 style="color: grey; font-size: 15px" ><g style="color:black">End Date: </g>
-                   <fmt:formatDate type = "date"  value = "${ProjectData.enddate}"/></h4></td>
+                    <fmt:formatDate type = "date" value = "${ProjectData.enddate}"/></h4></td>
+            
+           
             </tr>
         </table>
         <br>
@@ -315,14 +327,17 @@ body {
         
        <div class="scrollingtable">
 		<div>
-			<div>   
+			<div>
+                            
+                            
+<fmt:formatDate value="${ProjectTaskList.enddate}" var="AEDate" type="both" dateStyle = "short" timeStyle = "short" />
     <table border="1">
         <thead>
             <tr >
         <th><div label="Task Name"></div> </th>
         <th><div label="Engineer Name"> </div></th>
-        <th><div label="Task Start Date"> </div></th>
-        <th><div label="Task End Date"> </div></th>
+        <th><div label="Scheduled Start Date"> </div></th>
+        <th><div label="Scheduled End Date"> </div></th>
         <th><div label="Hours"> </div></th>
         <th><div label="Days"> </div></th>
         <th><div label="Status"> </div></th>
@@ -360,40 +375,18 @@ body {
                 </div>
         </div> 
         </td> 
-        <%--Individual task delay form --%>
-<!--         <td style="color: black">
-             <table>
-                 <tr>
-                     <td>
-            <form action="updateTaskDelay.do" method="post">
-                <td>  <input type="text" placeholder="Delay Hours" name="taskDelayTime"/></td>
-               <input type="hidden" name="transId" value="${ProjectTaskList.transid}"/>
-               <input type="hidden" name="projectid" value="${ProjectData.projectid}"/>
-               <input type="hidden" name="AntiCSRFToken" value="${csrfPreventionSalt}"/> 
-               <td> <input type="submit" value="Update Delay"/></td>
-            
-            </form>
-                     </td>
-                 </tr>
-             </table>
-               </div>
-			</div>  
-            </td>-->
 
+         
+        <c:set var = "DDate" value = "1/1/90 12:00 AM"/>
+              
+        <td style="color: black">   ${(ASDate eq DDate)? "--/--/--" : ASDate}</td>
        
-        <td style="color: black">${fn:escapeXml(ASDate)}</td>
+        <td style="color: black">  ${(AEDate eq DDate)? "--/--/--" : AEDate}</td>
        
-
-       
-        <td style="color: black">${fn:escapeXml(AEDate)}</td>
-       
-    
-</td>
-            
         </tr>
          
-      
        </c:forEach>
+      
          </tbody>
 </table>
        

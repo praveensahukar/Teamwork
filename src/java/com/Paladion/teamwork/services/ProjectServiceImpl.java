@@ -18,7 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 /**
  *
- * @author Administrator
+ * @author Santosh Babar
  */
 public class ProjectServiceImpl implements ProjectService {
 
@@ -87,6 +87,12 @@ ProjectDAO PD;
     
           return PD.updateProjectStatus(projid, status);
         
+    }
+    
+    
+    @Override
+    public ProjectTransactionBean getTransactionOnTransID(int transid){
+        return PD.getTransactionOnTransID(transid);
     }
     
     @Override

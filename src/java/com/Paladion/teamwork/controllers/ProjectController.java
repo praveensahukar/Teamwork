@@ -576,69 +576,70 @@ return new ModelAndView("downloadDocuments","SysSettings",Aservice.getSystemSett
     {
          String[] authorizedRoles = {"admin","manager","lead","engineer"};
         if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
-        List<ProjectTransactionBean> PTBList=PS.getProjectTransaction(pid);
+        
+        //List<ProjectTransactionBean> PTBList=PS.getProjectTransaction(pid);
+        ProjectTransactionBean PTBean = PS.getTransactionOnTransID(tid);
         List<ProjectTransactionBean> PTBList2=new ArrayList<>();
-        Date date2;
-        
-        
+      
         //Get current system time
-        DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+//      DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date1 = new Date();
-        long diffHours=0;
+//      long diffHours=0;
         
-        
-        for(ProjectTransactionBean PTBean: PTBList)
-        {
-            if(PTBean.getTransid()==tid)
+            if( PTBean!= null && PTBean.getTransid()==tid)
             {
-                if(status.equalsIgnoreCase("progress")){date2 = PTBean.getTaskstartdate();}
-                else{date2 = PTBean.getTaskenddate();}
+//                if(status.equalsIgnoreCase("progress")){date2 = PTBean.getTaskstartdate();}
+//                else{date2 = PTBean.getTaskenddate();}
                 
-                long diff = date1.getTime() - date2.getTime();
-                long diffMinutes = diff / (60 * 1000) % 60;
-                diffHours = diff / (60 * 60 * 1000);
+//              long diff = date1.getTime() - date2.getTime();
+//              long diffMinutes = diff / (60 * 1000) % 60;
+//              diffHours = diff / (60 * 60 * 1000);
                 
-                if(diffHours<2){ // The value for hours should be taken from sys settings.
-                   
-                    
-                        //Code to update the task delay reason.
-                }
+//                if(diffHours<2){  The value for hours should be taken from sys settings.
+//                   
+//                    
+//                        Code to update the task delay reason.
+//                }
                 
                 //updatedDate=DateUtils.addHours(date2, (int)diffHours);
                 
-                if(status.equalsIgnoreCase("completed")){
-                float hours= PTBean.getTaskhours()+ diffHours;
-                PTBean.setTaskhours(hours);
-                PTBean.setTaskdays(hours/9);
-                }
+//                if(status.equalsIgnoreCase("completed")){
+//                float hours= PTBean.getTaskhours()+ diffHours;
+//                PTBean.setTaskhours(hours);
+//                PTBean.setTaskdays(hours/9);
+//                }
               
 
-                    if(status.equalsIgnoreCase("progress")){PTBean.setStartdate(date1); PTBean.setStatus("Progress");}
-                else{PTBean.setEnddate(date1); PTBean.setStatus("Completed");}
+                if(status.equalsIgnoreCase("progress"))
+                {
+                    PTBean.setStartdate(date1); 
+                    PTBean.setStatus("Progress");
+                }
+                else
+                {
+                    PTBean.setEnddate(date1); 
+                    PTBean.setStatus("Completed");
+                }
 
                 PTBList2.add(PTBean);
             }
-           if(PTBean.getTransid()>tid)
-           {
-               
-               PTBList2.add(PTBean);
-            }  
-        }
+//           if(PTBean.getTransid()>tid)
+//           {
+//               
+//               PTBList2.add(PTBean);
+//            }  
         
-        List<ProjectTransactionBean> PTBList3=CU.updateDelayForTasks(PTBList2, (int)diffHours);
-        PS.updateProjectTransaction(PTBList3);
+       // List<ProjectTransactionBean> PTBList3=CU.updateDelayForTasks(PTBList2, (int)diffHours);
+        PS.updateProjectTransaction(PTBList2);
         ModelAndView result;
         List<ProjectTransactionBean> PSBList;
         ProjectBean PRDATA=PS.getProjectById(pid);
         PSBList = PS.getProjectTransaction(pid);   
         result=new ModelAndView("DisplayProjectProgress");
-        result.addObject("Message","Delay updated successfully");
+        result.addObject("Message","Status updated successfully");
         result.addObject("ProjectData",PRDATA);
         result.addObject("TaskDetails",PSBList);
         return result;
-      
-    
-    
     }
     
     

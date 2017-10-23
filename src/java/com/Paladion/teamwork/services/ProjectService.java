@@ -28,4 +28,6 @@ public interface ProjectService {
     public void updateProjectTransaction(List<ProjectTransactionBean>PTBList);
     public int[] getProjectsCount(HttpServletRequest req);
     public boolean deleteProject(int projid);
+    public ProjectTransactionBean getTransactionOnTransID(int Transid);
 }
+

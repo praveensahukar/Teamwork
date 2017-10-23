@@ -28,6 +28,7 @@ public interface ProjectDAO {
       public boolean updateTaskStatus(int projid);
        public boolean deleteProject(int projid);
       public void updateProjectTransaction(List<ProjectTransactionBean>PTBList);
+      public ProjectTransactionBean getTransactionOnTransID(int transid);
      
     
 }
