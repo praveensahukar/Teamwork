@@ -67,6 +67,10 @@ public class ProjectValidator implements org.springframework.validation.Validato
 	{
 	    errors.rejectValue("team","team.required");
 	}
+        else if (startDate.after(endDate))
+        {
+            errors.rejectValue("startdate","dates.invalid");
+        }
     }
     
 }

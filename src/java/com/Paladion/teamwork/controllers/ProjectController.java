@@ -158,6 +158,7 @@ public fileuploadBean populate1()
                         LeadList=CU.getUsersByRole("lead",sess);
                         model.addObject("AllTemplates", TemplateList);
                         model.addObject("AllLeads", LeadList);
+                        model.addObject("AllTeams",  TeamS.getAllTeams());
                         return model;
                     }
                     catch(Exception ex){
@@ -186,6 +187,7 @@ public fileuploadBean populate1()
                 results = new ModelAndView("CreateProject","Message","Project Creation failed due to an error");
                 results.addObject("AllTemplates", TemplateList);
                 results.addObject("AllLeads", LeadList);
+                results.addObject("AllTeams",  TeamS.getAllTeams());
                 return results;
             }
            
