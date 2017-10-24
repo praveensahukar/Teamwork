@@ -17,7 +17,6 @@ import com.Paladion.teamwork.beans.TemplateBean;
 import com.Paladion.teamwork.beans.ProjectTransactionBean;
 import com.Paladion.teamwork.beans.ProjectTransactionWrapper;
 import com.Paladion.teamwork.beans.SystemBean;
-import com.Paladion.teamwork.beans.TeamBean;
 import com.Paladion.teamwork.beans.fileuploadBean;
 import com.Paladion.teamwork.services.AdminService;
 import com.Paladion.teamwork.services.ProjectService;
@@ -33,16 +32,13 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import org.apache.commons.lang.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -180,7 +176,7 @@ public fileuploadBean populate1()
                 System.out.println("Man days :"+PB.getMandays());
                 UserDataBean sessuser=(UserDataBean) sess.getAttribute("Luser");
                 if(sessuser.getRole().equalsIgnoreCase("scheduling")){
-                return new ModelAndView("Welcome","Message","Project Created Successfully");
+                return new ModelAndView("Welcome","Message","Project Scheduled Successfully");
                 }
             }
             catch(Exception ex){
@@ -200,8 +196,14 @@ public fileuploadBean populate1()
             PSBList=  CU.setTaskHours(PRDATA, MTTB);
             PTW.setProjectlist(PSBList);
             results=new ModelAndView("AssignTaskToUsers");
+            //Engineer Availability Code Starts
             List<UserDataBean> Alleng=CU.getUsersByRole("engineer", sess);
-            results.addObject("AllEngineers",Alleng);
+             List<UserDataBean> availableEngineers = US.getAvailableEngineers(PB.getStartdate(), PB.getEnddate(),Alleng);
+             
+             
+            //Engineer Availability Code Ends
+            
+            results.addObject("AllEngineers",availableEngineers);
             results.addObject("ProjectW",PTW);
             return results;
         
@@ -276,7 +278,9 @@ public fileuploadBean populate1()
            PTW.setProjectlist(PSBList);
            result=new ModelAndView("AssignTaskToUsers");
            List<UserDataBean> Alleng=CU.getUsersByRole("engineer", sess);
-           result.addObject("AllEngineers",Alleng);
+           List<UserDataBean> availableEngineers = US.getAvailableEngineers(PRDATA.getStartdate(), PRDATA.getEnddate(),Alleng);
+             
+           result.addObject("AllEngineers",availableEngineers);
            result.addObject("ProjectW",PTW);
            return result;
            }

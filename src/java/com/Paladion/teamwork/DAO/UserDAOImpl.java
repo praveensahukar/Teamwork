@@ -10,6 +10,7 @@ import com.Paladion.teamwork.beans.UserDataBean;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Date;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
@@ -34,8 +35,7 @@ public class UserDAOImpl implements UserDAO{
 	public boolean addUser(UserDataBean userBean) {
 		try{
 		Session session = sessionFactory.getCurrentSession();
-		Transaction tx = null;
-	        tx = session.beginTransaction();
+		Transaction tx = session.beginTransaction();
 		session.save(userBean);
 		System.out.println("User added succefully ");
 				 
@@ -47,7 +47,24 @@ public class UserDAOImpl implements UserDAO{
 		}
 	}
         
-    
+    @Override
+    public List getAvailableEngineers(Date projStartDate, Date projEndDate)
+    {
+        
+        Session session1 = sessionFactory.getCurrentSession();
+	Transaction tx;
+		tx = session1.beginTransaction();
+		
+                String SQL_QUERY1= "select distinct userid from ProjectTransactionBean PB where PB.taskenddate > :projstartdate and PB.taskstartdate < :projenddate";
+                Query query = session1.createQuery(SQL_QUERY1);
+                query.setParameter("projstartdate",projStartDate);
+                query.setParameter("projenddate",projEndDate);
+	        List list2 = query.list();
+                
+                tx.commit();
+        
+        return list2;
+    }
 
         
         

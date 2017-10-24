@@ -7,6 +7,7 @@ package com.Paladion.teamwork.DAO;
 
 import com.Paladion.teamwork.beans.UserDataBean;
 import com.Paladion.teamwork.beans.TemplateBean;
+import java.util.Date;
 
 import java.util.List;
 
@@ -29,5 +30,7 @@ public interface UserDAO {
        public boolean UpdateUserDetails(UserDataBean LB);
        
        public UserDataBean GetUserById(int id);
+       
+       public List getAvailableEngineers(Date projStartDate, Date projEndDate);
 
 }

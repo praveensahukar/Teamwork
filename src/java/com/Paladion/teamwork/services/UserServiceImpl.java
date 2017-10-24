@@ -1,14 +1,13 @@
 package com.Paladion.teamwork.services;
 
 
-import com.Paladion.teamwork.DAO.UserDAO;
-import com.Paladion.teamwork.beans.UserDataBean;
 
 import java.util.List;
+import java.util.Date;
 
-import com.Paladion.teamwork.DAO.LoginDAO;
 import com.Paladion.teamwork.DAO.UserDAO;
 import com.Paladion.teamwork.beans.UserDataBean;
+import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -55,6 +54,36 @@ UserDAO userDAO;
 public UserDataBean GetUserById(int id){
     
     return userDAO.GetUserById(id);
+}
+
+@Override
+public List<UserDataBean> getAvailableEngineers(Date projStartDate, Date projEndDate, List<UserDataBean> AllEng){
+    
+    List list1 = userDAO.getAvailableEngineers(projStartDate, projEndDate);
+    int[] userIDs = new int[list1.size()];
+    int index=0;
+    for(Object uid : list1){
+        userIDs[index] = (int) uid;
+        index++;
+    }
+ 
+    List <UserDataBean> UserList = new ArrayList<>();
+    int i=0;
+    for(UserDataBean uBean : AllEng)
+    {
+        boolean flag = true;
+       for(i=0; i< list1.size();i++){
+           if(uBean.getUserid()== userIDs[i]){
+               flag=false;
+           }    
+       }
+       if(flag == true){
+           UserList.add(uBean);
+       }
+    }
+    
+    
+    return UserList;
 }
     
 

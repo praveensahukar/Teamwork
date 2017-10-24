@@ -6,6 +6,7 @@
 package com.Paladion.teamwork.services;
 
 import com.Paladion.teamwork.beans.UserDataBean;
+import java.util.Date;
 
 
 import java.util.List;
@@ -31,5 +32,7 @@ public interface UserService {
                    public boolean UpdateUserDetails(UserDataBean LB);
                    
                    public UserDataBean GetUserById(int id);
+                   
+                   public List<UserDataBean> getAvailableEngineers(Date projStartDate, Date projEndDate, List<UserDataBean> UDB);
 
 }
