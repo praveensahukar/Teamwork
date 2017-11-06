@@ -21,6 +21,7 @@
 <link rel="icon" href="Network-Security.png" type="image/x-icon">
 <head>
     
+    
 <style>
 ul {
     list-style-type: none;
@@ -51,6 +52,8 @@ li a:hover:not(.active) {
 .active {
     background-color: #cc0000;
 }
+
+
 </style>
 <style>
 
@@ -71,7 +74,7 @@ body {
   padding: 40px;
   width: 1420px;
   height: 550px;
-   background-color: white;
+  background-color: white;
   margin: 0 auto 10px;
   border-radius: 2px;
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
@@ -184,7 +187,7 @@ body {
 	overflow: hidden;
 	width: 100%; /*set table width here if using fixed value*/
 	/*min-width: 100%;*/ /*set table width here if using %*/
-	height: 100%; /*set table height here; can be fixed value or %*/
+	height: 80%; /*set table height here; can be fixed value or %*/
 	/*min-height: 104px;*/ /*if using % height, make this at least large enough to fit scrollbar arrows + captions + thead*/
 	font-family: Verdana, Tahoma, sans-serif;
 	font-size: 15px;
@@ -294,7 +297,9 @@ body {
 }
 .scrollingtable > div > div > table > tbody:last-of-type > tr:last-child > * {border-bottom: none;}
 .scrollingtable > div > div > table > tbody > tr:nth-child(even) {background: gainsboro;} /*alternate row color*/
-.scrollingtable > div > div > table > tbody > tr > * + * {border-left: 1px solid black;} 
+.scrollingtable > div > div > table > tbody > tr > * + * {border-left: 1px solid black;}
+
+
 </style>
 
 
@@ -310,7 +315,7 @@ body {
 			<div>
     <table>
         <thead>
-            <tr >
+            <tr bgcolor="#a6a6a6">
             <th><div label="Template Name"></div></th>
             <th><div label="Description"></div></th>
            
