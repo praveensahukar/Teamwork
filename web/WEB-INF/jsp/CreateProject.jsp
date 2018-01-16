@@ -174,7 +174,7 @@ font-style: italic;
 
 <%@include file="Header.jsp"%>
 	   <div class="login-card">
-	   <div align="left">  <h2 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">Create New Project</h2><br></div>
+	   <div align="left">  <h2 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">Create New Project</h2></div>
 <form:form action="ScheduleProject.do" method="post" commandName="ProjectM">
 <div align="center">
     <table  align="center" border="0">

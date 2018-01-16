@@ -148,7 +148,7 @@ font-style: italic;
 
   <title>Log-in</title>
   
-  <link rel='stylesheet' href='http://codepen.io/assets/libs/fullpage/jquery-ui.css'>
+ 
 
     <link rel="stylesheet" href="css/style.css" media="screen" type="text/css" />
 
@@ -183,7 +183,7 @@ font-style: italic;
   </form:form>
 	   
   <!-- UI goes here-->
-<script src='http://codepen.io/assets/libs/fullpage/jquery_and_jqueryui.js'></script>
+
   </div>
   
  
