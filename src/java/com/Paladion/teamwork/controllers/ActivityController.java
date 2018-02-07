@@ -12,19 +12,18 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 import com.Paladion.teamwork.beans.UserDataBean;
 import com.Paladion.teamwork.beans.MapTemplateTaskBean;
-import com.Paladion.teamwork.beans.ProjectBean;
+import com.Paladion.teamwork.beans.ActivityBean;
 import com.Paladion.teamwork.beans.TemplateBean;
-import com.Paladion.teamwork.beans.ProjectTransactionBean;
-import com.Paladion.teamwork.beans.ProjectTransactionWrapper;
+import com.Paladion.teamwork.beans.ActivityTransactionBean;
+import com.Paladion.teamwork.beans.ActivityTransactionWrapper;
 import com.Paladion.teamwork.beans.SystemBean;
 import com.Paladion.teamwork.beans.fileuploadBean;
 import com.Paladion.teamwork.services.AdminService;
-import com.Paladion.teamwork.services.ProjectService;
 import com.Paladion.teamwork.services.TeamService;
 import com.Paladion.teamwork.services.TemplateService;
 import com.Paladion.teamwork.services.UserService;
 import com.Paladion.teamwork.utils.CommonUtil;
-import com.Paladion.teamwork.utils.ProjectValidator;
+import com.Paladion.teamwork.utils.ActivityValidator;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -53,16 +52,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import com.Paladion.teamwork.services.ActivityService;
 
 /**
  *
  * @author Administrator
  */
 @Controller
-public class ProjectController {
+public class ActivityController {
 	
 //@Autowired
-//@Qualifier(value="ProjectValidator")
+//@Qualifier(value="ActivityValidator")
 //ProjectValidator PV;
 //
 //@InitBinder
@@ -80,7 +80,7 @@ CommonUtil CU;
     
 @Autowired
 @Qualifier(value="ProjectService")
-ProjectService PS;
+ActivityService PS;
 
 @Autowired
 @Qualifier(value="UserService")
@@ -96,7 +96,7 @@ TeamService TeamS;
 
 @Autowired
 @Qualifier(value="ProjectValidator")
-ProjectValidator projectBeanValidator;
+ActivityValidator projectBeanValidator;
 
 @Autowired
 @Qualifier(value="EmailBean")
@@ -108,9 +108,9 @@ protected void initProjectBeanBinder(WebDataBinder binder) {
 } 
 	
 @ModelAttribute("ProjectM")
-public ProjectBean populate()
+public ActivityBean populate()
 {
-    return new ProjectBean();
+    return new ActivityBean();
 }
 @ModelAttribute("filebean")
 public fileuploadBean populate1()
@@ -139,7 +139,7 @@ public fileuploadBean populate1()
 
     //Schedule a project
     @RequestMapping(value="/ScheduleProject",method=RequestMethod.POST)
-    public Object CreateNewProject(@ModelAttribute("ProjectM")@Validated ProjectBean PB,BindingResult result,HttpServletRequest req,Model E) throws Exception
+    public Object CreateNewProject(@ModelAttribute("ProjectM")@Validated ActivityBean PB,BindingResult result,HttpServletRequest req,Model E) throws Exception
     {
         String[] authorizedRoles = {"admin","manager","lead","scheduling"};
         if(!CU.checkUserAuthorization(authorizedRoles, req))  return new ModelAndView("Error");
@@ -173,7 +173,7 @@ public fileuploadBean populate1()
                 PS.addProject(PB);
                 SystemBean sys=Aservice.getSystemSettings();
                 CU.sendSchedulingMailToLead(PB, req.getSession(false));
-                System.out.println("Project Created with Project id"+PB.getProjectid());
+                System.out.println("Project Created with Project id"+PB.getActivityid());
                 System.out.println("Man days :"+PB.getMandays());
                 UserDataBean sessuser=(UserDataBean) sess.getAttribute("Luser");
                 if(sessuser.getRole().equalsIgnoreCase("scheduling")){
@@ -191,9 +191,9 @@ public fileuploadBean populate1()
                 return results;
             }
            
-            ProjectTransactionWrapper PTW=new ProjectTransactionWrapper();
-            List<ProjectTransactionBean> PSBList;
-            ProjectBean PRDATA=PS.getProjectById(PB.getProjectid());
+            ActivityTransactionWrapper PTW=new ActivityTransactionWrapper();
+            List<ActivityTransactionBean> PSBList;
+            ActivityBean PRDATA=PS.getProjectById(PB.getActivityid());
             List<MapTemplateTaskBean> MTTB=TS.getAllWeights(PRDATA.getTemplateid());
             PSBList=  CU.setTaskHours(PRDATA, MTTB);
             PTW.setProjectlist(PSBList);
@@ -211,7 +211,7 @@ public fileuploadBean populate1()
         
     }
     
-//    public String updateProject(ProjectBean pBean){return "";}
+//    public String updateProject(ActivityBean pBean){return "";}
 //    public String deleteProject(String id){return "";}
     
     @RequestMapping(value="/showAllProject",method=RequestMethod.GET)
@@ -220,7 +220,7 @@ public fileuploadBean populate1()
         HttpSession sess= req.getSession(false);
         UserDataBean sessuser=(UserDataBean) sess.getAttribute("Luser");
 	ModelAndView result=new ModelAndView("DisplayProjects");
-        List<ProjectBean> PBList=(List<ProjectBean>)PS.getAllProjects(sessuser.getUserid(), sessuser.getRole());
+        List<ActivityBean> PBList=(List<ActivityBean>)PS.getAllProjects(sessuser.getUserid(), sessuser.getRole());
         result.addObject("AllProjects",PBList );
         this.getAllProjectsDetails(req);
 	return  result;
@@ -241,21 +241,21 @@ public fileuploadBean populate1()
     
     //To assign engineers to the tasks in the project
     @RequestMapping(value="/AssignTaskToEngineers", method=RequestMethod.POST)
-    public ModelAndView AssignTaskToEngineer(@ModelAttribute("ProjectW")ProjectTransactionWrapper ProjectW,HttpServletRequest req) throws Exception
+    public ModelAndView AssignTaskToEngineer(@ModelAttribute("ProjectW")ActivityTransactionWrapper ProjectW,HttpServletRequest req) throws Exception
     {
         String[] authorizedRoles = {"admin","manager","lead"};
         if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
         
-        String projid=req.getParameter("projectid");
+        String projid=req.getParameter("activityid");
         int projectid=Integer.parseInt(projid);
-        ProjectBean PRDATA=PS.getProjectById(projectid);
-	List <ProjectTransactionBean> PTBList=ProjectW.getProjectlist();
-        List <ProjectTransactionBean> PTBList1=new ArrayList<ProjectTransactionBean>();
+        ActivityBean PRDATA=PS.getProjectById(projectid);
+	List <ActivityTransactionBean> PTBList=ProjectW.getProjectlist();
+        List <ActivityTransactionBean> PTBList1=new ArrayList<ActivityTransactionBean>();
         
         PTBList1= CU.updateProjectTransaction(PTBList, PRDATA,req.getSession(false));
         PS.insertProjectTransaction(PTBList1);
        
-        CU.sendSchedulingMailToEngineers(PTBList1,req.getSession(false),PRDATA.getProjectname());
+        CU.sendSchedulingMailToEngineers(PTBList1,req.getSession(false),PRDATA.getActivityname());
         ModelAndView result=new ModelAndView("DisplayProjectProgress");
         result.addObject("TaskDetails",PTBList1);
         result.addObject("ProjectData",PRDATA);
@@ -267,14 +267,14 @@ public fileuploadBean populate1()
     public ModelAndView showProjectProgress(@RequestParam int id,HttpServletRequest req) throws ParseException
     {
            ModelAndView result;
-           List<ProjectTransactionBean> PSBList;
-           ProjectBean PRDATA=PS.getProjectById(id);
+           List<ActivityTransactionBean> PSBList;
+           ActivityBean PRDATA=PS.getProjectById(id);
            PSBList = PS.getProjectTransaction(id);
            
            //If engineers not assigned, redirect to assign engineers to tasks.
            if(PSBList.isEmpty()){
            HttpSession sess=req.getSession(false);
-           ProjectTransactionWrapper PTW=new ProjectTransactionWrapper();
+           ActivityTransactionWrapper PTW=new ActivityTransactionWrapper();
            List<MapTemplateTaskBean> MTTB=TS.getAllWeights(PRDATA.getTemplateid());
            PSBList=  CU.setTaskHours(PRDATA, MTTB);
            PTW.setProjectlist(PSBList);
@@ -304,8 +304,8 @@ public fileuploadBean populate1()
         
         boolean value= PS.updateTaskStatus(tid,status);
         if(value==true){
-           List<ProjectTransactionBean> PSBList;
-           ProjectBean PRDATA=PS.getProjectById(pid);
+           List<ActivityTransactionBean> PSBList;
+           ActivityBean PRDATA=PS.getProjectById(pid);
            PSBList = PS.getProjectTransaction(pid);
  
            ModelAndView result=new ModelAndView("DisplayProjectProgress");
@@ -508,12 +508,12 @@ return new ModelAndView("downloadDocuments","SysSettings",Aservice.getSystemSett
         HttpSession sess= req.getSession(false);
         UserDataBean sessuser=(UserDataBean) sess.getAttribute("Luser");
 	ModelAndView result=new ModelAndView("Welcome");
-        List<ProjectBean> PBList=(List<ProjectBean>)PS.getAllProjects(sessuser.getUserid(), sessuser.getRole());
+        List<ActivityBean> PBList=(List<ActivityBean>)PS.getAllProjects(sessuser.getUserid(), sessuser.getRole());
         int total_projects=PBList.size();
         int project_new=0;
         int project_progress=0;
         int project_completed=0;
-        for(ProjectBean PB:PBList){
+        for(ActivityBean PB:PBList){
             if(PB.getStatus().equalsIgnoreCase("new")){
                 project_new++;
                
@@ -542,13 +542,13 @@ return new ModelAndView("downloadDocuments","SysSettings",Aservice.getSystemSett
         
         String tid=req.getParameter("transId");
         String delay=req.getParameter("taskDelayTime");
-        String pid=req.getParameter("projectid");
+        String pid=req.getParameter("activityid");
         int delayHours=Integer.parseInt(delay);
         int projectId=Integer.parseInt(pid);
         int transid=Integer.parseInt(tid);
-        List<ProjectTransactionBean> PTBList=PS.getProjectTransaction(projectId);
-        List<ProjectTransactionBean> PTBList2=new ArrayList<>();
-        for(ProjectTransactionBean PTBean: PTBList)
+        List<ActivityTransactionBean> PTBList=PS.getProjectTransaction(projectId);
+        List<ActivityTransactionBean> PTBList2=new ArrayList<>();
+        for(ActivityTransactionBean PTBean: PTBList)
         {
             if(PTBean.getTransid()==transid)
             {
@@ -563,11 +563,11 @@ return new ModelAndView("downloadDocuments","SysSettings",Aservice.getSystemSett
                 PTBList2.add(PTBean);
             }  
         }
-        List<ProjectTransactionBean> PTBList3=CU.updateDelayForTasks(PTBList2, delayHours);
+        List<ActivityTransactionBean> PTBList3=CU.updateDelayForTasks(PTBList2, delayHours);
         PS.updateProjectTransaction(PTBList3);
         ModelAndView result;
-        List<ProjectTransactionBean> PSBList;
-        ProjectBean PRDATA=PS.getProjectById(projectId);
+        List<ActivityTransactionBean> PSBList;
+        ActivityBean PRDATA=PS.getProjectById(projectId);
         PSBList = PS.getProjectTransaction(projectId);   
         result=new ModelAndView("DisplayProjectProgress");
         result.addObject("Message","Delay updated successfully");
@@ -584,8 +584,8 @@ return new ModelAndView("downloadDocuments","SysSettings",Aservice.getSystemSett
         if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
         
         //List<ProjectTransactionBean> PTBList=PS.getProjectTransaction(pid);
-        ProjectTransactionBean PTBean = PS.getTransactionOnTransID(tid);
-        List<ProjectTransactionBean> PTBList2=new ArrayList<>();
+        ActivityTransactionBean PTBean = PS.getTransactionOnTransID(tid);
+        List<ActivityTransactionBean> PTBList2=new ArrayList<>();
       
         //Get current system time
 //      DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -638,8 +638,8 @@ return new ModelAndView("downloadDocuments","SysSettings",Aservice.getSystemSett
        // List<ProjectTransactionBean> PTBList3=CU.updateDelayForTasks(PTBList2, (int)diffHours);
         PS.updateProjectTransaction(PTBList2);
         ModelAndView result;
-        List<ProjectTransactionBean> PSBList;
-        ProjectBean PRDATA=PS.getProjectById(pid);
+        List<ActivityTransactionBean> PSBList;
+        ActivityBean PRDATA=PS.getProjectById(pid);
         PSBList = PS.getProjectTransaction(pid);   
         result=new ModelAndView("DisplayProjectProgress");
         result.addObject("Message","Status updated successfully");

@@ -6,8 +6,8 @@
 package com.Paladion.teamwork.services;
 
 import com.Paladion.teamwork.beans.MapTemplateTaskBean;
-import com.Paladion.teamwork.beans.ProjectBean;
-import com.Paladion.teamwork.beans.ProjectTransactionBean;
+import com.Paladion.teamwork.beans.ActivityBean;
+import com.Paladion.teamwork.beans.ActivityTransactionBean;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
@@ -15,19 +15,19 @@ import javax.servlet.http.HttpServletRequest;
  *
  * @author Administrator
  */
-public interface ProjectService {
+public interface ActivityService {
     
-    public void addProject(ProjectBean pb);
-    public List<ProjectBean> getAllProjects(int userid, String role);
-    public ProjectBean getProjectById(int id);
-    public void insertProjectTransaction(List <ProjectTransactionBean> PTBList);
-    public List<ProjectTransactionBean> getProjectTransaction(int projectid);
+    public void addProject(ActivityBean pb);
+    public List<ActivityBean> getAllProjects(int userid, String role);
+    public ActivityBean getProjectById(int id);
+    public void insertProjectTransaction(List <ActivityTransactionBean> PTBList);
+    public List<ActivityTransactionBean> getProjectTransaction(int projectid);
     public boolean updateTaskStatus(int transid, String status);
     public boolean updateTaskStatus(int projid);
     public boolean updateProjectStatus(int projid, String status);
-    public void updateProjectTransaction(List<ProjectTransactionBean>PTBList);
+    public void updateProjectTransaction(List<ActivityTransactionBean>PTBList);
     public int[] getProjectsCount(HttpServletRequest req);
     public boolean deleteProject(int projid);
-    public ProjectTransactionBean getTransactionOnTransID(int Transid);
+    public ActivityTransactionBean getTransactionOnTransID(int Transid);
 }
 

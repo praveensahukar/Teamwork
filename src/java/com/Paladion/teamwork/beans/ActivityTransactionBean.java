@@ -19,15 +19,15 @@ import org.hibernate.annotations.GenericGenerator;
  * @author root
  */
 @Entity
-@Table(name = "projects_transaction",catalog="teamwork")
-public class ProjectTransactionBean {
+@Table(name = "activity_transaction",catalog="teamwork")
+public class ActivityTransactionBean {
     
     @Id
     @GenericGenerator(name="gen",strategy="increment")
     @GeneratedValue(generator="gen")
     @Column(name = "transid", unique = true, nullable = false, precision = 15, scale = 0)        
     int transid;
-    int projectid;
+    int activityid;
     String taskname;
     int userid;
     float taskhours;
@@ -114,12 +114,12 @@ public class ProjectTransactionBean {
         this.taskdays = taskdays;
     }
 
-	public int getProjectid() {
-		return projectid;
+	public int getActivityid() {
+		return activityid;
 	}
 
-	public void setProjectid(int projectid) {
-		this.projectid = projectid;
+	public void setActivityid(int activityid) {
+		this.activityid = activityid;
 	}
 
     public Date getStartdate() {

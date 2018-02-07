@@ -5,7 +5,7 @@
  */
 package com.Paladion.teamwork.DAO;
 
-import com.Paladion.teamwork.beans.ProjectBean;
+import com.Paladion.teamwork.beans.ActivityBean;
 import com.Paladion.teamwork.beans.SystemBean;
 import java.util.ArrayList;
 import java.util.List;

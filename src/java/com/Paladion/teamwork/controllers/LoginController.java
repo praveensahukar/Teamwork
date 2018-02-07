@@ -9,7 +9,6 @@ import com.Paladion.teamwork.beans.UserDataBean;
 import com.Paladion.teamwork.services.AdminService;
 
 import com.Paladion.teamwork.services.LoginService;
-import com.Paladion.teamwork.services.ProjectService;
 import com.Paladion.teamwork.services.UserService;
 import com.Paladion.teamwork.utils.CommonUtil;
 import com.Paladion.teamwork.utils.SystemInfo;
@@ -32,6 +31,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+import com.Paladion.teamwork.services.ActivityService;
 /**
  *
  * @author Administrator
@@ -65,7 +65,7 @@ protected void initBinder(WebDataBinder binder) {
  
  @Autowired
  @Qualifier(value="ProjectService")
- ProjectService PS;
+ ActivityService PS;
  
  @Autowired
  @Qualifier(value="AdminService")

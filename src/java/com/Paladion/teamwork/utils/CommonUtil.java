@@ -7,10 +7,10 @@ package com.Paladion.teamwork.utils;
 
 import com.Paladion.teamwork.beans.EmailBean;
 import com.Paladion.teamwork.beans.MapTemplateTaskBean;
-import com.Paladion.teamwork.beans.ProjectBean;
+import com.Paladion.teamwork.beans.ActivityBean;
 import com.Paladion.teamwork.beans.TaskBean;
 import com.Paladion.teamwork.beans.TemplateBean;
-import com.Paladion.teamwork.beans.ProjectTransactionBean;
+import com.Paladion.teamwork.beans.ActivityTransactionBean;
 import com.Paladion.teamwork.beans.SystemBean;
 import com.Paladion.teamwork.beans.UserDataBean;
 import java.math.RoundingMode;
@@ -95,9 +95,9 @@ public class CommonUtil {
  
     
     
-    public List<ProjectTransactionBean> devideDaysfortasks(ProjectBean PB, List<MapTemplateTaskBean> MTTP) throws ParseException
+    public List<ActivityTransactionBean> devideDaysfortasks(ActivityBean PB, List<MapTemplateTaskBean> MTTP) throws ParseException
     {
-        List <ProjectTransactionBean> PSBList=new ArrayList<ProjectTransactionBean>();
+        List <ActivityTransactionBean> PSBList=new ArrayList<ActivityTransactionBean>();
         Date TaskEndDate=null;
         float iMandays;
         int Weight;
@@ -112,7 +112,7 @@ public class CommonUtil {
        
         for(MapTemplateTaskBean MB :MTTP)
         {
-        ProjectTransactionBean PSB = new ProjectTransactionBean();
+        ActivityTransactionBean PSB = new ActivityTransactionBean();
         Weight =MB.getWeight();
         iMandays=TotalMandays * Weight/100;
         PSB.setTaskdays(iMandays);
@@ -203,12 +203,12 @@ Date end = null;
     
     
     
-     public List<ProjectTransactionBean> setTaskHours(ProjectBean PB, List<MapTemplateTaskBean> MTTP) throws ParseException
+     public List<ActivityTransactionBean> setTaskHours(ActivityBean PB, List<MapTemplateTaskBean> MTTP) throws ParseException
     {
         DecimalFormat df = new DecimalFormat("#.##");
         df.setRoundingMode(RoundingMode.CEILING);
         
-        List <ProjectTransactionBean> PSBList=new ArrayList<ProjectTransactionBean>();
+        List <ActivityTransactionBean> PSBList=new ArrayList<ActivityTransactionBean>();
        
         float iMandays;
         int Weight;
@@ -216,12 +216,12 @@ Date end = null;
         
         for(MapTemplateTaskBean MB :MTTP)
         {
-            ProjectTransactionBean PSB = new ProjectTransactionBean();
+            ActivityTransactionBean PSB = new ActivityTransactionBean();
             Weight =MB.getWeight();
             iMandays=TotalMandays * Weight/100;
             PSB.setTaskdays(iMandays);
             PSB.setTaskhours(iMandays*9);
-            PSB.setProjectid(PB.getProjectid());
+            PSB.setActivityid(PB.getActivityid());
             PSB.setTaskname(MB.getTaskname());
             PSB.setStatus("New");
             PSBList.add(PSB);
@@ -230,18 +230,18 @@ Date end = null;
     }
      
      
-     public List<ProjectTransactionBean> updateProjectTransaction(List<ProjectTransactionBean> PTBList, ProjectBean PB, HttpSession sess) throws ParseException{
+     public List<ActivityTransactionBean> updateProjectTransaction(List<ActivityTransactionBean> PTBList, ActivityBean PB, HttpSession sess) throws ParseException{
          
-         HashMap<Integer, List<ProjectTransactionBean>> hashMap = new HashMap<Integer, List<ProjectTransactionBean>>();
-         List <ProjectTransactionBean> ResultList=new ArrayList();
+         HashMap<Integer, List<ActivityTransactionBean>> hashMap = new HashMap<Integer, List<ActivityTransactionBean>>();
+         List <ActivityTransactionBean> ResultList=new ArrayList();
          SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
          String defaultDate = "1990-01-01 00:00:00";
          Date parsedDate = formatter.parse(defaultDate);
 
-         for(ProjectTransactionBean PTBean : PTBList)
+         for(ActivityTransactionBean PTBean : PTBList)
          {
             if (!hashMap.containsKey(PTBean.getUserid())) {
-            List<ProjectTransactionBean> list = new ArrayList();
+            List<ActivityTransactionBean> list = new ArrayList();
             list.add(PTBean);
             hashMap.put(PTBean.getUserid(), list);
            } 
@@ -251,17 +251,17 @@ Date end = null;
          
         System.out.println("\nNo of users assigned to project : "+hashMap.size());
         
-        for (Map.Entry<Integer, List<ProjectTransactionBean>> entry : hashMap.entrySet())
+        for (Map.Entry<Integer, List<ActivityTransactionBean>> entry : hashMap.entrySet())
         {
             Date TaskEndDate=null;
-            List<ProjectTransactionBean> PTlist = entry.getValue();
+            List<ActivityTransactionBean> PTlist = entry.getValue();
             Calendar ProjectTime = Calendar.getInstance();
             ProjectTime.setTime(PB.getStartdate());
 	    if (ProjectTime.get(Calendar.HOUR_OF_DAY) < 10) 
                {
                        ProjectTime.set(Calendar.HOUR, 10);
                }
-            for (ProjectTransactionBean PTBean : PTlist)
+            for (ActivityTransactionBean PTBean : PTlist)
               {
                 if(null==TaskEndDate)
                   {
@@ -360,13 +360,13 @@ Date end = null;
         return null;
     }
     
-    public boolean sendSchedulingMailToEngineers(List<ProjectTransactionBean> PTBList, HttpSession sess, String projectname){
+    public boolean sendSchedulingMailToEngineers(List<ActivityTransactionBean> PTBList, HttpSession sess, String projectname){
         
-        HashMap<Integer, List<ProjectTransactionBean>> hashMap = new HashMap();
+        HashMap<Integer, List<ActivityTransactionBean>> hashMap = new HashMap();
         // List <ProjectTransactionBean> ResultList=new ArrayList();
         PTBList.forEach((PTBean) -> {
             if (!hashMap.containsKey(PTBean.getUserid())) {
-                List<ProjectTransactionBean> list = new ArrayList();
+                List<ActivityTransactionBean> list = new ArrayList();
                 list.add(PTBean);
                 hashMap.put(PTBean.getUserid(), list);
             } 
@@ -376,7 +376,7 @@ Date end = null;
          
          hashMap.entrySet().forEach((entry) -> {
              int userid = entry.getKey();
-             List <ProjectTransactionBean> PTBlist =entry.getValue();
+             List <ActivityTransactionBean> PTBlist =entry.getValue();
              EmailBean ebean=new EmailBean();
              EmailUtil EU=new EmailUtil();
              UserDataBean ubean=this.getUserById(userid, sess);
@@ -390,7 +390,7 @@ Date end = null;
                      .append(projectname)
                      .append(" project.\n\n");
              
-             for(ProjectTransactionBean task:PTBlist){
+             for(ActivityTransactionBean task:PTBlist){
                  i++;
                  mess.append(i)
                          .append(". ")
@@ -408,7 +408,7 @@ Date end = null;
         return true;
     }
     
-    public boolean sendSchedulingMailToLead(ProjectBean PB, HttpSession sess) throws ParseException{
+    public boolean sendSchedulingMailToLead(ActivityBean PB, HttpSession sess) throws ParseException{
         
          EmailUtil EU=new EmailUtil();
          EmailBean ebean=new EmailBean();
@@ -423,7 +423,7 @@ Date end = null;
          StringBuilder mess=new StringBuilder();
          mess.append("Dear ").append(ub.getUsername()).append("\n\nYou have been assigned to the below project as delivery lead.")
                   .append(" Please assign Engineers to execute the project.")
-                  .append("\n\nProject : ").append(PB.getProjectname())
+                  .append("\n\nProject : ").append(PB.getActivityname())
                   .append("\nOPID : ").append(PB.getOpid())
                   .append("\nStart Date : ").append(sDate)
                   .append("\nEnd Date : ").append(eDate)
@@ -441,9 +441,9 @@ Date end = null;
 
     
     
-    public List<ProjectTransactionBean> updateDelayForTasks(List<ProjectTransactionBean> PTBList, int hours){
+    public List<ActivityTransactionBean> updateDelayForTasks(List<ActivityTransactionBean> PTBList, int hours){
         Date delayedTaskEndDate=null;
-        for(ProjectTransactionBean PTBean : PTBList)        
+        for(ActivityTransactionBean PTBean : PTBList)        
         {
             Calendar ProjectTime = Calendar.getInstance();
             ProjectTime.setTime(PTBean.getTaskstartdate());

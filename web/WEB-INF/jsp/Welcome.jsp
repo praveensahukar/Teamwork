@@ -9,7 +9,7 @@
 
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="com.Paladion.teamwork.beans.ProjectBean"%>
+<%@page import="com.Paladion.teamwork.beans.ActivityBean"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <link rel="icon" href="Network-Security.png" type="image/x-icon">
 <script src="jquery-1.12.4.js"></script>

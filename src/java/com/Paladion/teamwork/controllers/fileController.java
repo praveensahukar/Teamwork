@@ -9,21 +9,17 @@ import com.Paladion.teamwork.beans.UserDataBean;
 import com.Paladion.teamwork.services.AdminService;
 
 import com.Paladion.teamwork.services.LoginService;
-import com.Paladion.teamwork.services.ProjectService;
 import com.Paladion.teamwork.services.UserService;
 import com.Paladion.teamwork.utils.CommonUtil;
-import com.Paladion.teamwork.utils.SystemInfo;
 import com.Paladion.teamwork.utils.Validator;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.security.SecureRandom;
 import java.text.ParseException;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -31,28 +27,17 @@ import java.util.zip.ZipOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import net.tanesha.recaptcha.ReCaptchaImpl;
-import net.tanesha.recaptcha.ReCaptchaResponse;
-import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+import com.Paladion.teamwork.services.ActivityService;
 /**
  *
  * @author Administrator
@@ -88,7 +73,7 @@ protected void initBinder(WebDataBinder binder) {
  
  @Autowired
 @Qualifier(value="ProjectService")
- ProjectService PS;
+ ActivityService PS;
  
  UserDataBean lb=null;
  

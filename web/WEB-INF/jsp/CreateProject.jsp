@@ -168,19 +168,19 @@ font-style: italic;
 }
 </style>
 
-  <title>Schedule Project</title>
+  <title>Schedule Activity</title>
     </head>
     <body>
 
 <%@include file="Header.jsp"%>
 	   <div class="login-card">
-	   <div align="left">  <h2 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">Create New Project</h2></div>
+	   <div align="left">  <h2 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">Schedule Activity</h2></div>
 <form:form action="ScheduleProject.do" method="post" commandName="ProjectM">
 <div align="center">
     <table  align="center" border="0">
 
 <tr><td align="right"><h4>OPID :</td><td><form:input placeholder="Enter OPID" path="opid" /><form:errors path="opid" cssClass="error"/></h4></td></tr>
-<tr><td align="right"><h4>Project Name :</td><td><form:input placeholder="Enter Project Name" path="projectname" /><form:errors path="projectname" cssClass="error"/></h4></td></tr>  
+<tr><td align="right"><h4>Activity Name :</td><td><form:input placeholder="Enter Activity Name" path="activityname" /><form:errors path="activityname" cssClass="error"/></h4></td></tr>  
 
 <tr><td align="right"><h4>Team :</td>
     <td><form:select path="team">
@@ -204,7 +204,7 @@ font-style: italic;
     </td>
 </tr>
 <tr><td align="right"><h4>Start Date :<td><form:input placeholder="Enter Start Date" id="date" path="startdate" /><form:errors path="startdate" cssClass="error"/></h4></td></tr>
-<tr><td align="right"><h4>End Date :</td><td><form:input placeholder="Enter Project Name" id="datepicker" path="enddate"/><form:errors path="enddate" cssClass="error"/></h4></td></tr>
+<tr><td align="right"><h4>End Date :</td><td><form:input placeholder="Enter End Date" id="datepicker" path="enddate"/><form:errors path="enddate" cssClass="error"/></h4></td></tr>
 
 <tr><td align="right"><h4>Template :</td>
     <td><form:select  path="templateid" itemLabel="Select"> 

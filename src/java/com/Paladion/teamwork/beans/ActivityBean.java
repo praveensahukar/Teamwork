@@ -29,21 +29,21 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author Administrator
  */
 @Entity
-@Table(name = "projects",catalog="teamwork")
-public class ProjectBean implements Serializable{              
+@Table(name = "activity",catalog="teamwork")
+public class ActivityBean implements Serializable{              
     
 @Id
 @GenericGenerator(name="gen",strategy="increment")
 @GeneratedValue(generator="gen")
-@Column(name = "projectid", unique = true, nullable = false, precision = 15, scale = 0)
-        int projectid;  
+@Column(name = "activityid", unique = true, nullable = false, precision = 15, scale = 0)
+        int activityid;  
 
-public int getProjectid() {
-return projectid;
+public int getActivityid() {
+return activityid;
 }
 
-public void setProjectid(int projectid) {
-this.projectid = projectid;
+public void setActivityid(int activityid) {
+this.activityid = activityid;
 }
 @Column(name = "mandays")
 int mandays;
@@ -65,15 +65,15 @@ return opid;
 public void setOpid(String opid) {
 this.opid = opid;
 }
-@Column(name = "projectname")
-String projectname;
+@Column(name = "activityname")
+String activityname;
 
-public String getProjectname() {
-return projectname;
+public String getActivityname() {
+return activityname;
 }
 
-public void setProjectname(String projectname) {
-this.projectname = projectname;
+public void setActivityname(String activityname) {
+this.activityname = activityname;
 }
     
 @Column(name = "lead")
@@ -161,7 +161,7 @@ int leadid;
     
 //    
 //@OneToMany(cascade = CascadeType.ALL)
-//@JoinTable(name = "project_transaction", joinColumns = { @JoinColumn(name = "projectid") })
+//@JoinTable(name = "project_transaction", joinColumns = { @JoinColumn(name = "activityid") })
 //public Set <ProjectTransactionBean> ptbean;
 //
 //public Set<ProjectTransactionBean> getProjectstatusbean() {

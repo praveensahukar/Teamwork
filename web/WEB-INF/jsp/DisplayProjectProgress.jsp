@@ -294,7 +294,7 @@ body {
     <table border="1">
         <thead>
             <tr>
-                <td colspan="2"><h4 style="color: grey; font-size: 15px"><g style="color:black">Project Name:</g> ${fn:escapeXml(ProjectData.projectname)}</h2></td>
+                <td colspan="2"><h4 style="color: grey; font-size: 15px"><g style="color:black">Project Name:</g> ${fn:escapeXml(ProjectData.activityname)}</h2></td>
             </tr>
         </thead>
         
@@ -369,9 +369,9 @@ body {
             <div class="dropdown">
             <button class="dropbtn1">${fn:escapeXml(ProjectTaskList.status)}</button>
                 <div class="dropdown-content">
-                <a href="updateTaskStatus.do?pid=${ProjectTaskList.projectid}&tid=${ProjectTaskList.transid}&status=New">New</a>
-                <a href="updateTaskStatus.do?pid=${ProjectTaskList.projectid}&tid=${ProjectTaskList.transid}&status=Progress">Progress</a>
-                <a href="updateTaskStatus.do?pid=${ProjectTaskList.projectid}&tid=${ProjectTaskList.transid}&status=Completed">Completed</a> 
+                <a href="updateTaskStatus.do?pid=${ProjectTaskList.activityid}&tid=${ProjectTaskList.transid}&status=New">New</a>
+                <a href="updateTaskStatus.do?pid=${ProjectTaskList.activityid}&tid=${ProjectTaskList.transid}&status=Progress">Progress</a>
+                <a href="updateTaskStatus.do?pid=${ProjectTaskList.activityid}&tid=${ProjectTaskList.transid}&status=Completed">Completed</a> 
                 </div>
         </div> 
         </td> 
@@ -395,16 +395,16 @@ body {
 
 
                         </div>
-        <a href="/TeamWorkAlpha/uploadfiles.do?pid=${ProjectData.projectid}" 
+        <a href="/TeamWorkAlpha/uploadfiles.do?pid=${ProjectData.activityid}" 
   target="popup" 
-  onclick="window.open('/TeamWorkAlpha/uploadfiles.do?pid=${ProjectData.projectid}','popup','width=800,height=600'); return false;">
+  onclick="window.open('/TeamWorkAlpha/uploadfiles.do?pid=${ProjectData.activityid}','popup','width=800,height=600'); return false;">
     Upload files
 </a>
     <br>
     <br>
-<a href="/TeamWorkAlpha/Downloadfiles.do?pid=${ProjectData.projectid}" 
+<a href="/TeamWorkAlpha/Downloadfiles.do?pid=${ProjectData.activityid}" 
   target="popup" 
-  onclick="window.open('/TeamWorkAlpha/Downloadfiles.do?pid=${ProjectData.projectid}','popup','width=800,height=600'); return false;">
+  onclick="window.open('/TeamWorkAlpha/Downloadfiles.do?pid=${ProjectData.activityid}','popup','width=800,height=600'); return false;">
     Download files
 </a>
 

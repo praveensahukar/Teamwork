@@ -11,14 +11,14 @@ import java.util.List;
  *
  * @author santosh.babar
  */
-public class ProjectTransactionWrapper {
-    List <ProjectTransactionBean> projectlist;
+public class ActivityTransactionWrapper {
+    List <ActivityTransactionBean> projectlist;
 
-    public List<ProjectTransactionBean> getProjectlist() {
+    public List<ActivityTransactionBean> getProjectlist() {
         return projectlist;
     }
 
-    public void setProjectlist(List<ProjectTransactionBean> projectlist) {
+    public void setProjectlist(List<ActivityTransactionBean> projectlist) {
         this.projectlist = projectlist;
     }
 

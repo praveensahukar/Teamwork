@@ -5,8 +5,8 @@
  */
 package com.Paladion.teamwork.DAO;
 
-import com.Paladion.teamwork.beans.ProjectBean;
-import com.Paladion.teamwork.beans.ProjectTransactionBean;
+import com.Paladion.teamwork.beans.ActivityBean;
+import com.Paladion.teamwork.beans.ActivityTransactionBean;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
  *
  * @author user
  */
-public class ProjectDAOImpl implements ProjectDAO
+public class ActivityDAOImpl implements ActivityDAO
 {
            @Autowired
            @Qualifier(value="hibernate4AnnotatedSessionFactory")
@@ -36,7 +36,7 @@ public class ProjectDAOImpl implements ProjectDAO
            }
 	
 	@Override
-	public void addProjectDao(ProjectBean PB) {
+	public void addProjectDao(ActivityBean PB) {
 	    Session session1 = sessionFactory.getCurrentSession();
             Transaction tx = null;
 	    tx = session1.beginTransaction();
@@ -47,38 +47,38 @@ public class ProjectDAOImpl implements ProjectDAO
 
 	
 	@Override
-	public List<ProjectBean> getAllProjects(int userid, String role) {
+	public List<ActivityBean> getAllProjects(int userid, String role) {
 		
             Session session1 = sessionFactory.getCurrentSession();
-	    List <ProjectBean> allProjects=new ArrayList<>();
-            List<ProjectTransactionBean> PTbeanList=new ArrayList<>();
+	    List <ActivityBean> allProjects=new ArrayList<>();
+            List<ActivityTransactionBean> PTbeanList=new ArrayList<>();
             Transaction tx = null;
 	    tx = session1.beginTransaction();
             
             if (role.equalsIgnoreCase("Manager")||role.equalsIgnoreCase("Admin")||role.equalsIgnoreCase("scheduling"))
             {
-             Criteria criteria = session1.createCriteria(ProjectBean.class);
+             Criteria criteria = session1.createCriteria(ActivityBean.class);
              allProjects= criteria.list();
             }
             else if(role.equalsIgnoreCase("Lead"))
             {
-            Criteria criteria = session1.createCriteria(ProjectBean.class);    
+            Criteria criteria = session1.createCriteria(ActivityBean.class);    
             criteria.add(Restrictions.eq("leadid", userid));
             allProjects= criteria.list();
             }   
             else if(role.equalsIgnoreCase("Engineer"))
             {
                        
-            Query query1 = session1.createQuery("from ProjectTransactionBean where userid=? group by projectid");
+            Query query1 = session1.createQuery("from ActivityTransactionBean where userid=? group by activityid");
             query1.setParameter(0, userid);
             
-            PTbeanList=(List<ProjectTransactionBean>) query1.list();
+            PTbeanList=(List<ActivityTransactionBean>) query1.list();
         
-            for(ProjectTransactionBean PTB:PTbeanList)
+            for(ActivityTransactionBean PTB:PTbeanList)
             {
-            Criteria criteria2 = session1.createCriteria(ProjectBean.class); 
-            criteria2.add(Restrictions.eq("projectid", PTB.getProjectid()));
-            ProjectBean PB=(ProjectBean)criteria2.uniqueResult();
+            Criteria criteria2 = session1.createCriteria(ActivityBean.class); 
+            criteria2.add(Restrictions.eq("activityid", PTB.getActivityid()));
+            ActivityBean PB=(ActivityBean)criteria2.uniqueResult();
             allProjects.add(PB);
             }
             
@@ -89,24 +89,24 @@ public class ProjectDAOImpl implements ProjectDAO
         }
         
         @Override
-        public ProjectBean getProjectById(int id) {
+        public ActivityBean getProjectById(int id) {
 	   Transaction tx = null;
 	   Session session1 = sessionFactory.getCurrentSession();
            tx = session1.beginTransaction();
-           String SQL_QUERY1= "from ProjectBean as O where O.projectid=?";
+           String SQL_QUERY1= "from ActivityBean as O where O.activityid=?";
            Query query1 = session1.createQuery(SQL_QUERY1);
            query1.setParameter(0,id);
            List list1 = query1.list();       
-           ProjectBean PB = (ProjectBean) list1.get(0);
+           ActivityBean PB = (ActivityBean) list1.get(0);
            tx.commit();
         
            return PB;
       }
 
     @Override
-    public void insertProjectTransaction(List <ProjectTransactionBean> PTBList){
+    public void insertProjectTransaction(List <ActivityTransactionBean> PTBList){
         
-        for(ProjectTransactionBean PTBean : PTBList){
+        for(ActivityTransactionBean PTBean : PTBList){
                 Session session1 = sessionFactory.getCurrentSession();
 		Transaction tx = null;
 	        tx = session1.beginTransaction();
@@ -122,14 +122,14 @@ public class ProjectDAOImpl implements ProjectDAO
     
     
         @Override
-       public List<ProjectTransactionBean> getProjectTransaction(int projectid){
+       public List<ActivityTransactionBean> getProjectTransaction(int projectid){
         
-           List<ProjectTransactionBean> PList;
+           List<ActivityTransactionBean> PList;
            Transaction tx = null;
 	   Session session1 = sessionFactory.getCurrentSession();
            tx = session1.beginTransaction();
-           Criteria criteria = session1.createCriteria(ProjectTransactionBean.class);
-           criteria.add(Restrictions.eq("projectid", projectid));
+           Criteria criteria = session1.createCriteria(ActivityTransactionBean.class);
+           criteria.add(Restrictions.eq("activityid", projectid));
 //         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 	   PList = criteria.list();
            tx.commit();
@@ -147,7 +147,7 @@ public class ProjectDAOImpl implements ProjectDAO
            {
             
                
-               ProjectTransactionBean PTBean=this.getTransactionOnTransID(transid);
+               ActivityTransactionBean PTBean=this.getTransactionOnTransID(transid);
                System.out.println(PTBean.getStartdate());
                
 
@@ -234,7 +234,7 @@ public class ProjectDAOImpl implements ProjectDAO
             Session session = this.sessionFactory.openSession();
             Transaction tx;
             tx = session.beginTransaction();
-            String sql = "UPDATE projects_transaction SET status=? WHERE projectid=?";
+            String sql = "UPDATE activity_transaction SET status=? WHERE activityid=?";
             SQLQuery query = session.createSQLQuery(sql);
             query.setParameter(0,"Completed");
             query.setParameter(1,projid);
@@ -244,19 +244,19 @@ public class ProjectDAOImpl implements ProjectDAO
        }
        
        @Override
-       public ProjectTransactionBean getTransactionOnTransID(int transid){
-           List<ProjectTransactionBean> PList;
+       public ActivityTransactionBean getTransactionOnTransID(int transid){
+           List<ActivityTransactionBean> PList;
             Transaction tx = null;
             Session session1 = sessionFactory.getCurrentSession();
             tx = session1.beginTransaction();
-            Criteria criteria = session1.createCriteria(ProjectTransactionBean.class);
+            Criteria criteria = session1.createCriteria(ActivityTransactionBean.class);
             criteria.add(Restrictions.eq("transid", transid));
 //          criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
             PList = criteria.list();
             tx.commit();
             
             if(PList.size()==1){
-            ProjectTransactionBean PTB = PList.get(0);
+            ActivityTransactionBean PTB = PList.get(0);
             return PTB;
             }
             else{
@@ -273,7 +273,7 @@ public class ProjectDAOImpl implements ProjectDAO
             Session session = this.sessionFactory.openSession();
             Transaction tx;
             tx = session.beginTransaction();
-            String sql = "UPDATE projects SET status=? WHERE projectid=?";
+            String sql = "UPDATE activity SET status=? WHERE activityid=?";
             SQLQuery query = session.createSQLQuery(sql);
             query.setParameter(0,status);
             query.setParameter(1,projid);
@@ -290,9 +290,9 @@ public class ProjectDAOImpl implements ProjectDAO
 
 
 @Override
-    public void updateProjectTransaction(List <ProjectTransactionBean> PTBList){
+    public void updateProjectTransaction(List <ActivityTransactionBean> PTBList){
         
-        for(ProjectTransactionBean PTBean : PTBList){
+        for(ActivityTransactionBean PTBean : PTBList){
                 Session session1 = sessionFactory.getCurrentSession();
 		Transaction tx = null;
 	        tx = session1.beginTransaction();
@@ -317,7 +317,7 @@ public class ProjectDAOImpl implements ProjectDAO
 	public boolean deleteProject(int id)
 	{
             Session session = this.sessionFactory.openSession();
-            String sql = "delete p.*, pt.* from projects p left join projects_transaction pt on p.projectid=pt.projectid where p.projectid=?";
+            String sql = "delete p.*, pt.* from activity p left join activity_transaction pt on p.activityid=pt.activityid where p.activityid=?";
             SQLQuery query = session.createSQLQuery(sql);
             query.setParameter(0, id);
             query.executeUpdate();

@@ -5,7 +5,7 @@
  */
 package com.Paladion.teamwork.utils;
 
-import com.Paladion.teamwork.beans.ProjectBean;
+import com.Paladion.teamwork.beans.ActivityBean;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.logging.Level;
@@ -16,16 +16,16 @@ import org.springframework.validation.Errors;
  *
  * @author reshma.m
  */
-public class ProjectValidator implements org.springframework.validation.Validator{
+public class ActivityValidator implements org.springframework.validation.Validator{
   
     @Override
     public boolean supports(Class<?> clazz) {
-        return ProjectBean.class.isAssignableFrom(clazz); 
+        return ActivityBean.class.isAssignableFrom(clazz); 
     }
     
     @Override
     public void validate(Object target, Errors errors) {
-        ProjectBean pbean = (ProjectBean) target;
+        ActivityBean pbean = (ActivityBean) target;
         Date startDate = null;
         Date endDate = null;
                 
@@ -36,14 +36,14 @@ public class ProjectValidator implements org.springframework.validation.Validato
         catch (ParseException ex) {
         startDate = null;
         endDate = null;
-        Logger.getLogger(ProjectValidator.class.getName()).log(Level.SEVERE, null, ex);
+        Logger.getLogger(ActivityValidator.class.getName()).log(Level.SEVERE, null, ex);
         }
                 
 	if(pbean.getOpid().length() == 0)
         {
 	    errors.rejectValue("opid","opid.required");
 	}
-        else if(pbean.getProjectname().length() == 0)
+        else if(pbean.getActivityname().length() == 0)
 	{
 	    errors.rejectValue("projectname","projectname.required");
 	}

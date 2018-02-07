@@ -35,7 +35,7 @@
     
     <bean id="LoginService" class="com.Paladion.teamwork.services.LoginServiceImpl" />
     <bean id="PasswordService" class="com.Paladion.teamwork.services.PasswordServiceImpl" />
-    <bean id="ProjectService" class="com.Paladion.teamwork.services.ProjectServiceImpl" />
+    <bean id="ProjectService" class="com.Paladion.teamwork.services.ActivityServiceImpl" />
     <bean id="TaskService" class="com.Paladion.teamwork.services.TaskServiceImpl" />
     <bean id="TemplateService" class="com.Paladion.teamwork.services.TemplateServiceImpl" />
     <bean id="UserService" class="com.Paladion.teamwork.services.UserServiceImpl" />
@@ -43,13 +43,14 @@
     <bean id="CommonUtil" class="com.Paladion.teamwork.utils.CommonUtil" />
     <bean id="AdminService" class="com.Paladion.teamwork.services.AdminServiceImpl" />
     <bean id="TeamService" class="com.Paladion.teamwork.services.TeamServiceImpl" />
+    <bean id="CompanyService" class="com.Paladion.teamwork.services.CompanyServiceImpl" />
 
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close"> 
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
 
         <property name="url" value="jdbc:mysql://localhost/teamwork" /> 
         <property name="username" value="root" />
-        <property name="password" value="root" />
+        <property name="password" value="admin" />
 
        
 
@@ -64,12 +65,13 @@
                 
                 <value>com.Paladion.teamwork.beans.TaskBean</value>
                 <value>com.Paladion.teamwork.beans.TemplateBean</value>
-                <value>com.Paladion.teamwork.beans.ProjectBean</value>
+                <value>com.Paladion.teamwork.beans.ActivityBean</value>
                 <value>com.Paladion.teamwork.beans.MapTemplateTaskBean</value>
-                <value>com.Paladion.teamwork.beans.ProjectTransactionBean</value>
+                <value>com.Paladion.teamwork.beans.ActivityTransactionBean</value>
                 <value>com.Paladion.teamwork.beans.EmailTemplateBean</value>
                 <value>com.Paladion.teamwork.beans.SystemBean</value>
                 <value>com.Paladion.teamwork.beans.TeamBean</value>
+                <value>com.Paladion.teamwork.beans.CompanyBean</value>
                
             </list>
         </property>
@@ -107,7 +109,11 @@
         <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
         </bean>
 
-        <bean id="ProjectDAO" class="com.Paladion.teamwork.DAO.ProjectDAOImpl">
+        <bean id="ProjectDAO" class="com.Paladion.teamwork.DAO.ActivityDAOImpl">
+        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+        </bean>
+        
+        <bean id="CompanyDAO" class="com.Paladion.teamwork.DAO.CompanyDAOImpl">
         <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
         </bean>
 
@@ -131,7 +137,7 @@
         
         <bean id="TaskTemplateValidator" class="com.Paladion.teamwork.utils.TaskTemplateValidator"></bean>
         
-        <bean id="ProjectValidator" class="com.Paladion.teamwork.utils.ProjectValidator"></bean>
+        <bean id="ProjectValidator" class="com.Paladion.teamwork.utils.ActivityValidator"></bean>
          
         <bean id="EmailBean" class="com.Paladion.teamwork.beans.EmailBean"></bean>
          

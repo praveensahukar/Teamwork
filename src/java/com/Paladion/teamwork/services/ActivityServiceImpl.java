@@ -5,29 +5,29 @@
  */
 package com.Paladion.teamwork.services;
 
-import com.Paladion.teamwork.DAO.ProjectDAO;
 import com.Paladion.teamwork.beans.MapTemplateTaskBean;
-import com.Paladion.teamwork.beans.ProjectBean;
-import com.Paladion.teamwork.beans.ProjectTransactionBean;
+import com.Paladion.teamwork.beans.ActivityBean;
+import com.Paladion.teamwork.beans.ActivityTransactionBean;
 import com.Paladion.teamwork.beans.UserDataBean;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.servlet.ModelAndView;
+import com.Paladion.teamwork.DAO.ActivityDAO;
 
 /**
  *
  * @author Santosh Babar
  */
-public class ProjectServiceImpl implements ProjectService {
+public class ActivityServiceImpl implements ActivityService {
 
 @Autowired
 @Qualifier(value="ProjectDAO")
-ProjectDAO PD;
+ActivityDAO PD;
 	
 	@Override
-	public void addProject(ProjectBean pb) {
+	public void addProject(ActivityBean pb) {
 		PD.addProjectDao(pb);
 		
 		}
@@ -35,26 +35,26 @@ ProjectDAO PD;
 
 
 	@Override
-	public List<ProjectBean> getAllProjects(int userid, String role) {
+	public List<ActivityBean> getAllProjects(int userid, String role) {
 		return PD.getAllProjects(userid, role);
 	}
 
     @Override
-    public ProjectBean getProjectById(int id) {
+    public ActivityBean getProjectById(int id) {
     
         return PD.getProjectById(id); 
         
     }
     
     @Override
-    public void insertProjectTransaction(List<ProjectTransactionBean> PTBList) {
+    public void insertProjectTransaction(List<ActivityTransactionBean> PTBList) {
     
          PD.insertProjectTransaction(PTBList); 
         
     }
     
     @Override
-    public List<ProjectTransactionBean> getProjectTransaction(int projectid) {
+    public List<ActivityTransactionBean> getProjectTransaction(int projectid) {
     
          return PD.getProjectTransaction(projectid);
         
@@ -91,12 +91,12 @@ ProjectDAO PD;
     
     
     @Override
-    public ProjectTransactionBean getTransactionOnTransID(int transid){
+    public ActivityTransactionBean getTransactionOnTransID(int transid){
         return PD.getTransactionOnTransID(transid);
     }
     
     @Override
-   public void updateProjectTransaction(List<ProjectTransactionBean> PTBList){
+   public void updateProjectTransaction(List<ActivityTransactionBean> PTBList){
         PD.updateProjectTransaction(PTBList);
    }
 
@@ -105,12 +105,12 @@ ProjectDAO PD;
          HttpSession sess= req.getSession(false);
         UserDataBean sessuser=(UserDataBean) sess.getAttribute("Luser");
 	ModelAndView result=new ModelAndView("Welcome");
-        List<ProjectBean> PBList=(List<ProjectBean>)this.getAllProjects(sessuser.getUserid(), sessuser.getRole());
+        List<ActivityBean> PBList=(List<ActivityBean>)this.getAllProjects(sessuser.getUserid(), sessuser.getRole());
         int total_projects=PBList.size();
         int project_new=0;
         int project_progress=0;
         int project_completed=0;
-        for(ProjectBean PB:PBList){
+        for(ActivityBean PB:PBList){
             if(PB.getStatus().equalsIgnoreCase("new")){
                 project_new++;
                

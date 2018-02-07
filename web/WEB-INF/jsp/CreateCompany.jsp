@@ -1,18 +1,12 @@
 <%-- 
-    Document   : AddTasks
-    Created on : May 4, 2017, 8:19:13 AM
-    Author     : user
+    Document   : Login
+    Created on : 12 Apr, 2017, 8:31:39 PM
+    Author     : Administrator
 --%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@page import="com.Paladion.teamwork.controllers.TaskController"%>
-<%@page import="com.Paladion.teamwork.DAO.TaskDAOImpl"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="java.util.List"%>
-<%@page import="com.Paladion.teamwork.beans.TaskBean"%>
-<%@page import="com.Paladion.teamwork.beans.TemplateBean"%>
-<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<link rel="icon" href="Network-Security.png" type="image/x-icon">
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<link rel="icon" href="Network-Security.png" type="image/x-icon">
 <script src="jquery-1.12.4.js"></script>
 <script src="canvasjs.min.js"></script>
 <script src="jquery-2.1.1.js"></script>
@@ -26,6 +20,10 @@
 <link rel="stylesheet" href="jquery.dataTables.min.css">
 <head>
 <style>
+.error {
+color: black;
+font-style: italic;
+}
 ul {
     list-style-type: none;
     margin: 0;
@@ -75,7 +73,7 @@ body {
   padding: 40px;
   width: 1420px;
   height: 550px;
-   background-color: white;
+  background-color: white;
   margin: 0 auto 10px;
   border-radius: 2px;
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
@@ -170,6 +168,8 @@ body {
   font-size: 12px;
 }
 
+
+
 table {
     border-collapse: collapse;
     width: 100%;
@@ -180,73 +180,42 @@ th, td {
     padding: 8px;
 }
 
-tr:nth-child(even){background-color: #F7F7F7}
+tr:nth-child(even){}
 
 th {
     background-color: #a6a6a6;
     color: white;
 }
 </style>
-<script>
-$(document).ready(function() {
-    $('#example').DataTable( {
-        "scrollY":"200px",
-        "scrollCollapse": true,
-        "paging":  false,
-        "sorting": false,
-    } );
-} );
+<script type="text/javascript">
+    var form = document.getElementById('companyform');
+form.reset();
 </script>
-<title>Assign Tasks to Engineers</title>
 
+<title>Create Company</title>
 </head>
     <body>
-    
-     <%@include file="Header.jsp" %>
-        
-        <div class="login-card">
-	   <div align="left">  <h2 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">Assign Tasks for the Engineers</h2><br></div>
       
-           <form:form  action="AssignTaskToEngineers.do" method="post" modelAttribute="ProjectW">
-	   
-            
-                
-            <table id="example" class="display" width="100%"  cellspacing="0">
-            <thead>
-            <tr bgcolor="#a6a6a6">
-            <th>Task Name </th>  <th> Engineer</th>
-            </tr>
-            </thead>
-            
-           <tbody>
-             <c:forEach   varStatus="status"  items="${ProjectW.projectlist}"  var="task" >     
-             <tr align="center"> <td>${fn:escapeXml(task.taskname)}</td> 
-	
-	    <td>
-		<form:select path="projectlist[${status.index}].userid">
-	           <c:forEach  items="${AllEngineers}" var="engineer"> 
-	           <form:option value="${engineer.userid}" name="userid">${fn:escapeXml(engineer.username)}</form:option>
-                   </c:forEach></form:select> </td>	
-            
-             <h4> <input style="" type="hidden" name="projectlist[${status.index}].taskname" value="${task.taskname}"/></h4>
-             
-             <input style="font-family: cursive; font-size: 20px" type="hidden" name="projectlist[${status.index}].taskhours" value="${task.taskhours}"/>
-            <input type="hidden" name="projectlist[${status.index}].taskdays" value="${task.taskdays}"/>
-            <input type="hidden" name="projectlist[${status.index}].activityid" value="${task.activityid}"/>
-            <input type="hidden" name="projectlist[${status.index}].status" value="${task.status}"/>
-            
-              <input type="hidden" name="activityid" value="${task.activityid}"/>
-	   </tr>
-           </c:forEach>
-           </tbody>
-	   </table>
-               
-               <input type="hidden" name="AntiCSRFToken" value="${csrfPreventionSalt}"/> 
-               <tr><td><input type="submit" value="Create" class="login login-submit"/></td></tr>
-	   </div>
-	  
-	  
-	   </form:form>
-	  
-	   <center>${Temperror}</center><br>
+   <%@include file="Header.jsp" %>
+    
+    <div class="login-card">
+    <div align="left">  
+        <h2 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">Create Company  </h2>   
+    </div>
+
+    <form:form action="CreateCompany.do" method="post" modelAttribute="CompanyM" id="companyform" >
+
+    <table>
+    <tr><td align="center"><h4>Company Name:</td><td><form:input placeholder="Enter Company Name" path="companyname" /></h4></td></tr>    
+    <br><br>
+    <tr><td align="center"><h4>Website:</td><td><form:input placeholder="Website URL" path="website" /></h4></td></tr>  
+    <br>
+    <input type="hidden" name="AntiCSRFToken" value="${csrfPreventionSalt}"/> 
+    <tr><td align="center"><input type="submit" value="Create" class="login login-submit"/></td></tr>            
+    </table>
+    <center>${CompanySuccess}</center>
+    </form:form>
+    </div>
+    <br>      
+    </body>
 </html>

@@ -113,9 +113,20 @@
                 <div class="dropdown-content">
                     <% if(role.equalsIgnoreCase("Manager")||role.equalsIgnoreCase("scheduling"))
                     {%>
-                    <a href="CreateProject.do">Schedule Project</a>
+                    <a href="CreateProject.do">Create New Project</a>
                     <%}%>
                     <a href="showAllProject.do">View All Projects</a>
+                </div>
+        </div>
+        
+        <div class="dropdown">
+            <button class="dropbtn">Activities</button>
+                <div class="dropdown-content">
+                    <% if(role.equalsIgnoreCase("Manager")||role.equalsIgnoreCase("scheduling"))
+                    {%>
+                    <a href="CreateProject.do">Schedule Activity</a>
+                    <%}%>
+                    <a href="showAllProject.do">View All Activities</a>
                 </div>
         </div> 
         
@@ -128,6 +139,8 @@
                 <a href="ViewAllUser.do">View Users</a>
                 <a href="CreateTeam.do">Teams</a>
                 <a href="Administration.do">System Properties</a>
+                <a href="CreateCompany.do">Create Company</a>
+                <a href="GetAllCompany.do">View All Companies</a>
                 </div>
         </div> 
         <%}%>
@@ -147,10 +160,10 @@
          <% if(role.equalsIgnoreCase("lead")||role.equalsIgnoreCase("manager"))
         {%>
           <div class="dropdown">
-            <button class="dropbtn">Project Template</button>
+            <button class="dropbtn">Activity Template</button>
                 <div class="dropdown-content">
-                <a href="CreateTaskTemplate.do">Create Project Template</a>
-                <a href="GetAllTaskTemplates.do">View Project Templates</a>
+                <a href="CreateTaskTemplate.do">Create Activity Template</a>
+                <a href="GetAllTaskTemplates.do">View Activity Templates</a>
                 </div>
         </div> 
           <%}%>
@@ -179,5 +192,5 @@
 
     <div> <font color="red"><b><center>${Message}</center><br></font> </div>
     <%-- Header Code Ends --%>  
-    </body>
-</html>
+   
+
