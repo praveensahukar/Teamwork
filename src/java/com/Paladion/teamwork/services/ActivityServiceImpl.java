@@ -23,7 +23,7 @@ import com.Paladion.teamwork.DAO.ActivityDAO;
 public class ActivityServiceImpl implements ActivityService {
 
 @Autowired
-@Qualifier(value="ProjectDAO")
+@Qualifier(value="ActivityDAO")
 ActivityDAO PD;
 	
 	@Override

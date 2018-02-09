@@ -35,7 +35,7 @@
     
     <bean id="LoginService" class="com.Paladion.teamwork.services.LoginServiceImpl" />
     <bean id="PasswordService" class="com.Paladion.teamwork.services.PasswordServiceImpl" />
-    <bean id="ProjectService" class="com.Paladion.teamwork.services.ActivityServiceImpl" />
+    <bean id="ActivityService" class="com.Paladion.teamwork.services.ActivityServiceImpl" />
     <bean id="TaskService" class="com.Paladion.teamwork.services.TaskServiceImpl" />
     <bean id="TemplateService" class="com.Paladion.teamwork.services.TemplateServiceImpl" />
     <bean id="UserService" class="com.Paladion.teamwork.services.UserServiceImpl" />
@@ -44,6 +44,7 @@
     <bean id="AdminService" class="com.Paladion.teamwork.services.AdminServiceImpl" />
     <bean id="TeamService" class="com.Paladion.teamwork.services.TeamServiceImpl" />
     <bean id="CompanyService" class="com.Paladion.teamwork.services.CompanyServiceImpl" />
+    <bean id="ProjectService" class="com.Paladion.teamwork.services.ProjectServiceImpl" />
 
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close"> 
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
@@ -72,6 +73,7 @@
                 <value>com.Paladion.teamwork.beans.SystemBean</value>
                 <value>com.Paladion.teamwork.beans.TeamBean</value>
                 <value>com.Paladion.teamwork.beans.CompanyBean</value>
+                <value>com.Paladion.teamwork.beans.ProjectBean</value>
                
             </list>
         </property>
@@ -109,7 +111,7 @@
         <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
         </bean>
 
-        <bean id="ProjectDAO" class="com.Paladion.teamwork.DAO.ActivityDAOImpl">
+        <bean id="ActivityDAO" class="com.Paladion.teamwork.DAO.ActivityDAOImpl">
         <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
         </bean>
         
@@ -129,6 +131,10 @@
         <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
         </bean>
         
+        <bean id="ProjectDAO" class="com.Paladion.teamwork.DAO.ProjectDAOImpl">
+        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+        </bean>
+        
         <bean id="Validator" class="com.Paladion.teamwork.utils.Validator"></bean>
          
         <bean id="TaskValidator" class="com.Paladion.teamwork.utils.TaskValidator"></bean>
@@ -137,7 +143,7 @@
         
         <bean id="TaskTemplateValidator" class="com.Paladion.teamwork.utils.TaskTemplateValidator"></bean>
         
-        <bean id="ProjectValidator" class="com.Paladion.teamwork.utils.ActivityValidator"></bean>
+        <bean id="ActivityValidator" class="com.Paladion.teamwork.utils.ActivityValidator"></bean>
          
         <bean id="EmailBean" class="com.Paladion.teamwork.beans.EmailBean"></bean>
          

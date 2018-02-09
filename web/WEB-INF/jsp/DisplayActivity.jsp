@@ -6,7 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <script src="jquery-1.12.4.js"></script>
 <script src="canvasjs.min.js"></script>
 <script src="jquery-2.1.1.js"></script>
@@ -16,8 +16,8 @@
 <script src="jquery1.min.js"></script>
 <script src="prefixfree.min.js"></script>
 
-<link rel="stylesheet" href="jquery-ui.css">
-<link rel="stylesheet" href="jquery.dataTables.min.css">
+<!--<link rel="stylesheet" href="jquery-ui.css">
+<link rel="stylesheet" href="jquery.dataTables.min.css">-->
 <link rel="icon" href="Network-Security.png" type="image/x-icon">
 <head>
     
@@ -51,8 +51,6 @@ li a:hover:not(.active) {
 .active {
     background-color: #cc0000;
 }
-
-
 </style>
 <style>
 
@@ -89,6 +87,7 @@ body {
 .login-card input[type=submit] {
   width: 10%;
   display: block;
+  height: 20px;
   margin-bottom: 10px;
   position: relative;
   float: center;
@@ -97,7 +96,7 @@ body {
 .login-card input[type=text], input[type=password] {
   height: 44px;
   font-size: 16px;
-  width: auto;
+  width: 20%;
   margin-bottom: 10px;
   -webkit-appearance: none;
   background: #fff;
@@ -130,18 +129,9 @@ body {
   user-select: none; */
 }
 
-
-
-.login-submit:hover {
-  /* border: 1px solid #2f5bb7; */
-  border: 0px;
-  text-shadow: 0 1px rgba(0,0,0,0.3);
-  background-color: #ff8080;
-  /* background-image: -webkit-gradient(linear, 0 0, 0 100%,   from(#4d90fe), to(#357ae8)); */
-}
-
 .login-submit {
   /* border: 1px solid #3079ed; */
+  top: 10px;
   width: 20%;
   border: 0px;
   color: #fff;
@@ -178,6 +168,12 @@ body {
   font-size: 12px;
 }
 
+
+
+html {
+	/*width: 100%;*/ /*required if using % width*/
+	/*height: 100%;*/ /*required if using % height*/
+}
 
 .scrollingtable {
 	box-sizing: border-box;
@@ -296,48 +292,120 @@ body {
 }
 .scrollingtable > div > div > table > tbody:last-of-type > tr:last-child > * {border-bottom: none;}
 .scrollingtable > div > div > table > tbody > tr:nth-child(even) {background: gainsboro;} /*alternate row color*/
-.scrollingtable > div > div > table > tbody > tr > * + * {border-left: 1px solid black;}
-
-
+.scrollingtable > div > div > table > tbody > tr > * + * {border-left: 1px solid black;} /*borders between body cells*/
 </style>
+<script>
+/* THIS JAVASCRIPT JUST ADDS ROWS FOR TESTING PURPOSES */
+(function() {
+  for(var n=8, r=document.querySelector("tbody>tr"), p=r.parentNode; n--; p.appendChild(r.cloneNode(true)));
+})();
+</script>
+<script>
+        function fnExcelReport()
+{
+    var tab_text="<table border='2px'><tr bgcolor='#87AFC6'>";
+    var textRange; var j=0;
+    tab = document.getElementById('team'); // id of table
 
+    for(j = 0 ; j < tab.rows.length ; j++) 
+    {     
+        tab_text=tab_text+tab.rows[j].innerHTML+"</tr>";
+        //tab_text=tab_text+"</tr>";
+    }
 
+    tab_text=tab_text+"</table>";
+    tab_text= tab_text.replace(/<A[^>]*>|<\/A>/g, "");//remove if u want links in your table
+    tab_text= tab_text.replace(/<img[^>]*>/gi,""); // remove if u want images in your table
+    tab_text= tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); // reomves input params
 
-<title>All Companies</title>
+    var ua = window.navigator.userAgent;
+    var msie = ua.indexOf("MSIE "); 
+
+    if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))      // If Internet Explorer
+    {
+        txtArea1.document.open("txt/html","replace");
+        txtArea1.document.write(tab_text);
+        txtArea1.document.close();
+        txtArea1.focus(); 
+        sa=txtArea1.document.execCommand("SaveAs",true,"Say Thanks to Sumit.xls");
+    }  
+    else                 //other browser not tested on IE 11
+        sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));  
+
+    return (sa);
+}
+        </script>
+<title>All Projects</title>
 </head>
-    
-<body>
-    <%@include file="Header.jsp" %>        
-    <div class="login-card">
-    <div align="left">  <h2 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">All Companies</h2><br></div>
-    <div class="scrollingtable">
+    <body>
+         
+
+<%@include file="Header.jsp" %>
+         
+
+        <div class="login-card">
+	   <div align="left">  <h2 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">All Projects</h2><br></div>
+           <div align="right" style="top: 10px"> <button  class="login login-submit" id="btnExport" onclick="fnExcelReport();"> EXPORT TO EXCEL </button></div>
+     
+           <div class="scrollingtable">
 		<div>
 			<div>
-    <table>
+           
+           <table id="team">
         <thead>
-            <tr bgcolor="#a6a6a6">
-                <th><div label="Company Name"></div> </th>
-            <th><div label="Website"></div> </th>
-            <th><div label="Delete"></div> </th>
-        </tr>
-        </thead>
-    
-    
-    <tbody>
-            
-        <c:forEach  items="${AllCompany}" var="company">     
-           <tr>
-                <td> ${fn:escapeXml(company.companyname)}</td>
-                <td><a href="${(company.website)}"> ${fn:escapeXml(company.website)}</a></td>
-                <td><a href="DeleteCompany.do?id=${company.companyid}">DELETE</td>
-           </tr> 
-        </c:forEach>
+            <tr >
                 
-    </tbody>
-    </table>
-          </div>
-                    </div>
-			</div>
-    </div>
-    </body>
+                <th><div label="OPID"></div> OPID</th>
+                <th><div label="Project Title"></div>Project Title</th>
+                <th><div label="Lead"></div>Lead</th>
+                <th><div label="Start Date"></div>Start Date</th>
+                <th><div label="End Date"></div>End Date</th>
+                <th><div label="Man Days"></div>Status</th>
+                <th><div label="Status"></div>Status</th>
+                <th><div label="Delete"></div>Delete Project</th>
+           
+            </tr>
+        </thead>
+            
+            <tbody>
+            
+<c:forEach items="${AllProjects}" var="project">     
+    
+<fmt:formatDate value="${project.startdate}" var="SDate" type="date" pattern="dd-MMM-yyyy" />
+<fmt:formatDate value="${project.enddate}" var="EDate" type="date" pattern="dd-MMM-yyyy" />
+	   
+            <tr> 
+                
+                <td > <a href="showProgress.do?id=${project.activityid}"> ${fn:escapeXml(project.opid)}</a></td>
+	        <td >${fn:escapeXml(project.activityname)}</td>
+                <td >${fn:escapeXml(project.lead)}</td>
+                <td >${fn:escapeXml(SDate)}</td>
+                <td >${fn:escapeXml(EDate)}</td>
+                <td >${fn:escapeXml(project.mandays)}</td>
+                <td >
+                    <div class="dropdown">
+                    <button class="dropbtn1">${fn:escapeXml(project.status)}</button>
+                      <div class="dropdown-content">
+                        <a href="updateProjectStatus.do?pid=${project.activityid}&status=New">New</a>
+                        <a href="updateProjectStatus.do?pid=${project.activityid}&status=Progress">Progress</a>
+                        <a href="updateProjectStatus.do?pid=${project.activityid}&status=Completed">Completed</a> 
+                      </div>
+                    </div> 
+                </td>
+                <td >  <div class="dropdown"><a href="deleteProject.do?pid=${project.activityid}"><button class="dropbtn1">Delete</button></a> </div></td>
+	   </tr>
+           
+</c:forEach>
+            </tbody>
+          
+        </table>
+     
+ </div>
+           
+	   </div>
+      
+     
+         <iframe id="txtArea1" style="display:none"></iframe>
+     
+</body>
 </html>

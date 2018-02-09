@@ -72,7 +72,7 @@ protected void initBinder(WebDataBinder binder) {
  UserService userService;
  
  @Autowired
-@Qualifier(value="ProjectService")
+@Qualifier(value="ActivityService")
  ActivityService PS;
  
  UserDataBean lb=null;

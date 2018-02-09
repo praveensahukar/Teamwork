@@ -79,7 +79,7 @@ TemplateService TS;
 CommonUtil CU;
     
 @Autowired
-@Qualifier(value="ProjectService")
+@Qualifier(value="ActivityService")
 ActivityService PS;
 
 @Autowired
@@ -95,7 +95,7 @@ AdminService Aservice;
 TeamService TeamS;
 
 @Autowired
-@Qualifier(value="ProjectValidator")
+@Qualifier(value="ActivityValidator")
 ActivityValidator projectBeanValidator;
 
 @Autowired
@@ -119,14 +119,14 @@ public fileuploadBean populate1()
 }
 
 	
-    @RequestMapping(value="/CreateProject",method=RequestMethod.GET)
-    public ModelAndView CreateProject(HttpServletRequest req)
+    @RequestMapping(value="/CreateActivity",method=RequestMethod.GET)
+    public ModelAndView CreateActivity(HttpServletRequest req)
     {   
         String[] authorizedRoles = {"admin","manager","lead","scheduling"};
         if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
         
         HttpSession sess=req.getSession(false);
-	ModelAndView model=new ModelAndView("CreateProject");
+	ModelAndView model=new ModelAndView("CreateActivity");
 	try{
             model.addObject("AllTemplates", TS.getAllTemplates());
             model.addObject("AllLeads", CU.getUsersByRole("lead",sess));
@@ -137,8 +137,8 @@ public fileuploadBean populate1()
         
     }
 
-    //Schedule a project
-    @RequestMapping(value="/ScheduleProject",method=RequestMethod.POST)
+    //Schedule a activity
+    @RequestMapping(value="/ScheduleActivity",method=RequestMethod.POST)
     public Object CreateNewProject(@ModelAttribute("ProjectM")@Validated ActivityBean PB,BindingResult result,HttpServletRequest req,Model E) throws Exception
     {
         String[] authorizedRoles = {"admin","manager","lead","scheduling"};
@@ -152,7 +152,7 @@ public fileuploadBean populate1()
                 if (result.hasErrors()) {
                     //validates the user input, this is server side validation
                     System.out.println("error!!!!!!!!");
-                    ModelAndView model=new ModelAndView("CreateProject");
+                    ModelAndView model=new ModelAndView("CreateActivity");
                     try{
                         TemplateList=TS.getAllTemplates();
                         LeadList=CU.getUsersByRole("lead",sess);
@@ -184,7 +184,7 @@ public fileuploadBean populate1()
                 //ex.printStackTrace();
                 TemplateList=TS.getAllTemplates();
                 LeadList=CU.getUsersByRole("lead",sess);   
-                results = new ModelAndView("CreateProject","Message","Project Creation failed due to an error");
+                results = new ModelAndView("CreateActivity","Message","Activity Creation failed due to an error");
                 results.addObject("AllTemplates", TemplateList);
                 results.addObject("AllLeads", LeadList);
                 results.addObject("AllTeams",  TeamS.getAllTeams());
@@ -214,12 +214,12 @@ public fileuploadBean populate1()
 //    public String updateProject(ActivityBean pBean){return "";}
 //    public String deleteProject(String id){return "";}
     
-    @RequestMapping(value="/showAllProject",method=RequestMethod.GET)
-    public ModelAndView showAllProject(HttpServletRequest req)
+    @RequestMapping(value="/showAllActivity",method=RequestMethod.GET)
+    public ModelAndView showAllActivity(HttpServletRequest req)
     {
         HttpSession sess= req.getSession(false);
         UserDataBean sessuser=(UserDataBean) sess.getAttribute("Luser");
-	ModelAndView result=new ModelAndView("DisplayProjects");
+	ModelAndView result=new ModelAndView("DisplayActivity");
         List<ActivityBean> PBList=(List<ActivityBean>)PS.getAllProjects(sessuser.getUserid(), sessuser.getRole());
         result.addObject("AllProjects",PBList );
         this.getAllProjectsDetails(req);
@@ -256,7 +256,7 @@ public fileuploadBean populate1()
         PS.insertProjectTransaction(PTBList1);
        
         CU.sendSchedulingMailToEngineers(PTBList1,req.getSession(false),PRDATA.getActivityname());
-        ModelAndView result=new ModelAndView("DisplayProjectProgress");
+        ModelAndView result=new ModelAndView("DisplayActivityProgress");
         result.addObject("TaskDetails",PTBList1);
         result.addObject("ProjectData",PRDATA);
         return result;
@@ -288,7 +288,7 @@ public fileuploadBean populate1()
            }
            //return project progress
            else{
-           result=new ModelAndView("DisplayProjectProgress");
+           result=new ModelAndView("DisplayActivityProgress");
            result.addObject("ProjectData",PRDATA);
            result.addObject("TaskDetails",PSBList);
            return result;
@@ -308,7 +308,7 @@ public fileuploadBean populate1()
            ActivityBean PRDATA=PS.getProjectById(pid);
            PSBList = PS.getProjectTransaction(pid);
  
-           ModelAndView result=new ModelAndView("DisplayProjectProgress");
+           ModelAndView result=new ModelAndView("DisplayActivityProgress");
            result.addObject("ProjectData",PRDATA);
            result.addObject("TaskDetails",PSBList);
            return result;
@@ -340,7 +340,7 @@ public fileuploadBean populate1()
         
        
         if(value==true){
-          ModelAndView result=new ModelAndView("DisplayProjects");
+          ModelAndView result=new ModelAndView("DisplayActivity");
 	  result.addObject("AllProjects", PS.getAllProjects(sessuser.getUserid(), role));
 	  return  result;
         }
@@ -569,7 +569,7 @@ return new ModelAndView("downloadDocuments","SysSettings",Aservice.getSystemSett
         List<ActivityTransactionBean> PSBList;
         ActivityBean PRDATA=PS.getProjectById(projectId);
         PSBList = PS.getProjectTransaction(projectId);   
-        result=new ModelAndView("DisplayProjectProgress");
+        result=new ModelAndView("DisplayActivityProgress");
         result.addObject("Message","Delay updated successfully");
         result.addObject("ProjectData",PRDATA);
         result.addObject("TaskDetails",PSBList);
@@ -641,7 +641,7 @@ return new ModelAndView("downloadDocuments","SysSettings",Aservice.getSystemSett
         List<ActivityTransactionBean> PSBList;
         ActivityBean PRDATA=PS.getProjectById(pid);
         PSBList = PS.getProjectTransaction(pid);   
-        result=new ModelAndView("DisplayProjectProgress");
+        result=new ModelAndView("DisplayActivityProgress");
         result.addObject("Message","Status updated successfully");
         result.addObject("ProjectData",PRDATA);
         result.addObject("TaskDetails",PSBList);

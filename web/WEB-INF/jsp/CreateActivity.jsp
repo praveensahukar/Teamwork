@@ -167,58 +167,55 @@ color: black;
 font-style: italic;
 }
 </style>
-  <title>Create Project</title>
+
+  <title>Schedule Activity</title>
     </head>
     <body>
 
 <%@include file="Header.jsp"%>
 	   <div class="login-card">
-	   <div align="left">  <h2 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">Create Project</h2></div>
-<form:form action="CreateProject.do" method="post" commandName="ProjectM">
+	   <div align="left">  <h2 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">Schedule Activity</h2></div>
+<form:form action="ScheduleActivity.do" method="post" commandName="ProjectM">
 <div align="center">
     <table  align="center" border="0">
 
 <tr><td align="right"><h4>OPID :</td><td><form:input placeholder="Enter OPID" path="opid" /><form:errors path="opid" cssClass="error"/></h4></td></tr>
-<tr><td align="right"><h4>Project Name :</td><td><form:input placeholder="Enter Activity Name" path="projectname" /><form:errors path="projectname" cssClass="error"/></h4></td></tr>  
+<tr><td align="right"><h4>Activity Name :</td><td><form:input placeholder="Enter Activity Name" path="activityname" /><form:errors path="activityname" cssClass="error"/></h4></td></tr>  
 
-<tr><td align="right"><h4>Company :</td>
-    <td><form:select path="companyid">
-    <option class="login login-submit" value="">None</option>
-	           <c:forEach  items="${AllCompany}" var="company"> 
-	           <form:option class="login login-submit" value="${company.companyid}">${company.companyname}</form:option>
+<tr><td align="right"><h4>Team :</td>
+    <td><form:select path="team">
+                 
+	           <c:forEach  items="${AllTeams}" var="team"> 
+	           <form:option class="login login-submit" value="${team.teamname}">${team.teamname}</form:option>
 	           </c:forEach>
         </form:select>
-        <form:errors path="companyid" cssClass="error"/>
+        <form:errors path="team" cssClass="error"/>
     </td>
 </tr>
 
-<tr><td align="right"><h4>Delivery Manager :</td>
-    <td><form:select  path="deliverymanager" itemLabel="Select"> 
-         <option class="login login-submit" value="">None</option>
-	  <c:forEach items="${AllDManagers}" var="dmanager">     
-	  <option class="login login-submit" value="${dmanager.userid}">${dmanager.username}</option>
+<tr><td align="right"><h4>Lead :</td>
+    <td><form:select path="leadid">
+                   
+	          <c:forEach  items="${AllLeads}" var="lead"> 
+	           <form:option class="login login-submit" value="${lead.userid}">${lead.username}</form:option>
+	           </c:forEach>
+        </form:select>
+        <form:errors path="leadid" cssClass="error"/>
+    </td>
+</tr>
+<tr><td align="right"><h4>Start Date :<td><form:input placeholder="Enter Start Date" id="date" path="startdate" /><form:errors path="startdate" cssClass="error"/></h4></td></tr>
+<tr><td align="right"><h4>End Date :</td><td><form:input placeholder="Enter End Date" id="datepicker" path="enddate"/><form:errors path="enddate" cssClass="error"/></h4></td></tr>
+
+<tr><td align="right"><h4>Template :</td>
+    <td><form:select  path="templateid" itemLabel="Select"> 
+         <option class="login login-submit" value="">Select Template</option>
+	  <c:forEach items="${AllTemplates}" var="template">     
+	  <option class="login login-submit" value="${template.templateid}">${template.templatename}</option>
 	  </c:forEach>
-          <form:errors path="deliverymanager" cssClass="error"/>
+          <form:errors path="templateid" cssClass="error"/>
     </td>	  
         </form:select>
-        </tr>
 
-<tr><td align="right"><h4>Project Manager :</td>
-    <td><form:select  path="projectmanager" itemLabel="Select"> 
-         <option class="login login-submit" value="">None</option>
-	  <c:forEach items="${AllPManagers}" var="pmanager">     
-	  <option class="login login-submit" value="${pmanager.userid}">${pmanager.username}</option>
-	  </c:forEach>
-          <form:errors path="projectmanager" cssClass="error"/>
-    </td>	  
-        </form:select>
-        </tr>
-        
-        <tr><td align="right"><h4>Revenue :</td><td><form:input placeholder="Enter Revenue in INR" path="revenue" /><form:errors path="revenue" cssClass="error"/></h4></td></tr>
-
-        <tr><td align="right"><h4>Region :</td><td><form:input placeholder="Enter Region" path="region" /><form:errors path="region" cssClass="error"/></h4></td></tr>
-
-        <tr><td align="right"><h4>Other Details :</td><td><form:textarea rows="3" cols="40" path="description" /><form:errors path="description" cssClass="error"/></h4></td></tr>
 <input type="hidden" name="AntiCSRFToken" value="${csrfPreventionSalt}"/> 
 <tr><td align="center"><input type="submit" value="Create" class="login login-submit"/></td></tr>           
 </table >

@@ -124,9 +124,9 @@
                 <div class="dropdown-content">
                     <% if(role.equalsIgnoreCase("Manager")||role.equalsIgnoreCase("scheduling"))
                     {%>
-                    <a href="CreateProject.do">Schedule Activity</a>
+                    <a href="CreateActivity.do">Schedule Activity</a>
                     <%}%>
-                    <a href="showAllProject.do">View All Activities</a>
+                    <a href="showAllActivity.do">View All Activities</a>
                 </div>
         </div> 
         

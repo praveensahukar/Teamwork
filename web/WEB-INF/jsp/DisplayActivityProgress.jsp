@@ -1,12 +1,16 @@
 <%-- 
-    Document   : DisplayProjectStatus
-    Created on : May 10, 2017, 6:51:12 AM
-    Author     : user
+    Document   : DisplayProjectProgress
+    Created on : 14 May, 2017, 9:07:43 PM
+    Author     : root
 --%>
 
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.text.DateFormat"%>
+<%@page import="java.util.Date"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <script src="jquery-1.12.4.js"></script>
 <script src="canvasjs.min.js"></script>
 <script src="jquery-2.1.1.js"></script>
@@ -20,7 +24,6 @@
 <link rel="stylesheet" href="jquery.dataTables.min.css">
 <link rel="icon" href="Network-Security.png" type="image/x-icon">
 <head>
-    
 <style>
 ul {
     list-style-type: none;
@@ -31,11 +34,9 @@ ul {
     width:1500px;
    
 }
-
 li {
     float: left;
 }
-
 li a {
     display: block;
     color: white;
@@ -43,23 +44,16 @@ li a {
     padding: 14px 16px;
     text-decoration: none;
 }
-
 li a:hover:not(.active) {
     background-color: #b30000;
 }
-
 .active {
     background-color: #cc0000;
 }
-
-
 </style>
 <style>
-
 @import url(http://fonts.googleapis.com/css?family=Roboto:400,100);
-
 body {
-
 	background-image: url("grey.jpg");
   background-repeat: repeat-y;
   -webkit-background-size: cover;
@@ -68,36 +62,32 @@ body {
   background-size: cover;
   font-family: 'Roboto', sans-serif;
 }
-
 .login-card {
   padding: 40px;
   width: 1420px;
-  height: 550px;
+  height: 650px;
   background-color: white;
   margin: 0 auto 10px;
   border-radius: 2px;
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
   overflow: hidden;
 }
-
 .login-card h1 {
   font-weight: 1;
   text-align: center;
   font-size: 2.3em;
 }
-
 .login-card input[type=submit] {
-  width: 10%;
+  width: 100%;
   display: block;
   margin-bottom: 10px;
   position: relative;
   float: center;
 }
-
 .login-card input[type=text], input[type=password] {
-  height: 44px;
+  height: 30px;
   font-size: 16px;
-  width: auto;
+  width: 50%;
   margin-bottom: 10px;
   -webkit-appearance: none;
   background: #fff;
@@ -108,7 +98,6 @@ body {
   box-sizing: border-box;
   -moz-box-sizing: border-box;
 }
-
 .login-card input[type=text]:hover, input[type=password]:hover {
   border: 2px solid #b9b9b9;
   
@@ -117,7 +106,6 @@ body {
   -webkit-box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
   box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
 }
-
 .login {
   text-align: center;
   font-size: 14px;
@@ -129,27 +117,15 @@ body {
 /* -webkit-user-select: none;
   user-select: none; */
 }
-
-
-
-.login-submit:hover {
-  /* border: 1px solid #2f5bb7; */
-  border: 0px;
-  text-shadow: 0 1px rgba(0,0,0,0.3);
-  background-color: #ff8080;
-  /* background-image: -webkit-gradient(linear, 0 0, 0 100%,   from(#4d90fe), to(#357ae8)); */
-}
-
 .login-submit {
   /* border: 1px solid #3079ed; */
-  width: 20%;
+  width: 150px;
   border: 0px;
   color: #fff;
   text-shadow: 0 1px rgba(0,0,0,0.1); 
   background-color: #a6a6a6;
   /* background-image: -webkit-gradient(linear, 0 0, 0 100%,   from(#4d90fe), to(#4787ed)); */
 }
-
 .login-submit:hover {
   /* border: 1px solid #2f5bb7; */
   border: 0px;
@@ -157,7 +133,6 @@ body {
   background-color: #ff8080;
   /* background-image: -webkit-gradient(linear, 0 0, 0 100%,   from(#4d90fe), to(#357ae8)); */
 }
-
 .login-card a {
   text-decoration: none;
   color: #666;
@@ -167,18 +142,14 @@ body {
   opacity: 0.6;
   transition: opacity ease 0.5s;
 }
-
 .login-card a:hover {
   opacity: 1;
 }
-
 .login-help {
   width: 100%;
   text-align: center;
   font-size: 12px;
 }
-
-
 .scrollingtable {
 	box-sizing: border-box;
 	display: inline-block;
@@ -297,47 +268,148 @@ body {
 .scrollingtable > div > div > table > tbody:last-of-type > tr:last-child > * {border-bottom: none;}
 .scrollingtable > div > div > table > tbody > tr:nth-child(even) {background: gainsboro;} /*alternate row color*/
 .scrollingtable > div > div > table > tbody > tr > * + * {border-left: 1px solid black;}
-
-
 </style>
 
 
 
-<title>All Companies</title>
+<title>Project Progress</title>
+
 </head>
+    <body>
     
-<body>
-    <%@include file="Header.jsp" %>        
-    <div class="login-card">
-    <div align="left">  <h2 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">All Companies</h2><br></div>
-    <div class="scrollingtable">
+  <%@include file="Header.jsp" %>
+  
+  
+  
+   
+   
+        
+ 
+   
+    <div class="login-card" >
+        <div align="center">  <h3 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">Project Details</h3></div>
+	<div class="right">
+            
+            
+    <table border="1">
+        <thead>
+            <tr>
+                <td colspan="2"><h4 style="color: grey; font-size: 15px"><g style="color:black">Project Name:</g> ${fn:escapeXml(ProjectData.activityname)}</h2></td>
+            </tr>
+        </thead>
+        
+            <tr>
+            <td><h4 style="color: grey; font-size: 15px"><g style="color:black">OPID:</g> ${fn:escapeXml(ProjectData.opid)}</h4></h3></td>
+            <td><h4 style="color: grey; font-size: 15px"><g style="color:black">Team:</g> ${fn:escapeXml(ProjectData.team)}</h4></td>
+            </tr>
+        
+            <tr>
+            <td><h4 style="color: grey; font-size: 15px"><g style="color:black">Lead Assigned:</g> ${fn:escapeXml(ProjectData.lead)}</h4></td>
+            <td><h4 style="color: grey; font-size: 15px"><g style="color:black">Project Status: </g>${fn:escapeXml(ProjectData.status)}</h4></td>
+            </tr>
+        
+            <tr>
+            
+            <td> <h4 style="color: grey; font-size: 15px" ><g style="color:black">Start Date:</g>
+                   <fmt:formatDate type = "date" value = "${ProjectData.startdate}"/></h4></td>
+            <td> <h4 style="color: grey; font-size: 15px" ><g style="color:black">End Date: </g>
+                    <fmt:formatDate type = "date" value = "${ProjectData.enddate}"/></h4></td>
+            
+           
+            </tr>
+        </table>
+        <br>
+	</div>
+
+
+        
+             
+        
+       <div class="scrollingtable">
 		<div>
 			<div>
-    <table>
+                            
+                            
+<fmt:formatDate value="${ProjectTaskList.enddate}" var="AEDate" type="both" dateStyle = "short" timeStyle = "short" />
+    <table border="1">
         <thead>
-            <tr bgcolor="#a6a6a6">
-                <th><div label="Company Name"></div> </th>
-            <th><div label="Website"></div> </th>
-            <th><div label="Delete"></div> </th>
-        </tr>
+            <tr >
+        <th><div label="Task Name"></div> </th>
+        <th><div label="Engineer Name"> </div></th>
+        <th><div label="Scheduled Start Date"> </div></th>
+        <th><div label="Scheduled End Date"> </div></th>
+        <th><div label="Hours"> </div></th>
+        <th><div label="Days"> </div></th>
+        <th><div label="Status"> </div></th>
+        <th><div label="Actual Start Date"> </div></th>
+        <th><div label="Actual End Date"> </div></th>
+        
         </thead>
-    
-    
-    <tbody>
-            
-        <c:forEach  items="${AllCompany}" var="company">     
-           <tr>
-                <td> ${fn:escapeXml(company.companyname)}</td>
-                <td><a href="${(company.website)}"> ${fn:escapeXml(company.website)}</a></td>
-                <td><a href="DeleteCompany.do?id=${company.companyid}">DELETE</td>
-           </tr> 
-        </c:forEach>
-                
-    </tbody>
-    </table>
-          </div>
-                    </div>
-			</div>
-    </div>
+         <tbody>
+    <c:forEach  items="${TaskDetails}" var="ProjectTaskList">  
+        
+        <fmt:formatDate value="${ProjectTaskList.taskstartdate}" var="SDate" type="both" dateStyle = "short" timeStyle = "short"/>
+        
+        <fmt:formatDate value="${ProjectTaskList.taskenddate}" var="EDate" type="both" dateStyle = "short" timeStyle = "short" />
+        
+        <fmt:formatDate value="${ProjectTaskList.startdate}" var="ASDate" type="both" dateStyle = "short" timeStyle = "short"/>
+        <fmt:formatDate value="${ProjectTaskList.enddate}" var="AEDate" type="both" dateStyle = "short" timeStyle = "short" />
+        
+        
+        
+        <tr> 
+            <td style="color: black">${fn:escapeXml(ProjectTaskList.taskname)}</td>
+            <td style="color: black">${fn:escapeXml(ProjectTaskList.engname)}</td>
+            <td style="color: black">${fn:escapeXml(SDate)}</td>
+	        <td style="color: black">${fn:escapeXml(EDate)}</td>
+            <td style="color: black">${fn:escapeXml(ProjectTaskList.taskhours)}</td>
+            <td style="color: black">${fn:escapeXml(ProjectTaskList.taskdays)}</td>
+           
+            <td style="color: black">
+            <div class="dropdown">
+            <button class="dropbtn1">${fn:escapeXml(ProjectTaskList.status)}</button>
+                <div class="dropdown-content">
+                <a href="updateTaskStatus.do?pid=${ProjectTaskList.activityid}&tid=${ProjectTaskList.transid}&status=New">New</a>
+                <a href="updateTaskStatus.do?pid=${ProjectTaskList.activityid}&tid=${ProjectTaskList.transid}&status=Progress">Progress</a>
+                <a href="updateTaskStatus.do?pid=${ProjectTaskList.activityid}&tid=${ProjectTaskList.transid}&status=Completed">Completed</a> 
+                </div>
+        </div> 
+        </td> 
+
+         
+        <c:set var = "DDate" value = "1/1/90 12:00 AM"/>
+              
+        <td style="color: black">   ${(ASDate eq DDate)? "--/--/--" : ASDate}</td>
+       
+        <td style="color: black">  ${(AEDate eq DDate)? "--/--/--" : AEDate}</td>
+       
+        </tr>
+         
+       </c:forEach>
+      
+         </tbody>
+</table>
+       
+
+
+
+
+                        </div>
+        <a href="/TeamWorkAlpha/uploadfiles.do?pid=${ProjectData.activityid}" 
+  target="popup" 
+  onclick="window.open('/TeamWorkAlpha/uploadfiles.do?pid=${ProjectData.activityid}','popup','width=800,height=600'); return false;">
+    Upload files
+</a>
+    <br>
+    <br>
+<a href="/TeamWorkAlpha/Downloadfiles.do?pid=${ProjectData.activityid}" 
+  target="popup" 
+  onclick="window.open('/TeamWorkAlpha/Downloadfiles.do?pid=${ProjectData.activityid}','popup','width=800,height=600'); return false;">
+    Download files
+</a>
+
+<br>
+
     </body>
+
 </html>
