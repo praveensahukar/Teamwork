@@ -1,133 +1,119 @@
-;/*
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package com.Paladion.teamwork.beans;
 
-import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.*;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 import javax.persistence.Temporal;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
- * @author Administrator
+ * @author Santhosh
  */
-@Entity
-@Table(name = "activity",catalog="teamwork")
-public class ActivityBean implements Serializable{              
+public class ActivityBean {
     
 @Id
 @GenericGenerator(name="gen",strategy="increment")
 @GeneratedValue(generator="gen")
 @Column(name = "activityid", unique = true, nullable = false, precision = 15, scale = 0)
-        int activityid;  
+int activityid;
 
-public int getActivityid() {
-return activityid;
-}
-
-public void setActivityid(int activityid) {
-this.activityid = activityid;
-}
 @Column(name = "mandays")
 int mandays;
 
-public int getMandays() {
-return mandays;
-}
-
-public void setMandays(int mandays) {
-this.mandays = mandays;
-}
 @Column(name = "opid")
 String opid;
 
-public String getOpid() {
-return opid;
-}
-
-public void setOpid(String opid) {
-this.opid = opid;
-}
 @Column(name = "activityname")
 String activityname;
 
-public String getActivityname() {
-return activityname;
-}
-
-public void setActivityname(String activityname) {
-this.activityname = activityname;
-}
-    
 @Column(name = "lead")
 String lead;
 
-public String getLead() {
-return lead;
-}
+@Column(name = "templateid")
+int templateid;
 
-public void setLead(String lead) {
-this.lead = lead;
-}
+@Column(name = "status")
+String status;
+
+@Column(name = "leadid")
+int leadid;
+
+@Column(name = "team")
+String team;
+
+@Column(name = "projectid")
+int projectid;
 
 @Column(name = "startdate")
 @DateTimeFormat (pattern="MM/dd/yyyy")
 @Temporal(javax.persistence.TemporalType.DATE)
 Date startdate;
-public Date getStartdate() throws ParseException {
-    return startdate;
-}
-
-public void setStartdate(Date startdate) throws ParseException {
-    this.startdate = startdate;
-}
-
 
 @Column(name = "enddate")
 @DateTimeFormat(pattern="MM/dd/yyyy")
 @Temporal(javax.persistence.TemporalType.DATE)
 Date enddate;
-public Date getEnddate() throws ParseException {
-    return enddate;
-}
 
-public void setEnddate(Date enddate) throws ParseException {
-    this.enddate = enddate;
-}
+@Column(name = "engtracker")
+int engtracker;
 
+    public int getActivityid() {
+        return activityid;
+    }
 
-@Column(name = "templateid")
-int templateid;
+    public void setActivityid(int activityid) {
+        this.activityid = activityid;
+    }
 
-public int getTemplateid() {
-return templateid;
-}
+    public int getMandays() {
+        return mandays;
+    }
 
-public void setTemplateid(int templateid) {
-this.templateid = templateid;
-}
+    public void setMandays(int mandays) {
+        this.mandays = mandays;
+    }
 
-@Column(name = "status")
-String status;
+    public String getOpid() {
+        return opid;
+    }
 
-	 public String getStatus() {
+    public void setOpid(String opid) {
+        this.opid = opid;
+    }
+
+    public String getActivityname() {
+        return activityname;
+    }
+
+    public void setActivityname(String activityname) {
+        this.activityname = activityname;
+    }
+
+    public String getLead() {
+        return lead;
+    }
+
+    public void setLead(String lead) {
+        this.lead = lead;
+    }
+
+    public int getTemplateid() {
+        return templateid;
+    }
+
+    public void setTemplateid(int templateid) {
+        this.templateid = templateid;
+    }
+
+    public String getStatus() {
         return status;
     }
 
@@ -135,9 +121,6 @@ String status;
         this.status = status;
     }
 
-@Column(name = "leadid")
-int leadid;
-    
     public int getLeadid() {
         return leadid;
     }
@@ -145,10 +128,6 @@ int leadid;
     public void setLeadid(int leadid) {
         this.leadid = leadid;
     }
-    
-    
-    @Column(name = "team")
-    String team;
 
     public String getTeam() {
         return team;
@@ -157,37 +136,41 @@ int leadid;
     public void setTeam(String team) {
         this.team = team;
     }
-    
-    @Column(name = "projectid")
-    int projectid;
-    
-     public int getProjectid() {
+
+    public int getProjectid() {
         return projectid;
     }
 
     public void setProjectid(int projectid) {
         this.projectid = projectid;
     }
-    
-    
-//    
-//@OneToMany(cascade = CascadeType.ALL)
-//@JoinTable(name = "project_transaction", joinColumns = { @JoinColumn(name = "activityid") })
-//public Set <ProjectTransactionBean> ptbean;
-//
-//public Set<ProjectTransactionBean> getProjectstatusbean() {
-//return ptbean;
-//}
-//
-//public void setProjectstatusbean(Set <ProjectTransactionBean> projectstatusbean ) {
-//this.ptbean = projectstatusbean;
-//}
 
-   
 
-    
 
-   
+public Date getStartdate()  {
+    return startdate;
+}
+
+public void setStartdate(Date startdate)  {
+    this.startdate = startdate;
+}
+ 
+public Date getEnddate()  {
+    return enddate;
+}
+
+public void setEnddate(Date enddate)  {
+    this.enddate = enddate;
+}
+
+    public int getEngtracker() {
+        return engtracker;
+    }
+
+    public void setEngtracker(int engtracker) {
+        this.engtracker = engtracker;
+    }
+
 
 
 }

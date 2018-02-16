@@ -1,3 +1,5 @@
+
+
 <%-- 
     Document   : CreateProject
     Created on : 24 Apr, 2017, 5:28:38 PM
@@ -67,7 +69,7 @@ body {
 .login-card {
   padding: 40px;
   width: 1420px;
-  height: 550px;
+  height: 850px;
    background-color: white;
   margin: 0 auto 10px;
   border-radius: 2px;
@@ -168,6 +170,63 @@ font-style: italic;
 }
 </style>
 
+ <script >  
+   function doAjaxPost() {  
+       
+       
+    var sdate = $('#date').val();  
+    var edate = $('#datepicker').val();  
+    var team = $('#team').val();
+    
+    if(!team)
+    {
+        alert("Select Team!!"); 
+        return; 
+    }
+    
+    if(!sdate)
+    {
+        alert("Select Start Date!!"); 
+        return; 
+    }
+    
+    if(!edate)
+    {
+        alert("Select End Date!!"); 
+        return; 
+    }
+    
+    var dropdown = $('#engineers');
+    
+    
+   $.ajax({  
+     type : "Get",   
+     url : "getEngineers.do",   
+     data : "sdate=" + sdate + "&edate=" + edate + "&team=" + team,  
+     success : function(data){
+       
+            var users = JSON.parse(data);
+              alert(users);
+              
+              $.each(data.users,function(i,obj)
+                {
+                        $.each(obj, function (key, val) {
+                        alert(key + val);
+                        });
+                });
+            }
+            ,  
+     error : function(e) {  
+      alert('Error: ' + e);   
+     }  
+    }); 
+   }  
+ </script>  
+    
+    
+    
+    
+    
   <title>Schedule Activity</title>
     </head>
     <body>
@@ -179,12 +238,22 @@ font-style: italic;
 <div align="center">
     <table  align="center" border="0">
 
-<tr><td align="right"><h4>OPID :</td><td><form:input placeholder="Enter OPID" path="opid" /><form:errors path="opid" cssClass="error"/></h4></td></tr>
+<tr><td align="right"><h4>Project :</td>
+    <td><form:select path="projectid">
+                  <option class="login login-submit" value="">None</option>
+	           <c:forEach  items="${AllProjects}" var="project"> 
+	           <form:option class="login login-submit" value="${project.projectid}">${project.projectname}</form:option>
+	           </c:forEach>
+        </form:select>
+        <form:errors path="projectid" cssClass="error"/>
+    </td>
+</tr>
+
 <tr><td align="right"><h4>Activity Name :</td><td><form:input placeholder="Enter Activity Name" path="activityname" /><form:errors path="activityname" cssClass="error"/></h4></td></tr>  
 
 <tr><td align="right"><h4>Team :</td>
-    <td><form:select path="team">
-                 
+    <td><form:select path="team" id="team">
+        <option class="login login-submit" value="">None</option>
 	           <c:forEach  items="${AllTeams}" var="team"> 
 	           <form:option class="login login-submit" value="${team.teamname}">${team.teamname}</form:option>
 	           </c:forEach>
@@ -204,23 +273,39 @@ font-style: italic;
     </td>
 </tr>
 <tr><td align="right"><h4>Start Date :<td><form:input placeholder="Enter Start Date" id="date" path="startdate" /><form:errors path="startdate" cssClass="error"/></h4></td></tr>
-<tr><td align="right"><h4>End Date :</td><td><form:input placeholder="Enter End Date" id="datepicker" path="enddate"/><form:errors path="enddate" cssClass="error"/></h4></td></tr>
+<tr><td align="right"><h4>End Date :</td><td><form:input placeholder="Enter End Date" id="datepicker" path="enddate"/><form:errors path="enddate" cssClass="error"/></h4><input type="button" value="Get Engineers" onclick="doAjaxPost();" /></td></tr>
 
-<tr><td align="right"><h4>Template :</td>
-    <td><form:select  path="templateid" itemLabel="Select"> 
-         <option class="login login-submit" value="">Select Template</option>
-	  <c:forEach items="${AllTemplates}" var="template">     
-	  <option class="login login-submit" value="${template.templateid}">${template.templatename}</option>
-	  </c:forEach>
+<tr><td align="right"><h4>Engineer :</td>
+    <td><form:select  path="templateid" itemLabel="Select" id="engineers"> 
+   <!-- <option class="login login-submit" value="" >Select Engineer</option> -->
+	   </form:select>
           <form:errors path="templateid" cssClass="error"/>
     </td>	  
-        </form:select>
+       
+</tr>
+
+
+
 
 <input type="hidden" name="AntiCSRFToken" value="${csrfPreventionSalt}"/> 
 <tr><td align="center"><input type="submit" value="Create" class="login login-submit"/></td></tr>           
 </table >
 </div>
 </form:form>
+           
+           
+           
+      
+           <select id="engineers1">
+                           
+               
+               
+           </select>
+
+   
+	   
+         
+
 	   </div>
      
 	   <script>
@@ -235,5 +320,25 @@ font-style: italic;
     format: 'dd/mm/yyyy';
   });
   </script>
+
+
+<script>
+var jsonResponse = {
+  288878: "FOO",
+  288881: "BAZZ",
+  288882: "YOLLO"
+}
+ 
+var text= '<option value="volvo">Volvo</option>';
+
+$("#engineers1").append('<option value="volvo">Volvo</option>');
+
+alert(text);
+
+</script> 
+
+
     </body>
 </html>
+
+

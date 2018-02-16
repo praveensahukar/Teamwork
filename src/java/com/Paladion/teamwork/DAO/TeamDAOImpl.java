@@ -48,12 +48,32 @@ public class TeamDAOImpl implements TeamDAO{
 	public List<TeamBean> getAllTeams()
 	{
 	List <TeamBean> Teamlist=new ArrayList<TeamBean>();
-	 Session session=sessionFactory.openSession();
-        String teamquery= "from TeamBean";
-        System.out.println("Get all teams query");
-        Query query2 = session.createQuery(teamquery);
+        
+        Session session=sessionFactory.openSession();
+            
+                    String teamquery= "from TeamBean";
+                    System.out.println("Get all teams query");
+                    
+                     Transaction tx = null;
+   
+
+                    tx = session.beginTransaction();  
+                    
+                    Query query2 = session.createQuery(teamquery);
+                    Teamlist= query2.list();
+                    
+                    tx.commit();
+                    
+                    
+                  //  session.refresh(TeamBean.class);
+                    
+                    System.out.println(Teamlist.size());
+                    
+                    session.close();
+            
+	 
        
-        Teamlist= query2.list();
+        
         return Teamlist;
         }
         

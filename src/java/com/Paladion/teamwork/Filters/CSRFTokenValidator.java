@@ -21,6 +21,10 @@ public class CSRFTokenValidator implements Filter  {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
         throws IOException, ServletException {
 
+        //chain.doFilter(request, response);
+        
+        //Uncomment the below code and comment the above the line at line 24
+        
         HttpServletRequest httpReq = (HttpServletRequest) request;
         HttpServletResponse res=(HttpServletResponse)response;
         String url = httpReq.getRequestURL().toString();

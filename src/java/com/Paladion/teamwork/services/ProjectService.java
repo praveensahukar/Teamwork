@@ -5,10 +5,17 @@
  */
 package com.Paladion.teamwork.services;
 
+import com.Paladion.teamwork.beans.ProjectBean;
+import com.Paladion.teamwork.beans.TaskBean;
+import java.util.List;
+
 /**
  *
  * @author Santhosh
  */
-public class ProjectService {
-    
+public interface ProjectService {
+    public void addProject(ProjectBean pb);
+    public void editProject(ProjectBean pb);
+    public List<ProjectBean> getAllProjects();
+    public boolean deleteProject(int id);
 }

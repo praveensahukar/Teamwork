@@ -67,7 +67,7 @@ body {
 .login-card {
   padding: 40px;
   width: 1420px;
-  height: 550px;
+  height: 650px;
    background-color: white;
   margin: 0 auto 10px;
   border-radius: 2px;
@@ -167,14 +167,73 @@ color: black;
 font-style: italic;
 }
 </style>
+<script>
+ (function($, undefined) {
+
+    "use strict";
+
+    // When ready.
+    $(function() {
+        
+        var $form = $( "#form" );
+        var $input = $( "#revenue" );
+
+        $input.on( "keyup", function( event ) {
+            
+            
+            // When user select text in the document, also abort.
+            var selection = window.getSelection().toString();
+            if ( selection !== '' ) {
+                return;
+            }
+            
+            // When the arrow keys are pressed, abort.
+            if ( $.inArray( event.keyCode, [38,40,37,39] ) !== -1 ) {
+                return;
+            }
+            
+            var $this = $( this );
+            
+            // Get the value.
+            var input = $this.val();
+            
+            var input = input.replace(/[\D\s\._\-]+/g, "");
+                    input = input ? parseInt( input, 10 ) : 0;
+
+                    $this.val( function() {
+                        return ( input === 0 ) ? "" : input.toLocaleString( "en-IN" );
+                    } );
+        } );
+    });
+})(jQuery);   
+    </script>
+    
+    <script>
+        
+    function sanitize() {
+        
+    var $input = $("#revenue").val();
+    alert(12);
+    alert($input);
+    $x=$input.replace(/,/g , ''); 
+    alert($x);
+    $y = parseInt($x,10);
+    $('#revenue').val($y);
+    alert($y);
+    document.getElementById("form").submit();
+    
+    $("#form").trigger('reset');
+}     
+    </script>
+    
   <title>Create Project</title>
     </head>
-    <body>
+    <body onload="document.form.reset();">
 
 <%@include file="Header.jsp"%>
 	   <div class="login-card">
 	   <div align="left">  <h2 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">Create Project</h2></div>
-<form:form action="CreateProject.do" method="post" commandName="ProjectM">
+<form:form action="CreateProject.do" method="post" commandName="ProjectM" id="form">
 <div align="center">
     <table  align="center" border="0">
 
@@ -214,13 +273,13 @@ font-style: italic;
         </form:select>
         </tr>
         
-        <tr><td align="right"><h4>Revenue :</td><td><form:input placeholder="Enter Revenue in INR" path="revenue" /><form:errors path="revenue" cssClass="error"/></h4></td></tr>
+        <tr><td align="right"><h4>Revenue :</td><td><form:input placeholder="Enter Revenue in INR" path="revenue" id="revenue" type="text" maxlength="15"/><form:errors path="revenue" cssClass="error"/></h4></td></tr>
 
         <tr><td align="right"><h4>Region :</td><td><form:input placeholder="Enter Region" path="region" /><form:errors path="region" cssClass="error"/></h4></td></tr>
 
         <tr><td align="right"><h4>Other Details :</td><td><form:textarea rows="3" cols="40" path="description" /><form:errors path="description" cssClass="error"/></h4></td></tr>
 <input type="hidden" name="AntiCSRFToken" value="${csrfPreventionSalt}"/> 
-<tr><td align="center"><input type="submit" value="Create" class="login login-submit"/></td></tr>           
+<tr><td align="center"><input type="button" value="Create"  onclick="sanitize()" class="login login-submit"/></td></tr>           
 </table >
 </div>
 </form:form>

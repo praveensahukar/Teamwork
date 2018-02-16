@@ -50,7 +50,7 @@ String description;
 String region;
 
 @Column (name = "revenue")
-String revenue;
+int revenue;
 
     public String getProjectname() {
         return projectname;
@@ -101,11 +101,11 @@ String revenue;
         this.region = region;
     }
 
-    public String getRevenue() {
+    public int getRevenue() {
         return revenue;
     }
 
-    public void setRevenue(String revenue) {
+    public void setRevenue(int revenue) {
         this.revenue = revenue;
     }
 

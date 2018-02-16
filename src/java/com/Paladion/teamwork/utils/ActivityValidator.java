@@ -6,7 +6,6 @@
 package com.Paladion.teamwork.utils;
 
 import com.Paladion.teamwork.beans.ActivityBean;
-import java.text.ParseException;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -33,7 +32,7 @@ public class ActivityValidator implements org.springframework.validation.Validat
         startDate = pbean.getStartdate();
         endDate = pbean.getEnddate();
         } 
-        catch (ParseException ex) {
+        catch (Exception ex) {
         startDate = null;
         endDate = null;
         Logger.getLogger(ActivityValidator.class.getName()).log(Level.SEVERE, null, ex);

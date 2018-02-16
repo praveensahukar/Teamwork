@@ -5,10 +5,15 @@
  */
 package com.Paladion.teamwork.DAO;
 
+import com.Paladion.teamwork.beans.ProjectBean;
+import java.util.List;
+
 /**
  *
  * @author Santhosh
  */
-public class ProjectDAO {
-    
+public interface ProjectDAO {
+    public void addProjectDao(ProjectBean tb);
+    public List<ProjectBean> getAllProject();
+    public boolean deleteProject(int id);
 }

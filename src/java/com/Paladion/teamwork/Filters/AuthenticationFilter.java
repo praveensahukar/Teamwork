@@ -30,6 +30,10 @@ int i=0;
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain fc) throws IOException, ServletException {
         
+        //fc.doFilter(request, response);
+        
+        //Uncomment the below code and comment the above line at line 33
+        
         String url;
         HttpServletRequest req=(HttpServletRequest)request;
         HttpServletResponse res=(HttpServletResponse)response;
