@@ -7,8 +7,10 @@ package com.Paladion.teamwork.beans;
 
 import java.util.Date;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -17,6 +19,8 @@ import org.springframework.format.annotation.DateTimeFormat;
  *
  * @author Santhosh
  */
+@Entity
+@Table(name = "activity",catalog="teamwork")
 public class ActivityBean {
     
 @Id

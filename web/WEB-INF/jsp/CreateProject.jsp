@@ -228,7 +228,7 @@ font-style: italic;
     
   <title>Create Project</title>
     </head>
-    <body onload="document.form.reset();">
+    <body >
 
 <%@include file="Header.jsp"%>
 	   <div class="login-card">

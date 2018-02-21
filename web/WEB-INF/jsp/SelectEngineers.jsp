@@ -171,9 +171,12 @@ font-style: italic;
 </style>
 
  <script >  
-   function doAjaxPost() {  
+   function addEngineer() {
        
+       alert("Reached Function");
        
+         var engineerval = $('#engineer').val();
+         alert(engineerval);
     var sdate = $('#date').val();  
     var edate = $('#datepicker').val();  
     var team = $('#team').val();
@@ -230,62 +233,57 @@ font-style: italic;
     
     
     
-  <title>Schedule Activity</title>
+  <title>Assign Engineers</title>
     </head>
     <body>
 
 <%@include file="Header.jsp"%>
 	   <div class="login-card">
-	   <div align="left">  <h2 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">Schedule Activity</h2></div>
-<form:form action="getEngineers.do" method="post" commandName="ProjectM">
+	   <div align="left">  <h2 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">Assign/Block Resource</h2></div>
+<form:form action="ScheduleActivity.do" method="post" commandName="ProjectM">
 <div align="center">
     <input type="hidden" name="AntiCSRFToken" id="token" value="${csrfPreventionSalt}"/>
     
     <table  align="center" border="0">
 
-<tr><td align="right"><h4>Project :</td>
-    <td><form:select path="projectid">
-                  <option class="login login-submit" value="">None</option>
-	           <c:forEach  items="${AllProjects}" var="project"> 
-	           <form:option class="login login-submit" value="${project.projectid}">${project.projectname}</form:option>    
-                   </c:forEach>
-        </form:select>
-        <form:errors path="projectid" cssClass="error"/>
-    </td>
-</tr>
+<tr><td align="right"><h4>Activity : ${fn:escapeXml(activitybean.activityname)}</td> </tr>
 
-<tr><td align="right"><h4>Activity Name :</td><td><form:input placeholder="Enter Activity Name" path="activityname" /><form:errors path="activityname" cssClass="error"/></h4></td></tr>  
-
-<tr><td align="right"><h4>Team :</td>
-    <td><form:select path="team" id="team">
+<tr><td align="right"><h4>Available Engineers :</td>
+    <td><form:select path="engtracker" id="engineer">
         <option class="login login-submit" value="">None</option>
-	           <c:forEach  items="${AllTeams}" var="team"> 
-	           <form:option class="login login-submit" value="${team.teamname}">${team.teamname}</form:option>
+	           <c:forEach  items="${engineers}" var="eng"> 
+	           <form:option class="login login-submit" value="${eng.userid}">${eng.username} :-> ${eng.team} </form:option>
 	           </c:forEach>
         </form:select>
-        <form:errors path="team" cssClass="error"/>
+        <form:errors path="engtracker" cssClass="error"/>
     </td>
 </tr>
 
-<tr><td align="right"><h4>Lead :</td>
-    <td><form:select path="leadid">
-            <c:forEach  items="${AllLeads}" var="lead"> 
-	    <form:option class="login login-submit" value="${lead.userid}">${lead.username}</form:option>
-	    </c:forEach>
+<tr><td align="right"><h4>Template :</td>
+    <td><form:select  path="templateid" itemLabel="Select"> 
+         <option class="login login-submit" value="">Select Template</option>
+	  <c:forEach items="${AllTemplates}" var="template">     
+	  <option class="login login-submit" value="${template.templateid}">${template.templatename}</option>
+	  </c:forEach>
+          <form:errors path="templateid" cssClass="error"/>	  
         </form:select>
-        <form:errors path="leadid" cssClass="error"/>
-    </td>
+     </td>
 </tr>
+
+
 <tr><td align="right"><h4>Start Date :<td><form:input placeholder="Enter Start Date" id="date" path="startdate" /><form:errors path="startdate" cssClass="error"/></h4></td></tr>
 <tr><td align="right"><h4>End Date :</td><td><form:input placeholder="Enter End Date" id="datepicker" path="enddate"/><form:errors path="enddate" cssClass="error"/></h4></td></tr>
 
- 
-<tr><td align="center"><input type="submit" value="Create" class="login login-submit"/></td></tr>           
+
+<tr><td align="center"><input type="submit" value="Submit" class="login login-submit"/></td></tr>           
 </table >
 </div>
 </form:form>
 
-	   </div>
+           
+      
+           
+</div>
      
 	   <script>
   $(document).ready(function() {

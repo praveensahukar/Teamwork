@@ -115,7 +115,7 @@
                     {%>
                     <a href="CreateProject.do">Create New Project</a>
                     <%}%>
-                    <a href="showAllProject.do">View All Projects</a>
+                    <a href="GetAllProjects.do">View All Projects</a>
                 </div>
         </div>
         

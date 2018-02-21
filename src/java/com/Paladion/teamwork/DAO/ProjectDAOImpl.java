@@ -5,13 +5,16 @@
  */
 package com.Paladion.teamwork.DAO;
 
+import com.Paladion.teamwork.beans.ActivityTransactionBean;
 import com.Paladion.teamwork.beans.ProjectBean;
 import java.util.ArrayList;
 import java.util.List;
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -57,4 +60,25 @@ public class ProjectDAOImpl implements ProjectDAO {
     public boolean deleteProject(int id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    
+     @Override
+       public String getProjectOPID(int projectid){
+        
+           List<ProjectBean> PList;
+           Transaction tx = null;
+	   Session session1 = sessionFactory.getCurrentSession();
+           tx = session1.beginTransaction();
+           Criteria criteria = session1.createCriteria(ProjectBean.class);
+           criteria.add(Restrictions.eq("projectid", projectid));
+           criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+	   PList = criteria.list();
+           tx.commit();
+       
+           for(ProjectBean PB: PList){
+               return PB.getOpid();
+           }
+           return null;
+    }
+    
 }

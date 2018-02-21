@@ -16,6 +16,7 @@ import com.Paladion.teamwork.beans.ActivityBean;
 import com.Paladion.teamwork.beans.TemplateBean;
 import com.Paladion.teamwork.beans.ActivityTransactionBean;
 import com.Paladion.teamwork.beans.ActivityTransactionWrapper;
+import com.Paladion.teamwork.beans.AllocationBean;
 import com.Paladion.teamwork.beans.SystemBean;
 import com.Paladion.teamwork.beans.fileuploadBean;
 import com.Paladion.teamwork.services.AdminService;
@@ -54,20 +55,20 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import com.Paladion.teamwork.services.ActivityService;
 import com.Paladion.teamwork.services.ProjectService;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
-import org.json.JSONArray;
-import org.json.JSONObject;
+
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 /**
  *
  * @author Administrator
  */
 @Controller
+@SessionAttributes("ProjectM")
 public class ActivityController {
 	
 //@Autowired
@@ -125,6 +126,13 @@ public ActivityBean populate()
 {
     return new ActivityBean();
 }
+
+@ModelAttribute("AllocationB")
+public AllocationBean populateBean()
+{
+    return new AllocationBean();
+}
+
 @ModelAttribute("filebean")
 public fileuploadBean populate1()
 {
@@ -155,43 +163,30 @@ public fileuploadBean populate1()
     }
     
     
-     @RequestMapping(value="/getEngineers",method=RequestMethod.GET)
-    public @ResponseBody String getEngineers(HttpServletRequest req)
+    @RequestMapping(value="/getEngineers",method=RequestMethod.POST)
+    public @ResponseBody ModelAndView getEngineers(@ModelAttribute("ProjectM") ActivityBean AB,  HttpServletRequest req, HttpServletResponse response)
     {   
-//        String[] authorizedRoles = {"admin","manager","lead","scheduling"};
-//        if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
-        
+        String[] authorizedRoles = {"admin","manager","lead","scheduling"};
+        if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
+       
         HttpSession sess=req.getSession(false);
-	String sDate1=req.getParameter("sdate");
-        String eDate1=req.getParameter("edate");
-         
-	try{
-            Date sDate=new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);
-            Date eDate=new SimpleDateFormat("dd/MM/yyyy").parse(eDate1);
-            List<UserDataBean> availableEngineers = US.getAvailableEngineers(sDate,eDate,CU.getUsersByRole("engineer", sess));
-          
-            JSONObject json = new JSONObject();
-            //json.put("name", "student");
-            JSONArray array = new JSONArray();
-            
-            for(UserDataBean user:availableEngineers){
-            
-            JSONObject item = new JSONObject();
-            item.put("userid", user.getUserid());
-            item.put("username", user.getUsername());
-            array.put(item);
-            }
-            json.put("users", array);
-
-            String message = json.toString();
-
-            return message;
-	}
+	  
+	try{ 
+            List<UserDataBean> availableEngineers = US.getAvailableEngineers(AB.getStartdate(),AB.getEnddate(),CU.getUsersByRole("engineer", sess));
+            AB.setLead(CU.getUsernameFromSession(AB.getLeadid(), sess));
+            List <TemplateBean> TemplateList = TS.getAllTemplates();
+            ModelAndView model=new ModelAndView("SelectEngineers");
+            model.addObject("engineers",availableEngineers);
+            model.addObject("AllTemplates", TemplateList);
+            model.addObject("activitybean", AB);
+            return model;
+	 }
+        
         catch(Exception ex){
-        return null;
+      ex.printStackTrace();
         }
 	
-        
+        return null;
     }
     
     
@@ -199,7 +194,7 @@ public fileuploadBean populate1()
 
     //Schedule a activity
     @RequestMapping(value="/ScheduleActivity",method=RequestMethod.POST)
-    public Object CreateNewProject(@ModelAttribute("ProjectM")ActivityBean PB, HttpServletRequest req,Model E) throws Exception
+    public Object CreateNewProject(@ModelAttribute("ProjectM")ActivityBean AB, HttpServletRequest req,Model E) throws Exception
     {
         String[] authorizedRoles = {"admin","manager","lead","scheduling"};
         if(!CU.checkUserAuthorization(authorizedRoles, req))  return new ModelAndView("Error");
@@ -228,16 +223,33 @@ public fileuploadBean populate1()
 //                }
 	    
                 System.out.println("\n inside create Project POST method ");
-                PB.setMandays(CU.getWorkingDays(PB.getStartdate(),PB.getEnddate()));
-                PB.setStatus("New");
-                PB.setLead(CU.getUsernameFromSession(PB.getLeadid(), sess));
-                AS.addProject(PB);
+                AB.setMandays(CU.getWorkingDays(AB.getStartdate(),AB.getEnddate()));
+                AB.setStatus("New");
+               
+                String OPID= PS.getProjectOPID(AB.getProjectid());
+                AB.setOpid(OPID);
+                
+                AS.addProject(AB);
+                AllocationBean AloB = new AllocationBean();
+                
+                AloB.setActivityId(AB.getActivityid());
+                AloB.setAllocationStartdate(AB.getStartdate());
+                AloB.setAllocationEndenddate(AB.getEnddate());
+                AloB.setStatus("Allocated");
+                AloB.setEngineerId(AB.getEngtracker());
+                
+                if(AS.allocateResource(AloB)==true){
+                    
+                }
+                
                 SystemBean sys=Aservice.getSystemSettings();
-                CU.sendSchedulingMailToLead(PB, req.getSession(false));
-                System.out.println("Project Created with Project id"+PB.getActivityid());
-                System.out.println("Man days :"+PB.getMandays());
+                CU.sendSchedulingMailToLead(AB, req.getSession(false));
+                System.out.println("Project Created with Project id"+AB.getActivityid());
+                System.out.println("Man days :"+AB.getMandays());
                 UserDataBean sessuser=(UserDataBean) sess.getAttribute("Luser");
+                
                 if(sessuser.getRole().equalsIgnoreCase("scheduling")){
+                    
                 return new ModelAndView("Welcome","Message","Activity has been scheduled");
                 }
             }
@@ -254,14 +266,14 @@ public fileuploadBean populate1()
            
             ActivityTransactionWrapper PTW=new ActivityTransactionWrapper();
             List<ActivityTransactionBean> PSBList;
-            ActivityBean PRDATA=AS.getProjectById(PB.getActivityid());
+            ActivityBean PRDATA=AS.getProjectById(AB.getActivityid());
             List<MapTemplateTaskBean> MTTB=TS.getAllWeights(PRDATA.getTemplateid());
             PSBList=  CU.setTaskHours(PRDATA, MTTB);
             PTW.setProjectlist(PSBList);
             results=new ModelAndView("AssignTaskToUsers");
             //Engineer Availability Code Starts
            
-             List<UserDataBean> availableEngineers = US.getAvailableEngineers(PB.getStartdate(), PB.getEnddate(),CU.getUsersByRole("engineer", sess));
+             List<UserDataBean> availableEngineers = US.getAvailableEngineers(AB.getStartdate(), AB.getEnddate(),CU.getUsersByRole("engineer", sess));
              
              
             //Engineer Availability Code Ends

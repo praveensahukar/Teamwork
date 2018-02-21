@@ -8,6 +8,7 @@ package com.Paladion.teamwork.services;
 import com.Paladion.teamwork.beans.MapTemplateTaskBean;
 import com.Paladion.teamwork.beans.ActivityBean;
 import com.Paladion.teamwork.beans.ActivityTransactionBean;
+import com.Paladion.teamwork.beans.AllocationBean;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
@@ -29,5 +30,7 @@ public interface ActivityService {
     public int[] getProjectsCount(HttpServletRequest req);
     public boolean deleteProject(int projid);
     public ActivityTransactionBean getTransactionOnTransID(int Transid);
+    public boolean allocateResource(AllocationBean AB);
+    
 }
 

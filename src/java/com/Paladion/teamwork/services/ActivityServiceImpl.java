@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.servlet.ModelAndView;
 import com.Paladion.teamwork.DAO.ActivityDAO;
+import com.Paladion.teamwork.beans.AllocationBean;
 
 /**
  *
@@ -134,6 +135,11 @@ ActivityDAO PD;
          counts[3]=project_new;
          
          return counts;
+    }
+    
+   @Override
+    public boolean allocateResource(AllocationBean AB) {
+          return PD.allocateResource(AB);  
     }
 	
 }

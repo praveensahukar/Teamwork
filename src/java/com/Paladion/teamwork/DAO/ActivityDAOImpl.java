@@ -7,6 +7,7 @@ package com.Paladion.teamwork.DAO;
 
 import com.Paladion.teamwork.beans.ActivityBean;
 import com.Paladion.teamwork.beans.ActivityTransactionBean;
+import com.Paladion.teamwork.beans.AllocationBean;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -37,12 +38,17 @@ public class ActivityDAOImpl implements ActivityDAO
 	
 	@Override
 	public void addProjectDao(ActivityBean PB) {
+            try{
 	    Session session1 = sessionFactory.getCurrentSession();
             Transaction tx = null;
 	    tx = session1.beginTransaction();
 	    session1.save(PB );
 	    tx.commit();
             System.out.println("Project created successfully");
+            }
+            catch(Exception ex){
+                ex.printStackTrace();
+            }
       }
 
 	
@@ -297,7 +303,7 @@ public class ActivityDAOImpl implements ActivityDAO
 		Transaction tx = null;
 	        tx = session1.beginTransaction();
                 
-                String sql = "UPDATE projects_transaction SET taskstartdate=?, taskenddate=?, taskhours=?,taskdays=?, status=? , startdate = ?, enddate=? WHERE transid=?";
+                String sql = "UPDATE activity_transaction SET taskstartdate=?, taskenddate=?, taskhours=?,taskdays=?, status=? , startdate = ?, enddate=? WHERE transid=?";
                 SQLQuery query = session1.createSQLQuery(sql);
                 query.setParameter(0,PTBean.getTaskstartdate());
                 query.setParameter(1,PTBean.getTaskenddate());
@@ -326,8 +332,18 @@ public class ActivityDAOImpl implements ActivityDAO
         
         
       
-
-
+        @Override
+	public boolean allocateResource(AllocationBean AB) {
+		
+	Session session1 = sessionFactory.getCurrentSession();
+	Transaction tx = null;
+	tx = session1.beginTransaction();
+	session1.save(AB);
+	tx.commit();
+	System.out.println("Resource "+AB.getEngineerId()+" allocated successfully");
+        return true;
+	}
+   
 
 
 }

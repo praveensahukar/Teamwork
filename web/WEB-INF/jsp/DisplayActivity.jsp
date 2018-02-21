@@ -377,7 +377,7 @@ html {
             <tr> 
                 
                 <td > <a href="showProgress.do?id=${project.activityid}"> ${fn:escapeXml(project.opid)}</a></td>
-	        <td >${fn:escapeXml(project.activityname)}</td>
+	        <td ><a href="showProgress.do?id=${project.activityid}"> ${fn:escapeXml(project.activityname)}</a></td>
                 <td >${fn:escapeXml(project.lead)}</td>
                 <td >${fn:escapeXml(SDate)}</td>
                 <td >${fn:escapeXml(EDate)}</td>

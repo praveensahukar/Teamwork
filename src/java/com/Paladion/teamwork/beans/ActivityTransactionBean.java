@@ -5,6 +5,7 @@
  */
 package com.Paladion.teamwork.beans;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 import javax.persistence.Column;
@@ -20,7 +21,7 @@ import org.hibernate.annotations.GenericGenerator;
  */
 @Entity
 @Table(name = "activity_transaction",catalog="teamwork")
-public class ActivityTransactionBean {
+public class ActivityTransactionBean implements Serializable {
     
     @Id
     @GenericGenerator(name="gen",strategy="increment")
