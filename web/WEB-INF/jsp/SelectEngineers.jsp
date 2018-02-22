@@ -156,82 +156,19 @@ body {
 }
 table {
     border-collapse: collapse;
-    width: 100%;
+    width: 60%;
     color: #ff0000;
     border-color: white;
     align-items: center;
 }
 th {
-    text-align: center;
+    text-align: left;
 }
 .error {
 color: black;
 font-style: italic;
 }
 </style>
-
- <script >  
-   function addEngineer() {
-       
-       alert("Reached Function");
-       
-         var engineerval = $('#engineer').val();
-         alert(engineerval);
-    var sdate = $('#date').val();  
-    var edate = $('#datepicker').val();  
-    var team = $('#team').val();
-    var csrfPreventionSalt = $('#token').val();
-    alert(csrfPreventionSalt);
-    
-    if(!team)
-    {
-        alert("Select Team!!"); 
-        return; 
-    }
-    
-    if(!sdate)
-    {
-        alert("Select Start Date!!"); 
-        return; 
-    }
-    
-    if(!edate)
-    {
-        alert("Select End Date!!"); 
-        return; 
-    }
-    
-    var dropdown = $('#engineers');
-    
-    
-   $.ajax({
-     dataType : 'json',
-     type : "Post",   
-     url : "getEngineers.do",   
-     data : "sdate=" + sdate + "&edate=" + edate + "&team=" + team + "&AntiCSRFToken=" + csrfPreventionSalt,  
-     success : function(data){
-         alert(data);
-            var users = JSON.parse(data);
-              alert(users);
-              
-              $.each(data.users,function(i,obj)
-                {
-                        $.each(obj, function (key, val) {
-                        alert(key + val);
-                        });
-                });
-            }
-            ,  
-     error : function(e) {  
-      alert('Error: ' + e);   
-     }  
-    }); 
-   }  
- </script>  
-    
-    
-    
-    
     
   <title>Assign Engineers</title>
     </head>
@@ -241,10 +178,10 @@ font-style: italic;
 	   <div class="login-card">
 	   <div align="left">  <h2 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">Assign/Block Resource</h2></div>
 <form:form action="ScheduleActivity.do" method="post" commandName="ProjectM">
-<div align="center">
+<div align="left">
     <input type="hidden" name="AntiCSRFToken" id="token" value="${csrfPreventionSalt}"/>
     
-    <table  align="center" border="0">
+    <table  align="left" border="0">
 
 <tr><td align="right"><h4>Activity : ${fn:escapeXml(activitybean.activityname)}</td> </tr>
 
@@ -252,7 +189,7 @@ font-style: italic;
     <td><form:select path="engtracker" id="engineer">
         <option class="login login-submit" value="">None</option>
 	           <c:forEach  items="${engineers}" var="eng"> 
-	           <form:option class="login login-submit" value="${eng.userid}">${eng.username} :-> ${eng.team} </form:option>
+	           <form:option class="login login-submit" value="${eng.userid}">${eng.username}  :  ${eng.team} </form:option>
 	           </c:forEach>
         </form:select>
         <form:errors path="engtracker" cssClass="error"/>
@@ -275,14 +212,11 @@ font-style: italic;
 <tr><td align="right"><h4>End Date :</td><td><form:input placeholder="Enter End Date" id="datepicker" path="enddate"/><form:errors path="enddate" cssClass="error"/></h4></td></tr>
 
 
-<tr><td align="center"><input type="submit" value="Submit" class="login login-submit"/></td></tr>           
+<tr><td align="right"><input type="submit" value="Submit" class="login login-submit"/></td></tr>           
 </table >
 </div>
 </form:form>
-
-           
       
-           
 </div>
      
 	   <script>

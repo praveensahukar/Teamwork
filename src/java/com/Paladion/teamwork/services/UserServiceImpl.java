@@ -63,14 +63,9 @@ public UserDataBean GetUserById(int id){
 @Override
 public List<UserDataBean> getAvailableEngineers(Date projStartDate, Date projEndDate, List<UserDataBean> AllEng){
     
-    try {
-        SimpleDateFormat sm = new SimpleDateFormat("yyyy-mm-dd");
-        String strDate = sm.format(projStartDate);
-        Date sd = sm.parse(strDate);
-        String endDate = sm.format(projEndDate);
-        Date ed = sm.parse(endDate);
+   
         
-        List list1 = userDAO.getAvailableEngineers(sd, ed);
+        List list1 = userDAO.getAvailableEngineers(projStartDate, projEndDate);
         int[] userIDs = new int[list1.size()];
         int index=0;
         for(Object uid : list1){
@@ -92,16 +87,8 @@ public List<UserDataBean> getAvailableEngineers(Date projStartDate, Date projEnd
             }
         }
     return UserList;
-    } 
-    catch (ParseException ex) {
-        Logger.getLogger(UserServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-        return null;
-    }
-}
     
-
-    
-        
+}      
 		
 }
 

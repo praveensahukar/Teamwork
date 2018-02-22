@@ -17,6 +17,7 @@ import com.Paladion.teamwork.beans.TemplateBean;
 import com.Paladion.teamwork.beans.ActivityTransactionBean;
 import com.Paladion.teamwork.beans.ActivityTransactionWrapper;
 import com.Paladion.teamwork.beans.AllocationBean;
+import com.Paladion.teamwork.beans.ProjectBean;
 import com.Paladion.teamwork.beans.SystemBean;
 import com.Paladion.teamwork.beans.fileuploadBean;
 import com.Paladion.teamwork.services.AdminService;
@@ -193,7 +194,7 @@ public fileuploadBean populate1()
     
 
     //Schedule a activity
-    @RequestMapping(value="/ScheduleActivity",method=RequestMethod.POST)
+        @RequestMapping(value="/ScheduleActivity",method=RequestMethod.POST)
     public Object CreateNewProject(@ModelAttribute("ProjectM")ActivityBean AB, HttpServletRequest req,Model E) throws Exception
     {
         String[] authorizedRoles = {"admin","manager","lead","scheduling"};
@@ -226,8 +227,8 @@ public fileuploadBean populate1()
                 AB.setMandays(CU.getWorkingDays(AB.getStartdate(),AB.getEnddate()));
                 AB.setStatus("New");
                
-                String OPID= PS.getProjectOPID(AB.getProjectid());
-                AB.setOpid(OPID);
+                ProjectBean PB= PS.getProjectOPID(AB.getProjectid());
+                AB.setOpid(PB.getOpid());
                 
                 AS.addProject(AB);
                 AllocationBean AloB = new AllocationBean();
@@ -243,7 +244,7 @@ public fileuploadBean populate1()
                 }
                 
                 SystemBean sys=Aservice.getSystemSettings();
-                CU.sendSchedulingMailToLead(AB, req.getSession(false));
+                CU.sendSchedulingMailToLead(AB, req.getSession(false), PB);
                 System.out.println("Project Created with Project id"+AB.getActivityid());
                 System.out.println("Man days :"+AB.getMandays());
                 UserDataBean sessuser=(UserDataBean) sess.getAttribute("Luser");
@@ -266,21 +267,39 @@ public fileuploadBean populate1()
            
             ActivityTransactionWrapper PTW=new ActivityTransactionWrapper();
             List<ActivityTransactionBean> PSBList;
+            List<ActivityTransactionBean> PTBList1;
             ActivityBean PRDATA=AS.getProjectById(AB.getActivityid());
             List<MapTemplateTaskBean> MTTB=TS.getAllWeights(PRDATA.getTemplateid());
+            
+            UserDataBean engBean = CU.getUserById(AB.getEngtracker(), sess);
+            
             PSBList=  CU.setTaskHours(PRDATA, MTTB);
             PTW.setProjectlist(PSBList);
-            results=new ModelAndView("AssignTaskToUsers");
-            //Engineer Availability Code Starts
-           
-             List<UserDataBean> availableEngineers = US.getAvailableEngineers(AB.getStartdate(), AB.getEnddate(),CU.getUsersByRole("engineer", sess));
-             
-             
-            //Engineer Availability Code Ends
+            for(ActivityTransactionBean PTB: PSBList){
+                PTB.setUserid(engBean.getUserid());
+                PTB.setEngname(engBean.getUsername());
+               
+            }
             
-            results.addObject("AllEngineers",availableEngineers);
-            results.addObject("ProjectW",PTW);
-            return results;
+            PTBList1= CU.updateProjectTransaction(PSBList, PRDATA,req.getSession(false));
+          
+        AS.insertProjectTransaction(PTBList1);
+            
+//            results=new ModelAndView("AssignTaskToUsers");
+//            //Engineer Availability Code Starts
+//           
+//             List<UserDataBean> availableEngineers = US.getAvailableEngineers(AB.getStartdate(), AB.getEnddate(),CU.getUsersByRole("engineer", sess));
+//             
+//             
+//            //Engineer Availability Code Ends
+//            
+//            results.addObject("AllEngineers",availableEngineers);
+//            results.addObject("ProjectW",PTW);
+
+            results=new ModelAndView("DisplayActivityProgress");
+           results.addObject("ProjectData",PRDATA);
+           results.addObject("TaskDetails",PTBList1);
+           return results;
         
     }
     

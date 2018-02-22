@@ -46,7 +46,7 @@ public class ProjectServiceImpl  implements ProjectService {
     
     
       @Override
-        public String getProjectOPID( int pid){
+        public ProjectBean getProjectOPID( int pid){
         return PD.getProjectOPID(pid);
    }
     

@@ -69,7 +69,7 @@ body {
 .login-card {
   padding: 40px;
   width: 1420px;
-  height: 550px;
+  height: 850px;
    background-color: white;
   margin: 0 auto 10px;
   border-radius: 2px;
@@ -236,9 +236,9 @@ font-style: italic;
 
 <%@include file="Header.jsp"%>
 	   <div class="login-card">
-	   <div align="left">  <h2 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">Schedule Activity</h2></div>
+	   <div align="center">  <h2 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">Schedule Activity</h2></div>
 <form:form action="getEngineers.do" method="post" commandName="ProjectM">
-<div align="center">
+<div align="left">
     <input type="hidden" name="AntiCSRFToken" id="token" value="${csrfPreventionSalt}"/>
     
     <table  align="center" border="0">
@@ -279,9 +279,18 @@ font-style: italic;
 <tr><td align="right"><h4>Start Date :<td><form:input placeholder="Enter Start Date" id="date" path="startdate" /><form:errors path="startdate" cssClass="error"/></h4></td></tr>
 <tr><td align="right"><h4>End Date :</td><td><form:input placeholder="Enter End Date" id="datepicker" path="enddate"/><form:errors path="enddate" cssClass="error"/></h4></td></tr>
 
- 
-<tr><td align="center"><input type="submit" value="Create" class="login login-submit"/></td></tr>           
-</table >
+<tr><td align="right"><h4>Type of Assessment:</td><td><form:input placeholder="Initial/Confirmatory" name="type" path=""/></h4></td></tr> 
+
+<tr><td align="right"><h4>Regulation Compliance:</td><td><form:input placeholder="PCIDSS/HIPPA" name="complience" path=""/></h4></td></tr> 
+
+<tr><td align="right"><h4>Pre-requisites:</td><td><form:input placeholder="URL/Credentials/SourceCode" name="prerequisites" path=""/></h4></td></tr> 
+
+<tr><td align="right"><h4>Whitelisting Confirmation:</td><td><form:input placeholder="Yes/No" name="whitelisting" path=""/></h4></td></tr> 
+
+<tr><td align="right"><h4>Scope/Other Details :</td><td><form:textarea rows="3" cols="40" path="" name="description"/></h4></td></tr>
+<br>
+<tr><td align="right"><input type="submit" value="Create" class="login login-submit"/></td></tr>           
+</table>
 </div>
 </form:form>
 

@@ -193,7 +193,7 @@ window.onload = function () {
 	var chart = new CanvasJS.Chart("chartContainer",
 	{
 		title:{
-			text: "Project Status graph"
+			text: "Project Status Graph"
 		},
                 animationEnabled: true,
 		legend:{
@@ -213,7 +213,6 @@ window.onload = function () {
 			showInLegend: true,
 			toolTipContent:"{legendText} {y}",
 			dataPoints: [
-				{  y: "${All_proj}", legendText:"Total projects", label: "Total projects" },
 				{  y: "${Completed_proj}", legendText:"Projects Completed", label: "Projects Completed" },
 				{  y: "${Progress_proj}", legendText:"Projects In Progress", label: "Projects In Progress" },
 				{  y: "${New_proj}", legendText:"New Projects" , label: "New Projects"},       

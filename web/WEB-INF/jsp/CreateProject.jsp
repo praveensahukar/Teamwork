@@ -210,18 +210,12 @@ font-style: italic;
     
     <script>
         
-    function sanitize() {
-        
+    function sanitize() {     
     var $input = $("#revenue").val();
-    alert(12);
-    alert($input);
     $x=$input.replace(/,/g , ''); 
-    alert($x);
     $y = parseInt($x,10);
     $('#revenue').val($y);
-    alert($y);
     document.getElementById("form").submit();
-    
     $("#form").trigger('reset');
 }     
     </script>
@@ -242,7 +236,7 @@ font-style: italic;
 
 <tr><td align="right"><h4>Company :</td>
     <td><form:select path="companyid">
-    <option class="login login-submit" value="">None</option>
+    <option class="login login-submit" value="">Select</option>
 	           <c:forEach  items="${AllCompany}" var="company"> 
 	           <form:option class="login login-submit" value="${company.companyid}">${company.companyname}</form:option>
 	           </c:forEach>
@@ -253,7 +247,7 @@ font-style: italic;
 
 <tr><td align="right"><h4>Delivery Manager :</td>
     <td><form:select  path="deliverymanager" itemLabel="Select"> 
-         <option class="login login-submit" value="">None</option>
+         <option class="login login-submit" value="">Select</option>
 	  <c:forEach items="${AllDManagers}" var="dmanager">     
 	  <option class="login login-submit" value="${dmanager.userid}">${dmanager.username}</option>
 	  </c:forEach>
@@ -264,7 +258,7 @@ font-style: italic;
 
 <tr><td align="right"><h4>Project Manager :</td>
     <td><form:select  path="projectmanager" itemLabel="Select"> 
-         <option class="login login-submit" value="">None</option>
+         <option class="login login-submit" value="">Select</option>
 	  <c:forEach items="${AllPManagers}" var="pmanager">     
 	  <option class="login login-submit" value="${pmanager.userid}">${pmanager.username}</option>
 	  </c:forEach>

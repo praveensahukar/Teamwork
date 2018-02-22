@@ -47,7 +47,7 @@ public class UserDAOImpl implements UserDAO{
 		}
 	}
         
-    @Override
+   @Override
     public List getAvailableEngineers(Date projStartDate, Date projEndDate)
     {
         
@@ -55,7 +55,7 @@ public class UserDAOImpl implements UserDAO{
 	Transaction tx;
 		tx = session1.beginTransaction();
 		
-                String SQL_QUERY1= "select distinct engineerId from AllocationBean AB where AB.allocationStartdate > :projstartdate and AB.allocationEndenddate < :projenddate";
+                String SQL_QUERY1= "select distinct userid from ActivityTransactionBean PB where PB.taskenddate > :projstartdate and PB.taskstartdate < :projenddate";
                 Query query = session1.createQuery(SQL_QUERY1);
                 query.setParameter("projstartdate",projStartDate);
                 query.setParameter("projenddate",projEndDate);

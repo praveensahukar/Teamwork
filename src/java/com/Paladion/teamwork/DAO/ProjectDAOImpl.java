@@ -8,6 +8,7 @@ package com.Paladion.teamwork.DAO;
 import com.Paladion.teamwork.beans.ActivityTransactionBean;
 import com.Paladion.teamwork.beans.ProjectBean;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -63,20 +64,20 @@ public class ProjectDAOImpl implements ProjectDAO {
     
     
      @Override
-       public String getProjectOPID(int projectid){
+       public ProjectBean getProjectOPID(int projectid){
         
            List<ProjectBean> PList;
-           Transaction tx = null;
 	   Session session1 = sessionFactory.getCurrentSession();
-           tx = session1.beginTransaction();
+           Transaction tx = session1.beginTransaction();
            Criteria criteria = session1.createCriteria(ProjectBean.class);
            criteria.add(Restrictions.eq("projectid", projectid));
            criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 	   PList = criteria.list();
            tx.commit();
-       
-           for(ProjectBean PB: PList){
-               return PB.getOpid();
+           if(1 == PList.size())
+           {
+           Iterator iter = PList.iterator();
+           return (ProjectBean)iter.next();
            }
            return null;
     }

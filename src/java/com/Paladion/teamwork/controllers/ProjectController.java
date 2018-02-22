@@ -69,7 +69,7 @@ public class ProjectController {
 	try{
               model.addObject("AllCompany", CS.getAllCompany());
               model.addObject("AllDManagers", CU.getUsersByRole("manager",sess));
-              model.addObject("AllPManagers", CU.getUsersByRole("manager",sess));
+              model.addObject("AllPManagers", CU.getUsersByRole("pmanager",sess));
 	}
         catch(Exception ex){}
 	return model;
@@ -88,11 +88,17 @@ public class ProjectController {
             System.out.println("error!!!!!!!!");
             return new ModelAndView("CreateCompany");
         }
-        
-	System.out.println("\n inside create company method ");
-        PB.getRevenue();
 	PS.addProject(PB);
-	System.out.println("Project Created with projectid "+PB.getProjectid());
+        System.out.println("Project Created with projectid "+PB.getProjectid());
+        HttpSession sess=req.getSession(false);
+        ModelAndView model=new ModelAndView("CreateProject");
+	try{
+              model.addObject("AllCompany", CS.getAllCompany());
+              model.addObject("AllDManagers", CU.getUsersByRole("manager",sess));
+              model.addObject("AllPManagers", CU.getUsersByRole("pmanager",sess));
+	}
+        catch(Exception ex){}
+	
 	return new ModelAndView( "CreateProject","Message","Project Created Successfully"  );  
     }	
     

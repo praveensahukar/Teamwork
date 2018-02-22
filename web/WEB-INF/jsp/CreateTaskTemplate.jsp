@@ -2,9 +2,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <link rel="icon" href="Network-Security.png" type="image/x-icon">
-<!DOCTYPE html>
-<html lang="en">
-<head>
+
 <script src="jquery-1.12.4.js"></script>
 <script src="canvasjs.min.js"></script>
 <script src="jquery-2.1.1.js"></script>
@@ -93,19 +91,18 @@ li a:hover:not(.active) {
 </style><style>
 @import url(http://fonts.googleapis.com/css?family=Roboto:400,100);
 body {
-
-	background-image: url("grey.jpg");
-  background-repeat: repeat-y;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  font-family: 'Roboto', sans-serif;
+    background-image: url("grey.jpg");
+    background-repeat: repeat-y;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    font-family: 'Roboto', sans-serif;
 }
 .login-card {
   padding: 40px;
   width: 1420px;
-  height: 550px;
+  height: 570px;
   background-color: #F7F7F7;
   margin: 0 auto 10px;
   border-radius: 2px;
@@ -228,23 +225,22 @@ table.dataTable thead th:first-child {
   overflow: auto;
 }      
 </style>        
-        </head>
+</head>
+<%@include file="Header.jsp" %>
 <body>
-        <%@include file="Header.jsp" %>
-        
-        
-        <div class="login-card">
-        
-        <h2>Create Task Template</h2>
  
+ <div class="login-card">
+ <h2>Create Activity Template</h2>
 <form:form name="selection" action="CreateTaskTemplate.do" method="post" modelAttribute="TemplateM" onSubmit="return selectAll()"> 
     <table>
     <tr><td ><h4>Template Name:</td><td>   <form:input placeholder="Enter template name" name="t1"  path="templatename" /> </h4></td></tr>     
     <form:errors path="templatename" cssClass="error"/>
     <br><br>
-     <tr><td ><h4>Description:  </td><td>   <form:input placeholder="Enter description" name="t2"  path="templateDesc" /></h4></td></tr>
+     <tr><td><h4>Description:  </td><td>   <form:textarea rows="3" cols="40" name="t2" path="templateDesc" /></h4></td></tr>
     <form:errors path="templateDesc" cssClass="error"/>
      <br><br>
+    </table>
+     <table>
     
    <tr><td> <select  multiple size="10" id="from">
         <c:forEach  items="${AllTasks}" var="task">

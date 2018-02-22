@@ -278,23 +278,17 @@ body {
     <body>
     
   <%@include file="Header.jsp" %>
-  
-  
-  
-   
-   
-        
  
    
     <div class="login-card" >
-        <div align="center">  <h3 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">Project Details</h3></div>
+        <div align="center">  <h3 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">Activity Details</h3></div>
 	<div class="right">
             
             
     <table border="1">
         <thead>
             <tr>
-                <td colspan="2"><h4 style="color: grey; font-size: 15px"><g style="color:black">Project Name:</g> ${fn:escapeXml(ProjectData.activityname)}</h2></td>
+                <td colspan="2"><h4 style="color: grey; font-size: 15px"><g style="color:black">Activity:</g> ${fn:escapeXml(ProjectData.activityname)}</h2></td>
             </tr>
         </thead>
         
@@ -321,15 +315,11 @@ body {
         <br>
 	</div>
 
-
-        
-             
-        
+   
        <div class="scrollingtable">
 		<div>
 			<div>
-                            
-                            
+                                                       
 <fmt:formatDate value="${ProjectTaskList.enddate}" var="AEDate" type="both" dateStyle = "short" timeStyle = "short" />
     <table border="1">
         <thead>

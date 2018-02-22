@@ -313,7 +313,7 @@ body {
     <div class="scrollingtable">
 		<div>
 			<div>
-    <table>
+    <table width="50%">
         <thead>
             <tr bgcolor="#a6a6a6">
                 <th><div label="Company Name"></div> </th>

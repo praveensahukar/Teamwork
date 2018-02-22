@@ -164,7 +164,7 @@ body {
 
 .login-help {
   width: 100%;
-  text-align: center;
+  text-align: left;
   font-size: 12px;
 }
 
@@ -172,7 +172,7 @@ body {
 
 table {
     border-collapse: collapse;
-    width: 100%;
+    width: 70%;
 }
 
 th, td {
@@ -200,8 +200,7 @@ form.reset();
     
     <div class="login-card">
 	   <div align="left">  <h2 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">Create Task</h2><br></div>
-
-	   <form:form action="CreateTask.do" method="post" modelAttribute="TaskM" id="taskform">
+<form:form action="CreateTask.do" method="post" modelAttribute="TaskM" id="taskform">
 <table>
 
 <tr><td align="center"><h4>Task Name:</td><td><form:input placeholder="Enter Task Name" path="taskname" /></h4></td></tr>    

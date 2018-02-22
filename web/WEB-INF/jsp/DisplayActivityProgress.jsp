@@ -272,29 +272,22 @@ body {
 
 
 
-<title>Project Progress</title>
+<title>Activity Progress</title>
 
 </head>
     <body>
     
   <%@include file="Header.jsp" %>
-  
-  
-  
-   
-   
-        
- 
    
     <div class="login-card" >
-        <div align="center">  <h3 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">Project Details</h3></div>
+        <div align="center">  <h3 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">Activity Details</h3></div>
 	<div class="right">
             
             
     <table border="1">
         <thead>
             <tr>
-                <td colspan="2"><h4 style="color: grey; font-size: 15px"><g style="color:black">Project Name:</g> ${fn:escapeXml(ProjectData.activityname)}</h2></td>
+                <td colspan="2"><h4 style="color: grey; font-size: 15px"><g style="color:black">Activity Name:</g> ${fn:escapeXml(ProjectData.activityname)}</h2></td>
             </tr>
         </thead>
         
@@ -321,15 +314,10 @@ body {
         <br>
 	</div>
 
-
-        
-             
-        
        <div class="scrollingtable">
 		<div>
 			<div>
-                            
-                            
+                                                        
 <fmt:formatDate value="${ProjectTaskList.enddate}" var="AEDate" type="both" dateStyle = "short" timeStyle = "short" />
     <table border="1">
         <thead>
@@ -354,8 +342,6 @@ body {
         
         <fmt:formatDate value="${ProjectTaskList.startdate}" var="ASDate" type="both" dateStyle = "short" timeStyle = "short"/>
         <fmt:formatDate value="${ProjectTaskList.enddate}" var="AEDate" type="both" dateStyle = "short" timeStyle = "short" />
-        
-        
         
         <tr> 
             <td style="color: black">${fn:escapeXml(ProjectTaskList.taskname)}</td>
@@ -390,9 +376,6 @@ body {
          </tbody>
 </table>
        
-
-
-
 
                         </div>
         <a href="/TeamWorkAlpha/uploadfiles.do?pid=${ProjectData.activityid}" 

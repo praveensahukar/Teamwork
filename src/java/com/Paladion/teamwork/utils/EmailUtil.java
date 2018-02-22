@@ -69,10 +69,11 @@ public boolean sendEmail(EmailBean ebean, SystemBean syssetting)
 			message.setRecipients(Message.RecipientType.TO,
 					InternetAddress.parse(ebean.getTo()));
 			message.setSubject(ebean.getSubject());
+                        message.setContent(ebean.getMessage(),"text/html");
 			//message.setText("Dear Mail Crawler," +
 					//"\n\n No spam to my email, please!");
 			
-			message.setText(ebean.getMessage());
+			//message.setText(ebean.getMessage());
 
 			Transport.send(message);
 
