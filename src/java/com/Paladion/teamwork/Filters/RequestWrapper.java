@@ -16,7 +16,8 @@ public final class RequestWrapper extends HttpServletRequestWrapper {
 	}
 
 	public String[] getParameterValues(String parameter) {
-		
+            
+            try{
 		String[] values = super.getParameterValues(parameter);
 		if (values == null) {
 			return null;
@@ -27,29 +28,45 @@ public final class RequestWrapper extends HttpServletRequestWrapper {
 			encodedValues[i] = cleanXSS(values[i]);
 		}
 		return encodedValues;
+            }
+            catch(Exception ex){
+                ex.printStackTrace();
+                return null;
+            }
 	}
 
 	public String getParameter(String parameter) {
 		
+            try{
 		String value = super.getParameter(parameter);
 		if (value == null) {
 			return null;
 		}
 		
 		return cleanXSS(value);
+            }
+            catch(Exception ex){
+                ex.printStackTrace();
+                return null;
+            }
 	}
 
 	public String getHeader(String name) {
-		
+		try{
 		String value = super.getHeader(name);
 		if (value == null)
 			return null;
 		
 		return cleanXSS(value);
+                }
+                catch(Exception ex){
+                    ex.printStackTrace();
+                    return null;
+                }
 	}
 
 	private String cleanXSS(String value) {
-		
+		try{
 		value = value.replaceAll("<", "& lt;").replaceAll(">", "& gt;");
 		value = value.replaceAll("\\(", "& #40;").replaceAll("\\)", "& #41;");
 		value = value.replaceAll("'", "&#39;");
@@ -62,5 +79,10 @@ public final class RequestWrapper extends HttpServletRequestWrapper {
 		//value = value.replaceAll("(", "");
 		//value = value.replaceAll(")", "");
 		return value;
+                }
+                catch(Exception ex){
+                    ex.printStackTrace();
+                    return null;
+                }
 	}
 }

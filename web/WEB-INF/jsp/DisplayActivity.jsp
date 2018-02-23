@@ -344,7 +344,7 @@ html {
          
 
         <div class="login-card">
-	   <div align="left">  <h2 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">All Projects</h2><br></div>
+	   <div align="left">  <h2 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">All Activities</h2><br></div>
            <div align="right" style="top: 10px"> <button  class="login login-submit" id="btnExport" onclick="fnExcelReport();"> EXPORT TO EXCEL </button></div>
      
            <div class="scrollingtable">

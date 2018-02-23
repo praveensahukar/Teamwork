@@ -24,7 +24,7 @@ public class CSRFTokenValidator implements Filter  {
         //chain.doFilter(request, response);
         
         //Uncomment the below code and comment the above the line at line 24
-        
+        try{
         HttpServletRequest httpReq = (HttpServletRequest) request;
         HttpServletResponse res=(HttpServletResponse)response;
         String url = httpReq.getRequestURL().toString();
@@ -49,8 +49,12 @@ public class CSRFTokenValidator implements Filter  {
                 sess.invalidate();
                 res.sendRedirect("Login.do");
             }
+          }
         }
-     }
+        catch(Exception ex){
+            ex.printStackTrace();
+        }
+    }
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {

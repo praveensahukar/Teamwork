@@ -56,6 +56,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import com.Paladion.teamwork.services.ActivityService;
 import com.Paladion.teamwork.services.ProjectService;
+import com.Paladion.teamwork.services.TaskService;
 
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
@@ -84,6 +85,10 @@ public class ActivityController {
 @Autowired
 @Qualifier(value="TemplateService")
 TemplateService TS;
+
+@Autowired
+@Qualifier(value="TaskService")
+TaskService TaskS;
 
 @Autowired
 @Qualifier(value="CommonUtil")
@@ -128,6 +133,12 @@ public ActivityBean populate()
     return new ActivityBean();
 }
 
+@ModelAttribute("ActivityTB")
+public ActivityTransactionBean populateATB()
+{
+    return new ActivityTransactionBean();
+}
+
 @ModelAttribute("AllocationB")
 public AllocationBean populateBean()
 {
@@ -144,50 +155,49 @@ public fileuploadBean populate1()
     @RequestMapping(value="/CreateActivity",method=RequestMethod.GET)
     public ModelAndView CreateActivity(HttpServletRequest req)
     {   
+        try
+        {
         String[] authorizedRoles = {"admin","manager","lead","scheduling"};
         if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
         
         HttpSession sess=req.getSession(false);
 	ModelAndView model=new ModelAndView("CreateActivity");
-	try{
+	
             model.addObject("AllTemplates", TS.getAllTemplates());
             model.addObject("AllLeads", CU.getUsersByRole("lead",sess));
             model.addObject("AllTeams",  TeamS.getAllTeams());
-            model.addObject("AllProjects",PS.getAllProjects());
-            
+            model.addObject("AllProjects",PS.getAllProjects());  
+            return model;
 	}
-        
-        
-        catch(Exception ex){}
-	return model;
-        
+        catch(Exception ex){
+        ex.printStackTrace();
+        return null;
+        }   
     }
     
     
     @RequestMapping(value="/getEngineers",method=RequestMethod.POST)
     public @ResponseBody ModelAndView getEngineers(@ModelAttribute("ProjectM") ActivityBean AB,  HttpServletRequest req, HttpServletResponse response)
     {   
+        try{ 
         String[] authorizedRoles = {"admin","manager","lead","scheduling"};
         if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
        
         HttpSession sess=req.getSession(false);
-	  
-	try{ 
-            List<UserDataBean> availableEngineers = US.getAvailableEngineers(AB.getStartdate(),AB.getEnddate(),CU.getUsersByRole("engineer", sess));
-            AB.setLead(CU.getUsernameFromSession(AB.getLeadid(), sess));
-            List <TemplateBean> TemplateList = TS.getAllTemplates();
-            ModelAndView model=new ModelAndView("SelectEngineers");
-            model.addObject("engineers",availableEngineers);
-            model.addObject("AllTemplates", TemplateList);
-            model.addObject("activitybean", AB);
-            return model;
-	 }
+	List<UserDataBean> availableEngineers = US.getAvailableEngineers(AB.getStartdate(),AB.getEnddate(),CU.getUsersByRole("engineer", sess));
+        AB.setLead(CU.getUsernameFromSession(AB.getLeadid(), sess));
+        List <TemplateBean> TemplateList = TS.getAllTemplates();
+        ModelAndView model=new ModelAndView("SelectEngineers");
+        model.addObject("engineers",availableEngineers);
+        model.addObject("AllTemplates", TemplateList);
+        model.addObject("activitybean", AB);
+        return model;
+	}
         
         catch(Exception ex){
-      ex.printStackTrace();
+            ex.printStackTrace();
+            return null;
         }
-	
-        return null;
     }
     
     
@@ -197,109 +207,103 @@ public fileuploadBean populate1()
         @RequestMapping(value="/ScheduleActivity",method=RequestMethod.POST)
     public Object CreateNewProject(@ModelAttribute("ProjectM")ActivityBean AB, HttpServletRequest req,Model E) throws Exception
     {
-        String[] authorizedRoles = {"admin","manager","lead","scheduling"};
-        if(!CU.checkUserAuthorization(authorizedRoles, req))  return new ModelAndView("Error");
-       
         HttpSession sess= req.getSession(false);
         ModelAndView results = null;
         List <TemplateBean> TemplateList;
         List <UserDataBean> LeadList;
-           try{
-//                if (result.hasErrors()) {
-//                    //validates the user input, this is server side validation
-//                    System.out.println("error!!!!!!!!");
-//                    ModelAndView model=new ModelAndView("CreateActivity");
-//                    try{
-//                        TemplateList=TS.getAllTemplates();
-//                        LeadList=CU.getUsersByRole("lead",sess);
-//                        model.addObject("AllTemplates", TemplateList);
-//                        model.addObject("AllLeads", LeadList);
-//                        model.addObject("AllTeams",  TeamS.getAllTeams());
-//                        model.addObject("AllProjects",PS.getAllProjects());
-//                        return model;
-//                    }
-//                    catch(Exception ex){
-//                    return new ModelAndView("Error");
-//                    }                    
-//                }
+        try{
+        String[] authorizedRoles = {"admin","manager","lead","scheduling"};
+        if(!CU.checkUserAuthorization(authorizedRoles, req))  return new ModelAndView("Error");
+       
+//        if (result.hasErrors()) {
+//            //validates the user input, this is server side validation
+//            System.out.println("error!!!!!!!!");
+//            ModelAndView model=new ModelAndView("CreateActivity");
+//            try{
+//                TemplateList=TS.getAllTemplates();
+//                LeadList=CU.getUsersByRole("lead",sess);
+//                model.addObject("AllTemplates", TemplateList);
+//                model.addObject("AllLeads", LeadList);
+//                model.addObject("AllTeams",  TeamS.getAllTeams());
+//                model.addObject("AllProjects",PS.getAllProjects());
+//                return model;
+//            }
+//            catch(Exception ex){
+//            return new ModelAndView("Error");
+//            }                    
+//        }
 	    
-                System.out.println("\n inside create Project POST method ");
-                AB.setMandays(CU.getWorkingDays(AB.getStartdate(),AB.getEnddate()));
-                AB.setStatus("New");
+        System.out.println("\n inside create Project POST method ");
+        AB.setMandays(CU.getWorkingDays(AB.getStartdate(),AB.getEnddate()));
+        AB.setStatus("New");
                
-                ProjectBean PB= PS.getProjectOPID(AB.getProjectid());
-                AB.setOpid(PB.getOpid());
+        ProjectBean PB= PS.getProjectOPID(AB.getProjectid());
+        AB.setOpid(PB.getOpid());
                 
-                AS.addProject(AB);
-                AllocationBean AloB = new AllocationBean();
+        AS.addProject(AB);
+        AllocationBean AloB = new AllocationBean();
                 
-                AloB.setActivityId(AB.getActivityid());
-                AloB.setAllocationStartdate(AB.getStartdate());
-                AloB.setAllocationEndenddate(AB.getEnddate());
-                AloB.setStatus("Allocated");
-                AloB.setEngineerId(AB.getEngtracker());
+        AloB.setActivityId(AB.getActivityid());
+        AloB.setAllocationStartdate(AB.getStartdate());
+        AloB.setAllocationEndenddate(AB.getEnddate());
+        AloB.setStatus("Allocated");
+        AloB.setEngineerId(AB.getEngtracker());
                 
-                if(AS.allocateResource(AloB)==true){
+        if(AS.allocateResource(AloB)!=true){
                     
-                }
+        }
                 
-                SystemBean sys=Aservice.getSystemSettings();
-                CU.sendSchedulingMailToLead(AB, req.getSession(false), PB);
-                System.out.println("Project Created with Project id"+AB.getActivityid());
-                System.out.println("Man days :"+AB.getMandays());
-                UserDataBean sessuser=(UserDataBean) sess.getAttribute("Luser");
+        SystemBean sys=Aservice.getSystemSettings();
+       // CU.sendSchedulingMailToLead(AB, req.getSession(false), PB);
+        System.out.println("Project Created with Project id"+AB.getActivityid());
+        System.out.println("Man days :"+AB.getMandays());
+        UserDataBean sessuser=(UserDataBean) sess.getAttribute("Luser");
                 
-                if(sessuser.getRole().equalsIgnoreCase("scheduling")){
-                    
-                return new ModelAndView("Welcome","Message","Activity has been scheduled");
-                }
-            }
-            catch(Exception ex){
-                //ex.printStackTrace();
-                TemplateList=TS.getAllTemplates();
-                LeadList=CU.getUsersByRole("lead",sess);   
-                results = new ModelAndView("CreateActivity","Message","Activity Creation failed due to an error");
-                results.addObject("AllTemplates", TemplateList);
-                results.addObject("AllLeads", LeadList);
-                results.addObject("AllTeams",  TeamS.getAllTeams());
-                return results;
-            }
+        if(sessuser.getRole().equalsIgnoreCase("scheduling")){
+            return new ModelAndView("Welcome","Message","Activity has been scheduled");
+        }
            
-            ActivityTransactionWrapper PTW=new ActivityTransactionWrapper();
-            List<ActivityTransactionBean> PSBList;
-            List<ActivityTransactionBean> PTBList1;
-            ActivityBean PRDATA=AS.getProjectById(AB.getActivityid());
-            List<MapTemplateTaskBean> MTTB=TS.getAllWeights(PRDATA.getTemplateid());
+        ActivityTransactionWrapper PTW=new ActivityTransactionWrapper();
+        List<ActivityTransactionBean> PSBList;
+        List<ActivityTransactionBean> PTBList1;
+        ActivityBean PRDATA=AS.getProjectById(AB.getActivityid());
+        List<MapTemplateTaskBean> MTTB=TS.getAllWeights(PRDATA.getTemplateid());
             
-            UserDataBean engBean = CU.getUserById(AB.getEngtracker(), sess);
+        UserDataBean engBean = CU.getUserById(AB.getEngtracker(), sess);
             
-            PSBList=  CU.setTaskHours(PRDATA, MTTB);
-            PTW.setProjectlist(PSBList);
-            for(ActivityTransactionBean PTB: PSBList){
-                PTB.setUserid(engBean.getUserid());
-                PTB.setEngname(engBean.getUsername());
-               
-            }
+        PSBList=  CU.setTaskHours(PRDATA, MTTB);
+        PTW.setProjectlist(PSBList);
+        for(ActivityTransactionBean PTB: PSBList){
+            PTB.setUserid(engBean.getUserid());
+            PTB.setEngname(engBean.getUsername());
+        }
             
-            PTBList1= CU.updateProjectTransaction(PSBList, PRDATA,req.getSession(false));
+        PTBList1= CU.updateProjectTransaction(PSBList, PRDATA,req.getSession(false));
           
         AS.insertProjectTransaction(PTBList1);
             
-//            results=new ModelAndView("AssignTaskToUsers");
-//            //Engineer Availability Code Starts
-//           
-//             List<UserDataBean> availableEngineers = US.getAvailableEngineers(AB.getStartdate(), AB.getEnddate(),CU.getUsersByRole("engineer", sess));
-//             
-//             
-//            //Engineer Availability Code Ends
-//            
-//            results.addObject("AllEngineers",availableEngineers);
-//            results.addObject("ProjectW",PTW);
+//      results=new ModelAndView("AssignTaskToUsers");
+//      //Engineer Availability Code Starts           
+//      List<UserDataBean> availableEngineers = US.getAvailableEngineers(AB.getStartdate(), AB.getEnddate(),CU.getUsersByRole("engineer", sess));
+//      Engineer Availability Code Ends
+//      results.addObject("AllEngineers",availableEngineers);
+//      results.addObject("ProjectW",PTW);
 
-            results=new ModelAndView("DisplayActivityProgress");
-           results.addObject("ProjectData",PRDATA);
-           results.addObject("TaskDetails",PTBList1);
-           return results;
+        results=new ModelAndView("DisplayActivityProgress");
+        results.addObject("ProjectData",PRDATA);
+        results.addObject("TaskDetails",PTBList1);
+        return results;
+    }
+    catch(Exception ex){
+        ex.printStackTrace();
+        TemplateList=TS.getAllTemplates();
+        LeadList=CU.getUsersByRole("lead",sess);   
+        results = new ModelAndView("CreateActivity","Message","Activity Creation failed due to an error");
+        results.addObject("AllTemplates", TemplateList);
+        results.addObject("AllLeads", LeadList);
+        results.addObject("AllTeams",  TeamS.getAllTeams());
+        return results;
+    }
         
     }
     
@@ -458,17 +462,17 @@ public fileuploadBean populate1()
 @RequestMapping(value="/uploadfiles",method=RequestMethod.GET)
 public ModelAndView uploaddocs(@RequestParam String pid,HttpServletRequest req)
 {
-HttpSession sess=req.getSession();
-sess.setAttribute("uploadPID", pid);
-return new ModelAndView("DocumentUpload","SysSettings",Aservice.getSystemSettings());
+    HttpSession sess=req.getSession();
+    sess.setAttribute("uploadPID", pid);
+    return new ModelAndView("DocumentUpload","SysSettings",Aservice.getSystemSettings());
 }
 
 
 @RequestMapping(value="/uploadfiles",method=RequestMethod.POST)    
 public ModelAndView uploaddocstoProject(HttpServletRequest req,@ModelAttribute fileuploadBean filebean,Model model)
     {
-        String[] authorizedRoles = {"admin","manager","lead","engineer"};
-        if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
+    String[] authorizedRoles = {"admin","manager","lead","engineer"};
+    if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
         
     HttpSession sess=req.getSession();    
     String PID=(String) sess.getAttribute("uploadPID");    
@@ -509,37 +513,38 @@ public void  Downloadfiles(HttpServletRequest req,Model model,HttpServletRespons
     File downloadfile = new File(filepath+File.separator+"files"+File.separator+PID);
     System.out.println("folder " + downloadfile.toString());
     String sourceFolderName =  downloadfile.toString();
-        String outputFileName = downloadfile.toString()+".zip";
+    String outputFileName = downloadfile.toString()+".zip";
  
-        FileOutputStream fos = new FileOutputStream(outputFileName);
-        ZipOutputStream zos = new ZipOutputStream(fos);
-        //level - the compression level (0-9)
-        zos.setLevel(9);
+    FileOutputStream fos = new FileOutputStream(outputFileName);
+    ZipOutputStream zos = new ZipOutputStream(fos);
+    //level - the compression level (0-9)
+    zos.setLevel(9);
  
-        System.out.println("Begin to compress folder : " + sourceFolderName + " to " + outputFileName);
-        addFolder(zos, sourceFolderName, sourceFolderName);
+    System.out.println("Begin to compress folder : " + sourceFolderName + " to " + outputFileName);
+    addFolder(zos, sourceFolderName, sourceFolderName);
  
-        zos.close();
-        System.out.println("Program ended successfully!");
-        //file download
+    zos.close();
+    System.out.println("Program ended successfully!");
+    //file download
         
         
-String downloadFolder = downloadfile.toString();
-String filename1=downloadfile.toString()+".zip";
-Path file = Paths.get(filename1);
-  if (Files.exists(file)) {
-   response.setContentType("application/zip");
-   response.addHeader("Content-Disposition", "attachment; filename=" + filename1);
-   try {
-    Files.copy(file, response.getOutputStream());
-    response.getOutputStream().flush();
-   } catch (IOException e) {
-    System.out.println("Error :- " + e.getMessage());
-   }
-  } else {
-   System.out.println("Sorry File not found!!!!");
-  }
-   //file download        
+    String downloadFolder = downloadfile.toString();
+    String filename1=downloadfile.toString()+".zip";
+    Path file = Paths.get(filename1);
+    if (Files.exists(file)) {
+    response.setContentType("application/zip");
+    response.addHeader("Content-Disposition", "attachment; filename=" + filename1);
+    try {
+        Files.copy(file, response.getOutputStream());
+        response.getOutputStream().flush();
+    } catch (IOException e) {
+        System.out.println("Error :- " + e.getMessage());
+    }
+    } 
+    else {
+    System.out.println("Sorry File not found!!!!");
+    }
+    //file download        
         
     }
  
@@ -751,5 +756,72 @@ return new ModelAndView("downloadDocuments","SysSettings",Aservice.getSystemSett
         return new ModelAndView("Error","Message","Something Went Wrong");
     }
     }
+    
+    
+    @RequestMapping(value="/addActivityTask",method=RequestMethod.GET)
+    public ModelAndView addActivityTask(@ModelAttribute("ActivityTB") ActivityTransactionBean ATB, HttpServletRequest req)
+    {   
+        try
+        {
+        String[] authorizedRoles = {"admin","manager","lead"};
+        if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
+        
+        HttpSession sess=req.getSession(false); 
+        String aID= req.getParameter("activityId");
+        int activityID = Integer.parseInt(aID);
+        
+        ActivityBean AB = AS.getProjectById(activityID);
+        UserDataBean eng = CU.getUserById(AB.getEngtracker(), sess);
+        List<UserDataBean> availableEngineers = US.getAvailableEngineers(AB.getStartdate(),AB.getEnddate(),CU.getUsersByRole("engineer", sess));
+        availableEngineers.add(eng);
+       
+	ModelAndView model=new ModelAndView("addTasktoActivity");
+	
+        model.addObject("AllTasks", TaskS.getAllTasks());
+        model.addObject("AllEngineers", availableEngineers);
+        model.addObject("ActivityId",AB.getActivityid());
+        return model;
+	}
+        catch(Exception ex){
+        ex.printStackTrace();
+        return null;
+        }   
+    }
+    
+    @RequestMapping(value="/addActivityTask",method=RequestMethod.POST)
+    public ModelAndView addTasktoActivity(HttpServletRequest req, @ModelAttribute("ActivityTB") ActivityTransactionBean ATB)
+    {   
+        try
+        {
+        String[] authorizedRoles = {"admin","manager","lead"};
+        if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
+        
+        HttpSession sess=req.getSession(false); 
+        
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+        String defaultDate = "1990-01-01 00:00:00";
+        Date parsedDate = formatter.parse(defaultDate);
+        
+        UserDataBean eng = CU.getUserById(ATB.getUserid(), sess);
+        ATB.setEngname(eng.getUsername());
+        ATB.setStatus("New");
+        ATB.setStartdate(parsedDate);
+        ATB.setEnddate(parsedDate);
+        List <ActivityTransactionBean> PTBList=new ArrayList<ActivityTransactionBean>();
+        PTBList.add(ATB);
+        
+        AS.insertProjectTransaction(PTBList);
+       
+	ModelAndView model=new ModelAndView("addTasktoActivity");
+	
+        
+        return model;
+	}
+        catch(Exception ex){
+        ex.printStackTrace();
+        return null;
+        }   
+    }
+    
     
 }

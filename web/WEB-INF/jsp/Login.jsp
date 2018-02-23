@@ -168,10 +168,10 @@ font-style: italic;
         Password:<form:password path="password" placeholder="Enter the password"/><br>
         <form:errors path="password" cssClass="error"/>
         <input type="hidden" name="csrfPreventionSalt" value="<c:out value='${csrfPreventionSalt}'/>"/>
-        <%
+<!--        <%
           ReCaptcha c = ReCaptchaFactory.newReCaptcha("6LdILiQUAAAAADnLG0a6cHtsTag3ey10y652yvGK", "6LdlHOsSAAAAACe2WYaGCjU2sc95EZqCI9wLcLXY", true);
           out.print(c.createRecaptchaHtml(null, null));
-          %> 
+          %> -->
         <div align="left"><button type="submit" name=login value="Login"class="login login-submit">Login</button></div><br>
 	   
         

@@ -69,7 +69,7 @@ body {
 .login-card {
   padding: 40px;
   width: 1420px;
-  height: 850px;
+  height: 550px;
    background-color: white;
   margin: 0 auto 10px;
   border-radius: 2px;
@@ -91,7 +91,7 @@ body {
 .login-card input[type=text], input[type=password] {
   height: 44px;
   font-size: 16px;
-  width: 30%;
+  width: 90%;
   margin-bottom: 10px;
   -webkit-appearance: none;
   background: #fff;
@@ -156,7 +156,7 @@ body {
 }
 table {
     border-collapse: collapse;
-    width: 100%;
+    width: 50%;
     color: #ff0000;
     border-color: white;
     align-items: center;
@@ -168,147 +168,66 @@ th {
 color: black;
 font-style: italic;
 }
-</style>
-
- <script >  
-   function doAjaxPost() {  
-       
-       
-    var sdate = $('#date').val();  
-    var edate = $('#datepicker').val();  
-    var team = $('#team').val();
-    var csrfPreventionSalt = $('#token').val();
-    alert(csrfPreventionSalt);
-    
-    if(!team)
-    {
-        alert("Select Team!!"); 
-        return; 
-    }
-    
-    if(!sdate)
-    {
-        alert("Select Start Date!!"); 
-        return; 
-    }
-    
-    if(!edate)
-    {
-        alert("Select End Date!!"); 
-        return; 
-    }
-    
-    var dropdown = $('#engineers');
-    
-    
-   $.ajax({
-     dataType : 'json',
-     type : "Post",   
-     url : "getEngineers.do",   
-     data : "sdate=" + sdate + "&edate=" + edate + "&team=" + team + "&AntiCSRFToken=" + csrfPreventionSalt,  
-     success : function(data){
-         alert(data);
-            var users = JSON.parse(data);
-              alert(users);
-              
-              $.each(data.users,function(i,obj)
-                {
-                        $.each(obj, function (key, val) {
-                        alert(key + val);
-                        });
-                });
-            }
-            ,  
-     error : function(e) {  
-      alert('Error: ' + e);   
-     }  
-    }); 
-   }  
- </script>  
-    
-    
-    
-    
-    
-  <title>Schedule Activity</title>
-    </head>
-    <body>
-
+</style> 
+ 
+  <title>Add Task to Activity</title>
+  </head>
+<body>
 <%@include file="Header.jsp"%>
-	   <div class="login-card">
-	   <div align="center">  <h2 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">Schedule Activity</h2></div>
-<form:form action="getEngineers.do" method="post" commandName="ProjectM">
-<div align="center">
+<div class="login-card">
+<div align="left">  <h2 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">Add Task to Activity</h2></div>
+    <form:form action="addActivityTask.do" method="post" commandName="ActivityTB">
+    <div align="left">
     <input type="hidden" name="AntiCSRFToken" id="token" value="${csrfPreventionSalt}"/>
     
-    <table  align="center" border="0">
+    <table  align="left" border="0" width="50%">
 
-<tr><td align="right"><h4>Project :</td>
-    <td><form:select path="projectid">
-                  <option class="login login-submit" value="">None</option>
-	           <c:forEach  items="${AllProjects}" var="project"> 
-	           <form:option class="login login-submit" value="${project.projectid}">${project.projectname}</form:option>    
+    <tr><td align="right"><h4>Select Task :</td>
+    <td><form:select path="taskname">
+                  <option class="login login-submit" value="">Select Task</option>
+	           <c:forEach  items="${AllTasks}" var="task"> 
+	           <form:option class="login login-submit" value="${task.taskname}">${task.taskname}</form:option>    
                    </c:forEach>
         </form:select>
-        <form:errors path="projectid" cssClass="error"/>
+        <form:errors path="taskname" cssClass="error"/>
     </td>
-</tr>
+    </tr>
 
-<tr><td align="right"><h4>Activity Name :</td><td><form:input placeholder="Enter Activity Name" path="activityname" /><form:errors path="activityname" cssClass="error"/></h4></td></tr>  
-
-<tr><td align="right"><h4>Team :</td>
-    <td><form:select path="team" id="team">
-        <option class="login login-submit" value="">None</option>
-	           <c:forEach  items="${AllTeams}" var="team"> 
-	           <form:option class="login login-submit" value="${team.teamname}">${team.teamname}</form:option>
+    <tr><td align="right"><h4>Select from Available Engineers :</td>
+    <td><form:select path="userid" id="userid">
+        <option class="login login-submit" value="">Engineer</option>
+	           <c:forEach  items="${AllEngineers}" var="engineer"> 
+	           <form:option class="login login-submit" value="${engineer.userid}">${engineer.username}</form:option>
 	           </c:forEach>
         </form:select>
-        <form:errors path="team" cssClass="error"/>
+        <form:errors path="userid" cssClass="error"/>
     </td>
-</tr>
+    </tr>
 
-<tr><td align="right"><h4>Lead :</td>
-    <td><form:select path="leadid">
-            <c:forEach  items="${AllLeads}" var="lead"> 
-	    <form:option class="login login-submit" value="${lead.userid}">${lead.username}</form:option>
-	    </c:forEach>
-        </form:select>
-        <form:errors path="leadid" cssClass="error"/>
-    </td>
-</tr>
-<tr><td align="right"><h4>Start Date :<td><form:input placeholder="Enter Start Date" id="date" path="startdate" /><form:errors path="startdate" cssClass="error"/></h4></td></tr>
-<tr><td align="right"><h4>End Date :</td><td><form:input placeholder="Enter End Date" id="datepicker" path="enddate"/><form:errors path="enddate" cssClass="error"/></h4></td></tr>
-
-<tr><td align="right"><h4>Type of Assessment:</td><td><form:input placeholder="Initial/Confirmatory" name="type" path=""/></h4></td></tr> 
-
-<tr><td align="right"><h4>Regulation Compliance:</td><td><form:input placeholder="PCIDSS/HIPPA" name="complience" path=""/></h4></td></tr> 
-
-<tr><td align="right"><h4>Pre-requisites:</td><td><form:input placeholder="URL/Credentials/SourceCode" name="prerequisites" path=""/></h4></td></tr> 
-
-<tr><td align="right"><h4>Whitelisting Confirmation:</td><td><form:input placeholder="Yes/No" name="whitelisting" path=""/></h4></td></tr> 
-
-<tr><td align="right"><h4>Scope/Other Details :</td><td><form:textarea rows="3" cols="40" path="" name="description"/></h4></td></tr>
-<br>
-<tr><td align="right"><input type="submit" value="Create" class="login login-submit"/></td></tr>           
-</table>
-</div>
+    <tr><td align="right"><h4>Allocation Start Time :<td><form:input placeholder="Start Time" id="date" path="taskstartdate" /><form:errors path="taskstartdate" cssClass="error"/></h4></td></tr>
+    <tr><td align="right"><h4>Allocation End Time :</td><td><form:input placeholder="End Time" id="datepicker" path="taskenddate"/><form:errors path="taskenddate" cssClass="error"/></h4></td></tr>
+    <input type="hidden" name="activityid" value="${ActivityId}"/>
+    <br>
+    <tr><td align="right"><input type="submit" value="Create" class="login login-submit"/></td></tr>           
+    </table>
+    </div>
 </form:form>
 
-	   </div>
+</div>
      
-	   <script>
+<script>
   $(document).ready(function() {
     $("#datepicker").datepicker();
     format: 'dd/mm/yyyy';
   });
-  </script>
-  <script>
+</script>
+<script>
   $(document).ready(function() {
     $("#datepickers").datepicker();
     format: 'dd/mm/yyyy';
   });
-  </script>
-    </body>
+</script>
+</body>
 </html>
 
 

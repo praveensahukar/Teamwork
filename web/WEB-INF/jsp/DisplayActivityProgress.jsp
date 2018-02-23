@@ -377,7 +377,7 @@ body {
 </table>
        
 
-                        </div>
+        </div>
         <a href="/TeamWorkAlpha/uploadfiles.do?pid=${ProjectData.activityid}" 
   target="popup" 
   onclick="window.open('/TeamWorkAlpha/uploadfiles.do?pid=${ProjectData.activityid}','popup','width=800,height=600'); return false;">
@@ -390,9 +390,12 @@ body {
   onclick="window.open('/TeamWorkAlpha/Downloadfiles.do?pid=${ProjectData.activityid}','popup','width=800,height=600'); return false;">
     Download files
 </a>
+    <br>  
+    <br>
+    <a href="addActivityTask.do?activityId=${ProjectData.activityid}"><button>Add Task to Activity</button></a>
 
 <br>
 
-    </body>
+</body>
 
 </html>

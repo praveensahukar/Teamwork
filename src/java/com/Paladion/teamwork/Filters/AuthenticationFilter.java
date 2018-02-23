@@ -33,31 +33,35 @@ int i=0;
         //fc.doFilter(request, response);
         
         //Uncomment the below code and comment the above line at line 33
+        try{
+            String url;
+            HttpServletRequest req=(HttpServletRequest)request;
+            HttpServletResponse res=(HttpServletResponse)response;
+            url = req.getRequestURL().toString();
+            HttpSession sess=req.getSession(false);
         
-        String url;
-        HttpServletRequest req=(HttpServletRequest)request;
-        HttpServletResponse res=(HttpServletResponse)response;
-        url = req.getRequestURL().toString();
-        HttpSession sess=req.getSession(false);
+                if(url.contains("Login")||url.contains("ResetPassword")||url.contains("ForgotPassword")||!(url.endsWith(".do"))){
+                fc.doFilter(request, response);
+                }
         
-        if(url.contains("Login")||url.contains("ResetPassword")||url.contains("ForgotPassword")||!(url.endsWith(".do"))){
-            fc.doFilter(request, response);
-          }
-        
-        else{
-            //Check for logged in user session
-           
-            if(sess==null||null==sess.getAttribute("Luser")){
+                else{
+                //Check for logged in user session
+                if(sess==null||null==sess.getAttribute("Luser")){
                 res.sendRedirect("Login.do");
                 return;
-            }
-            else{
+                }
+                else{
                 //Assign CSRF token to request
                 String token=sess.getAttribute("AntiCsrfToken").toString();
                 req.setAttribute("csrfPreventionSalt", token);
                 fc.doFilter(request, response);
             }
-        }   
+        }
+        }
+        catch(IOException | ServletException ex)
+        {
+            ex.printStackTrace();
+        }
     }
 
     @Override

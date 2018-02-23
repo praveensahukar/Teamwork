@@ -31,9 +31,14 @@ public class CrossScriptingFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
         throws IOException, ServletException {
         //cache control headers start
+        try{
         HttpServletResponse httpResp = (HttpServletResponse) response;
         
         chain.doFilter(new RequestWrapper((HttpServletRequest) request), response);
+        }
+        catch(Exception ex){
+            ex.printStackTrace();
+        }
         
     }
 

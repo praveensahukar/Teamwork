@@ -124,7 +124,7 @@ body {
 .login-card input[type=text], input[type=password] {
   height: 44px;
   font-size: 16px;
-  width: auto;
+  width: 90%;
   margin-bottom: 10px;
   -webkit-appearance: none;
   background: #fff;

@@ -13,7 +13,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -33,7 +35,21 @@ public class ActivityTransactionBean implements Serializable {
     int userid;
     float taskhours;
     String status;
-    Date taskstartdate, taskenddate, startdate, enddate;
+    
+//    @Column(name = "taskstartdate")
+//    @DateTimeFormat(pattern="MM/dd/yyyy")
+//    @Temporal(javax.persistence.TemporalType.DATE)
+    Date taskstartdate;
+    
+//    @Column(name = "taskenddate")
+//    @DateTimeFormat(pattern="MM/dd/yyyy")
+//    @Temporal(javax.persistence.TemporalType.DATE)
+    Date taskenddate;
+    
+    Date startdate;
+    
+    Date enddate;
+    
     float taskdays;
     String engname;
     String comments;
@@ -46,8 +62,6 @@ public class ActivityTransactionBean implements Serializable {
         this.transid = transid;
     }
     
-    
-
     public String getEngname() {
         return engname;
     }
@@ -56,32 +70,30 @@ public class ActivityTransactionBean implements Serializable {
         this.engname = engname;
     }
         
-        
-        public int getUserid() {
-		return userid;
-	}
+    public int getUserid() {
+	return userid;
+    }
 
-	public void setUserid(int userid) {
-		this.userid = userid;
-	}
+    public void setUserid(int userid) {
+	this.userid = userid;
+    }
 
-	public float getTaskhours() {
-		return taskhours;
-	}
+    public float getTaskhours() {
+	return taskhours;
+    }
 
-	public void setTaskhours(float taskhours) {
-		this.taskhours = taskhours;
-	}
+    public void setTaskhours(float taskhours) {
+	this.taskhours = taskhours;
+    }
 
-	public String getStatus() {
-		return status;
-	}
+    public String getStatus() {
+	return status;
+    }
 
-	public void setStatus(String status) {
-		this.status = status;
-	}
+    public void setStatus(String status) {
+	this.status = status;
+    }
   
-
     public String getTaskname() {
         return taskname;
     }
@@ -95,7 +107,6 @@ public class ActivityTransactionBean implements Serializable {
     }
 
     public void setTaskstartdate(Calendar taskstartdate) {
-        
         this.taskstartdate = taskstartdate.getTime();
     }
 
@@ -115,20 +126,19 @@ public class ActivityTransactionBean implements Serializable {
         this.taskdays = taskdays;
     }
 
-	public int getActivityid() {
-		return activityid;
-	}
+    public int getActivityid() {
+	return activityid;
+    }
 
-	public void setActivityid(int activityid) {
-		this.activityid = activityid;
-	}
+    public void setActivityid(int activityid) {
+	this.activityid = activityid;
+    }
 
     public Date getStartdate() {
         return startdate;
     }
 
     public void setStartdate(Date startdate) {
-        
         this.startdate = startdate;
     }
 
@@ -147,6 +157,5 @@ public class ActivityTransactionBean implements Serializable {
     public void setComments(String comments) {
         this.comments = comments;
     }
-    
     
 }
