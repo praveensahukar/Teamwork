@@ -272,6 +272,7 @@ Date end = null;
                     PTBean.setTaskenddate(TaskEndDate);
                     PTBean.setStartdate(parsedDate);
                     PTBean.setEnddate(parsedDate);
+                    PTBean.setHolddate(parsedDate);
                   }
                 else
                   {

@@ -50,6 +50,8 @@ public class ActivityTransactionBean implements Serializable {
     
     Date enddate;
     
+    Date holddate;
+    
     float taskdays;
     String engname;
     String comments;
@@ -157,5 +159,14 @@ public class ActivityTransactionBean implements Serializable {
     public void setComments(String comments) {
         this.comments = comments;
     }
+
+    public Date getHolddate() {
+        return holddate;
+    }
+
+    public void setHolddate(Date holddate) {
+        this.holddate = holddate;
+    }
+    
     
 }

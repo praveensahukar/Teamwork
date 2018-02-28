@@ -683,6 +683,7 @@ return new ModelAndView("downloadDocuments","SysSettings",Aservice.getSystemSett
         //List<ProjectTransactionBean> PTBList=PS.getProjectTransaction(pid);
         ActivityTransactionBean PTBean = AS.getTransactionOnTransID(tid);
         List<ActivityTransactionBean> PTBList2=new ArrayList<>();
+         ActivityBean PRDATA=AS.getProjectById(pid);
       
         //Get current system time
 //      DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -715,13 +716,50 @@ return new ModelAndView("downloadDocuments","SysSettings",Aservice.getSystemSett
 
                 if(status.equalsIgnoreCase("progress"))
                 {
-                    PTBean.setStartdate(date1); 
-                    PTBean.setStatus("Progress");
+                    if(PTBean.getStatus().equalsIgnoreCase("On Hold")){
+                        
+                        Date holdDate=PTBean.getHolddate();
+                        long diff = date1.getTime() - holdDate.getTime();
+                        long diffMinutes = diff / (60 * 1000) % 60;
+                        long diffHours = diff / (60 * 60 * 1000);
+                        System.out.println("\n ---- Task was on hold for "+diffHours+" Hours and "+diffMinutes+ " Minutes ----- \n" );
+                        
+                        //Update the delay time into the activity
+                        
+                        PTBean.setStatus("Progress");
+                                             
+                    }
+                    else{
+                        PTBean.setStartdate(date1); 
+                        PTBean.setStatus("Progress");
+                    }
                 }
-                else
+                
+                
+                if(status.equalsIgnoreCase("completed"))
                 {
-                    PTBean.setEnddate(date1); 
-                    PTBean.setStatus("Completed");
+                     if(PTBean.getStatus().equalsIgnoreCase("On Hold")){
+                        
+                        Date holdDate=PTBean.getHolddate();
+                        long diff = date1.getTime() - holdDate.getTime();
+                        long diffMinutes = diff / (60 * 1000) % 60;
+                        long diffHours = diff / (60 * 60 * 1000);
+                        System.out.println("\n ---- Task was on hold for "+diffHours+" Hours and "+diffMinutes+ " Minutes ----- \n" );
+                        
+                        //Update the delay time into the activity
+                        
+                        PTBean.setStatus("Completed");
+                                             
+                    }
+                    
+                    else{
+                        PTBean.setEnddate(date1); 
+                        PTBean.setStatus("Completed");
+                    }
+                }
+                if(status.equalsIgnoreCase("Hold")){
+                    PTBean.setHolddate(date1);
+                    PTBean.setStatus("On Hold");
                 }
 
                 PTBList2.add(PTBean);
@@ -736,7 +774,7 @@ return new ModelAndView("downloadDocuments","SysSettings",Aservice.getSystemSett
         AS.updateProjectTransaction(PTBList2);
         ModelAndView result;
         List<ActivityTransactionBean> PSBList;
-        ActivityBean PRDATA=AS.getProjectById(pid);
+       
         PSBList = AS.getProjectTransaction(pid);   
         result=new ModelAndView("DisplayActivityProgress");
         result.addObject("Message","Status updated successfully");

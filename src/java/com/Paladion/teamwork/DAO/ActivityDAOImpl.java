@@ -153,10 +153,12 @@ public class ActivityDAOImpl implements ActivityDAO
            {
             
                
-               ActivityTransactionBean PTBean=this.getTransactionOnTransID(transid);
-               System.out.println(PTBean.getStartdate());
+            ActivityTransactionBean PTBean=this.getTransactionOnTransID(transid);
+            System.out.println(PTBean.getStartdate());
                
-
+            
+          
+            
                  
             if(status.equalsIgnoreCase("progress"))
                 
@@ -303,7 +305,7 @@ public class ActivityDAOImpl implements ActivityDAO
 		Transaction tx = null;
 	        tx = session1.beginTransaction();
                 
-                String sql = "UPDATE activity_transaction SET taskstartdate=?, taskenddate=?, taskhours=?,taskdays=?, status=? , startdate = ?, enddate=? WHERE transid=?";
+                String sql = "UPDATE activity_transaction SET taskstartdate=?, taskenddate=?, taskhours=?,taskdays=?, status=? , startdate = ?, enddate=?, holddate=? WHERE transid=?";
                 SQLQuery query = session1.createSQLQuery(sql);
                 query.setParameter(0,PTBean.getTaskstartdate());
                 query.setParameter(1,PTBean.getTaskenddate());
@@ -312,7 +314,9 @@ public class ActivityDAOImpl implements ActivityDAO
                 query.setParameter(4,PTBean.getStatus());
                 query.setParameter(5,PTBean.getStartdate());
                 query.setParameter(6,PTBean.getEnddate());
-                query.setParameter(7,PTBean.getTransid());
+                query.setParameter(7,PTBean.getHolddate());
+                query.setParameter(8,PTBean.getTransid());
+                
                 query.executeUpdate();
                 tx.commit();
 		System.out.println("Project transaction updated successfully");

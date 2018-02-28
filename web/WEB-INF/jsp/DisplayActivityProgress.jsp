@@ -355,9 +355,9 @@ body {
             <div class="dropdown">
             <button class="dropbtn1">${fn:escapeXml(ProjectTaskList.status)}</button>
                 <div class="dropdown-content">
-                <a href="updateTaskStatus.do?pid=${ProjectTaskList.activityid}&tid=${ProjectTaskList.transid}&status=New">New</a>
                 <a href="updateTaskStatus.do?pid=${ProjectTaskList.activityid}&tid=${ProjectTaskList.transid}&status=Progress">Progress</a>
                 <a href="updateTaskStatus.do?pid=${ProjectTaskList.activityid}&tid=${ProjectTaskList.transid}&status=Completed">Completed</a> 
+                <a href="updateTaskStatus.do?pid=${ProjectTaskList.activityid}&tid=${ProjectTaskList.transid}&status=Hold">On Hold</a>
                 </div>
         </div> 
         </td> 
