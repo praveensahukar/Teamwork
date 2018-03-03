@@ -5,8 +5,11 @@
  */
 package com.Paladion.teamwork.services;
 
+import com.Paladion.teamwork.beans.ActivityBean;
 import com.Paladion.teamwork.beans.EmailTemplateBean;
+import com.Paladion.teamwork.beans.ProjectBean;
 import java.util.List;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -23,5 +26,7 @@ public boolean updateEmailTemplate(EmailTemplateBean emailTempBean);
 public List<EmailTemplateBean> listEmailTemplate();
 
 public boolean deleteEmailTemplate(EmailTemplateBean emailTempBean);
+
+public boolean sendSchedulingMailToLead(ActivityBean AB, HttpSession sess, ProjectBean PB);
 	
 }

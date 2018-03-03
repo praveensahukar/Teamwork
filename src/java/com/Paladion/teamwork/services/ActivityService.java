@@ -31,6 +31,7 @@ public interface ActivityService {
     public boolean deleteProject(int projid);
     public ActivityTransactionBean getTransactionOnTransID(int Transid);
     public boolean allocateResource(AllocationBean AB);
+    public List<ActivityBean> getUpcomingActivities();
     
 }
 

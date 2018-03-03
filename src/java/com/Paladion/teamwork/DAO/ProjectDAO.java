@@ -5,6 +5,7 @@
  */
 package com.Paladion.teamwork.DAO;
 
+import com.Paladion.teamwork.beans.ActivityBean;
 import com.Paladion.teamwork.beans.ProjectBean;
 import java.util.List;
 
@@ -17,4 +18,5 @@ public interface ProjectDAO {
     public List<ProjectBean> getAllProject();
     public boolean deleteProject(int id);
     public ProjectBean getProjectOPID(int pid);
+    public List<ActivityBean> getProjectActivities(int pid);
 }

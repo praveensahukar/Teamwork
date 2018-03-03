@@ -55,6 +55,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import com.Paladion.teamwork.services.ActivityService;
+import com.Paladion.teamwork.services.EmailService;
 import com.Paladion.teamwork.services.ProjectService;
 import com.Paladion.teamwork.services.TaskService;
 
@@ -113,6 +114,10 @@ AdminService Aservice;
 @Autowired()
 @Qualifier(value = "TeamService")
 TeamService TeamS;
+
+@Autowired()
+@Qualifier(value = "EmailService")
+EmailService EmailS;
 
 @Autowired
 @Qualifier(value="ActivityValidator")
@@ -236,7 +241,9 @@ public fileuploadBean populate1()
         System.out.println("\n inside create Project POST method ");
         AB.setMandays(CU.getWorkingDays(AB.getStartdate(),AB.getEnddate()));
         AB.setStatus("New");
-               
+         
+           
+        
         ProjectBean PB= PS.getProjectOPID(AB.getProjectid());
         AB.setOpid(PB.getOpid());
                 
@@ -254,7 +261,7 @@ public fileuploadBean populate1()
         }
                 
         SystemBean sys=Aservice.getSystemSettings();
-       // CU.sendSchedulingMailToLead(AB, req.getSession(false), PB);
+        EmailS.sendSchedulingMailToLead(AB, req.getSession(false), PB);
         System.out.println("Project Created with Project id"+AB.getActivityid());
         System.out.println("Man days :"+AB.getMandays());
         UserDataBean sessuser=(UserDataBean) sess.getAttribute("Luser");

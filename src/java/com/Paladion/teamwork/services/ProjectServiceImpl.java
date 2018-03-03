@@ -8,6 +8,7 @@ package com.Paladion.teamwork.services;
 import com.Paladion.teamwork.DAO.ProjectDAO;
 import com.Paladion.teamwork.beans.ProjectBean;
 import java.util.List;
+import com.Paladion.teamwork.beans.ActivityBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -50,4 +51,8 @@ public class ProjectServiceImpl  implements ProjectService {
         return PD.getProjectOPID(pid);
    }
     
+    @Override
+        public List<ActivityBean> getProjectActivities(int pid){
+        return PD.getProjectActivities(pid);
+    }
 }

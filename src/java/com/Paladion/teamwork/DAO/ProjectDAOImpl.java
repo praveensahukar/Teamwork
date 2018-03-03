@@ -5,6 +5,7 @@
  */
 package com.Paladion.teamwork.DAO;
 
+import com.Paladion.teamwork.beans.ActivityBean;
 import com.Paladion.teamwork.beans.ActivityTransactionBean;
 import com.Paladion.teamwork.beans.ProjectBean;
 import java.util.ArrayList;
@@ -56,6 +57,24 @@ public class ProjectDAOImpl implements ProjectDAO {
         Projectlist= query2.list();
         return Projectlist;
     }
+    
+    
+    
+    
+    @Override
+    public List<ActivityBean> getProjectActivities(int pid) {
+    
+    List<ActivityBean> AList;
+	   Session session1 = sessionFactory.getCurrentSession();
+           Transaction tx = session1.beginTransaction();
+           Criteria criteria = session1.createCriteria(ActivityBean.class);
+           criteria.add(Restrictions.eq("projectid", pid));
+           //criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+	   AList = criteria.list();
+           tx.commit();
+        return AList;
+    }
+    
 
     @Override
     public boolean deleteProject(int id) {

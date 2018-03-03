@@ -410,65 +410,7 @@ Date end = null;
         return true;
     }
     
-    public boolean sendSchedulingMailToLead(ActivityBean AB, HttpSession sess, ProjectBean PB) throws ParseException{
-        
-         EmailUtil EU=new EmailUtil();
-         EmailBean ebean=new EmailBean();
-         UserDataBean leadb=this.getUserById(AB.getLeadid(), sess);
-         ebean.setTo(leadb.getEmail());
-         ebean.setSubject("Project Scheduling Mail");
-         
-         UserDataBean pmbean=this.getUserById(PB.getProjectmanager(), sess);
-         UserDataBean dmbean=this.getUserById(PB.getDeliverymanager(), sess);
-         
-         SimpleDateFormat sm = new SimpleDateFormat("dd-MM-yyyy");
-         String sDate = sm.format(AB.getStartdate());
-         String eDate = sm.format(AB.getEnddate());
-         
-         StringBuilder mess=new StringBuilder();
-         mess.append("<html><body>");
-         mess.append("<h4 style = \"color:#000033\">");
-         mess.append("Dear ").append(leadb.getUsername()).append("</br></br>").append("You have been assigned to the below project as delivery lead. </h4><br>");
-             
-                 
-         mess.append( "<table border='2' style='border-collapse:collapse' width='70%'");
-         
-         mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Project Name</b> </td> <td>").append(PB.getProjectname()).append("</td> <tr>");
-         
-         mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Client</b> </td> <td>").append(PB.getCompanyid()).append("</td> <tr>");
-        
-         mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>OPID</b> </td> <td>").append(PB.getOpid()).append("</td> <tr>");
-         
-        mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Activity</b> </td> <td>").append(AB.getActivityname()).append("</td> <tr>");
-        
-        mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Activity Start Date</b> </td> <td>").append(sDate).append("</td> <tr>");
-       
-        mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Activity End Date</b> </td> <td>").append(eDate).append("</td> <tr>");
-         
-        mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Lead Assigned</b> </td> <td>").append(AB.getLead()).append("</td> <tr>");
-        
-        mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Delivery Manager</b> </td> <td>").append(dmbean.getUsername()).append("</td> <tr>");
-        
-        mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Project Manager</b> </td> <td>").append(pmbean.getUsername()).append("</td> <tr>");
 
-        mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Region</b> </td> <td>").append(PB.getRegion()).append("</td> <tr>");
-        
-        mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Details</b> </td> <td>").append(PB.getDescription()).append("</td> <tr>");
-        
-                  
-         
-         mess.append("</table>").append("</br>").append("<b> Best Regards,").append("</br>").append("COE Scheduling Team,</br> Paladion Networks <b></body></html>");        
-         String message=mess.toString();
-         
-         ebean.setMessage(message);
-         SystemBean syssetting = (SystemBean)sess.getAttribute("SysConfig");
-         EU.sendEmail(ebean, syssetting);
-        return true;
-    }
-    
-
-    
-    
     public List<ActivityTransactionBean> updateDelayForTasks(List<ActivityTransactionBean> PTBList, int hours){
         Date delayedTaskEndDate=null;
         for(ActivityTransactionBean PTBean : PTBList)        

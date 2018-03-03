@@ -5,6 +5,7 @@
  */
 package com.Paladion.teamwork.services;
 
+import com.Paladion.teamwork.beans.ActivityBean;
 import com.Paladion.teamwork.beans.ProjectBean;
 import com.Paladion.teamwork.beans.TaskBean;
 import java.util.List;
@@ -19,4 +20,5 @@ public interface ProjectService {
     public List<ProjectBean> getAllProjects();
     public boolean deleteProject(int id);
     public ProjectBean getProjectOPID(int pid);
+    public List<ActivityBean> getProjectActivities(int pid);
 }

@@ -12,6 +12,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
@@ -349,5 +350,20 @@ public class ActivityDAOImpl implements ActivityDAO
 	}
    
 
+        public List<ActivityBean> getUpcomingActivities(Date today, Date nextDate){
+            
+            List<ActivityBean> AList;
+            Transaction tx = null;
+            Session session1 = sessionFactory.getCurrentSession();
+            tx = session1.beginTransaction();
+            
+            Criteria criteria = session1.createCriteria(ActivityBean.class);
+            criteria.add(Restrictions.ge("startdate", today));
+            criteria.add(Restrictions.lt("startdate", nextDate));
+            AList = criteria.list();
+            tx.commit();
+            return AList;
+            
+        }
 
 }

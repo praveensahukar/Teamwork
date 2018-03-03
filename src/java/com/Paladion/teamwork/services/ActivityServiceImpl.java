@@ -16,6 +16,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.servlet.ModelAndView;
 import com.Paladion.teamwork.DAO.ActivityDAO;
 import com.Paladion.teamwork.beans.AllocationBean;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 /**
  *
@@ -29,9 +32,27 @@ ActivityDAO PD;
 	
 	@Override
 	public void addProject(ActivityBean pb) {
-		PD.addProjectDao(pb);
+            
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(pb.getStartdate());
+         calendar.set(Calendar.HOUR_OF_DAY, 10);
+         
+          Calendar cal = Calendar.getInstance();
+        cal.setTime(pb.getStartdate());
+         cal.set(Calendar.HOUR_OF_DAY, 19);
+         
+         Date startDate = calendar.getTime();
+         Date endDate = cal.getTime();
+         
+          System.out.println(startDate);
+            System.out.println(endDate);
+            
+            pb.setStartdate(startDate);
+            pb.setEnddate(endDate);
+        
+	PD.addProjectDao(pb);
 		
-		}
+	}
 
 
 
@@ -140,6 +161,25 @@ ActivityDAO PD;
    @Override
     public boolean allocateResource(AllocationBean AB) {
           return PD.allocateResource(AB);  
+    }
+    
+    @Override
+    public List<ActivityBean> getUpcomingActivities() {
+        Date today = new Date();
+        
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(today);
+        Date maxDate;
+        int day = calendar.get(Calendar.DAY_OF_WEEK);
+        
+        if(day == 6){          
+        maxDate = new Date(today.getTime() + TimeUnit.DAYS.toMillis(3));
+        }
+       
+        else{
+        maxDate = new Date(today.getTime() + TimeUnit.DAYS.toMillis(1));
+        }
+        return PD.getUpcomingActivities(today, maxDate);  
     }
 	
 }

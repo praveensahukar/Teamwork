@@ -5,6 +5,7 @@
  */
 package com.Paladion.teamwork.controllers;
 
+import com.Paladion.teamwork.beans.ActivityBean;
 import com.Paladion.teamwork.beans.ProjectBean;
 import com.Paladion.teamwork.beans.TaskBean;
 import com.Paladion.teamwork.services.CompanyService;
@@ -21,6 +22,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -111,6 +113,18 @@ public ModelAndView GetAllProjects(HttpServletRequest req)
     ModelAndView result=new ModelAndView("DisplayProjects");
     List<ProjectBean> PBList= PS.getAllProjects();
     result.addObject("AllProjects",PBList);
+    return result; 
+}
+
+@RequestMapping(value="/GetProjectActivities",method=RequestMethod.GET)
+public ModelAndView GetAllProjectActivities(@RequestParam int pid, HttpServletRequest req)
+{ 
+    String[] authorizedRoles = {"admin","manager","lead"};
+    if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
+    
+    ModelAndView result=new ModelAndView("DisplayProjectActivities");
+    List<ActivityBean> AList= PS.getProjectActivities(pid);
+    result.addObject("AllActivity",AList);
     return result; 
 }
 

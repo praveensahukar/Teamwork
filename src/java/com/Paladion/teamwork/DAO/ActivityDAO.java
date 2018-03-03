@@ -9,6 +9,7 @@ import com.Paladion.teamwork.beans.ActivityBean;
 import com.Paladion.teamwork.beans.MapTemplateTaskBean;
 import com.Paladion.teamwork.beans.AllocationBean;
 import com.Paladion.teamwork.beans.ActivityTransactionBean;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -31,5 +32,6 @@ public interface ActivityDAO {
       public void updateProjectTransaction(List<ActivityTransactionBean>PTBList);
       public ActivityTransactionBean getTransactionOnTransID(int transid);
       public boolean allocateResource(AllocationBean AB);  
+      public List<ActivityBean> getUpcomingActivities(Date today, Date nextDate);
     
 }
