@@ -33,5 +33,7 @@ public interface ActivityDAO {
       public ActivityTransactionBean getTransactionOnTransID(int transid);
       public boolean allocateResource(AllocationBean AB);  
       public List<ActivityBean> getUpcomingActivities(Date today, Date nextDate);
+      public void checkTaskStatusOnhold();
+      
     
 }

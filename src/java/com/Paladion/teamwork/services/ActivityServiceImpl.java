@@ -30,87 +30,50 @@ public class ActivityServiceImpl implements ActivityService {
 @Qualifier(value="ActivityDAO")
 ActivityDAO PD;
 	
-	@Override
-	public void addProject(ActivityBean pb) {
-            
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(pb.getStartdate());
-         calendar.set(Calendar.HOUR_OF_DAY, 10);
-         
-          Calendar cal = Calendar.getInstance();
-        cal.setTime(pb.getStartdate());
-         cal.set(Calendar.HOUR_OF_DAY, 19);
-         
-         Date startDate = calendar.getTime();
-         Date endDate = cal.getTime();
-         
-          System.out.println(startDate);
-            System.out.println(endDate);
-            
-            pb.setStartdate(startDate);
-            pb.setEnddate(endDate);
-        
+    @Override
+    public void addProject(ActivityBean pb) {   
 	PD.addProjectDao(pb);
-		
-	}
+    }
 
-
-
-	@Override
-	public List<ActivityBean> getAllProjects(int userid, String role) {
-		return PD.getAllProjects(userid, role);
-	}
+    @Override
+    public List<ActivityBean> getAllProjects(int userid, String role) {
+        return PD.getAllProjects(userid, role);
+    }
 
     @Override
     public ActivityBean getProjectById(int id) {
-    
         return PD.getProjectById(id); 
-        
     }
     
     @Override
     public void insertProjectTransaction(List<ActivityTransactionBean> PTBList) {
-    
-         PD.insertProjectTransaction(PTBList); 
-        
+        PD.insertProjectTransaction(PTBList); 
     }
     
     @Override
     public List<ActivityTransactionBean> getProjectTransaction(int projectid) {
-    
-         return PD.getProjectTransaction(projectid);
-        
+        return PD.getProjectTransaction(projectid);
     }
     
-       @Override
+    @Override
     public boolean updateTaskStatus(int transid, String status) {
-    
-          return PD.updateTaskStatus(transid, status);
-        
+        return PD.updateTaskStatus(transid, status);
     }
     
-    
-        @Override
+    @Override
     public boolean updateTaskStatus(int projid) {
-    
-          return PD.updateTaskStatus(projid);
-        
+        return PD.updateTaskStatus(projid);
     }
     
-        @Override
+    @Override
     public boolean deleteProject(int projid) {
-    
-          return PD.deleteProject(projid);
-        
+        return PD.deleteProject(projid);
     }
     
-      @Override
+    @Override
     public boolean updateProjectStatus(int projid, String status) {
-    
-          return PD.updateProjectStatus(projid, status);
-        
+        return PD.updateProjectStatus(projid, status);
     }
-    
     
     @Override
     public ActivityTransactionBean getTransactionOnTransID(int transid){
@@ -118,13 +81,13 @@ ActivityDAO PD;
     }
     
     @Override
-   public void updateProjectTransaction(List<ActivityTransactionBean> PTBList){
+    public void updateProjectTransaction(List<ActivityTransactionBean> PTBList){
         PD.updateProjectTransaction(PTBList);
-   }
+    }
 
     @Override
     public int[] getProjectsCount(javax.servlet.http.HttpServletRequest req) {
-         HttpSession sess= req.getSession(false);
+        HttpSession sess= req.getSession(false);
         UserDataBean sessuser=(UserDataBean) sess.getAttribute("Luser");
 	ModelAndView result=new ModelAndView("Welcome");
         List<ActivityBean> PBList=(List<ActivityBean>)this.getAllProjects(sessuser.getUserid(), sessuser.getRole());
@@ -135,27 +98,23 @@ ActivityDAO PD;
         for(ActivityBean PB:PBList){
             if(PB.getStatus().equalsIgnoreCase("new")){
                 project_new++;
-               
             }
             if(PB.getStatus().equalsIgnoreCase("progress")){
                 project_progress++;
-              
             }
             if(PB.getStatus().equalsIgnoreCase("completed")){
                 project_completed++;
-              
             }
         }
         System.out.println("No of completed projects : "+project_completed);
         System.out.println("No of on going projects : "+project_progress);
         System.out.println("No of new projects : "+project_new);
-         int [] counts = new int[4];
-         counts[0]=total_projects;
-         counts[1]=project_completed;
-         counts[2]=project_progress;
-         counts[3]=project_new;
-         
-         return counts;
+        int [] counts = new int[4];
+        counts[0]=total_projects;
+        counts[1]=project_completed;
+        counts[2]=project_progress;
+        counts[3]=project_new;
+        return counts;
     }
     
    @Override
@@ -173,13 +132,18 @@ ActivityDAO PD;
         int day = calendar.get(Calendar.DAY_OF_WEEK);
         
         if(day == 6){          
-        maxDate = new Date(today.getTime() + TimeUnit.DAYS.toMillis(3));
+        maxDate = new Date(today.getTime() + TimeUnit.DAYS.toMillis(4));
         }
-       
         else{
-        maxDate = new Date(today.getTime() + TimeUnit.DAYS.toMillis(1));
+        maxDate = new Date(today.getTime() + TimeUnit.DAYS.toMillis(2));
         }
         return PD.getUpcomingActivities(today, maxDate);  
     }
+    
+    @Override
+    public void checkTaskStatusOnhold() {
+           PD.checkTaskStatusOnhold();  
+    }
+    
 	
 }
