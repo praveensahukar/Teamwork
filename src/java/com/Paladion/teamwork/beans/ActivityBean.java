@@ -56,6 +56,12 @@ String team;
 @Column(name = "projectid")
 int projectid;
 
+@Column(name = "assessmentType")
+String assessmentType;
+
+@Column(name = "compliance")
+String compliance;
+
 @Column(name = "startdate")
 @DateTimeFormat (pattern="MM/dd/yyyy")
 @Temporal(javax.persistence.TemporalType.DATE)
@@ -173,6 +179,22 @@ public void setEnddate(Date enddate)  {
 
     public void setEngtracker(int engtracker) {
         this.engtracker = engtracker;
+    }
+
+    public String getAssessmentType() {
+        return assessmentType;
+    }
+
+    public void setAssessmentType(String assessmentType) {
+        this.assessmentType = assessmentType;
+    }
+
+    public String getCompliance() {
+        return compliance;
+    }
+
+    public void setCompliance(String compliance) {
+        this.compliance = compliance;
     }
 
 

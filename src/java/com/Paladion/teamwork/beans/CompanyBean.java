@@ -26,12 +26,12 @@ public class CompanyBean implements Serializable{
 @GeneratedValue(generator="gen")
 @Column(name = "companyid", unique = true, nullable = false, precision = 15, scale = 0)
 
-    long companyid;	 	
+    int companyid;	 	
     public long getCompanyid() {
         return companyid;
     }
 
-    public void setCompanyid(long companyid) {
+    public void setCompanyid(int companyid) {
         this.companyid = companyid;
     }
 

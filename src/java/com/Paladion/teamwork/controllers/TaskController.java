@@ -70,7 +70,7 @@ public TaskBean populate()
     {
         String[] authorizedRoles = {"admin","manager","lead"};
         if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
-        
+        try{
         if (result.hasErrors()) {
             //validates the user input, this is server side validation
             System.out.println("error!!!!!!!!");
@@ -80,7 +80,12 @@ public TaskBean populate()
 	System.out.println("\n inside create Task method ");
 	TS.addTask(TB); 	
 	System.out.println("Task Created with Taskid"+TB.getTaskid());
-	return new ModelAndView( "CreateTask","Message","Task Created Successfully"  );  
+	return new ModelAndView( "CreateTask","Message","Task Created Successfully");
+        }
+        catch(Exception ex){
+        ex.printStackTrace();
+        return new ModelAndView("Error");
+        }
     }	
     
     
@@ -89,11 +94,16 @@ public ModelAndView GetAllTasks(HttpServletRequest req)
 { 
     String[] authorizedRoles = {"admin","manager","lead"};
     if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
-    
+    try{
     ModelAndView result=new ModelAndView("DisplayTasks");
     List<TaskBean> TBList= TS.getAllTasks();
     result.addObject("AllTasks",TBList);
     return result; 
+    }
+    catch(Exception ex){
+    ex.printStackTrace();
+    return new ModelAndView("Error");
+    }
 }
 
 
@@ -102,7 +112,7 @@ public ModelAndView GetAllTasks(HttpServletRequest req)
     {
         String[] authorizedRoles = {"admin","manager","lead"};
         if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
-        
+        try{
         if(id!=0)
            {
                boolean value= TS.deleteTask(id);
@@ -115,5 +125,10 @@ public ModelAndView GetAllTasks(HttpServletRequest req)
            else{
                 return new ModelAndView("Error");
             }
+        }
+        catch(Exception ex){
+        ex.printStackTrace();
+        return new ModelAndView("Error");
+        }
     }  
 }

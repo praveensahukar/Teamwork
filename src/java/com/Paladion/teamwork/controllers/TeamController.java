@@ -45,12 +45,18 @@ public TeamBean populate()
     @RequestMapping(value="/CreateTeam",method=RequestMethod.GET)
      public ModelAndView CreateTeam(HttpServletRequest req)
     {   
+        try{
         String[] authorizedRoles = {"admin","manager"};
         if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
         ModelAndView result=new ModelAndView("CreateTeam");
         List<TeamBean> TeamList= TS.getAllTeams();
         result.addObject("AllTeams",TeamList);
         return result;
+        }
+        catch(Exception ex){
+        ex.printStackTrace();
+        return new ModelAndView("Error");
+        }
     }
      
      
@@ -60,13 +66,18 @@ public TeamBean populate()
     {
         String[] authorizedRoles = {"admin","manager"};
         if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
-       
+        try{
 	TS.addTeam(TB); 	
 	ModelAndView result=new ModelAndView("CreateTeam");
         List<TeamBean> TeamList= TS.getAllTeams();
         result.addObject("AllTeams",TeamList);
         result.addObject("Message","Team Created Successfully!!");
         return result;
+        }
+        catch(Exception ex){
+        ex.printStackTrace();
+        return new ModelAndView("Error");
+        }
     }	
     
     
@@ -75,11 +86,16 @@ public ModelAndView GetAllTasks(HttpServletRequest req)
 { 
     String[] authorizedRoles = {"admin","manager"};
     if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
-    
+    try{
     ModelAndView result=new ModelAndView("DisplayTasks");
     List<TeamBean> TeamList= TS.getAllTeams();
     result.addObject("AllTeams",TeamList);
-    return result; 
+    return result;
+    }
+    catch(Exception ex){
+    ex.printStackTrace();
+    return new ModelAndView("Error");
+    }
 }
 
 
@@ -88,7 +104,7 @@ public ModelAndView GetAllTasks(HttpServletRequest req)
     {
         String[] authorizedRoles = {"admin","manager"};
         if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
-        
+        try{
         if(id!=0)
            {
                boolean value= TS.deleteTeam(id);
@@ -101,5 +117,10 @@ public ModelAndView GetAllTasks(HttpServletRequest req)
            else{
                 return new ModelAndView("Error");
             }
+        }
+        catch(Exception ex){
+        ex.printStackTrace();
+        return new ModelAndView("Error");
+        }
     }
 }

@@ -39,8 +39,8 @@ public class UserDAOImpl implements UserDAO{
 		session.save(userBean);
 		System.out.println("User added succefully ");
 				 
-	           tx.commit();
-                   return true;
+	        tx.commit();
+                return true;
 		}catch(Exception ex){
 			System.out.println("In catch block: Exception raised");
 			return false;

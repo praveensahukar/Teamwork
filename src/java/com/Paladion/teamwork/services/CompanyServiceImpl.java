@@ -42,5 +42,10 @@ CompanyDAO CD;
         public boolean deleteCompany(int id) {
                 return CD.deleteCompany(id);
             }
+        
+        @Override
+        public CompanyBean getCompanyByID(int id){
+            return CD.getCompanyByID(id);
+        }
 	
 }

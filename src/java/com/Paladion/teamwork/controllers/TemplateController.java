@@ -12,6 +12,7 @@ import com.Paladion.teamwork.beans.TemplateBean;
 import com.Paladion.teamwork.services.TemplateService;
 import com.Paladion.teamwork.utils.CommonUtil;
 import com.Paladion.teamwork.utils.TaskTemplateValidator;
+import java.io.IOException;
 import java.sql.Array;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -72,16 +73,18 @@ public TaskTemplateWrapper populatetask()
 @RequestMapping(value="/CreateTaskTemplate",method=RequestMethod.GET)
 public ModelAndView Template(HttpServletRequest req)
   {
-      String[] authorizedRoles = {"admin","manager","lead"};
-      if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
+        String[] authorizedRoles = {"admin","manager","lead"};
+        if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
         
-      List <TaskBean> Tasklist = null;
-      try
-        {
-            Tasklist =TempS.getAllTasksforTemplate();
-	}
-        catch(Exception ex){}
-      return new ModelAndView("CreateTaskTemplate","AllTasks", Tasklist); 
+        try{  
+        List <TaskBean> Tasklist = null;
+        Tasklist =TempS.getAllTasksforTemplate();
+        return new ModelAndView("CreateTaskTemplate","AllTasks", Tasklist);
+        }
+        catch(Exception ex){
+        ex.printStackTrace();
+        return new ModelAndView("Error");
+        }
   }
 
 @RequestMapping(value="/CreateTaskTemplate",method=RequestMethod.POST)
@@ -89,55 +92,61 @@ public ModelAndView CreateTemplate(@ModelAttribute("TemplateM")@Validated Templa
 {
     String[] authorizedRoles = {"admin","manager","lead"};
     if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
-     
-     List <TaskBean> Tasklist = null;
-     if (result.hasErrors()) {
-            //validates the user input, this is server side validation
-            System.out.println("error!!!!!!!!");
-             Tasklist =TempS.getAllTasksforTemplate();
-        return new ModelAndView("CreateTaskTemplate","AllTasks", Tasklist); 
-      }
-       System.out.println("\n inside create Template method ");
-
-       
+    try{
+        List <TaskBean> Tasklist = null;
         
+        if (result.hasErrors()) {
+        //validates the user input, this is server side validation
+        System.out.println("error!!!!!!!!");
+        Tasklist =TempS.getAllTasksforTemplate();
+        return new ModelAndView("CreateTaskTemplate","AllTasks", Tasklist); 
+        }
+       
         HttpSession TempSession=req.getSession(false);
         TempSession.setAttribute("Template", TempB);
 	System.out.println("Template Created with Template id  "+TempB.getTemplateid());
-	    
-	try
-        {
-            Tasklist =TempS.getAllTasksforTemplate();
-	}
-        catch(Exception ex){}
-	    
-        List<MapTemplateTaskBean> MTTBList = new ArrayList<MapTemplateTaskBean>();
+	Tasklist =TempS.getAllTasksforTemplate();
+	List<MapTemplateTaskBean> MTTBList = new ArrayList<MapTemplateTaskBean>();
 	
-       String []taskid= new String[20];
-       TaskTemplateWrapper ttw=new TaskTemplateWrapper();
-               taskid=req.getParameterValues("taskid");
-               for(int i=0;i<taskid.length;i++){
-               System.out.println(taskid[i]);
-               MapTemplateTaskBean mttb=new MapTemplateTaskBean();
-               int taskId=Integer.parseInt(taskid[i]);
-               mttb.setTaskid(taskId);
-               String taskname=getTaskName(taskId,Tasklist);
-               mttb.setTaskname(taskname);
-               MTTBList.add(mttb);
-               }
-               ttw.setMttblist(MTTBList);
+        String []taskid= new String[20];
+        TaskTemplateWrapper ttw=new TaskTemplateWrapper();
+        taskid=req.getParameterValues("taskid");
+        for(int i=0;i<taskid.length;i++){
+            System.out.println(taskid[i]);
+            MapTemplateTaskBean mttb=new MapTemplateTaskBean();
+            int taskId=Integer.parseInt(taskid[i]);
+            mttb.setTaskid(taskId);
+            String taskname=getTaskName(taskId,Tasklist);
+            mttb.setTaskname(taskname);
+            MTTBList.add(mttb);
+            }
+        ttw.setMttblist(MTTBList);
 	return new ModelAndView("AddTasksToTemplatev1","taskwrapper", ttw);
+    }
+    catch(NumberFormatException ex){
+    ex.printStackTrace();
+    return new ModelAndView("Error");
+    }
+    catch(Exception ex){
+    ex.printStackTrace();
+    return new ModelAndView("Error");
+    }
 }
 
-public String getTaskName(int taskid, List<TaskBean> Tasklist){
-     String name=null;
-    for(TaskBean tb:Tasklist)
-    {
-    if (taskid==tb.getTaskid()){
-        name=tb.getTaskname();
-       }
+    public String getTaskName(int taskid, List<TaskBean> Tasklist){
+    try{
+    String name=null;
+    for(TaskBean tb:Tasklist){
+        if (taskid==tb.getTaskid()){
+            name=tb.getTaskname();
+        }
     }
     return name;
+    }
+    catch(Exception ex){
+    ex.printStackTrace();
+    return null;
+    }
 }
 
 @RequestMapping(value="/AddTaskTemplate",method=RequestMethod.POST)
@@ -145,7 +154,7 @@ public ModelAndView AddTaskToTemplate(@ModelAttribute("TaskW")TaskTemplateWrappe
 {
     String[] authorizedRoles = {"admin","manager","lead"};
     if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
-      
+    try{  
     System.out.println("Inside Add Task to template controller");
     HttpSession session=req.getSession();
     TemplateBean TempB=(TemplateBean)session.getAttribute("Template"); 
@@ -173,6 +182,11 @@ public ModelAndView AddTaskToTemplate(@ModelAttribute("TaskW")TaskTemplateWrappe
             }	
     }
     return new ModelAndView("CreateTaskTemplate","Message","Template Created Successfully");
+    }
+    catch(Exception ex){
+    ex.printStackTrace();
+    return new ModelAndView("Error");
+    }
  }
 
 @RequestMapping(value="/GetAllTaskTemplates",method=RequestMethod.GET)
@@ -180,11 +194,16 @@ public ModelAndView GetAllTaskTemplates(HttpServletRequest req)
 {
     String[] authorizedRoles = {"admin","manager","lead"};
     if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
-      
+    try{  
     ModelAndView result=new ModelAndView("DisplayTemplates");
     List<TemplateBean> TBList= TempS.getAllTemplates();
     result.addObject("AllTemplates",TBList);
     return result;
+    }
+    catch(Exception ex){
+    ex.printStackTrace();
+    return new ModelAndView("Error");
+    }
 }
 
 
@@ -193,7 +212,7 @@ public ModelAndView GetAllTaskTemplates(HttpServletRequest req)
     {
         String[] authorizedRoles = {"admin","manager","lead"};
         if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
-      
+        try{
            if(id!=0)
            {
                boolean value= TempS.deleteTemplate(id);
@@ -206,6 +225,11 @@ public ModelAndView GetAllTaskTemplates(HttpServletRequest req)
            else{
                 return new ModelAndView("Error");
             }
+        }
+        catch(Exception ex){
+        ex.printStackTrace();
+        return new ModelAndView("Error");
+        }
     }
     
 
@@ -214,7 +238,7 @@ public ModelAndView GetTemplateDetails(@RequestParam int id, HttpServletRequest 
 {
     String[] authorizedRoles = {"admin","manager","lead"};
     if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
-      
+    try{  
         ModelAndView result=new ModelAndView("UpdateTemplateDetails");
         if(id!=0)
         {
@@ -226,7 +250,12 @@ public ModelAndView GetTemplateDetails(@RequestParam int id, HttpServletRequest 
         {
             result=new ModelAndView("fail");
         }
-    return result;
+        return result;
+    }
+    catch(Exception ex){
+    ex.printStackTrace();
+    return new ModelAndView("Error");
+    }
 }
 //
 //@RequestMapping(value="/UpdateTemplateDetails",method=RequestMethod.GET)

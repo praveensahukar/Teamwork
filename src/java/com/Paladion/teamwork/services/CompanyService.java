@@ -18,6 +18,7 @@ public interface CompanyService {
     public void editCompany(CompanyBean tb);
     public List<CompanyBean> getAllCompany();
     public boolean deleteCompany(int id);
+    public CompanyBean getCompanyByID(int id);
     
 }
 

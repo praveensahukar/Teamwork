@@ -69,7 +69,7 @@ public CompanyBean populate()
     {
         String[] authorizedRoles = {"admin","manager","lead"};
         if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
-        
+        try{
         if (result.hasErrors()) {
             //validates the user input, this is server side validation
             System.out.println("error!!!!!!!!");
@@ -79,7 +79,12 @@ public CompanyBean populate()
 	System.out.println("\n inside create company method ");
 	CS.addCompany(CB); 	
 	System.out.println("Company Created with companyid"+CB.getCompanyid());
-	return new ModelAndView( "CreateCompany","Message","Company Created Successfully"  );  
+	return new ModelAndView( "CreateCompany","Message","Company Created Successfully"  ); 
+        }
+        catch(Exception ex){
+        ex.printStackTrace();
+        return new ModelAndView("Error");
+        }
     }	
     
     
@@ -88,11 +93,16 @@ public ModelAndView GetAllTasks(HttpServletRequest req)
 { 
     String[] authorizedRoles = {"admin","manager","lead"};
     if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
-    
+    try{
     ModelAndView result=new ModelAndView("DisplayCompany");
     List<CompanyBean> CBList= CS.getAllCompany();
     result.addObject("AllCompany",CBList);
     return result; 
+    }
+    catch(Exception ex){
+    ex.printStackTrace();
+    return new ModelAndView("Error");
+    }
 }
 
 
@@ -101,7 +111,7 @@ public ModelAndView GetAllTasks(HttpServletRequest req)
     {
         String[] authorizedRoles = {"admin","manager","lead"};
         if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
-        
+        try{
         if(id!=0)
            {
                boolean value= CS.deleteCompany(id);
@@ -114,5 +124,10 @@ public ModelAndView GetAllTasks(HttpServletRequest req)
            else{
                 return new ModelAndView("Error");
             }
+        }
+        catch(Exception ex){
+        ex.printStackTrace();
+        return new ModelAndView("Error");
+        }
     }  
 }
