@@ -44,11 +44,11 @@ body {
   top: 30%;
   padding: 40px;
   width: 500px;
-  height:600px;
+  height:500px;
   background-image: url("2.jpg");
   margin: 0 auto 10px;
   border-radius: 0px;
-  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+  
   overflow: hidden;
 }
 
@@ -143,7 +143,19 @@ font-style: italic;
 }
 
 </style>
-
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+.footer {
+   position: fixed;
+   left: 0;
+   bottom: 0;
+   width: 100%;
+   height: 8%;
+   background-color: #79a6d2;
+   color: white;
+   text-align: center;
+}
+</style>
   <meta charset="UTF-8">
 
   <title>Log-in</title>
@@ -153,12 +165,12 @@ font-style: italic;
     <link rel="stylesheet" href="css/style.css" media="screen" type="text/css" />
 
 </head>
-<br><br><br>
+<br><br>
   <div class="login-card">
-  <div align="center">
+  <div align="left">
 <img src="PaladionLogo.png"/>
     </div>
-    <h1>Log-in</h1><br>
+    <h1>Teamwork</h1>
     <center><h4 style="color: #ff0000">${Message}</h4></center>
 <!-- UI goes here-->
     <form:form action="Login.do" method="post" commandName="LoginM"> 
@@ -180,15 +192,13 @@ font-style: italic;
     <form:form action="ForgotPassword.do" method="GET">
         <div align="left">   <button type="submit" value="forgot" class="login login-submit">Forgot Password</button></a></div>
     </form:form>
-  </form:form>
-	   
-  <!-- UI goes here-->
-
-  </div>
-  
- 
-  
+    </form:form>
+<div class="footer">
+  <p>Copyright © 2007-2018 Paladion Team Version: 1.0 All rights reserved. </p>
+</div>
 </html>
+  </div>
+
 </body>
 
 
