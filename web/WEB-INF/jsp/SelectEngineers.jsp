@@ -222,6 +222,25 @@ font-style: italic;
   /* background-image: -webkit-gradient(linear, 0 0, 0 100%,   from(#4d90fe), to(#4787ed)); */
 }
 
+.sumu-submit {
+  /* border: 1px solid #3079ed; */
+  border: 0px;
+  text-shadow: 0 1px rgba(0,0,0,0.3);
+  background-color: #ff8080;
+  text-align: center;
+  font-size: 14px;
+  font-family: 'Arial', sans-serif;
+  font-weight: 700;
+  height: 36px;
+  padding: 0 8px;
+  width: 100%;
+  border: 0px;
+  color: #fff;
+  text-shadow: 0 1px rgba(0,0,0,0.1); 
+  background-color: #a6a6a6;
+  /* background-image: -webkit-gradient(linear, 0 0, 0 100%,   from(#4d90fe), to(#4787ed)); */
+}
+
 #overflowTest {
     padding: 15px;
     height: 100px;
@@ -244,12 +263,12 @@ font-style: italic;
             var date          =    $("#date").val();
             var datepicker    =    $("#datepicker").val();
             
-            var markup = "<tr> <td>"+ engineer +"</td> <td>" + date + "</td> <td>" + datepicker + "</td></tr>";
+            var markup = "<tr> <td><input type='checkbox' name='record'></td><td>"+ engineer +"</td> <td>" + date + "</td> <td>" + datepicker + "</td></tr>";
             $("table tbody").append(markup);
         });
         
         // Find and remove selected table rows
-        $(".delete-row").click(function(){
+        $(".sumu-submit").click(function(){
             $("table tbody").find('input[name="record"]').each(function(){
             	if($(this).is(":checked")){
                     $(this).parents("tr").remove();
@@ -268,11 +287,7 @@ font-style: italic;
 <form:form action="ScheduleActivity.do" method="post" commandName="ProjectM">
 <div align="left">
     <input type="hidden" name="AntiCSRFToken" id="token" value="${csrfPreventionSalt}"/>
-    
-    
-        
-            
-            
+       
 <!-- addrow-->
 <!-- addrow-->
 
@@ -280,8 +295,6 @@ font-style: italic;
 <!-- addrow-->
 
  <div id="sumukh"> 
-
-    
         <div class="col1">
             <h4>Template</h4><form:select style="width:130px"  path="templateid" itemLabel="Select">
          <option class="login login-submit" value="">Select Template</option>
@@ -317,7 +330,9 @@ font-style: italic;
 
 <br><br><br>
 <hr><hr>
-<div class="santosh"><form><input type="button" class="sumukh-submit" value="Add Row"></form><br><br><input type="submit" value="Submit" class="login login-submit"/></div>
+<div class="santosh"><form><input type="button" class="sumukh-submit" value="Add Row">
+  <input type="button" class="sumu-submit" value="Delete Row">  
+    </form><br><br><input type="submit" value="Submit" class="login login-submit"/></div>
 <div id="overflowTest">
 <table>
         <thead>
