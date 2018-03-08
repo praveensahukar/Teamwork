@@ -91,12 +91,12 @@ public class ActivityDAOImpl implements ActivityDAO
                 }
             }
             tx.commit();
-            session1.close();
+            
 	    return allProjects;
         }
         catch(Exception e){
-        tx.rollback();
         System.out.println("Exception occured. "+e.getMessage());
+        tx.rollback();
         return null;
         }
         finally{
