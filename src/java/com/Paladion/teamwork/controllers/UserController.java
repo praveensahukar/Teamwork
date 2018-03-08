@@ -8,6 +8,7 @@ package com.Paladion.teamwork.controllers;
 import com.Paladion.teamwork.beans.EmailBean;
 import com.Paladion.teamwork.beans.SystemBean;
 import com.Paladion.teamwork.beans.UserDataBean;
+import com.Paladion.teamwork.services.AdminService;
 
 import com.Paladion.teamwork.services.LoginService;
 import com.Paladion.teamwork.services.TeamService;
@@ -66,6 +67,10 @@ TeamService TService;
 @Autowired
 @Qualifier(value="CommonUtil")
 CommonUtil CU;
+
+@Autowired
+@Qualifier(value="AdminService")
+AdminService AdminS;
 	
 @ModelAttribute("UserM")
  public UserDataBean PopulateLoginBean() 
@@ -127,7 +132,7 @@ CommonUtil CU;
             ebean.setSubject(subject);
             ebean.setMessage(message);
             HttpSession Sess=req.getSession(false);
-            SystemBean syssetting = (SystemBean)Sess.getAttribute("SysConfig");
+            SystemBean syssetting = AdminS.getSystemSettings();
             eutil.sendEmail(ebean, syssetting);
                
             //Update user list in session

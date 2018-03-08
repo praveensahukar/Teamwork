@@ -7,9 +7,9 @@ package com.Paladion.teamwork.controllers;
 
 import com.Paladion.teamwork.beans.ActivityBean;
 import com.Paladion.teamwork.beans.ProjectBean;
-import com.Paladion.teamwork.beans.TaskBean;
 import com.Paladion.teamwork.services.CompanyService;
 import com.Paladion.teamwork.services.ProjectService;
+import com.Paladion.teamwork.services.UserService;
 import com.Paladion.teamwork.utils.CommonUtil;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -53,6 +53,10 @@ public class ProjectController {
     @Autowired
     @Qualifier(value = "CommonUtil")
     CommonUtil CU;
+    
+    @Autowired
+    @Qualifier(value = "UserService")
+    UserService US;
   
     @ModelAttribute("ProjectM")
     public ProjectBean populate()
@@ -69,8 +73,8 @@ public class ProjectController {
         HttpSession sess=req.getSession(false);
 	ModelAndView model=new ModelAndView("CreateProject");
         model.addObject("AllCompany", CS.getAllCompany());
-        model.addObject("AllDManagers", CU.getUsersByRole("manager",sess));
-        model.addObject("AllPManagers", CU.getUsersByRole("pmanager",sess));
+        model.addObject("AllDManagers", US.GetUsersByRole("manager"));
+        model.addObject("AllPManagers", US.GetUsersByRole("pmanager"));
         return model;
 	}
         catch(Exception ex){
@@ -96,8 +100,8 @@ public class ProjectController {
         HttpSession sess=req.getSession(false);
         ModelAndView model=new ModelAndView("CreateProject");
 	model.addObject("AllCompany", CS.getAllCompany());
-        model.addObject("AllDManagers", CU.getUsersByRole("manager",sess));
-        model.addObject("AllPManagers", CU.getUsersByRole("pmanager",sess));
+        model.addObject("AllDManagers", US.GetUsersByRole("manager"));
+        model.addObject("AllPManagers", US.GetUsersByRole("pmanager"));
 	return new ModelAndView( "CreateProject","Message","Project Created Successfully"); 
         }
         catch(Exception ex){

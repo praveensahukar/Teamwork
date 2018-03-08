@@ -133,8 +133,8 @@ public String Login()
                       String token = RandomStringUtils.random(30, 0, 0, true, true, null, new SecureRandom());
                       LoginSess.setAttribute("AntiCsrfToken",token);
                       if(!lb.getRole().equalsIgnoreCase("engineer")){
-                      LoginSess.setAttribute("SysConfig", AS.getSystemSettings());
-                      LoginSess.setAttribute("AllUsers", userService.GetAllUser());
+//                      LoginSess.setAttribute("SysConfig", AS.getSystemSettings());
+//                      LoginSess.setAttribute("AllUsers", userService.GetAllUser());
                       }
 	            return new ModelAndView("redirect:/Welcome.do");
            }
@@ -155,7 +155,7 @@ public String Login()
             ModelAndView result=new ModelAndView("Welcome");
             int [] counts = new int[3];
             counts = PS.getProjectsCount(req);
-            result.addObject("All_proj",counts[0]);
+            result.addObject("On_Hold",counts[0]);
             result.addObject("New_proj",counts[3]);
             result.addObject("Progress_proj",counts[2]);
             result.addObject("Completed_proj",counts[1]);

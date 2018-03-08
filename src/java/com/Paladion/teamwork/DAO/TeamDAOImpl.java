@@ -48,37 +48,32 @@ public class TeamDAOImpl implements TeamDAO{
 	public List<TeamBean> getAllTeams()
 	{
 	List <TeamBean> Teamlist=new ArrayList<TeamBean>();
-        
         Session session=sessionFactory.openSession();
-            
-                    String teamquery= "from TeamBean";
-                    System.out.println("Get all teams query");
-                    
-                     Transaction tx = null;
-   
-
-                    tx = session.beginTransaction();  
-                    
-                    Query query2 = session.createQuery(teamquery);
-                    Teamlist= query2.list();
-                    
-                    tx.commit();
-                    
-                    
-                  //  session.refresh(TeamBean.class);
-                    
-                    System.out.println(Teamlist.size());
-                    
-                    session.close();
-            
-	 
-       
-        
-        return Teamlist;
+        Transaction tx = session.beginTransaction();
+        try{
+            String teamquery= "from TeamBean";
+            System.out.println("Get all teams query");
+            Query query2 = session.createQuery(teamquery);
+            Teamlist= query2.list();
+            tx.commit();
+            //  session.refresh(TeamBean.class);
+            System.out.println(Teamlist.size());
+            return Teamlist;
+        }
+        catch(Exception e){
+            System.out.println("Exception occured. "+e.getMessage());
+            return null;
+            }
+            finally{
+            if(session.isOpen()){
+            System.out.println("-----------Closing session---------------");
+            session.close();
+            }
+            }
         }
         
         
-            @Override
+        @Override
 	public boolean deleteTeam(int id)
 	{
             Session session = this.sessionFactory.openSession();

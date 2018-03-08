@@ -33,6 +33,8 @@ public interface UserService {
                    
                    public UserDataBean GetUserById(int id);
                    
+                   public List<UserDataBean> GetUsersByRole(String role);
+                   
                    public List<UserDataBean> getAvailableEngineers(Date projStartDate, Date projEndDate, List<UserDataBean> UDB);
 
 }

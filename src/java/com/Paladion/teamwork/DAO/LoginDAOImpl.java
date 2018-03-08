@@ -36,7 +36,6 @@ public class LoginDAOImpl implements LoginDAO{
         UserDataBean SessUserBean=null;
         Session session = this.sessionFactory.openSession();
         System.out.println("Inside LoginDao");
-        String userid="";
         String SQL_QUERY1 ="from UserDataBean as o where o.email=? and o.password=?";
         Query query1 = session.createQuery(SQL_QUERY1);
         query1.setParameter(0,LB.getEmail());
@@ -45,8 +44,8 @@ public class LoginDAOImpl implements LoginDAO{
         Iterator it= list1.iterator();
         while(it.hasNext())
         {
-         SessUserBean=(UserDataBean) it.next();
-            System.out.println("Query succefully executed");
+           SessUserBean=(UserDataBean) it.next();
+           System.out.println("Query succefully executed");
         }
                         
         if ((list1 != null) && (list1.size() > 0)) 

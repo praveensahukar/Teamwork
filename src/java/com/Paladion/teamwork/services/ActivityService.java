@@ -21,7 +21,7 @@ public interface ActivityService {
     public void addProject(ActivityBean pb);
     public List<ActivityBean> getAllProjects(int userid, String role);
     public ActivityBean getProjectById(int id);
-    public void insertProjectTransaction(List <ActivityTransactionBean> PTBList);
+    public void insertProjectTransaction(ActivityTransactionBean PTB);
     public List<ActivityTransactionBean> getProjectTransaction(int projectid);
     public boolean updateTaskStatus(int transid, String status);
     public boolean updateTaskStatus(int projid);

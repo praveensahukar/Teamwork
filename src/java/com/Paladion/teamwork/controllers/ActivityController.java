@@ -169,7 +169,7 @@ public fileuploadBean populate1()
 	ModelAndView model=new ModelAndView("CreateActivity");
 	
             model.addObject("AllTemplates", TS.getAllTemplates());
-            model.addObject("AllLeads", CU.getUsersByRole("lead",sess));
+            model.addObject("AllLeads", US.GetUsersByRole("lead"));
             model.addObject("AllTeams",  TeamS.getAllTeams());
             model.addObject("AllProjects",PS.getAllProjects());  
             return model;
@@ -189,8 +189,8 @@ public fileuploadBean populate1()
         if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
        
         HttpSession sess=req.getSession(false);
-	List<UserDataBean> availableEngineers = US.getAvailableEngineers(AB.getStartdate(),AB.getEnddate(),CU.getUsersByRole("engineer", sess));
-        AB.setLead(CU.getUsernameFromSession(AB.getLeadid(), sess));
+	List<UserDataBean> availableEngineers = US.getAvailableEngineers(AB.getStartdate(),AB.getEnddate(),US.GetUsersByRole("engineer"));
+        AB.setLead(US.GetUserById(AB.getLeadid()).getUsername());
         List <TemplateBean> TemplateList = TS.getAllTemplates();
         ModelAndView model=new ModelAndView("SelectEngineers");
         model.addObject("engineers",availableEngineers);
@@ -209,7 +209,7 @@ public fileuploadBean populate1()
     
 
     //Schedule a activity
-        @RequestMapping(value="/ScheduleActivity",method=RequestMethod.POST)
+    @RequestMapping(value="/ScheduleActivity",method=RequestMethod.POST)
     public Object CreateNewProject(@ModelAttribute("ProjectM")ActivityBean AB, HttpServletRequest req,Model E) throws Exception
     {
         HttpSession sess= req.getSession(false);
@@ -274,7 +274,7 @@ public fileuploadBean populate1()
         ActivityBean PRDATA=AS.getProjectById(AB.getActivityid());
         List<MapTemplateTaskBean> MTTB=TS.getAllWeights(PRDATA.getTemplateid());
             
-        UserDataBean engBean = CU.getUserById(AB.getEngtracker(), sess);
+        UserDataBean engBean = US.GetUserById(AB.getEngtracker());
             
         PSBList=  CU.setTaskHours(PRDATA, MTTB);
         PTW.setProjectlist(PSBList);
@@ -284,8 +284,9 @@ public fileuploadBean populate1()
         }
             
         PTBList1= CU.updateProjectTransaction(PSBList, PRDATA,req.getSession(false));
-          
-        AS.insertProjectTransaction(PTBList1);
+        for(ActivityTransactionBean PTB : PTBList1){
+        AS.insertProjectTransaction(PTB);
+        }
             
 //      results=new ModelAndView("AssignTaskToUsers");
 //      //Engineer Availability Code Starts           
@@ -302,7 +303,7 @@ public fileuploadBean populate1()
     catch(Exception ex){
         ex.printStackTrace();
         TemplateList=TS.getAllTemplates();
-        LeadList=CU.getUsersByRole("lead",sess);   
+        LeadList=US.GetUsersByRole("lead");   
         results = new ModelAndView("CreateActivity","Message","Activity Creation failed due to an error");
         results.addObject("AllTemplates", TemplateList);
         results.addObject("AllLeads", LeadList);
@@ -367,8 +368,9 @@ public fileuploadBean populate1()
         List <ActivityTransactionBean> PTBList1=new ArrayList<ActivityTransactionBean>();
         
         PTBList1= CU.updateProjectTransaction(PTBList, PRDATA,req.getSession(false));
-        AS.insertProjectTransaction(PTBList1);
-       
+        for(ActivityTransactionBean PTB: PTBList1){
+        AS.insertProjectTransaction(PTB);
+        }
         CU.sendSchedulingMailToEngineers(PTBList1,req.getSession(false),PRDATA.getActivityname());
         ModelAndView result=new ModelAndView("DisplayActivityProgress");
         result.addObject("TaskDetails",PTBList1);
@@ -399,7 +401,7 @@ public fileuploadBean populate1()
            PSBList=  CU.setTaskHours(PRDATA, MTTB);
            PTW.setProjectlist(PSBList);
            result=new ModelAndView("AssignTaskToUsers");
-           List<UserDataBean> Alleng=CU.getUsersByRole("engineer", sess);
+           List<UserDataBean> Alleng=US.GetUsersByRole("engineer");
            List<UserDataBean> availableEngineers = US.getAvailableEngineers(PRDATA.getStartdate(), PRDATA.getEnddate(),Alleng);
              
            result.addObject("AllEngineers",availableEngineers);
@@ -754,7 +756,7 @@ public ModelAndView Downloadfiles(@RequestParam String pid,HttpServletRequest re
         //List<ProjectTransactionBean> PTBList=PS.getProjectTransaction(pid);
         ActivityTransactionBean PTBean = AS.getTransactionOnTransID(tid);
         List<ActivityTransactionBean> PTBList2=new ArrayList<>();
-         ActivityBean PRDATA=AS.getProjectById(pid);
+        ActivityBean PRDATA=AS.getProjectById(pid);
       
         //Get current system time
 //      DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -891,8 +893,8 @@ public ModelAndView Downloadfiles(@RequestParam String pid,HttpServletRequest re
         int activityID = Integer.parseInt(aID);
         
         ActivityBean AB = AS.getProjectById(activityID);
-        UserDataBean eng = CU.getUserById(AB.getEngtracker(), sess);
-        List<UserDataBean> availableEngineers = US.getAvailableEngineers(AB.getStartdate(),AB.getEnddate(),CU.getUsersByRole("engineer", sess));
+        UserDataBean eng = US.GetUserById(AB.getEngtracker());
+        List<UserDataBean> availableEngineers = US.getAvailableEngineers(AB.getStartdate(),AB.getEnddate(),US.GetUsersByRole("engineer"));
         availableEngineers.add(eng);
        
 	ModelAndView model=new ModelAndView("addTasktoActivity");
@@ -915,27 +917,18 @@ public ModelAndView Downloadfiles(@RequestParam String pid,HttpServletRequest re
         {
         String[] authorizedRoles = {"admin","manager","lead"};
         if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
-        
-        HttpSession sess=req.getSession(false); 
-        
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
         String defaultDate = "1990-01-01 00:00:00";
         Date parsedDate = formatter.parse(defaultDate);
         
-        UserDataBean eng = CU.getUserById(ATB.getUserid(), sess);
+        UserDataBean eng = US.GetUserById(ATB.getUserid());
         ATB.setEngname(eng.getUsername());
         ATB.setStatus("New");
         ATB.setStartdate(parsedDate);
         ATB.setEnddate(parsedDate);
-        List <ActivityTransactionBean> PTBList=new ArrayList<ActivityTransactionBean>();
-        PTBList.add(ATB);
-        
-        AS.insertProjectTransaction(PTBList);
-       
-	ModelAndView model=new ModelAndView("addTasktoActivity");
-	
-        
-        return model;
+        AS.insertProjectTransaction(ATB);
+        ModelAndView model=new ModelAndView("addTasktoActivity");
+	return model;
 	}
         catch(Exception ex){
         ex.printStackTrace();

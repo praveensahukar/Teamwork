@@ -37,29 +37,37 @@ public class TemplateDAOImpl implements TemplateDAO{
 	@Override
 	public void addTemplateDao(TemplateBean TempB) {
 	Session session1 = sessionFactory.getCurrentSession();
-	Transaction tx = null;
-	tx = session1.beginTransaction();
+	Transaction tx = session1.beginTransaction();
 	session1.save(TempB);
 	tx.commit();
+        session1.close();
 	
 	System.out.println("Template create successfully");	
 	}
 
 	@Override
 	public boolean addTaskToTemplate(MapTemplateTaskBean MTT){
-        try 
-        {
         Session session1 = sessionFactory.getCurrentSession();
         Transaction tx = null;
 	tx = session1.beginTransaction();
-	session1.save(MTT);
+        try 
+        {
+        session1.save(MTT);
 	tx.commit();
-	
 	System.out.println("Template weights added successfully");    
         return true;
         }
-        catch(Exception e){e.printStackTrace();return false;}
-	}
+        catch(Exception e){
+        System.out.println("Exception occured. "+e.getMessage());
+        return false;
+        }
+        finally{
+        if(session1.isOpen()){
+	System.out.println("Closing session");
+	session1.close();
+        }
+        }
+    }
 
 @Override
     public List<TaskBean> getAllTasksforTemplate() 
@@ -79,17 +87,31 @@ public class TemplateDAOImpl implements TemplateDAO{
     
      public  List<TemplateBean> getAllTemplates() {
         
- 	List <TemplateBean> templateList=new ArrayList<TemplateBean>();
-	 
+ 	List <TemplateBean> templateList = new ArrayList<TemplateBean>();
+	
         Session session=sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        
+        try{
         String templatequery= "from TemplateBean";
         System.out.println("template query");
         Query query2 = session.createQuery(templatequery);
        
         templateList= query2.list();
-	
+	tx.commit();
          
         return templateList;
+        }
+        catch(Exception e){
+        System.out.println("Exception occured. "+e.getMessage());
+        return null;
+        }
+        finally{
+        if(session.isOpen()){
+	System.out.println("-------------Closing session--------------");
+	session.close();
+        }
+        }
      }
     
     
@@ -98,8 +120,7 @@ public class TemplateDAOImpl implements TemplateDAO{
 	{
             Session session = this.sessionFactory.openSession();
             
-            Transaction tx = null;
-            tx = session.beginTransaction();
+            Transaction tx = session.beginTransaction();
             String sql = "delete from templates where templateid=?";
             SQLQuery query = session.createSQLQuery(sql);
             query.setParameter(0, id);

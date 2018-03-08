@@ -17,23 +17,32 @@ import java.util.List;
  * @author Administrator
  */
 public interface ActivityDAO {
-   public void addProjectDao(ActivityBean pb);
+    
+    public void addProjectDao(ActivityBean pb);
    
-   public List<ActivityBean> getAllProjects(int userid, String role);
+    public List<ActivityBean> getAllProjects(int userid, String role);
 
     public ActivityBean getProjectById(int id);
-    public void insertProjectTransaction(List<ActivityTransactionBean> PTBList);
+    
+    public void insertProjectTransaction(ActivityTransactionBean PTB);
+    
     public List<ActivityTransactionBean> getProjectTransaction(int projectid);
+    
     public boolean updateTaskStatus(int transid, String status);
     
-     public boolean updateProjectStatus(int projid, String status);
-      public boolean updateTaskStatus(int projid);
-       public boolean deleteProject(int projid);
-      public void updateProjectTransaction(List<ActivityTransactionBean>PTBList);
-      public ActivityTransactionBean getTransactionOnTransID(int transid);
-      public boolean allocateResource(AllocationBean AB);  
-      public List<ActivityBean> getUpcomingActivities(Date today, Date nextDate);
-      public void checkTaskStatusOnhold();
-      
+    public boolean updateProjectStatus(int projid, String status);
     
+    public boolean updateTaskStatus(int projid);
+    
+    public boolean deleteProject(int projid);
+    
+    public void updateProjectTransaction(List<ActivityTransactionBean>PTBList);
+    
+    public ActivityTransactionBean getTransactionOnTransID(int transid);
+    
+    public boolean allocateResource(AllocationBean AB);  
+    
+    public List<ActivityBean> getUpcomingActivities(Date today, Date nextDate);
+    
+    public void checkTaskStatusOnhold();
 }

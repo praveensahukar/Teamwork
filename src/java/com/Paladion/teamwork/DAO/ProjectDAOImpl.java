@@ -47,15 +47,30 @@ public class ProjectDAOImpl implements ProjectDAO {
 
     @Override
     public List<ProjectBean> getAllProject() {
-    
-    List <ProjectBean> Projectlist=new ArrayList<ProjectBean>();
-	 Session session=sessionFactory.openSession();
+        Session session=sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        List <ProjectBean> Projectlist=new ArrayList<ProjectBean>();
+	try{
         String projectquery= "from ProjectBean";
         System.out.println("Get all projects query");
         Query query2 = session.createQuery(projectquery);
-       
         Projectlist= query2.list();
+        tx.commit();
         return Projectlist;
+        }
+        catch(Exception e){
+        System.out.println("Exception occured. "+e.getMessage());
+        return null;
+        }
+        finally{
+        if(session.isOpen()){
+	System.out.println("-------------Closing session--------------");
+	session.close();
+        }
+        }
+        
+        
+       
     }
     
     

@@ -46,8 +46,8 @@ ActivityDAO PD;
     }
     
     @Override
-    public void insertProjectTransaction(List<ActivityTransactionBean> PTBList) {
-        PD.insertProjectTransaction(PTBList); 
+    public void insertProjectTransaction(ActivityTransactionBean PTB) {
+        PD.insertProjectTransaction(PTB); 
     }
     
     @Override

@@ -14,6 +14,8 @@ import com.Paladion.teamwork.beans.ActivityTransactionBean;
 import com.Paladion.teamwork.beans.ProjectBean;
 import com.Paladion.teamwork.beans.SystemBean;
 import com.Paladion.teamwork.beans.UserDataBean;
+import com.Paladion.teamwork.services.AdminService;
+import com.Paladion.teamwork.services.UserService;
 import java.math.RoundingMode;
 import java.security.SecureRandom;
 import java.text.DecimalFormat;
@@ -29,6 +31,8 @@ import java.util.Map;
 import java.util.stream.IntStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 /**
  *
@@ -36,8 +40,17 @@ import javax.servlet.http.HttpSession;
  */
 public class CommonUtil {
     
+    @Autowired
+    @Qualifier(value="UserService")
+    UserService US;
+    
+    @Autowired
+    @Qualifier(value="AdminService")
+    AdminService AdminS;
+    
     public List<MapTemplateTaskBean> Maptasktotemplate(HttpServletRequest req, HttpSession session) 
     {
+        try{
         List<MapTemplateTaskBean> mTTBList = new ArrayList<MapTemplateTaskBean>();
         List<TaskBean> tasklist = null;
         TemplateBean TempB = null;
@@ -91,6 +104,11 @@ public class CommonUtil {
            return mTTBList;
         }
       else{return null;}
+        }
+       catch(Exception ex){
+            ex.printStackTrace();
+            return null;
+        }
     }
     
  
@@ -98,6 +116,7 @@ public class CommonUtil {
     
     public List<ActivityTransactionBean> devideDaysfortasks(ActivityBean PB, List<MapTemplateTaskBean> MTTP) throws ParseException
     {
+        try{
         List <ActivityTransactionBean> PSBList=new ArrayList<ActivityTransactionBean>();
         Date TaskEndDate=null;
         float iMandays;
@@ -137,30 +156,33 @@ public class CommonUtil {
         PSBList.add(PSB);
         System.out.println("second end date is"+TaskEndDate);          
         }
-
-      
         return PSBList;
+        }
+        catch(Exception ex){
+            ex.printStackTrace();
+            return null;
+        }
     
     }
 
     
- Date calculateResponseTime(Calendar ProjectTime, float ProjectDurationinHours) {
-     
-int fromHour = 10;//start time of the day usually 10 AM
-int fromMinute = 0;
-int toHour = 19;//end time of the day usually 7 PM
-int toMinute = 0;
-Date end = null;
+Date calculateResponseTime(Calendar ProjectTime, float ProjectDurationinHours) {
+    try{ 
+    int fromHour = 10;//start time of the day usually 10 AM
+    int fromMinute = 0;
+    int toHour = 19;//end time of the day usually 7 PM
+    int toMinute = 0;
+    Date end = null;
 
 
-//Check to get start time of the current day. If less than 10 AM make it 10 AM
+    //Check to get start time of the current day. If less than 10 AM make it 10 AM
 
     if (ProjectTime.get(Calendar.HOUR_OF_DAY) < fromHour) 
     {
         ProjectTime.set(Calendar.HOUR, fromHour);
     }
-   //Check to get end time of the current day. If less more than 7 PM add a day and set the time to 10 AM 
-   //if the current day is sunday make it Monday 10 AM
+    //Check to get end time of the current day. If less more than 7 PM add a day and set the time to 10 AM 
+    //if the current day is sunday make it Monday 10 AM
     if (ProjectTime.get(Calendar.HOUR_OF_DAY) >= toHour || ProjectTime.get(Calendar.DAY_OF_WEEK) == 1) 
     {
         ProjectTime.add(Calendar.DATE, 1);
@@ -199,6 +221,11 @@ Date end = null;
     }
 
     return end;
+    }
+    catch(Exception ex){
+            ex.printStackTrace();
+            return null;
+        }
 
 } 
     
@@ -206,6 +233,7 @@ Date end = null;
     
      public List<ActivityTransactionBean> setTaskHours(ActivityBean PB, List<MapTemplateTaskBean> MTTP) throws ParseException
     {
+        try{
         DecimalFormat df = new DecimalFormat("#.##");
         df.setRoundingMode(RoundingMode.CEILING);
         
@@ -227,12 +255,17 @@ Date end = null;
             PSB.setStatus("New");
             PSBList.add(PSB);
         }
-      return PSBList;
+        return PSBList;
+        }
+        catch(Exception ex){
+            ex.printStackTrace();
+            return null;
+        }
     }
      
      
      public List<ActivityTransactionBean> updateProjectTransaction(List<ActivityTransactionBean> PTBList, ActivityBean PB, HttpSession sess) throws ParseException{
-         
+        try{ 
          HashMap<Integer, List<ActivityTransactionBean>> hashMap = new HashMap<Integer, List<ActivityTransactionBean>>();
          List <ActivityTransactionBean> ResultList=new ArrayList();
          SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
@@ -245,9 +278,10 @@ Date end = null;
             List<ActivityTransactionBean> list = new ArrayList();
             list.add(PTBean);
             hashMap.put(PTBean.getUserid(), list);
-           } 
+            } 
             else {
-            hashMap.get(PTBean.getUserid()).add(PTBean);}
+            hashMap.get(PTBean.getUserid()).add(PTBean);
+            }
         }
          
         System.out.println("\nNo of users assigned to project : "+hashMap.size());
@@ -267,7 +301,7 @@ Date end = null;
                 if(null==TaskEndDate)
                   {
                     PTBean.setTaskstartdate(ProjectTime);
-                    PTBean.setEngname(this.getUsernameFromSession(PTBean.getUserid(),sess));
+                    PTBean.setEngname(US.GetUserById(PTBean.getUserid()).getUsername());
                     TaskEndDate=calculateResponseTime(ProjectTime, PTBean.getTaskhours());
                     PTBean.setTaskenddate(TaskEndDate);
                     PTBean.setStartdate(parsedDate);
@@ -286,7 +320,7 @@ Date end = null;
                         }
                     PTBean.setTaskstartdate(ProjectTime);
                     TaskEndDate=calculateResponseTime(ProjectTime,PTBean.getTaskhours());
-                    PTBean.setEngname(this.getUsernameFromSession(PTBean.getUserid(),sess));
+                    PTBean.setEngname(US.GetUserById(PTBean.getUserid()).getUsername());
                     PTBean.setTaskenddate(TaskEndDate);
                      PTBean.setStartdate(parsedDate);
                     PTBean.setEnddate(parsedDate);
@@ -294,11 +328,17 @@ Date end = null;
                 ResultList.add(PTBean);
             }
         }
-      return ResultList;    
+        return ResultList;
+        }
+        catch(Exception ex){
+            ex.printStackTrace();
+            return null;
+        }
     }
      
      
     public  int getWorkingDays(Date startDate, Date endDate) {
+    try{
     Calendar startCal = Calendar.getInstance();
     startCal.setTime(startDate);        
 
@@ -326,44 +366,66 @@ Date end = null;
     } while (startCal.getTimeInMillis() < endCal.getTimeInMillis()); 
 
     return workDays;
+    }
+    catch(Exception ex){
+    ex.printStackTrace();
+    return 0;
+    }
 }
 
-    public String getUsernameFromSession(int userid,HttpSession sess) 
+//    public String getUsernameFromSession(int userid,HttpSession sess) 
+//    {
+//        try{
+//        List<UserDataBean> UDBean=(List<UserDataBean>) sess.getAttribute("AllUsers");
+//        for (UserDataBean ub:UDBean)
+//        {
+//        if(ub.getUserid()==userid)
+//        return ub.getUsername();
+//        }
+//        return null;
+//        }
+//        catch(Exception ex){
+//            ex.printStackTrace();
+//            return null;
+//        }
+//        
+//    }
     
-    {
-        List<UserDataBean> UDBean=(List<UserDataBean>) sess.getAttribute("AllUsers");
-        for (UserDataBean ub:UDBean)
-        {
-        if(ub.getUserid()==userid)
-        return ub.getUsername();
-        }
-        return null;
-        
-    }
+//    public List<UserDataBean> getUsersByRole(String role, HttpSession sess){
+//        try{
+//        List<UserDataBean> UserList=new ArrayList();
+//        List<UserDataBean> UDBean=(List<UserDataBean>) sess.getAttribute("AllUsers");
+//        for(UserDataBean ub:UDBean){
+//            if(role.equalsIgnoreCase(ub.getRole())){
+//               UserList.add(ub);
+//            }
+//        }
+//        return UserList;
+//        }
+//        catch(Exception ex){
+//            ex.printStackTrace();
+//            return null;
+//        }
+//    }
     
-    public List<UserDataBean> getUsersByRole(String role, HttpSession sess){
-        List<UserDataBean> UserList=new ArrayList();
-        List<UserDataBean> UDBean=(List<UserDataBean>) sess.getAttribute("AllUsers");
-        for(UserDataBean ub:UDBean){
-            if(role.equalsIgnoreCase(ub.getRole())){
-               UserList.add(ub);
-            }
-        }
-        return UserList;
-    }
-    
-    public UserDataBean getUserById(int userid, HttpSession sess){
-        List<UserDataBean> UDBean=(List<UserDataBean>) sess.getAttribute("AllUsers");
-        for(UserDataBean ub:UDBean){
-            if(userid==ub.getUserid()){
-               return ub;
-               }
-             }
-        return null;
-    }
+//    public UserDataBean getUserById(int userid, HttpSession sess){
+//        try{
+//        List<UserDataBean> UDBean=(List<UserDataBean>) sess.getAttribute("AllUsers");
+//        for(UserDataBean ub:UDBean){
+//            if(userid==ub.getUserid()){
+//               return ub;
+//               }
+//             }
+//        return null;
+//        }
+//        catch(Exception ex){
+//            ex.printStackTrace();
+//            return null;
+//        }
+//    }
     
     public boolean sendSchedulingMailToEngineers(List<ActivityTransactionBean> PTBList, HttpSession sess, String projectname){
-        
+        try{
         HashMap<Integer, List<ActivityTransactionBean>> hashMap = new HashMap();
         // List <ProjectTransactionBean> ResultList=new ArrayList();
         PTBList.forEach((PTBean) -> {
@@ -381,7 +443,7 @@ Date end = null;
              List <ActivityTransactionBean> PTBlist =entry.getValue();
              EmailBean ebean=new EmailBean();
              EmailUtil EU=new EmailUtil();
-             UserDataBean ubean=this.getUserById(userid, sess);
+             UserDataBean ubean=US.GetUserById(userid);
              ebean.setTo(ubean.getEmail());
              ebean.setSubject("Project Scheduling Mail");
              int i=0;
@@ -402,16 +464,20 @@ Date end = null;
              mess.append("\n\nBest Regards\nTeam Paladion");
              String message=mess.toString();
              ebean.setMessage(message);
-              SystemBean syssetting = (SystemBean)sess.getAttribute("SysConfig");
+             SystemBean syssetting = AdminS.getSystemSettings();
              EU.sendEmail(ebean, syssetting);
         });
-        
-        
         return true;
+        }
+        catch(Exception ex){
+            ex.printStackTrace();
+            return false;
+        }
     }
     
 
     public List<ActivityTransactionBean> updateDelayForTasks(List<ActivityTransactionBean> PTBList, int hours){
+        try{
         Date delayedTaskEndDate=null;
         for(ActivityTransactionBean PTBean : PTBList)        
         {
@@ -432,11 +498,17 @@ Date end = null;
                   }
             }
         return PTBList;
+        }
+         catch(Exception ex){
+            ex.printStackTrace();
+            return null;
+        }
     }
    
     
     //code not used any where
     public String randomGenetator(int size){
+        try{
         System.out.println("Generating password using random() : ");
      
         String Capital_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -456,9 +528,15 @@ Date end = null;
         }
         System.out.println("Generared OTP :"+new String(password));
         return new String(password);
+        }
+         catch(Exception ex){
+            ex.printStackTrace();
+            return null;
+        }
     }
     
     public boolean checkUserAuthorization(String[] roles, HttpServletRequest req ){
+        try{
         HttpSession sess=req.getSession(true);
         UserDataBean uBean=(UserDataBean)sess.getAttribute("Luser");
         String userRole = uBean.getRole();
@@ -469,6 +547,11 @@ Date end = null;
             }
         }
         return false;
+        }
+         catch(Exception ex){
+            ex.printStackTrace();
+            return false;
+        }
     }
     
 }

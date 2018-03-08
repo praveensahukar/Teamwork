@@ -32,5 +32,7 @@ public interface UserDAO {
        public UserDataBean GetUserById(int id);
        
        public List getAvailableEngineers(Date projStartDate, Date projEndDate);
+       
+       public List<UserDataBean> GetUsersByRole(String role); 
 
 }

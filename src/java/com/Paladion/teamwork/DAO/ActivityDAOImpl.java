@@ -29,43 +29,47 @@ import org.springframework.beans.factory.annotation.Qualifier;
  */
 public class ActivityDAOImpl implements ActivityDAO
 {
-           @Autowired
-           @Qualifier(value="hibernate4AnnotatedSessionFactory")
-           private SessionFactory sessionFactory;
+    @Autowired
+    @Qualifier(value="hibernate4AnnotatedSessionFactory")
+    private SessionFactory sessionFactory;
 
-           public void setSessionFactory(SessionFactory sessionFactory) {
-                       this.sessionFactory = sessionFactory;
-           }
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 	
-	@Override
-	public void addProjectDao(ActivityBean PB) {
-            try{
-	    Session session1 = sessionFactory.getCurrentSession();
-            Transaction tx = null;
-	    tx = session1.beginTransaction();
-	    session1.save(PB );
-	    tx.commit();
-            System.out.println("Project created successfully");
-            }
-            catch(Exception ex){
-                ex.printStackTrace();
-            }
-      }
+    @Override
+    public void addProjectDao(ActivityBean PB) {
+        Session session1 = sessionFactory.getCurrentSession();
+        Transaction tx = session1.beginTransaction();
+        try{
+        session1.save(PB );
+	tx.commit();
+        System.out.println("Project created successfully");
+        session1.close();
+        }
+        catch(Exception e){
+        tx.rollback();
+        System.out.println("Exception occured. "+e.getMessage());
+        }
+        finally{
+        if(session1.isOpen()){
+	System.out.println("-------------Closing session--------------");
+	session1.close();
+        }
+        }
+     }
 
-	
-	@Override
-	public List<ActivityBean> getAllProjects(int userid, String role) {
-		
-            Session session1 = sessionFactory.getCurrentSession();
-	    List <ActivityBean> allProjects=new ArrayList<>();
-            List<ActivityTransactionBean> PTbeanList=new ArrayList<>();
-            Transaction tx = null;
-	    tx = session1.beginTransaction();
-            
-            if (role.equalsIgnoreCase("Manager")||role.equalsIgnoreCase("Admin")||role.equalsIgnoreCase("scheduling"))
-            {
-             Criteria criteria = session1.createCriteria(ActivityBean.class);
-             allProjects= criteria.list();
+    @Override
+    public List<ActivityBean> getAllProjects(int userid, String role) {
+	Session session1 = sessionFactory.getCurrentSession();
+        Transaction tx = session1.beginTransaction();
+        try{
+	List <ActivityBean> allProjects=new ArrayList<>();
+        List<ActivityTransactionBean> PTbeanList=new ArrayList<>();
+        
+        if (role.equalsIgnoreCase("Manager")||role.equalsIgnoreCase("Admin")||role.equalsIgnoreCase("scheduling")){
+            Criteria criteria = session1.createCriteria(ActivityBean.class);
+            allProjects= criteria.list();
             }
             else if(role.equalsIgnoreCase("Lead"))
             {
@@ -75,76 +79,118 @@ public class ActivityDAOImpl implements ActivityDAO
             }   
             else if(role.equalsIgnoreCase("Engineer"))
             {
-                       
             Query query1 = session1.createQuery("from ActivityTransactionBean where userid=? group by activityid");
             query1.setParameter(0, userid);
-            
             PTbeanList=(List<ActivityTransactionBean>) query1.list();
-        
-            for(ActivityTransactionBean PTB:PTbeanList)
-            {
-            Criteria criteria2 = session1.createCriteria(ActivityBean.class); 
-            criteria2.add(Restrictions.eq("activityid", PTB.getActivityid()));
-            ActivityBean PB=(ActivityBean)criteria2.uniqueResult();
-            allProjects.add(PB);
+                for(ActivityTransactionBean PTB:PTbeanList)
+                {
+                    Criteria criteria2 = session1.createCriteria(ActivityBean.class); 
+                    criteria2.add(Restrictions.eq("activityid", PTB.getActivityid()));
+                    ActivityBean PB=(ActivityBean)criteria2.uniqueResult();
+                    allProjects.add(PB);
+                }
             }
-            
-            }
-            
-	    tx.commit();
+            tx.commit();
+            session1.close();
 	    return allProjects;
+        }
+        catch(Exception e){
+        tx.rollback();
+        System.out.println("Exception occured. "+e.getMessage());
+        return null;
+        }
+        finally{
+        if(session1.isOpen()){
+	System.out.println("-------------Closing session--------------");
+	session1.close();
+        }
+        }
         }
         
         @Override
         public ActivityBean getProjectById(int id) {
-	   Transaction tx = null;
-	   Session session1 = sessionFactory.getCurrentSession();
-           tx = session1.beginTransaction();
+           
+        Session session1 = sessionFactory.getCurrentSession();
+	Transaction tx = session1.beginTransaction();
+	try{
            String SQL_QUERY1= "from ActivityBean as O where O.activityid=?";
            Query query1 = session1.createQuery(SQL_QUERY1);
            query1.setParameter(0,id);
            List list1 = query1.list();       
            ActivityBean PB = (ActivityBean) list1.get(0);
            tx.commit();
-        
+           session1.close();
            return PB;
+        }
+        catch(Exception e){
+        tx.rollback();
+        System.out.println("Exception occured. "+e.getMessage());
+        return null;
+        }
+        finally{
+        if(session1.isOpen()){
+	System.out.println("-------------Closing session--------------");
+	session1.close();
+        }
+        }
+           
       }
 
     @Override
-    public void insertProjectTransaction(List <ActivityTransactionBean> PTBList){
-        
-        for(ActivityTransactionBean PTBean : PTBList){
-                Session session1 = sessionFactory.getCurrentSession();
-		Transaction tx = null;
-	        tx = session1.beginTransaction();
-	        session1.save(PTBean);
-	        tx.commit();
-		System.out.println("Project transaction updated successfully");
+    public void insertProjectTransaction(ActivityTransactionBean PTBean){
+        Session session1 = sessionFactory.getCurrentSession();
+        Transaction tx = session1.beginTransaction();
+        try{
+            session1.save(PTBean);
+            System.out.println("Project transaction updated successfully");
+            session1.close();
+            tx.commit();
+        }
+        catch(Exception ex){
+            tx.rollback();
+            System.out.println("Error Occured : "+ex.getMessage());
+        }
+        finally{
+        if(session1.isOpen()){
+	System.out.println("-------------Closing session--------------");
+	session1.close();
+        }
         }
         
+        
     }
-    
-    
- 
     
     
         @Override
-       public List<ActivityTransactionBean> getProjectTransaction(int projectid){
+        public List<ActivityTransactionBean> getProjectTransaction(int projectid){
         
-           List<ActivityTransactionBean> PList;
-           Transaction tx = null;
-	   Session session1 = sessionFactory.getCurrentSession();
-           tx = session1.beginTransaction();
-           Criteria criteria = session1.createCriteria(ActivityTransactionBean.class);
-           criteria.add(Restrictions.eq("activityid", projectid));
-//         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-	   PList = criteria.list();
-           tx.commit();
-           return PList;
-    }
+            Session session1 = sessionFactory.getCurrentSession();
+            Transaction tx = session1.beginTransaction();
+            try{
+            List<ActivityTransactionBean> PList;
+            Criteria criteria = session1.createCriteria(ActivityTransactionBean.class);
+            criteria.add(Restrictions.eq("activityid", projectid));
+//          criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+            PList = criteria.list();
+            tx.commit();
+            session1.close();
+            return PList;
+            }
+            catch(Exception ex){
+            tx.rollback();
+            System.out.println("Error Occured : "+ex.getMessage());
+            return null;
+            }
+            finally{
+            if(session1.isOpen()){
+            System.out.println("-------------Closing session--------------");
+            session1.close();
+            }
+            }
+        }
   
         @Override
-       public boolean updateTaskStatus(int transid, String status){
+        public boolean updateTaskStatus(int transid, String status){
            
         DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date1 = new Date();
@@ -156,10 +202,9 @@ public class ActivityDAOImpl implements ActivityDAO
             System.out.println(PTBean.getStartdate());
                 
             if(status.equalsIgnoreCase("progress"))
-                
             {               
                 Date date2 = PTBean.getTaskstartdate();
-              // Get msec from each, and subtract.
+                // Get msec from each, and subtract.
                 long diff = date1.getTime() - date2.getTime();
                 long diffSeconds = diff / 1000 % 60;
                 long diffMinutes = diff / (60 * 1000) % 60;
@@ -228,58 +273,96 @@ public class ActivityDAOImpl implements ActivityDAO
        
        
        @Override
-       public boolean updateTaskStatus(int projid){
+       public boolean updateTaskStatus(int activityId){
             Session session = this.sessionFactory.openSession();
-            Transaction tx;
-            tx = session.beginTransaction();
+            Transaction tx = session.beginTransaction();
+            try{
             String sql = "UPDATE activity_transaction SET status=? WHERE activityid=?";
             SQLQuery query = session.createSQLQuery(sql);
             query.setParameter(0,"Completed");
-            query.setParameter(1,projid);
+            query.setParameter(1,activityId);
             query.executeUpdate();
             tx.commit();
+            session.close();
             return true;
+            }
+            catch(Exception ex){
+            tx.rollback();
+            System.out.println("Error Occured : "+ex.getMessage());
+            return false;
+            }
+            finally{
+            if(session.isOpen()){
+            System.out.println("-------------Closing session--------------");
+            session.close();
+            }
+            }
        }
        
        @Override
        public ActivityTransactionBean getTransactionOnTransID(int transid){
-           List<ActivityTransactionBean> PList;
-            Transaction tx = null;
-            Session session1 = sessionFactory.getCurrentSession();
-            tx = session1.beginTransaction();
-            Criteria criteria = session1.createCriteria(ActivityTransactionBean.class);
+            Session session = sessionFactory.getCurrentSession();
+            Transaction tx = session.beginTransaction();
+            try{
+            List<ActivityTransactionBean> PList;
+            Criteria criteria = session.createCriteria(ActivityTransactionBean.class);
             criteria.add(Restrictions.eq("transid", transid));
 //          criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
             PList = criteria.list();
             tx.commit();
-            
+            session.close();
             if(PList.size()==1){
             ActivityTransactionBean PTB = PList.get(0);
             return PTB;
             }
             else{
-           return null;
-           }
+            return null;
+            }
+            }
+            catch(Exception ex){
+                tx.rollback();
+                System.out.println("Error Occured : "+ex.getMessage());
+                return null;
+            }
+            finally{
+                if(session.isOpen()){
+                System.out.println("-------------Closing session--------------");
+                session.close();
+                }
+            }
+            
        }
        
         @Override
         public boolean updateProjectStatus(int projid, String status){
-            if(status.equalsIgnoreCase("new")||status.equalsIgnoreCase("progress")||status.equalsIgnoreCase("completed")){
             Session session = this.sessionFactory.openSession();
-            Transaction tx;
-            tx = session.beginTransaction();
-            String sql = "UPDATE activity SET status=? WHERE activityid=?";
-            SQLQuery query = session.createSQLQuery(sql);
-            query.setParameter(0,status);
-            query.setParameter(1,projid);
-            query.executeUpdate();
-            tx.commit();
-            return true;
-            }           
-           
-           else{
-               System.out.println("Invalid option selected");
-               return false;
+            Transaction tx = session.beginTransaction();
+            try{
+            if(status.equalsIgnoreCase("new")||status.equalsIgnoreCase("progress")||status.equalsIgnoreCase("completed")){
+                String sql = "UPDATE activity SET status=? WHERE activityid=?";
+                SQLQuery query = session.createSQLQuery(sql);
+                query.setParameter(0,status);
+                query.setParameter(1,projid);
+                query.executeUpdate();
+                tx.commit();
+                session.close();
+                return true;
+                }           
+                else{
+                System.out.println("Invalid option selected");
+                return false;
+                }
+            }
+            catch(Exception ex){
+                tx.rollback();
+                System.out.println("Error Occured : "+ex.getMessage());
+                return false;
+            }
+            finally{
+            if(session.isOpen()){
+                System.out.println("-------------Closing session--------------");
+                session.close();
+                }
             }
         }
 
