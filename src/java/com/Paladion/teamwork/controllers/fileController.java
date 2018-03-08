@@ -89,19 +89,17 @@ AdminService Aservice;
 
 
  
-@RequestMapping(value="/fileDownload",method=RequestMethod.GET)
-    public void fileDownload(@RequestParam String id,HttpServletRequest req,HttpServletResponse res) throws ParseException, IOException, FileNotFoundException, Exception
-    {
-System.out.println("fileDownload:");
-  
-HttpSession sess=req.getSession();    
-    String PID=(String) sess.getAttribute("DownloadPID");    
-    System.out.println("projectid"+id);    
-    String filepath=Aservice.getSystemSettings().getUploadpath();
+    @RequestMapping(value="/fileDownload",method=RequestMethod.GET)
+    public void fileDownload(@RequestParam String id,HttpServletRequest req,HttpServletResponse res) throws ParseException, IOException, FileNotFoundException, Exception{
+    try{
+        HttpSession sess=req.getSession();    
+        String PID=(String) sess.getAttribute("DownloadPID");    
+        System.out.println("projectid"+id);    
+        String filepath=Aservice.getSystemSettings().getUploadpath();
     
-    File downloadfile = new File(filepath+File.separator+"files"+File.separator+id);
-    System.out.println("folder " + downloadfile.toString());
-   String sourceFolderName =  downloadfile.toString();
+        File downloadfile = new File(filepath+File.separator+"files"+File.separator+id);
+        System.out.println("folder " + downloadfile.toString());
+        String sourceFolderName =  downloadfile.toString();
         String outputFileName = downloadfile.toString()+".zip";
  
         FileOutputStream fos = new FileOutputStream(outputFileName);
@@ -117,34 +115,32 @@ HttpSession sess=req.getSession();
         //file download
         
         
-String downloadFolder = downloadfile.toString();
-String filename1=downloadfile.toString()+".zip";
-Path file = Paths.get(filename1);
-  if (Files.exists(file)) {
-   res.setContentType("application/zip");
-   res.addHeader("Content-Disposition", "attachment; filename=" + filename1);
-   try {
-    Files.copy(file, res.getOutputStream());
-    res.getOutputStream().flush();
-   } catch (IOException e) {
-    System.out.println("Error :- " + e.getMessage());
-   }
-  } else {
-   System.out.println("Sorry File not found!!!!");
-  }
-        
-        
-        //file download
-        
-        
-        
-        
+        String downloadFolder = downloadfile.toString();
+        String filename1=downloadfile.toString()+".zip";
+        Path file = Paths.get(filename1);
+        if (Files.exists(file)) {
+            res.setContentType("application/zip");
+            res.addHeader("Content-Disposition", "attachment; filename=" + filename1);
+            try {
+                Files.copy(file, res.getOutputStream());
+                res.getOutputStream().flush();
+            }catch (IOException e) {
+            System.out.println("Error :- " + e.getMessage());
+            }
+        } else{
+            System.out.println("Sorry File not found!!!!");
+        }
+        }
+        catch(Exception ex){
+        ex.printStackTrace();
+        return;
+        }
     }
  
     private static void addFolder(ZipOutputStream zos,String folderName,String baseFolderName)throws Exception{
+    try{    
         File f = new File(folderName);
         if(f.exists()){
- 
             if(f.isDirectory()){
                 //Thank to peter 
                 //For pointing out missing entry for empty folder
@@ -157,8 +153,9 @@ Path file = Paths.get(filename1);
                 File f2[] = f.listFiles();
                 for(int i=0;i<f2.length;i++){
                     addFolder(zos,f2[i].getAbsolutePath(),baseFolderName);    
-                }
-            }else{
+                    }
+            }
+            else{
                 //add file
                 //extract the relative name for entry purpose
                 String entryName = folderName.substring(baseFolderName.length()+1,folderName.length());
@@ -176,10 +173,16 @@ Path file = Paths.get(filename1);
                 System.out.println("OK!");
  
             }
-        }else{
+        }
+        else{
             System.out.println("File or directory not found " + folderName);
         }
-}  
     }
+    catch(Exception ex){
+    ex.printStackTrace();
+    return;
+    }
+  }  
+}
 
 

@@ -152,15 +152,9 @@ public class ActivityDAOImpl implements ActivityDAO
            
            if(!status.equalsIgnoreCase("new") && !status.isEmpty())
            {
-            
-               
             ActivityTransactionBean PTBean=this.getTransactionOnTransID(transid);
             System.out.println(PTBean.getStartdate());
-               
-            
-          
-            
-                 
+                
             if(status.equalsIgnoreCase("progress"))
                 
             {               
@@ -181,7 +175,6 @@ public class ActivityDAOImpl implements ActivityDAO
                // this.updatePTB(PTBean);
             }
             
-            
             if(status.equalsIgnoreCase("completed")){
                 
                 Date date2 = PTBean.getTaskenddate();
@@ -198,11 +191,7 @@ public class ActivityDAOImpl implements ActivityDAO
                 //Redirect to update the delay reason
                 }
                 PTBean.setEnddate(date1);
-               
-            }
-            
-            
-            
+            }    
             
 //            Session session = this.sessionFactory.openSession();
 //            Transaction tx;
@@ -238,7 +227,7 @@ public class ActivityDAOImpl implements ActivityDAO
        }
        
        
-             @Override
+       @Override
        public boolean updateTaskStatus(int projid){
             Session session = this.sessionFactory.openSession();
             Transaction tx;
@@ -273,12 +262,9 @@ public class ActivityDAOImpl implements ActivityDAO
            }
        }
        
-       
-       
-         @Override
-       public boolean updateProjectStatus(int projid, String status){
-           if(status.equalsIgnoreCase("new")||status.equalsIgnoreCase("progress")||status.equalsIgnoreCase("completed"))
-           {
+        @Override
+        public boolean updateProjectStatus(int projid, String status){
+            if(status.equalsIgnoreCase("new")||status.equalsIgnoreCase("progress")||status.equalsIgnoreCase("completed")){
             Session session = this.sessionFactory.openSession();
             Transaction tx;
             tx = session.beginTransaction();
@@ -289,57 +275,52 @@ public class ActivityDAOImpl implements ActivityDAO
             query.executeUpdate();
             tx.commit();
             return true;
-           }           
+            }           
            
            else{
                System.out.println("Invalid option selected");
                return false;
-           }
-       }
+            }
+        }
 
 
-@Override
-    public void updateProjectTransaction(List <ActivityTransactionBean> PTBList){
-        
-        for(ActivityTransactionBean PTBean : PTBList){
-                Session session1 = sessionFactory.getCurrentSession();
-		Transaction tx = null;
-	        tx = session1.beginTransaction();
-                
-                String sql = "UPDATE activity_transaction SET taskstartdate=?, taskenddate=?, taskhours=?,taskdays=?, status=? , startdate = ?, enddate=?, holddate=? WHERE transid=?";
-                SQLQuery query = session1.createSQLQuery(sql);
-                query.setParameter(0,PTBean.getTaskstartdate());
-                query.setParameter(1,PTBean.getTaskenddate());
-                query.setParameter(2,PTBean.getTaskhours());
-                query.setParameter(3,PTBean.getTaskdays());
-                query.setParameter(4,PTBean.getStatus());
-                query.setParameter(5,PTBean.getStartdate());
-                query.setParameter(6,PTBean.getEnddate());
-                query.setParameter(7,PTBean.getHolddate());
-                query.setParameter(8,PTBean.getTransid());
-                
-                query.executeUpdate();
-                tx.commit();
-		System.out.println("Project transaction updated successfully");
-        }
-        
-    } 
-         @Override
-	public boolean deleteProject(int id)
-	{
-            Session session = this.sessionFactory.openSession();
-            String sql = "delete p.*, pt.* from activity p left join activity_transaction pt on p.activityid=pt.activityid where p.activityid=?";
-            SQLQuery query = session.createSQLQuery(sql);
-            query.setParameter(0, id);
-            query.executeUpdate();
-            return true;
-        }
-        
-        
-      
         @Override
-	public boolean allocateResource(AllocationBean AB) {
-		
+        public void updateProjectTransaction(List <ActivityTransactionBean> PTBList){
+        for(ActivityTransactionBean PTBean : PTBList){
+            Session session1 = sessionFactory.getCurrentSession();
+            Transaction tx = null;
+	    tx = session1.beginTransaction();
+                
+            String sql = "UPDATE activity_transaction SET taskstartdate=?, taskenddate=?, taskhours=?,taskdays=?, status=? , startdate = ?, enddate=?, holddate=? WHERE transid=?";
+            SQLQuery query = session1.createSQLQuery(sql);
+            query.setParameter(0,PTBean.getTaskstartdate());
+            query.setParameter(1,PTBean.getTaskenddate());
+            query.setParameter(2,PTBean.getTaskhours());
+            query.setParameter(3,PTBean.getTaskdays());
+            query.setParameter(4,PTBean.getStatus());
+            query.setParameter(5,PTBean.getStartdate());
+            query.setParameter(6,PTBean.getEnddate());
+            query.setParameter(7,PTBean.getHolddate());
+            query.setParameter(8,PTBean.getTransid());
+                
+            query.executeUpdate();
+            tx.commit();
+            System.out.println("Project transaction updated successfully");
+            }
+        } 
+        
+        @Override
+	public boolean deleteProject(int id){
+        Session session = this.sessionFactory.openSession();
+        String sql = "delete p.*, pt.* from activity p left join activity_transaction pt on p.activityid=pt.activityid where p.activityid=?";
+        SQLQuery query = session.createSQLQuery(sql);
+        query.setParameter(0, id);
+        query.executeUpdate();
+        return true;
+        }
+        
+        @Override
+	public boolean allocateResource(AllocationBean AB) {	
 	Session session1 = sessionFactory.getCurrentSession();
 	Transaction tx = null;
 	tx = session1.beginTransaction();
@@ -350,20 +331,29 @@ public class ActivityDAOImpl implements ActivityDAO
 	}
    
 
-        public List<ActivityBean> getUpcomingActivities(Date today, Date nextDate){
+        public List<ActivityBean> getUpcomingActivities(Date today, Date maxDate){
+        List<ActivityBean> AList;
+        Transaction tx = null;
+        Session session1 = sessionFactory.getCurrentSession();
+        tx = session1.beginTransaction();
             
-            List<ActivityBean> AList;
-            Transaction tx = null;
-            Session session1 = sessionFactory.getCurrentSession();
-            tx = session1.beginTransaction();
-            
-            Criteria criteria = session1.createCriteria(ActivityBean.class);
-            criteria.add(Restrictions.ge("startdate", today));
-            criteria.add(Restrictions.lt("startdate", nextDate));
-            AList = criteria.list();
-            tx.commit();
-            return AList;
-            
+        Criteria criteria = session1.createCriteria(ActivityBean.class);
+        criteria.add(Restrictions.ge("startdate", today));
+        criteria.add(Restrictions.lt("startdate", maxDate));
+        AList = criteria.list();
+        tx.commit();
+        return AList;
         }
-
-}
+        
+        @Override
+        public void checkTaskStatusOnhold(){
+        
+        Transaction tx = null;
+        Session session1 = sessionFactory.getCurrentSession();
+        tx = session1.beginTransaction();
+        String sql = "UPDATE activity SET status = 'On Hold' WHERE activityid IN (SELECT t.activityid FROM activity_transaction t WHERE t.status = 'On Hold' AND t.holddate < (LOCALTIME() - INTERVAL 10 MINUTE));";
+        SQLQuery query = session1.createSQLQuery(sql);
+        query.executeUpdate();
+        tx.commit();
+        }
+    }

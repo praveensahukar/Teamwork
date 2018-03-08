@@ -60,6 +60,7 @@ public class PasswordController {
     @RequestMapping(value="/ForgotPassword",method=RequestMethod.POST)
     public ModelAndView ForgotPassword(HttpServletRequest req )
     {
+        try{
         String remoteAddr = req.getRemoteAddr();
         ReCaptchaImpl reCaptcha = new ReCaptchaImpl();
         reCaptcha.setPrivateKey("6LdILiQUAAAAAPJwovQaU6ezxtcIoa2FEFS70KgO");
@@ -81,12 +82,17 @@ public class PasswordController {
         else {
             return new ModelAndView("ResetPassword","Message","OTP is sent to your registered mailId");
         }
+        }
+        catch(Exception ex){
+        ex.printStackTrace();
+        return new ModelAndView("Error");
+        }
     }
 
     @RequestMapping(value="/ResetPassword",method=RequestMethod.POST)
     public ModelAndView ResetPassword(HttpServletRequest req )
     {
-        
+        try{
         String otp=req.getParameter("userOTP");
         String email=req.getParameter("emailId");
         String password=req.getParameter("newPassword");
@@ -111,12 +117,18 @@ public class PasswordController {
         result1.addObject("email",email);
         return result1;
         }
+        }
+        catch(Exception ex){
+        ex.printStackTrace();
+        return new ModelAndView("Error");
+        }
     }
     
     
     @RequestMapping(value="/ChangePassword",method=RequestMethod.POST)
     public ModelAndView ChangePassword(HttpServletRequest req )
     {
+        try{
         String currentPass=req.getParameter("currentPass");
         String newPass=req.getParameter("newPass");
         String confPass=req.getParameter("confPass");
@@ -148,6 +160,11 @@ public class PasswordController {
             ModelAndView result1=new ModelAndView("ChangePassword");
             result1.addObject("Message","Not a strong password.");
             return result1;
+        }
+        }
+        catch(Exception ex){
+        ex.printStackTrace();
+        return new ModelAndView("Error");
         }
     }
 }

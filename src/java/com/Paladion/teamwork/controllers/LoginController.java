@@ -85,14 +85,15 @@ public String Login()
     return "Login";
 }
 
-@RequestMapping(value="/Login",method=RequestMethod.POST)
-public ModelAndView Login(@ModelAttribute("LoginM")@Validated UserDataBean LB, BindingResult result,HttpServletRequest req )
+    @RequestMapping(value="/Login",method=RequestMethod.POST)
+    public ModelAndView Login(@ModelAttribute("LoginM")@Validated UserDataBean LB, BindingResult result,HttpServletRequest req )
     {
+        try{
         if (result.hasErrors()) {
             //validates the user input, this is server side validation
             System.out.println("error!!!!!!!!");   
          return new ModelAndView("Login");
-      }
+        }
         
         //Captcha code begins
         String remoteAddr = req.getRemoteAddr();
@@ -140,12 +141,17 @@ public ModelAndView Login(@ModelAttribute("LoginM")@Validated UserDataBean LB, B
            else {
            return new ModelAndView("Login","Lerror", "Incorrect Username or Password");
            }
- 
+        }
+        catch(Exception ex){
+        ex.printStackTrace();
+        return new ModelAndView("Error");
+        }
     }
 
-@RequestMapping(value="/Welcome",method=RequestMethod.GET)
-public ModelAndView Welcome(HttpServletRequest req)
-{
+    @RequestMapping(value="/Welcome",method=RequestMethod.GET)
+    public ModelAndView Welcome(HttpServletRequest req)
+    {
+        try{
             ModelAndView result=new ModelAndView("Welcome");
             int [] counts = new int[3];
             counts = PS.getProjectsCount(req);
@@ -154,14 +160,25 @@ public ModelAndView Welcome(HttpServletRequest req)
             result.addObject("Progress_proj",counts[2]);
             result.addObject("Completed_proj",counts[1]);
             return result;
+        }
+        catch(Exception ex){
+        ex.printStackTrace();
+        return new ModelAndView("Error");
+        }
 }
 
-@RequestMapping(value="/Logout",method=RequestMethod.GET)
-public String Logout(HttpServletRequest req)
-   {
+    @RequestMapping(value="/Logout",method=RequestMethod.GET)
+    public String Logout(HttpServletRequest req)
+    {
+        try{
         LS.Logout(req.getSession(false));
         return "redirect:Login.do";
-   }
+        }
+        catch(Exception ex){
+        ex.printStackTrace();
+        return "redirect:Error";
+        }
+    }
 
 @RequestMapping(value="/index",method=RequestMethod.GET)
 public String index()

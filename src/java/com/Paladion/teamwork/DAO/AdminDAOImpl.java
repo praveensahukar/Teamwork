@@ -57,7 +57,7 @@ public class AdminDAOImpl implements AdminDAO{
             Criteria criteria = session1.createCriteria(SystemBean.class);    
             
             settings=(SystemBean) criteria.uniqueResult();
-             tx.commit();
+            tx.commit();
             return settings;
             
     }

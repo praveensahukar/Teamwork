@@ -16,4 +16,5 @@ public interface CompanyDAO {
     public void addCompanyDao(CompanyBean cb);
 	public List<CompanyBean> getAllCompany();
         public boolean deleteCompany(int id);
+        public CompanyBean getCompanyByID(int id);
 }

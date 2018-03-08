@@ -41,53 +41,55 @@ EmailService emailService;
    return new EmailTemplateBean(); 
 }
 	
-@RequestMapping(value="/Email",method=RequestMethod.GET)
-public ModelAndView sendMail()
-	   
-{
-	List EmailTemplateBean=emailService.listEmailTemplate();
-	
-	System.out.println(EmailTemplateBean);
-	
-	
-	return new ModelAndView("Email", "emailList", EmailTemplateBean);
-	
-	}
+    @RequestMapping(value="/Email",method=RequestMethod.GET)
+    public ModelAndView sendMail()
+    {
+        try{
+        List EmailTemplateBean=emailService.listEmailTemplate();
+        System.out.println(EmailTemplateBean);
+        return new ModelAndView("Email", "emailList", EmailTemplateBean);
+        }
+        catch(Exception ex){
+        ex.printStackTrace();
+        return new ModelAndView("Error");
+        }
+    }
 
 @RequestMapping(value="/createEmailTemp",method=RequestMethod.POST)
 public String createEmailTemplate(@ModelAttribute("EmailBean")EmailTemplateBean emailBean,HttpServletRequest req)
 {
+    try{
     emailService.createEmailTemplate(emailBean);
     return "Email";
+    }
+    catch(Exception ex){
+        ex.printStackTrace();
+        return "Error";
+        }
 	
 }
 
 @RequestMapping(value="/EmailUpdateTemp/{id}",method=RequestMethod.GET)
 public String updateEmailTemplate(@PathVariable("id") int id)
 {
-	System.out.println("fgfguiy"+id);
-//emailService.updateEmailTemplate();
-return "Email";
+    System.out.println("fgfguiy"+id);
+    //emailService.updateEmailTemplate();
+    return "Email";
 }
 
 @RequestMapping(value="/deleteEmailTemp/{id}",method=RequestMethod.GET)
 public ModelAndView deleteEmailTemplate(@PathVariable("id") int id)
 {
-	
-	System.out.println(id);
-	System.out.println("delete email template");
-//emailService.deleteEmailTemplate(emailBean);
-return new ModelAndView( "Email","success","Email Template Deleted Successfully"  );
+    System.out.println(id);
+    System.out.println("delete email template");
+    //emailService.deleteEmailTemplate(emailBean);
+    return new ModelAndView( "Email","success","Email Template Deleted Successfully"  );
 }
-
-
-
-
 
 @RequestMapping(value="/listEmailTemp",method=RequestMethod.POST)
 public ModelAndView listEmailTemplate()
 {
-emailService.listEmailTemplate();
+//emailService.listEmailTemplate();
 return new ModelAndView( "Email");
 }
 

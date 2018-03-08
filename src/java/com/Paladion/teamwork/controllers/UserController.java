@@ -77,11 +77,17 @@ CommonUtil CU;
     @RequestMapping(value="/CreateUser",method=RequestMethod.GET)
     public ModelAndView createUser(HttpServletRequest req)
     {   
+        try{
         String[] authorizedRoles = {"admin","manager"};
         if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
         ModelAndView result= new ModelAndView("CreateUser");
         result.addObject("AllTeams",TService.getAllTeams());
         return result;
+        }
+        catch(Exception ex){
+        ex.printStackTrace();
+        return new ModelAndView("Error");
+        }
     }
 	
     @RequestMapping(value="/CreateUser",method=RequestMethod.POST)
@@ -89,7 +95,7 @@ CommonUtil CU;
     {
         String[] authorizedRoles = {"admin","manager"};
         if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
-        
+        try{
         if (result.hasErrors()) {
             //validates the user input, this is server side validation
             System.out.println("error!!!!!!!!");
@@ -132,9 +138,14 @@ CommonUtil CU;
         }
            
         else{
-               return new ModelAndView("CreateUser","Message","User Creation Failed Due to Error");
-           }
+        return new ModelAndView("CreateUser","Message","User Creation Failed Due to Error");
         }
+        }
+        catch(Exception ex){
+        ex.printStackTrace();
+        return new ModelAndView("Error");
+        }
+    }
 
 
 @RequestMapping(value="/ViewAllUser",method=RequestMethod.GET)
@@ -142,13 +153,18 @@ public ModelAndView ViewAllUser(HttpServletRequest req )
     {
         String[] authorizedRoles = {"admin","manager"};
         if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
-        
+        try{
         System.out.println("ViewAllUser");
     
 	List<UserDataBean> userList=userService.GetAllUser();
 	ModelAndView result=new ModelAndView("ViewAllUser");
         result.addObject("AllUsers",userList);
 	return result;
+        }
+        catch(Exception ex){
+        ex.printStackTrace();
+        return new ModelAndView("Error");
+        }
     }
 
 @RequestMapping(value="/DeleteUser",method=RequestMethod.GET)
@@ -156,23 +172,26 @@ public ModelAndView ViewAllUser(HttpServletRequest req )
     {
         String[] authorizedRoles = {"admin","manager"};
         if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
-        
+        try{
         ModelAndView result=new ModelAndView("ViewAllUser");
-           if(id!=0)
-           {
-               userService.DeleteUser(id);
-               List<UserDataBean> userList=userService.GetAllUser();
-               HttpSession Sess=req.getSession(false);
-               //update user list in session
-               Sess.setAttribute("AllUsers", userList);
-	       result.addObject("AllUsers",userList);
-               result.addObject("Message","User deleted successfully");    
-           }
-           else{
-                result=new ModelAndView("Welcome");
+        if(id!=0){
+            userService.DeleteUser(id);
+            List<UserDataBean> userList=userService.GetAllUser();
+            HttpSession Sess=req.getSession(false);
+            //update user list in session
+            Sess.setAttribute("AllUsers", userList);
+	    result.addObject("AllUsers",userList);
+            result.addObject("Message","User deleted successfully");    
             }
-           return result;
-      
+            else{
+            result=new ModelAndView("Welcome");
+            }
+            return result;
+        }
+        catch(Exception ex){
+        ex.printStackTrace();
+        return new ModelAndView("Error");
+        }
     }
     
 @RequestMapping(value="/GetUserDetails",method=RequestMethod.GET)
@@ -180,7 +199,7 @@ public ModelAndView GetUserDetails(@RequestParam int id, HttpServletRequest req)
 {
     String[] authorizedRoles = {"admin","manager"};
     if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
-        
+    try{   
     ModelAndView result=new ModelAndView("UpdateUser");
     if(id!=0)
     {
@@ -192,26 +211,31 @@ public ModelAndView GetUserDetails(@RequestParam int id, HttpServletRequest req)
         result=new ModelAndView("fail");
     }
     return result;
+    }
+    catch(Exception ex){
+    ex.printStackTrace();
+    return new ModelAndView("Error");
+    }
 }
     
-
-
-@RequestMapping(value="/UpdateUserDetails",method=RequestMethod.POST)
+    @RequestMapping(value="/UpdateUserDetails",method=RequestMethod.POST)
     public ModelAndView updateUserDetails(@ModelAttribute("UserM")UserDataBean UserBean, HttpServletRequest req)
     {
         String[] authorizedRoles = {"admin","manager"};
         if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
-        
+        try{
         System.out.println("in update user details controller method");
-    
-	   userService.UpdateUserDetails(UserBean);
-           
-           List<UserDataBean> userList=userService.GetAllUser();
-	   ModelAndView result=new ModelAndView("ViewAllUser");
-           result.addObject("AllUsers",userList);
-           result.addObject("Message","User Details Updated Successfully");
-	   return result;
-   
-        } 
+        userService.UpdateUserDetails(UserBean);
+        List<UserDataBean> userList=userService.GetAllUser();
+	ModelAndView result=new ModelAndView("ViewAllUser");
+        result.addObject("AllUsers",userList);
+        result.addObject("Message","User Details Updated Successfully");
+	return result;
+        }
+        catch(Exception ex){
+        ex.printStackTrace();
+        return new ModelAndView("Error");
+        }
+    } 
 }
 

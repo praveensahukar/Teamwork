@@ -176,7 +176,7 @@ public fileuploadBean populate1()
 	}
         catch(Exception ex){
         ex.printStackTrace();
-        return null;
+        return new ModelAndView("Error");
         }   
     }
     
@@ -201,7 +201,7 @@ public fileuploadBean populate1()
         
         catch(Exception ex){
             ex.printStackTrace();
-            return null;
+            return new ModelAndView("Error");
         }
     }
     
@@ -242,8 +242,6 @@ public fileuploadBean populate1()
         AB.setMandays(CU.getWorkingDays(AB.getStartdate(),AB.getEnddate()));
         AB.setStatus("New");
          
-           
-        
         ProjectBean PB= PS.getProjectOPID(AB.getProjectid());
         AB.setOpid(PB.getOpid());
                 
@@ -320,6 +318,7 @@ public fileuploadBean populate1()
     @RequestMapping(value="/showAllActivity",method=RequestMethod.GET)
     public ModelAndView showAllActivity(HttpServletRequest req)
     {
+        try{
         HttpSession sess= req.getSession(false);
         UserDataBean sessuser=(UserDataBean) sess.getAttribute("Luser");
 	ModelAndView result=new ModelAndView("DisplayActivity");
@@ -327,6 +326,11 @@ public fileuploadBean populate1()
         result.addObject("AllProjects",PBList );
         this.getAllProjectsDetails(req);
 	return  result;
+        }
+        catch(Exception ex){
+            ex.printStackTrace();
+            return new ModelAndView("Error");
+        }
     }
       
     @RequestMapping(value="/AssignTaskToEngineers", method=RequestMethod.GET)
@@ -335,17 +339,24 @@ public fileuploadBean populate1()
         String[] authorizedRoles = {"admin","manager","lead"};
         if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
         
+        try{
         ModelAndView result= new ModelAndView("AssignTaskToUsers");
         result.addObject("AllEngineers",null);
         result.addObject("ProjectW",null);
         result.addObject("Message","Please Select a Project From the Project List");
         return result;
+        }
+        catch(Exception ex){
+            ex.printStackTrace();
+            return new ModelAndView("Error");
+        }
     }
     
     //To assign engineers to the tasks in the project
     @RequestMapping(value="/AssignTaskToEngineers", method=RequestMethod.POST)
     public ModelAndView AssignTaskToEngineer(@ModelAttribute("ProjectW")ActivityTransactionWrapper ProjectW,HttpServletRequest req) throws Exception
     {
+        try{
         String[] authorizedRoles = {"admin","manager","lead"};
         if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
         
@@ -363,12 +374,18 @@ public fileuploadBean populate1()
         result.addObject("TaskDetails",PTBList1);
         result.addObject("ProjectData",PRDATA);
         return result;
+        }
+        catch(Exception ex){
+            ex.printStackTrace();
+            return new ModelAndView("Error");
+        }
     }
     
     //To display individual project progress
     @RequestMapping(value="/showProgress",method=RequestMethod.GET)
     public ModelAndView showProjectProgress(@RequestParam int id,HttpServletRequest req) throws ParseException
     {
+        try{
            ModelAndView result;
            List<ActivityTransactionBean> PSBList;
            ActivityBean PRDATA=AS.getProjectById(id);
@@ -396,6 +413,11 @@ public fileuploadBean populate1()
            result.addObject("TaskDetails",PSBList);
            return result;
            }
+        }
+        catch(Exception ex){
+            ex.printStackTrace();
+            return new ModelAndView("Error");
+        }
     }
     
     //Update status of the individual task in the project
@@ -405,6 +427,7 @@ public fileuploadBean populate1()
         String[] authorizedRoles = {"admin","manager","lead","engineer"};
         if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
         
+        try{
         boolean value= AS.updateTaskStatus(tid,status);
         if(value==true){
            List<ActivityTransactionBean> PSBList;
@@ -421,6 +444,11 @@ public fileuploadBean populate1()
             result.addObject("Message","Something Went Wrong");
             return result;
         }
+        }
+        catch(Exception ex){
+            ex.printStackTrace();
+            return new ModelAndView("Error");
+        }
     }
     
     //Update status of the individual project
@@ -429,7 +457,7 @@ public fileuploadBean populate1()
     {
         String[] authorizedRoles = {"admin","manager","lead"};
         if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
-        
+        try{
         boolean value=false;
         HttpSession sess= req.getSession(false);
         UserDataBean sessuser=(UserDataBean) sess.getAttribute("Luser");
@@ -453,6 +481,11 @@ public fileuploadBean populate1()
             result.addObject("Message","You are not authorized to perform the action.");
             return result;
         }
+        }
+        catch(Exception ex){
+            ex.printStackTrace();
+            return new ModelAndView("Error");
+        }
     }
     
     
@@ -469,9 +502,15 @@ public fileuploadBean populate1()
 @RequestMapping(value="/uploadfiles",method=RequestMethod.GET)
 public ModelAndView uploaddocs(@RequestParam String pid,HttpServletRequest req)
 {
+    try{
     HttpSession sess=req.getSession();
     sess.setAttribute("uploadPID", pid);
     return new ModelAndView("DocumentUpload","SysSettings",Aservice.getSystemSettings());
+    }
+    catch(Exception ex){
+        ex.printStackTrace();
+        return new ModelAndView("Error");
+    }
 }
 
 
@@ -480,7 +519,7 @@ public ModelAndView uploaddocstoProject(HttpServletRequest req,@ModelAttribute f
     {
     String[] authorizedRoles = {"admin","manager","lead","engineer"};
     if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
-        
+    try{    
     HttpSession sess=req.getSession();    
     String PID=(String) sess.getAttribute("uploadPID");    
     List<MultipartFile> upfiles = filebean.getFiles();    
@@ -505,7 +544,12 @@ public ModelAndView uploaddocstoProject(HttpServletRequest req,@ModelAttribute f
                 }
             }
         }
-     return new ModelAndView("DocumentUpload"); 
+     return new ModelAndView("DocumentUpload");
+    }
+    catch(Exception ex){
+        ex.printStackTrace();
+        return new ModelAndView("Error");
+    }
   }
 
 
@@ -533,8 +577,7 @@ public void  Downloadfiles(HttpServletRequest req,Model model,HttpServletRespons
     zos.close();
     System.out.println("Program ended successfully!");
     //file download
-        
-        
+   
     String downloadFolder = downloadfile.toString();
     String filename1=downloadfile.toString()+".zip";
     Path file = Paths.get(filename1);
@@ -556,6 +599,7 @@ public void  Downloadfiles(HttpServletRequest req,Model model,HttpServletRespons
     }
  
     private static void addFolder(ZipOutputStream zos,String folderName,String baseFolderName)throws Exception{
+        try{
         File f = new File(folderName);
         if(f.exists()){
  
@@ -593,7 +637,11 @@ public void  Downloadfiles(HttpServletRequest req,Model model,HttpServletRespons
         }else{
             System.out.println("File or directory not found " + folderName);
         }
-     
+    }
+    catch(Exception ex){
+        ex.printStackTrace();
+        return;
+    }
 }
 //download files end
 
@@ -601,14 +649,21 @@ public void  Downloadfiles(HttpServletRequest req,Model model,HttpServletRespons
 @RequestMapping(value="/Downloadfiles",method=RequestMethod.GET)
 public ModelAndView Downloadfiles(@RequestParam String pid,HttpServletRequest req)
 {
-HttpSession sess=req.getSession();
-sess.setAttribute("DownloadPID", pid);
-return new ModelAndView("downloadDocuments","SysSettings",Aservice.getSystemSettings());
+    try{
+    HttpSession sess=req.getSession();
+    sess.setAttribute("DownloadPID", pid);
+    return new ModelAndView("downloadDocuments","SysSettings",Aservice.getSystemSettings());
+    }
+    catch(Exception ex){
+        ex.printStackTrace();
+        return new ModelAndView("Error");
+    }
 }
      
     @RequestMapping(value="/GetAllProjectDetails",method=RequestMethod.GET)
     public void getAllProjectsDetails(HttpServletRequest req)
     {
+        try{
         HttpSession sess= req.getSession(false);
         UserDataBean sessuser=(UserDataBean) sess.getAttribute("Luser");
 	ModelAndView result=new ModelAndView("Welcome");
@@ -634,7 +689,11 @@ return new ModelAndView("downloadDocuments","SysSettings",Aservice.getSystemSett
         System.out.println("No of completed projects : "+project_completed);
         System.out.println("No of on going projects : "+project_progress);
         System.out.println("No of new projects : "+project_new);
-	
+        }
+        catch(Exception ex){
+        ex.printStackTrace();
+        return;
+        }
     }
     
     
@@ -643,7 +702,7 @@ return new ModelAndView("downloadDocuments","SysSettings",Aservice.getSystemSett
     {
         String[] authorizedRoles = {"admin","manager","lead","engineer"};
         if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
-        
+        try{
         String tid=req.getParameter("transId");
         String delay=req.getParameter("taskDelayTime");
         String pid=req.getParameter("activityid");
@@ -678,15 +737,20 @@ return new ModelAndView("downloadDocuments","SysSettings",Aservice.getSystemSett
         result.addObject("ProjectData",PRDATA);
         result.addObject("TaskDetails",PSBList);
         return result;
+        }
+        catch(Exception ex){
+        ex.printStackTrace();
+        return new ModelAndView("Error");
+        }
     }
     
     
      @RequestMapping(value="/updateTaskStatus",method=RequestMethod.GET)
     public ModelAndView updateTask_Status(@RequestParam int pid,@RequestParam int tid, @RequestParam String status, HttpServletRequest req) throws ParseException
     {
-         String[] authorizedRoles = {"admin","manager","lead","engineer"};
+        String[] authorizedRoles = {"admin","manager","lead","engineer"};
         if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
-        
+        try{
         //List<ProjectTransactionBean> PTBList=PS.getProjectTransaction(pid);
         ActivityTransactionBean PTBean = AS.getTransactionOnTransID(tid);
         List<ActivityTransactionBean> PTBList2=new ArrayList<>();
@@ -788,18 +852,29 @@ return new ModelAndView("downloadDocuments","SysSettings",Aservice.getSystemSett
         result.addObject("ProjectData",PRDATA);
         result.addObject("TaskDetails",PSBList);
         return result;
+        }
+        catch(Exception ex){
+        ex.printStackTrace();
+        return new ModelAndView("Error");
+        }
     }
     
     
     @RequestMapping(value="/deleteProject",method=RequestMethod.GET)
     public ModelAndView delete_Project(@RequestParam int pid, HttpServletRequest req) throws ParseException
     {
-    if(AS.deleteProject(pid)){
-        return new ModelAndView("redirect:/Welcome.do","Message","Project Deleted Successfully");
-    }
-    else{
-        return new ModelAndView("Error","Message","Something Went Wrong");
-    }
+        try{
+            if(AS.deleteProject(pid)){
+            return new ModelAndView("redirect:/Welcome.do","Message","Project Deleted Successfully");
+            }
+            else{
+            return new ModelAndView("Error","Message","Something Went Wrong");
+            }
+        }
+        catch(Exception ex){
+        ex.printStackTrace();
+        return new ModelAndView("Error");
+        }
     }
     
     
@@ -829,8 +904,8 @@ return new ModelAndView("downloadDocuments","SysSettings",Aservice.getSystemSett
 	}
         catch(Exception ex){
         ex.printStackTrace();
-        return null;
-        }   
+        return new ModelAndView("Error");
+        }
     }
     
     @RequestMapping(value="/addActivityTask",method=RequestMethod.POST)
@@ -864,8 +939,8 @@ return new ModelAndView("downloadDocuments","SysSettings",Aservice.getSystemSett
 	}
         catch(Exception ex){
         ex.printStackTrace();
-        return null;
-        }   
+        return new ModelAndView("Error");
+        }
     }
     
     

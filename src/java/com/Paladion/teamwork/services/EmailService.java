@@ -28,5 +28,7 @@ public List<EmailTemplateBean> listEmailTemplate();
 public boolean deleteEmailTemplate(EmailTemplateBean emailTempBean);
 
 public boolean sendSchedulingMailToLead(ActivityBean AB, HttpSession sess, ProjectBean PB);
+
+public void sendReminder(ActivityBean AB);
 	
 }

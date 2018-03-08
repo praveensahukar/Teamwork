@@ -65,17 +65,18 @@ public class ProjectController {
     {   
         String[] authorizedRoles = {"admin","manager","lead","scheduling"};
         if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
-        
+        try{
         HttpSession sess=req.getSession(false);
 	ModelAndView model=new ModelAndView("CreateProject");
-	try{
-              model.addObject("AllCompany", CS.getAllCompany());
-              model.addObject("AllDManagers", CU.getUsersByRole("manager",sess));
-              model.addObject("AllPManagers", CU.getUsersByRole("pmanager",sess));
+        model.addObject("AllCompany", CS.getAllCompany());
+        model.addObject("AllDManagers", CU.getUsersByRole("manager",sess));
+        model.addObject("AllPManagers", CU.getUsersByRole("pmanager",sess));
+        return model;
 	}
-        catch(Exception ex){}
-	return model;
-        
+        catch(Exception ex){
+        ex.printStackTrace();
+        return new ModelAndView("Error");
+        }
     }
 
 
@@ -84,7 +85,7 @@ public class ProjectController {
     {
         String[] authorizedRoles = {"admin","manager","lead"};
         if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
-        
+        try{
         if (result.hasErrors()) {
             //validates the user input, this is server side validation
             System.out.println("error!!!!!!!!");
@@ -94,14 +95,15 @@ public class ProjectController {
         System.out.println("Project Created with projectid "+PB.getProjectid());
         HttpSession sess=req.getSession(false);
         ModelAndView model=new ModelAndView("CreateProject");
-	try{
-              model.addObject("AllCompany", CS.getAllCompany());
-              model.addObject("AllDManagers", CU.getUsersByRole("manager",sess));
-              model.addObject("AllPManagers", CU.getUsersByRole("pmanager",sess));
-	}
-        catch(Exception ex){}
-	
-	return new ModelAndView( "CreateProject","Message","Project Created Successfully"  );  
+	model.addObject("AllCompany", CS.getAllCompany());
+        model.addObject("AllDManagers", CU.getUsersByRole("manager",sess));
+        model.addObject("AllPManagers", CU.getUsersByRole("pmanager",sess));
+	return new ModelAndView( "CreateProject","Message","Project Created Successfully"); 
+        }
+        catch(Exception ex){
+        ex.printStackTrace();
+        return new ModelAndView("Error");
+        }
     }	
     
 @RequestMapping(value="/GetAllProjects",method=RequestMethod.GET)
@@ -109,11 +111,16 @@ public ModelAndView GetAllProjects(HttpServletRequest req)
 { 
     String[] authorizedRoles = {"admin","manager","lead"};
     if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
-    
+    try{
     ModelAndView result=new ModelAndView("DisplayProjects");
     List<ProjectBean> PBList= PS.getAllProjects();
     result.addObject("AllProjects",PBList);
-    return result; 
+    return result;
+    }
+    catch(Exception ex){
+    ex.printStackTrace();
+    return new ModelAndView("Error");
+    }
 }
 
 @RequestMapping(value="/GetProjectActivities",method=RequestMethod.GET)
@@ -121,11 +128,16 @@ public ModelAndView GetAllProjectActivities(@RequestParam int pid, HttpServletRe
 { 
     String[] authorizedRoles = {"admin","manager","lead"};
     if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
-    
+    try{
     ModelAndView result=new ModelAndView("DisplayProjectActivities");
     List<ActivityBean> AList= PS.getProjectActivities(pid);
     result.addObject("AllActivity",AList);
-    return result; 
+    return result;
+    }
+    catch(Exception ex){
+    ex.printStackTrace();
+    return new ModelAndView("Error");
+    }
 }
 
 

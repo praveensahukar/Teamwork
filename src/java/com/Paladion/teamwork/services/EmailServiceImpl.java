@@ -8,6 +8,7 @@ package com.Paladion.teamwork.services;
 import com.Paladion.teamwork.DAO.EmailDAO;
 import com.Paladion.teamwork.DAO.LoginDAO;
 import com.Paladion.teamwork.beans.ActivityBean;
+import com.Paladion.teamwork.beans.CompanyBean;
 import com.Paladion.teamwork.beans.EmailBean;
 import com.Paladion.teamwork.beans.EmailTemplateBean;
 import com.Paladion.teamwork.beans.ProjectBean;
@@ -35,6 +36,18 @@ public class EmailServiceImpl implements EmailService{
     @Autowired
     @Qualifier(value="CommonUtil")
     CommonUtil CU;
+    
+    @Autowired
+    @Qualifier(value="UserService")
+    UserService UserS;
+    
+    @Autowired
+    @Qualifier(value="CompanyService")
+    CompanyService CompanyS;
+    
+    @Autowired
+    @Qualifier(value="AdminService")
+    AdminService AdminS;
 
 	@Override
 	public boolean createEmailTemplate(EmailTemplateBean emailTempBean) {
@@ -63,13 +76,19 @@ public class EmailServiceImpl implements EmailService{
         try{
          EmailUtil EU=new EmailUtil();
          EmailBean ebean=new EmailBean();
-         UserDataBean leadb=CU.getUserById(AB.getLeadid(), sess);
-         ebean.setTo(leadb.getEmail());
+         UserDataBean leadb=UserS.GetUserById(AB.getLeadid());
+         UserDataBean eng=UserS.GetUserById(AB.getEngtracker());
+         UserDataBean pmbean=UserS.GetUserById(PB.getProjectmanager());
+         UserDataBean dmbean=UserS.GetUserById(PB.getDeliverymanager());
+         
+         CompanyBean CB = CompanyS.getCompanyByID(PB.getCompanyid());
+         
+         String to = leadb.getEmail()+","+eng.getEmail()+","+pmbean.getEmail()+","+dmbean.getEmail();
+         
+         ebean.setTo(to);
+         
          ebean.setSubject("Project Scheduling Mail");
-         
-         UserDataBean pmbean=CU.getUserById(PB.getProjectmanager(), sess);
-         UserDataBean dmbean=CU.getUserById(PB.getDeliverymanager(), sess);
-         
+  
          SimpleDateFormat sm = new SimpleDateFormat("dd-MM-yyyy");
          String sDate = sm.format(AB.getStartdate());
          String eDate = sm.format(AB.getEnddate());
@@ -77,18 +96,22 @@ public class EmailServiceImpl implements EmailService{
          StringBuilder mess=new StringBuilder();
          mess.append("<html><body>");
          mess.append("<h4 style = \"color:#000033\">");
-         mess.append("Dear ").append(leadb.getUsername()).append("</br></br>").append("You have been assigned to the below project as delivery lead. </h4><br>");
+         mess.append("Dear ").append(leadb.getUsername()).append("/").append(eng.getUsername()).append("</br></br>").append("You have been scheduled to execute the below activity. Please find the activity details below. </h4><br>");
              
                  
-         mess.append( "<table border='2' style='border-collapse:collapse' width='70%'");
+         mess.append( "<table border='2' style='border-collapse:collapse' width='70%'>");
          
-         mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Project Name</b> </td> <td>").append(PB.getProjectname()).append("</td> <tr>");
+         mess.append("<tr style = /'color:#000055/'> <td bgcolor=/'#ccddff/' > <b>Project Name</b> </td> <td>").append(PB.getProjectname()).append("</td> <tr>");
          
-         mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Client</b> </td> <td>").append(PB.getCompanyid()).append("</td> <tr>");
+         mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Client</b> </td> <td>").append(CB.getCompanyname()).append("</td> <tr>");
         
          mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>OPID</b> </td> <td>").append(PB.getOpid()).append("</td> <tr>");
          
         mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Activity</b> </td> <td>").append(AB.getActivityname()).append("</td> <tr>");
+        
+        mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Assessment Type</b> </td> <td>").append(AB.getAssessmentType()).append("</td> <tr>");
+        
+        mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Compliance</b> </td> <td>").append(AB.getCompliance()).append("</td> <tr>");
         
         mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Activity Start Date</b> </td> <td>").append(sDate).append("</td> <tr>");
        
@@ -96,21 +119,21 @@ public class EmailServiceImpl implements EmailService{
          
         mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Lead Assigned</b> </td> <td>").append(AB.getLead()).append("</td> <tr>");
         
+         mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Engineer Assigned</b> </td> <td>").append(eng.getUsername()).append("</td> <tr>");
+        
         mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Delivery Manager</b> </td> <td>").append(dmbean.getUsername()).append("</td> <tr>");
         
         mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Project Manager</b> </td> <td>").append(pmbean.getUsername()).append("</td> <tr>");
 
         mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Region</b> </td> <td>").append(PB.getRegion()).append("</td> <tr>");
         
-        mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Details</b> </td> <td>").append(PB.getDescription()).append("</td> <tr>");
-        
-                  
-         
-         mess.append("</table>").append("</br>").append("<b> Best Regards,").append("</br>").append("COE Scheduling Team,</br> Paladion Networks <b></body></html>");        
-         String message=mess.toString();
+        mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Other Details</b> </td> <td>").append(PB.getDescription()).append("</td> <tr>");
+   
+        mess.append("</table>").append("</br>").append("<b> Best Regards,").append("</br>").append("Teamwork Team,</br> Paladion Networks <b></body></html>");        
+        String message=mess.toString();
          
          ebean.setMessage(message);
-         SystemBean syssetting = (SystemBean)sess.getAttribute("SysConfig");
+         SystemBean syssetting = AdminS.getSystemSettings();
          EU.sendEmail(ebean, syssetting);
         return true;
         }
@@ -121,6 +144,40 @@ public class EmailServiceImpl implements EmailService{
     }
         
 	
-	
-	
+        
+     @Override
+        public void sendReminder(ActivityBean AB){
+        
+        try{
+        
+            UserDataBean eng = UserS.GetUserById(AB.getEngtracker());
+            UserDataBean lead = UserS.GetUserById(AB.getLeadid());
+            
+            EmailUtil EU=new EmailUtil();
+            EmailBean ebean=new EmailBean();
+            
+            String to= lead.getEmail()+","+eng.getEmail();
+            ebean.setTo(to);
+            ebean.setSubject("Activity Reminder Mail :: "+AB.getActivityname());
+            
+            StringBuilder mess=new StringBuilder();
+            mess.append("<html><body>");
+            mess.append("<h4 style = \"color:#000033\">");
+            mess.append("Dear ").append(lead.getUsername()).append(" & ").append(eng.getUsername()).append("</br></br>")
+                .append("This is a reminder email for the subject mentioned activity starting from ")
+                .append(AB.getStartdate()).append(". ")
+                .append("Kindly ensure to have all the pre-requisites ready to start the activity.")
+                .append("<br> <br>Please inform the scheduling and project team in case the activity is delayed. </h4>");
+            mess.append("</br>").append("<b> Best Regards,").append("</br>").append("COE Team,</br> Paladion Networks <b></body></html>");  
+        
+            String message=mess.toString();
+            ebean.setMessage(message);
+            SystemBean syssetting = AdminS.getSystemSettings();
+            EU.sendEmail(ebean, syssetting);
+        }
+        catch(Exception ex){
+            
+        }
+        
+        }
 }

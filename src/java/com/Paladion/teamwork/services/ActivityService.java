@@ -32,6 +32,7 @@ public interface ActivityService {
     public ActivityTransactionBean getTransactionOnTransID(int Transid);
     public boolean allocateResource(AllocationBean AB);
     public List<ActivityBean> getUpcomingActivities();
+    public void checkTaskStatusOnhold();
     
 }
 

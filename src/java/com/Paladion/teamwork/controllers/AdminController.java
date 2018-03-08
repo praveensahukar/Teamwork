@@ -47,13 +47,18 @@ public class AdminController {
         
         String[] authorizedRoles = {"admin","manager"};
         boolean authorized =CU.checkUserAuthorization(authorizedRoles, req);
-		
+	try{	
         if(authorized==true){
         SystemBean syssetting=Aservice.getSystemSettings();
         return new ModelAndView("Administration", "SysSettings",syssetting);
         }
         else{
             return new ModelAndView("Error");
+        }
+        }
+        catch(Exception ex){
+        ex.printStackTrace();
+        return new ModelAndView("Error");
         }
     }
     
@@ -62,13 +67,18 @@ public class AdminController {
     {
         String[] authorizedRoles = {"admin","manager"};
         boolean authorized =CU.checkUserAuthorization(authorizedRoles, req);
-		
+	try{	
         if(authorized==true){
         Aservice.SaveSettings(Sysmodel);
         return new ModelAndView("Administration","Message","System Properties Updated Successfully.");
         }
         else{
             return new ModelAndView("Error");
+        }
+        }
+        catch(Exception ex){
+        ex.printStackTrace();
+        return new ModelAndView("Error");
         }
     }
     
