@@ -43,9 +43,8 @@ public class ActivityDAOImpl implements ActivityDAO
         Transaction tx = session1.beginTransaction();
         try{
         session1.save(PB );
-	tx.commit();
+        tx.commit();
         System.out.println("Project created successfully");
-        session1.close();
         }
         catch(Exception e){
         tx.rollback();
@@ -91,8 +90,7 @@ public class ActivityDAOImpl implements ActivityDAO
                 }
             }
             tx.commit();
-            
-	    return allProjects;
+            return allProjects;
         }
         catch(Exception e){
         System.out.println("Exception occured. "+e.getMessage());
@@ -102,7 +100,7 @@ public class ActivityDAOImpl implements ActivityDAO
         finally{
         if(session1.isOpen()){
 	System.out.println("-------------Closing session--------------");
-	session1.close();
+	
         }
         }
         }
@@ -119,7 +117,6 @@ public class ActivityDAOImpl implements ActivityDAO
            List list1 = query1.list();       
            ActivityBean PB = (ActivityBean) list1.get(0);
            tx.commit();
-           session1.close();
            return PB;
         }
         catch(Exception e){
@@ -130,7 +127,7 @@ public class ActivityDAOImpl implements ActivityDAO
         finally{
         if(session1.isOpen()){
 	System.out.println("-------------Closing session--------------");
-	session1.close();
+	
         }
         }
            
@@ -143,7 +140,6 @@ public class ActivityDAOImpl implements ActivityDAO
         try{
             session1.save(PTBean);
             System.out.println("Project transaction updated successfully");
-            session1.close();
             tx.commit();
         }
         catch(Exception ex){
@@ -173,7 +169,6 @@ public class ActivityDAOImpl implements ActivityDAO
 //          criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
             PList = criteria.list();
             tx.commit();
-            session1.close();
             return PList;
             }
             catch(Exception ex){
@@ -283,7 +278,6 @@ public class ActivityDAOImpl implements ActivityDAO
             query.setParameter(1,activityId);
             query.executeUpdate();
             tx.commit();
-            session.close();
             return true;
             }
             catch(Exception ex){
@@ -310,7 +304,6 @@ public class ActivityDAOImpl implements ActivityDAO
 //          criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
             PList = criteria.list();
             tx.commit();
-            session.close();
             if(PList.size()==1){
             ActivityTransactionBean PTB = PList.get(0);
             return PTB;
@@ -345,7 +338,6 @@ public class ActivityDAOImpl implements ActivityDAO
                 query.setParameter(1,projid);
                 query.executeUpdate();
                 tx.commit();
-                session.close();
                 return true;
                 }           
                 else{
@@ -359,7 +351,7 @@ public class ActivityDAOImpl implements ActivityDAO
                 return false;
             }
             finally{
-            if(session.isOpen()){
+                if(session.isOpen()){
                 System.out.println("-------------Closing session--------------");
                 session.close();
                 }
@@ -371,9 +363,8 @@ public class ActivityDAOImpl implements ActivityDAO
         public void updateProjectTransaction(List <ActivityTransactionBean> PTBList){
         for(ActivityTransactionBean PTBean : PTBList){
             Session session1 = sessionFactory.getCurrentSession();
-            Transaction tx = null;
-	    tx = session1.beginTransaction();
-                
+            Transaction tx = session1.beginTransaction();
+            try{
             String sql = "UPDATE activity_transaction SET taskstartdate=?, taskenddate=?, taskhours=?,taskdays=?, status=? , startdate = ?, enddate=?, holddate=? WHERE transid=?";
             SQLQuery query = session1.createSQLQuery(sql);
             query.setParameter(0,PTBean.getTaskstartdate());
@@ -390,53 +381,114 @@ public class ActivityDAOImpl implements ActivityDAO
             tx.commit();
             System.out.println("Project transaction updated successfully");
             }
+            catch(Exception ex){
+                tx.rollback();
+                System.out.println("Error Occured : "+ex.getMessage());
+                return;
+            }
+            finally{
+                if(session1.isOpen()){
+                System.out.println("-------------Closing session--------------");
+                session1.close();
+                }
+            }
+            }
         } 
         
         @Override
 	public boolean deleteProject(int id){
-        Session session = this.sessionFactory.openSession();
+        Session session1 = sessionFactory.getCurrentSession();
+	Transaction tx = session1.beginTransaction();
+        try{
         String sql = "delete p.*, pt.* from activity p left join activity_transaction pt on p.activityid=pt.activityid where p.activityid=?";
-        SQLQuery query = session.createSQLQuery(sql);
+        SQLQuery query = session1.createSQLQuery(sql);
         query.setParameter(0, id);
         query.executeUpdate();
+        tx.commit();
         return true;
+        }
+        catch(Exception ex){
+                tx.rollback();
+                System.out.println("Error Occured : "+ex.getMessage());
+                return false;
+            }
+            finally{
+                if(session1.isOpen()){
+                System.out.println("-------------Closing session--------------");
+                session1.close();
+                }
+            }
+        
         }
         
         @Override
 	public boolean allocateResource(AllocationBean AB) {	
 	Session session1 = sessionFactory.getCurrentSession();
-	Transaction tx = null;
-	tx = session1.beginTransaction();
+	Transaction tx = session1.beginTransaction();
+        try{
 	session1.save(AB);
 	tx.commit();
 	System.out.println("Resource "+AB.getEngineerId()+" allocated successfully");
         return true;
 	}
+        catch(Exception ex){
+                tx.rollback();
+                System.out.println("Error Occured : "+ex.getMessage());
+                return false;
+            }
+            finally{
+                if(session1.isOpen()){
+                System.out.println("-------------Closing session--------------");
+                session1.close();
+                }
+            }
+        }
    
 
         public List<ActivityBean> getUpcomingActivities(Date today, Date maxDate){
-        List<ActivityBean> AList;
-        Transaction tx = null;
-        Session session1 = sessionFactory.getCurrentSession();
-        tx = session1.beginTransaction();
-            
+        Session session1 = sessionFactory.getCurrentSession();    
+        Transaction tx = session1.beginTransaction();
+        try{    
         Criteria criteria = session1.createCriteria(ActivityBean.class);
         criteria.add(Restrictions.ge("startdate", today));
         criteria.add(Restrictions.lt("startdate", maxDate));
-        AList = criteria.list();
+        List<ActivityBean> AList = criteria.list();
         tx.commit();
         return AList;
+        }
+        catch(Exception ex){
+                tx.rollback();
+                System.out.println("Error Occured : "+ex.getMessage());
+                return null;
+            }
+            finally{
+                if(session1.isOpen()){
+                System.out.println("-------------Closing session--------------");
+                session1.close();
+                }
+            }
         }
         
         @Override
         public void checkTaskStatusOnhold(){
-        
-        Transaction tx = null;
         Session session1 = sessionFactory.getCurrentSession();
-        tx = session1.beginTransaction();
+        Transaction tx = session1.beginTransaction();
+        try{
         String sql = "UPDATE activity SET status = 'On Hold' WHERE activityid IN (SELECT t.activityid FROM activity_transaction t WHERE t.status = 'On Hold' AND t.holddate < (LOCALTIME() - INTERVAL 10 MINUTE));";
         SQLQuery query = session1.createSQLQuery(sql);
         query.executeUpdate();
         tx.commit();
+        }
+        catch(Exception ex){
+                tx.rollback();
+                System.out.println("Error Occured : "+ex.getMessage());
+                return;
+            }
+            finally{
+                if(session1.isOpen()){
+                System.out.println("-------------Closing session--------------");
+                session1.close();
+                }
+            }
         }
     }

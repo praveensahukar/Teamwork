@@ -5,10 +5,7 @@
  */
 package com.Paladion.teamwork.DAO;
 
-import com.Paladion.teamwork.beans.ActivityBean;
 import com.Paladion.teamwork.beans.SystemBean;
-import java.util.ArrayList;
-import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -30,35 +27,50 @@ public class AdminDAOImpl implements AdminDAO{
         this.sessionFactory = sessionFactory;
     }
 
-
     @Override
-      @SuppressWarnings("empty-statement")
+    @SuppressWarnings("empty-statement")
     public boolean SaveSettings(SystemBean SysModel) {
-      Session session=sessionFactory.getCurrentSession();
-      Transaction tx = null;
-      
-      try
-      {
-      tx = session.beginTransaction();    
-      session.update(SysModel);
-      tx.commit();
-      }
-     
-      catch(Exception e){return false;};
-      return true;
+    Session session=sessionFactory.getCurrentSession();
+    Transaction tx = session.beginTransaction();
+        try{
+        session.update(SysModel);
+        tx.commit();
+        return true;
+        }
+        catch(Exception ex){
+            tx.rollback();
+            System.out.println("Error Occured : "+ex.getMessage());
+            return false;
+        }
+        finally{
+            if(session.isOpen()){
+            System.out.println("-------------Closing session--------------");
+            session.close();
+            }
+        }
     }
 
     @Override
     public SystemBean getSystemSettings() {
         Session session1 = sessionFactory.getCurrentSession();
-        SystemBean settings;
-        Transaction tx = null;
-	    tx = session1.beginTransaction();
-            Criteria criteria = session1.createCriteria(SystemBean.class);    
-            
-            settings=(SystemBean) criteria.uniqueResult();
-            tx.commit();
-            return settings;
+        Transaction tx = session1.beginTransaction();
+	try{   
+        Criteria criteria = session1.createCriteria(SystemBean.class);    
+        SystemBean settings=(SystemBean) criteria.uniqueResult();
+        tx.commit();
+        return settings;
+        }
+        catch(Exception ex){
+            tx.rollback();
+            System.out.println("Error Occured : "+ex.getMessage());
+            return null;
+        }
+        finally{
+            if(session1.isOpen()){
+            System.out.println("-------------Closing session--------------");
+            session1.close();
+            }
+        }
             
     }
     

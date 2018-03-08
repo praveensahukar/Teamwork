@@ -8,7 +8,6 @@ package com.Paladion.teamwork.DAO;
 import com.Paladion.teamwork.beans.EmailTemplateBean;
 import java.util.List;
 import org.hibernate.Criteria;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -32,73 +31,89 @@ public class EmailDAOImpl implements EmailDAO{
 
 	@Override
 	public boolean createEmailTemplate(EmailTemplateBean emailTempBean) {
-		try{
-		Session session=sessionFactory.openSession();
-		Transaction tx = null;
-	            tx = session.beginTransaction();
-	           session.save(emailTempBean );
-	           tx.commit();
-		}catch(Exception ex){
-			return false;
-			
-		}
-		return true;
+	Session session=sessionFactory.openSession();
+	Transaction tx = session.beginTransaction();
+        try{
+	session.save(emailTempBean);
+	tx.commit();
+        return true;
+        }
+        catch(Exception ex){
+                tx.rollback();
+                System.out.println("Error Occured : "+ex.getMessage());
+                return false;
+            }
+            finally{
+                if(session.isOpen()){
+                System.out.println("-------------Closing session--------------");
+                session.close();
+                }
+            }
 	}
 
 	@Override
 	public boolean updateEmailTemplate(EmailTemplateBean emailTempBean) {
-		try{
-		Session session=sessionFactory.getCurrentSession();
-		Transaction tx = null;
-	            tx = session.beginTransaction();
-	           session.update(emailTempBean );
-	           tx.commit();
-		}catch(Exception ex){
-			return false;
-			
-		}
-		return true;
-	}
+            Session session=sessionFactory.getCurrentSession();
+            Transaction tx = session.beginTransaction();
+            try{
+                session.update(emailTempBean );
+	        tx.commit();
+                return true;
+            }
+            catch(Exception ex){
+                tx.rollback();
+                System.out.println("Error Occured : "+ex.getMessage());
+                return false;
+            }
+            finally{
+                if(session.isOpen()){
+                System.out.println("-------------Closing session--------------");
+                session.close();
+                }
+            }
+        }
 
 	@Override
 	public List<EmailTemplateBean> listEmailTemplate() {
-		List <EmailTemplateBean> emailTemplateBean=null;
-		try{
-		Session session=sessionFactory.getCurrentSession();
-		Transaction tx = null;
-	            tx = session.beginTransaction();
-	           Criteria criteria = session.createCriteria(EmailTemplateBean.class);
-	           emailTemplateBean= (List<EmailTemplateBean>)criteria.list();
-	           tx.commit();
-		}catch(Exception ex){
-			
-			
-			ex.printStackTrace();
-			return null;
-			
-		}
-		return emailTemplateBean;
-		
-		
-		
-		
-		
-		
+            Session session=sessionFactory.getCurrentSession();
+            Transaction tx = session.beginTransaction();
+            try{
+		Criteria criteria = session.createCriteria(EmailTemplateBean.class);
+	        List <EmailTemplateBean> emailTemplateBean = (List<EmailTemplateBean>)criteria.list();
+	        tx.commit();
+                return emailTemplateBean;
+            }catch(Exception ex){
+                tx.rollback();
+                System.out.println("Error Occured : "+ex.getMessage());
+                return null;
+            }
+            finally{
+                if(session.isOpen()){
+                System.out.println("-------------Closing session--------------");
+                session.close();
+                }
+            }
 	}
 
 	@Override
 	public boolean deleteEmailTemplate(EmailTemplateBean emailTempBean) {
-		try{
-		Session session=sessionFactory.getCurrentSession();
-		Transaction tx = null;
-	            tx = session.beginTransaction();
-	           session.delete(emailTempBean);
-	           tx.commit();
-		}catch(Exception ex){
-			return false;
-			
-		}
-		return true;
+            Session session=sessionFactory.getCurrentSession();
+            Transaction tx = session.beginTransaction();
+	    try{
+		session.delete(emailTempBean);
+	        tx.commit();
+                return true;
+            }catch(Exception ex){
+                tx.rollback();
+                System.out.println("Error Occured : "+ex.getMessage());
+                return false;
+            }finally{
+                if(session.isOpen()){
+                System.out.println("-------------Closing session--------------");
+                session.close();
+                }
+            }
+		
 	}
 	
 }

@@ -4,16 +4,13 @@
  * and open the template in the editor.
  */
 package com.Paladion.teamwork.DAO;
-import com.Paladion.teamwork.beans.EmailBean;
-import java.util.UUID;
 import com.Paladion.teamwork.beans.UserDataBean;
-import com.Paladion.teamwork.utils.EmailUtil;
 import java.util.Iterator;
 import java.util.List;
 import org.hibernate.Query;
-import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -33,8 +30,10 @@ public class LoginDAOImpl implements LoginDAO{
 
     @Override
     public UserDataBean Login(UserDataBean LB) {
-        UserDataBean SessUserBean=null;
         Session session = this.sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        try{
+        UserDataBean SessUserBean=null;
         System.out.println("Inside LoginDao");
         String SQL_QUERY1 ="from UserDataBean as o where o.email=? and o.password=?";
         Query query1 = session.createQuery(SQL_QUERY1);
@@ -42,25 +41,29 @@ public class LoginDAOImpl implements LoginDAO{
         query1.setParameter(1,LB.getPassword());
         List list1=query1.list();
         Iterator it= list1.iterator();
-        while(it.hasNext())
-        {
-           SessUserBean=(UserDataBean) it.next();
-           System.out.println("Query succefully executed");
+            while(it.hasNext()){
+            SessUserBean=(UserDataBean) it.next();
+            System.out.println("Query succefully executed");
+            }
+            if ((list1 != null) && (list1.size() > 0)){
+            return SessUserBean;
+            }
+            else{
+            return null;
+            }            
         }
-                        
-        if ((list1 != null) && (list1.size() > 0)) 
-        {
-        return SessUserBean;
+        catch(Exception ex){
+                tx.rollback();
+                System.out.println("Error Occured : "+ex.getMessage());
+                return null;
+            }finally{
+                if(session.isOpen()){
+                System.out.println("-------------Closing session--------------");
+                session.close();
+                }
+            }
         }
-        else
-        {
-        return null;
-        }            
-    }
-    
- 
-}
-        
+    }  
               
     
         

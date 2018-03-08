@@ -7,7 +7,6 @@ package com.Paladion.teamwork.DAO;
 
 import com.Paladion.teamwork.beans.CompanyBean;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -37,53 +36,102 @@ public class CompanyDAOImpl implements CompanyDAO{
 	public void addCompanyDao(CompanyBean CB) {
 		
 	Session session1 = sessionFactory.getCurrentSession();
-	Transaction tx = null;
-	tx = session1.beginTransaction();
+	Transaction tx = session1.beginTransaction();
+        try{
 	session1.save(CB);
 	tx.commit();
-	
 	System.out.println("Company create successfully");
-	}
+        }
+        catch(Exception ex){
+            tx.rollback();
+            System.out.println("Error Occured : "+ex.getMessage());
+            return;
+        }
+        finally{
+            if(session1.isOpen()){
+            System.out.println("-------------Closing session--------------");
+            session1.close();
+            }
+        }
+    }
 	
     @Override
-	public List<CompanyBean> getAllCompany()
-	{
-	List <CompanyBean> Companylist=new ArrayList<CompanyBean>();
-	Session session=sessionFactory.openSession();
-        String companyquery= "from CompanyBean";
-        System.out.println("Get all company query");
-        Query query2 = session.createQuery(companyquery);
-       
-        Companylist= query2.list();
-        return Companylist;
+	public List<CompanyBean> getAllCompany(){
+        Session session=sessionFactory.openSession();
+	Transaction tx = session.beginTransaction();
+            try{
+            List <CompanyBean> Companylist=new ArrayList<CompanyBean>();
+            String companyquery= "from CompanyBean";
+            System.out.println("Get all company query");
+            Query query2 = session.createQuery(companyquery);
+            Companylist= query2.list();
+            tx.commit();
+            return Companylist;
+            }
+            catch(Exception ex){
+                tx.rollback();
+                System.out.println("Error Occured : "+ex.getMessage());
+                return null;
+            }
+            finally{
+                if(session.isOpen()){
+                System.out.println("-------------Closing session--------------");
+                session.close();
+                }
+            }
         }
-        
-        
-            @Override
+  
+        @Override
 	public boolean deleteCompany(int id)
 	{
             Session session = this.sessionFactory.openSession();
+            Transaction tx = session.beginTransaction();
+            try{
             String sql = "delete from company where companyid=?";
             SQLQuery query = session.createSQLQuery(sql);
             query.setParameter(0, id);
             query.executeUpdate();
+            tx.commit();
             return true;
+            }
+            catch(Exception ex){
+                tx.rollback();
+                System.out.println("Error Occured : "+ex.getMessage());
+                return false;
+            }
+            finally{
+                if(session.isOpen()){
+                System.out.println("-------------Closing session--------------");
+                session.close();
+                }
+            }
+            
         }
         
         @Override
         public CompanyBean getCompanyByID(int id){
          
-           List<CompanyBean> CList;
-          
-           Transaction tx = null;
-	   Session session1 = sessionFactory.getCurrentSession();
-           tx = session1.beginTransaction();
-           Criteria criteria = session1.createCriteria(CompanyBean.class);
-           criteria.add(Restrictions.eq("companyid", id));
-           CList = criteria.list();
-           tx.commit();
-           CompanyBean CB = (CompanyBean) CList.get(0);
-           return CB;       
+            Session session1 = sessionFactory.getCurrentSession();
+            Transaction tx = session1.beginTransaction();
+            try{
+            Criteria criteria = session1.createCriteria(CompanyBean.class);
+            criteria.add(Restrictions.eq("companyid", id));
+            List<CompanyBean> CList = criteria.list();
+            tx.commit();
+            CompanyBean CB = (CompanyBean) CList.get(0);
+            return CB;
+            }
+            catch(Exception ex){
+                tx.rollback();
+                System.out.println("Error Occured : "+ex.getMessage());
+                return null;
+            }
+            finally{
+                if(session1.isOpen()){
+                System.out.println("-------------Closing session--------------");
+                session1.close();
+                }
+            }
           }
   
 }
