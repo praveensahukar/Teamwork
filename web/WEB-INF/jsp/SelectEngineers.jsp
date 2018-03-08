@@ -10,24 +10,33 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
-  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+
+
 <head>
-<script type="text/javascript">
+    <script type="text/javascript">
   $(document).ready(function() {
-    $("#date").datepicker();
-    format: 'dd/mm/yyyy'
-  });
-  </script>
+
+    $("#date").datepicker({
+        showOn: 'button',
+        buttonText: 'Show Date',
+        buttonImageOnly: true,
+        buttonImage: 'http://jqueryui.com/resources/demos/datepicker/images/calendar.gif'
+    });
+});
+  </script>  
+  
   <script type="text/javascript">
   $(document).ready(function() {
-    $("#datepicker").datepicker();
-    format: 'dd/mm/yyyy'
-  });
-  </script>
+
+    $("#datepicker").datepicker({
+        showOn: 'button',
+        buttonText: 'Show Date',
+        buttonImageOnly: true,
+        buttonImage: 'http://jqueryui.com/resources/demos/datepicker/images/calendar.gif'
+    });
+});
+  </script> 
+    
 <style>
 ul {
     list-style-type: none;
@@ -82,7 +91,7 @@ body {
   font-size: 2.3em;
 }
 .login-card input[type=submit] {
-  width: 20%;
+  width: 100%;
   display: block;
   margin-bottom: 10px;
   position: relative;
@@ -91,7 +100,7 @@ body {
 .login-card input[type=text], input[type=password] {
   height: 44px;
   font-size: 16px;
-  width: 30%;
+  width: 150%;
   margin-bottom: 10px;
   -webkit-appearance: none;
   background: #fff;
@@ -156,9 +165,9 @@ body {
 }
 table {
     border-collapse: collapse;
-    width: 60%;
-    color: #ff0000;
-    border-color: white;
+    width: 95%;
+    color: black;
+    border-color: black;
     align-items: center;
 }
 th {
@@ -168,8 +177,106 @@ th {
 color: black;
 font-style: italic;
 }
+
+#sumukh {
+  
+    column-gap: 40px;
+  width: 1420px;
+  height: 100px;
+}
+
+#sumukh > div {
+  width: 70px;
+  height: 100px;
+  
+}
+#sumukha {
+  display: flex;
+  justify-content: space-around;
+  
+  width: 1420px;
+  height: 100px;
+}
+
+#sumukha > div {
+  width: 70px;
+  height: 100px;
+  
+}
+.sumukh-submit {
+  /* border: 1px solid #3079ed; */
+  border: 0px;
+  text-shadow: 0 1px rgba(0,0,0,0.3);
+  background-color: #ff8080;
+  text-align: center;
+  font-size: 14px;
+  font-family: 'Arial', sans-serif;
+  font-weight: 700;
+  height: 36px;
+  padding: 0 8px;
+  width: 100%;
+  border: 0px;
+  color: #fff;
+  text-shadow: 0 1px rgba(0,0,0,0.1); 
+  background-color: #a6a6a6;
+  /* background-image: -webkit-gradient(linear, 0 0, 0 100%,   from(#4d90fe), to(#4787ed)); */
+}
+
+.sumu-submit {
+  /* border: 1px solid #3079ed; */
+  border: 0px;
+  text-shadow: 0 1px rgba(0,0,0,0.3);
+  background-color: #ff8080;
+  text-align: center;
+  font-size: 14px;
+  font-family: 'Arial', sans-serif;
+  font-weight: 700;
+  height: 36px;
+  padding: 0 8px;
+  width: 100%;
+  border: 0px;
+  color: #fff;
+  text-shadow: 0 1px rgba(0,0,0,0.1); 
+  background-color: #a6a6a6;
+  /* background-image: -webkit-gradient(linear, 0 0, 0 100%,   from(#4d90fe), to(#4787ed)); */
+}
+
+#overflowTest {
+    padding: 15px;
+    height: 100px;
+    overflow: scroll;
+    border: 1px solid #ccc;
+}
+
+.santosh
+{
+    display: inline-flex;
+    width: 200px;
+}
+
 </style>
-    
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $(".sumukh-submit").click(function(){
+            var engineer      =    $("#engineer").val();
+            var date          =    $("#date").val();
+            var datepicker    =    $("#datepicker").val();
+            
+            var markup = "<tr> <td><input type='checkbox' name='record'></td><td>"+ engineer +"</td> <td>" + date + "</td> <td>" + datepicker + "</td></tr>";
+            $("table tbody").append(markup);
+        });
+        
+        // Find and remove selected table rows
+        $(".sumu-submit").click(function(){
+            $("table tbody").find('input[name="record"]').each(function(){
+            	if($(this).is(":checked")){
+                    $(this).parents("tr").remove();
+                }
+            });
+        });
+    });    
+</script>
   <title>Assign Engineers</title>
     </head>
     <body>
@@ -180,58 +287,79 @@ font-style: italic;
 <form:form action="ScheduleActivity.do" method="post" commandName="ProjectM">
 <div align="left">
     <input type="hidden" name="AntiCSRFToken" id="token" value="${csrfPreventionSalt}"/>
-    
-    <table  align="left" border="0">
+       
+<!-- addrow-->
+<!-- addrow-->
 
-<tr><td align="right"><h4>Activity : ${fn:escapeXml(activitybean.activityname)}</td> </tr>
+<!-- addrow-->
+<!-- addrow-->
 
-<tr><td align="right"><h4>Available Engineers :</td>
-    <td><form:select path="engtracker" id="engineer">
-        <option class="login login-submit" value="">None</option>
-	           <c:forEach  items="${engineers}" var="eng"> 
-	           <form:option class="login login-submit" value="${eng.userid}">${eng.username}  :  ${eng.team} </form:option>
-	           </c:forEach>
-        </form:select>
-        <form:errors path="engtracker" cssClass="error"/>
-    </td>
-</tr>
-
-<tr><td align="right"><h4>Template :</td>
-    <td><form:select  path="templateid" itemLabel="Select"> 
+ <div id="sumukh"> 
+        <div class="col1">
+            <h4>Template</h4><form:select style="width:130px"  path="templateid" itemLabel="Select">
          <option class="login login-submit" value="">Select Template</option>
 	  <c:forEach items="${AllTemplates}" var="template">     
 	  <option class="login login-submit" value="${template.templateid}">${template.templatename}</option>
 	  </c:forEach>
           <form:errors path="templateid" cssClass="error"/>	  
         </form:select>
-     </td>
-</tr>
+        </div>  
+     <hr><hr>
+        <div class="col2"> <h4>Current Activity <br><br>${fn:escapeXml(activitybean.activityname)}</h4></div>
+</div>
+<div id="sumukha"> 
+    <div>
+    <h4>Available Engineers<br><br>
+    <form:select style="width:130px" path="engtracker" >
+        <option class="login login-submit" value="">None</option>
+	           <c:forEach  items="${engineers}" var="eng"> 
+	           <form:option id="engineer" class="login login-submit" value="${eng.userid}">${eng.username}  :  ${eng.team} </form:option>
+	           </c:forEach>
+        </form:select>
+        <form:errors path="engtracker" cssClass="error"/></h4>
+</div>  
+ <div><h4>Start Date</h4><form:input placeholder="Enter Start Date" id="date" path="startdate" /><form:errors path="startdate" cssClass="error"/></div>
+ <div><h4>End Date</h4><br><form:input placeholder="Enter End Date" id="datepicker" path="enddate"/><form:errors path="enddate" cssClass="error"/></div>
+</div>
+<!-- second table-->
+<!-- second table-->
+<!-- second table-->
+<!-- second table-->
+<!-- second table-->
+<!-- second table-->
 
+<br><br><br>
+<hr><hr>
+<div class="santosh"><form><input type="button" class="sumukh-submit" value="Add Row">
+  <input type="button" class="sumu-submit" value="Delete Row">  
+    </form><br><br><input type="submit" value="Submit" class="login login-submit"/></div>
+<div id="overflowTest">
+<table>
+        <thead>
+            <tr><hr>
+                <th>Available Engineers</th>
+                <th>Start date</th>
+                <th>end date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td></td>
+                <td><form:input type="hidden" id="date" path="startdate" /></td>
+                <td><form:input type="hidden" id="datepicker" path="enddate"/></td>
+            </tr>
+        </tbody>
+    </table><hr>
+     <br><br><br><br>       
 
-<tr><td align="right"><h4>Start Date :<td><form:input placeholder="Enter Start Date" id="date" path="startdate" /><form:errors path="startdate" cssClass="error"/></h4></td></tr>
-<tr><td align="right"><h4>End Date :</td><td><form:input placeholder="Enter End Date" id="datepicker" path="enddate"/><form:errors path="enddate" cssClass="error"/></h4></td></tr>
-
-
-<tr><td align="right"><input type="submit" value="Submit" class="login login-submit"/></td></tr>           
+ </div>
 </table >
 </div>
+<br><br><br><br> 
 </form:form>
       
 </div>
-     
-	   <script>
-  $(document).ready(function() {
-    $("#datepicker").datepicker();
-    format: 'dd/mm/yyyy';
-  });
-  </script>
-  <script>
-  $(document).ready(function() {
-    $("#datepickers").datepicker();
-    format: 'dd/mm/yyyy';
-  });
-  </script>
-    </body>
+</body>
 </html>
 
 
