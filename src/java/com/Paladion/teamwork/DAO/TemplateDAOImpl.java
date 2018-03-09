@@ -29,61 +29,78 @@ public class TemplateDAOImpl implements TemplateDAO{
     @Qualifier(value="hibernate4AnnotatedSessionFactory")
     private SessionFactory sessionFactory;
 
-    public void setSessionFactory(SessionFactory sessionFactory) {
+    public void setSessionFactory(SessionFactory sessionFactory){
         this.sessionFactory = sessionFactory;
     }
 	
-
-	@Override
-	public void addTemplateDao(TemplateBean TempB) {
+    @Override
+    public void addTemplateDao(TemplateBean TempB) {
 	Session session1 = sessionFactory.getCurrentSession();
 	Transaction tx = session1.beginTransaction();
-	session1.save(TempB);
-	tx.commit();
-        session1.close();
-	
-	System.out.println("Template create successfully");	
-	}
-
-	@Override
-	public boolean addTaskToTemplate(MapTemplateTaskBean MTT){
-        Session session1 = sessionFactory.getCurrentSession();
-        Transaction tx = null;
-	tx = session1.beginTransaction();
-        try 
-        {
-        session1.save(MTT);
-	tx.commit();
-	System.out.println("Template weights added successfully");    
-        return true;
+        try{
+            session1.save(TempB);
+            tx.commit();
+            System.out.println("Template create successfully");	
         }
         catch(Exception e){
-        System.out.println("Exception occured. "+e.getMessage());
-        return false;
+            System.out.println("Exception occured. "+e.getMessage());
+            return;
         }
         finally{
-        if(session1.isOpen()){
-	System.out.println("Closing session");
-	session1.close();
-        }
+            if(session1.isOpen()){
+            System.out.println("-------------Closing session--------------");
+            session1.close();
+            }
         }
     }
 
-@Override
-    public List<TaskBean> getAllTasksforTemplate() 
-    {
-        
-        List <TaskBean> taskList=new ArrayList<TaskBean>();
+    @Override
+    public boolean addTaskToTemplate(MapTemplateTaskBean MTT){
+        Session session1 = sessionFactory.getCurrentSession();
+        Transaction tx = session1.beginTransaction();
+        try{
+            session1.save(MTT);
+            tx.commit();
+            System.out.println("Template weights added successfully");    
+            return true;
+        }
+        catch(Exception e){
+            System.out.println("Exception occured. "+e.getMessage());
+            return false;
+        }
+        finally{
+            if(session1.isOpen()){
+            System.out.println("Closing session");
+            session1.close();
+            }
+        }
+    }
+
+    @Override
+    public List<TaskBean> getAllTasksforTemplate(){
         Session session=sessionFactory.openSession();
-        String taskquery= "from TaskBean";
-        System.out.println(taskquery);
-        Query query2 = session.createQuery(taskquery);
-       
-        taskList= query2.list();
-	
-        return taskList;
+        Transaction tx = session.beginTransaction();
+        try{
+            List <TaskBean> taskList=new ArrayList<TaskBean>();
+            String taskquery= "from TaskBean";
+            System.out.println(taskquery);
+            Query query2 = session.createQuery(taskquery);
+            taskList= query2.list();
+            tx.commit();
+            return taskList;
+        }
+        catch(Exception e){
+            System.out.println("Exception occured. "+e.getMessage());
+            return null;
+        }
+        finally{
+            if(session.isOpen()){
+            System.out.println("Closing session");
+            session.close();
+            }
+        }
         
-      }
+    }
     
      public  List<TemplateBean> getAllTemplates() {
         
@@ -160,7 +177,4 @@ public class TemplateDAOImpl implements TemplateDAO{
                   }
 	   return list2;
         }
-
-        
-        
 }

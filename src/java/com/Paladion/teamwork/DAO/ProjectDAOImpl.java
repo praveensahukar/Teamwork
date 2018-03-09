@@ -6,7 +6,6 @@
 package com.Paladion.teamwork.DAO;
 
 import com.Paladion.teamwork.beans.ActivityBean;
-import com.Paladion.teamwork.beans.ActivityTransactionBean;
 import com.Paladion.teamwork.beans.ProjectBean;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -24,7 +23,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
  *
  * @author Santhosh
  */
-public class ProjectDAOImpl implements ProjectDAO {
+    public class ProjectDAOImpl implements ProjectDAO {
+        
     @Autowired
     @Qualifier(value="hibernate4AnnotatedSessionFactory")
     private SessionFactory sessionFactory;
@@ -33,61 +33,74 @@ public class ProjectDAOImpl implements ProjectDAO {
         this.sessionFactory = sessionFactory;
     }
     
-    @Override
+        @Override
 	public void addProjectDao(ProjectBean PB) {
-		
 	Session session1 = sessionFactory.getCurrentSession();
-	Transaction tx = null;
-	tx = session1.beginTransaction();
-	session1.save(PB);
-	tx.commit();
-	
-	System.out.println("Project create successfully");
+	Transaction tx = session1.beginTransaction();
+            try{
+            session1.save(PB);
+            tx.commit();
+            System.out.println("Project create successfully");
+            }
+            catch(Exception ex){
+                tx.rollback();
+                System.out.println("Error Occured : "+ex.getMessage());
+                return;
+            }finally{
+                if(session1.isOpen()){
+                System.out.println("-------------Closing session--------------");
+                session1.close();
+                }
+            }
 	}
 
     @Override
     public List<ProjectBean> getAllProject() {
         Session session=sessionFactory.openSession();
         Transaction tx = session.beginTransaction();
-        List <ProjectBean> Projectlist=new ArrayList<ProjectBean>();
-	try{
-        String projectquery= "from ProjectBean";
-        System.out.println("Get all projects query");
-        Query query2 = session.createQuery(projectquery);
-        Projectlist= query2.list();
-        tx.commit();
-        return Projectlist;
+        try{
+            List <ProjectBean> Projectlist=new ArrayList<ProjectBean>();
+            String projectquery= "from ProjectBean";
+            System.out.println("Get all projects query");
+            Query query2 = session.createQuery(projectquery);
+            Projectlist= query2.list();
+            tx.commit();
+            return Projectlist;
         }
         catch(Exception e){
-        System.out.println("Exception occured. "+e.getMessage());
-        return null;
+            System.out.println("Exception occured. "+e.getMessage());
+            return null;
         }
         finally{
-        if(session.isOpen()){
-	System.out.println("-------------Closing session--------------");
-	session.close();
+            if(session.isOpen()){
+            System.out.println("-------------Closing session--------------");
+            session.close();
+            }
         }
-        }
-        
-        
-       
     }
-    
-    
-    
     
     @Override
     public List<ActivityBean> getProjectActivities(int pid) {
-    
-    List<ActivityBean> AList;
-	   Session session1 = sessionFactory.getCurrentSession();
-           Transaction tx = session1.beginTransaction();
-           Criteria criteria = session1.createCriteria(ActivityBean.class);
-           criteria.add(Restrictions.eq("projectid", pid));
-           //criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-	   AList = criteria.list();
-           tx.commit();
+        Session session1 = sessionFactory.getCurrentSession();
+        Transaction tx = session1.beginTransaction();
+        try{
+        Criteria criteria = session1.createCriteria(ActivityBean.class);
+        criteria.add(Restrictions.eq("projectid", pid));
+        //criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+	List<ActivityBean> AList = criteria.list();
+        tx.commit();
         return AList;
+        }
+        catch(Exception e){
+            System.out.println("Exception occured. "+e.getMessage());
+            return null;
+        }
+        finally{
+            if(session1.isOpen()){
+            System.out.println("-------------Closing session--------------");
+            session1.close();
+            }
+        }
     }
     
 
@@ -96,24 +109,31 @@ public class ProjectDAOImpl implements ProjectDAO {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
-    
-     @Override
-       public ProjectBean getProjectOPID(int projectid){
-        
-           List<ProjectBean> PList;
-	   Session session1 = sessionFactory.getCurrentSession();
-           Transaction tx = session1.beginTransaction();
-           Criteria criteria = session1.createCriteria(ProjectBean.class);
-           criteria.add(Restrictions.eq("projectid", projectid));
-           criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-	   PList = criteria.list();
-           tx.commit();
-           if(1 == PList.size())
-           {
-           Iterator iter = PList.iterator();
-           return (ProjectBean)iter.next();
-           }
-           return null;
+    @Override
+    public ProjectBean getProjectOPID(int projectid){
+        Session session1 = sessionFactory.getCurrentSession();
+        Transaction tx = session1.beginTransaction();
+        try{
+        Criteria criteria = session1.createCriteria(ProjectBean.class);
+        criteria.add(Restrictions.eq("projectid", projectid));
+        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+	List<ProjectBean> PList = criteria.list();
+        tx.commit();
+            if(1 == PList.size()){
+            Iterator iter = PList.iterator();
+            return (ProjectBean)iter.next();
+            }
+            return null;
+        }
+        catch(Exception e){
+            System.out.println("Exception occured. "+e.getMessage());
+            return null;
+        }
+        finally{
+            if(session1.isOpen()){
+            System.out.println("-------------Closing session--------------");
+            session1.close();
+            }
+        }
     }
-    
 }

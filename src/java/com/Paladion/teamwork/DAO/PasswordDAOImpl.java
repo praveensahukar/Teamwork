@@ -129,7 +129,6 @@ public class PasswordDAOImpl implements PasswordDAO {
             }
         }
     
-    
     public void insertOtp(String otp,String email){
         Session session1 = this.sessionFactory.openSession();
         Transaction tx=session1.beginTransaction();
@@ -156,8 +155,8 @@ public class PasswordDAOImpl implements PasswordDAO {
     @Override
     public void updatePassword(String password,String email){
         Session session1 = this.sessionFactory.openSession();
-        Transaction tx;
-        tx=session1.beginTransaction();
+        Transaction tx=session1.beginTransaction();
+        try{
         String sql = "update users set password=?, otp=? where email=?";
         SQLQuery query = session1.createSQLQuery(sql);
         query.setParameter(0, password);
@@ -165,5 +164,16 @@ public class PasswordDAOImpl implements PasswordDAO {
         query.setParameter(2, email);
         query.executeUpdate();
         tx.commit();
+        }
+        catch(Exception ex){
+            tx.rollback();
+            System.out.println("Error Occured : "+ex.getMessage());
+            return;
+        }finally{
+            if(session1.isOpen()){
+            System.out.println("-------------Closing session--------------");
+            session1.close();
+            }
+        }
     }
 }
