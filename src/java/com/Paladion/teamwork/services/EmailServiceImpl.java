@@ -178,6 +178,35 @@ public class EmailServiceImpl implements EmailService{
         catch(Exception ex){
             
         }
-        
         }
+        
+    @Override
+    public boolean sendUserCreationMail(UserDataBean UB){
+        try{
+        EmailBean ebean=new EmailBean();
+        EmailUtil eutil=new EmailUtil();
+        ebean.setTo(UB.getEmail());
+        String subject="Paladion TeamWork- User Account Created";
+        StringBuilder mess=new StringBuilder();
+                
+        mess.append("Dear ").append(UB.getUsername())
+            .append("<br><br>Your account has been created in the <a href = 'http://10.0.100.123:8000/TeamWorkAlpha/Login.do'> Paladion Teamwork Protal</a> ")
+            .append("<br>Please Log into your account using the following credentials.<br><br>")
+            .append("UserName : ").append(UB.getEmail()).append("<br>Password : ").append(UB.getPassword())
+            .append("<br><br>Best Regards,<br>Team Paladion");
+               
+            String message=mess.toString();
+                
+            //String message="Dear "+loginBean.getUsername()+"\n\nYour account has been created in the Paladion Teamwork Application ( http://10.0.1.128/TeamWork/ ).\nPlease Log into your account using the following credentials\n\nUsername: "+loginBean.getEmail() +"\nPassword: "+loginBean.getPassword()+"\n\n\n\nBest Regards\nTeam Paladion";
+            ebean.setSubject(subject);
+            ebean.setMessage(message);
+            SystemBean syssetting = AdminS.getSystemSettings();
+            eutil.sendEmail(ebean, syssetting);
+            return true;
+        }
+        catch(Exception e){
+            System.out.println("Exception occured. "+e.getMessage());
+            return false;
+        }
+    }
 }

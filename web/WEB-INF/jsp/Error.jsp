@@ -9,9 +9,14 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Error</title>
     </head>
     <body>
-        <h1>Something went wrong:(</h1>
+        <br><br>
+        <hr>
+        <h1><center>Oops!! Something went wrong!!</center></h1>
+        <hr>
+        <h3><center>The requested resource is unavailable or you are unauthorized to access this page.</center></h3>
+        <hr>
     </body>
 </html>

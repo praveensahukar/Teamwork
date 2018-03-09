@@ -160,8 +160,6 @@ font-style: italic;
 
   <title>Log-in</title>
   
- 
-
     <link rel="stylesheet" href="css/style.css" media="screen" type="text/css" />
 
 </head>
@@ -170,8 +168,9 @@ font-style: italic;
   <div align="left">
 <img src="PaladionLogo.png"/>
     </div>
-    <h1>Teamwork</h1>
-    <center><h4 style="color: #ff0000">${Message}</h4></center>
+      <h1><b>Teamwork</b></h1>
+      
+      <center><h4 style="color: #ffffff"><b>${Message}</b></h4></center>
 <!-- UI goes here-->
     <form:form action="Login.do" method="post" commandName="LoginM"> 
         <form:errors path="email" cssClass="error"/><br>

@@ -103,20 +103,15 @@ public class TemplateDAOImpl implements TemplateDAO{
     }
     
      public  List<TemplateBean> getAllTemplates() {
-        
- 	List <TemplateBean> templateList = new ArrayList<TemplateBean>();
-	
         Session session=sessionFactory.openSession();
         Transaction tx = session.beginTransaction();
-        
         try{
+        List <TemplateBean> templateList = new ArrayList<TemplateBean>();
         String templatequery= "from TemplateBean";
         System.out.println("template query");
         Query query2 = session.createQuery(templatequery);
-       
         templateList= query2.list();
 	tx.commit();
-         
         return templateList;
         }
         catch(Exception e){
@@ -136,8 +131,8 @@ public class TemplateDAOImpl implements TemplateDAO{
 	public boolean deleteTemplate(int id)
 	{
             Session session = this.sessionFactory.openSession();
-            
             Transaction tx = session.beginTransaction();
+            try{
             String sql = "delete from templates where templateid=?";
             SQLQuery query = session.createSQLQuery(sql);
             query.setParameter(0, id);
@@ -149,32 +144,54 @@ public class TemplateDAOImpl implements TemplateDAO{
             SQLQuery query1 = session1.createSQLQuery(sql1);
             query1.setParameter(0, id);
             query1.executeUpdate();
+            return true;
+            }
+            catch(Exception e){
+            System.out.println("Exception occured. "+e.getMessage());
+            return false;
+            }
+            finally{
+                if(session.isOpen()){
+                System.out.println("-------------Closing session--------------");
+                session.close();
+                }
+            }
             
-            return true;	
 	}
     
 	
         @Override
 	public List<MapTemplateTaskBean> getAllWeights(int tempID) {
-		 
-           System.out.println("com.Paladion.teamwork.DAO.ProjectDAOImpl.getAllWeights()");
-           MapTemplateTaskBean MTTB;
-	   Session session1 = sessionFactory.getCurrentSession();
-	   Transaction tx = null;
-           tx = session1.beginTransaction();
-           String SQL_QUERY1= "from MapTemplateTaskBean as O where O.templateid=?";
-           Query query2 = session1.createQuery(SQL_QUERY1);
-           query2.setParameter(0,tempID);
+            Session session1 = sessionFactory.getCurrentSession();
+            Transaction tx = session1.beginTransaction();
+            try{
+            System.out.println("com.Paladion.teamwork.DAO.ProjectDAOImpl.getAllWeights()");
+            MapTemplateTaskBean MTTB;
+	   
+            String SQL_QUERY1= "from MapTemplateTaskBean as O where O.templateid=?";
+            Query query2 = session1.createQuery(SQL_QUERY1);
+            query2.setParameter(0,tempID);
            
-           List list2 = query2.list();
-	   System.out.println("Query executed :)");
-	   Iterator it= list2.iterator();
-	   tx.commit();
+            List list2 = query2.list();
+            System.out.println("Query executed :)");
+            Iterator it= list2.iterator();
+            tx.commit();
                 while(it.hasNext())
                   {
                       MTTB=(MapTemplateTaskBean) it.next();
                       System.out.print("Taskid from the DB"+MTTB.getTaskid());
                   }
-	   return list2;
+            return list2;
+            }
+            catch(Exception e){
+            System.out.println("Exception occured. "+e.getMessage());
+            return null;
+            }
+            finally{
+                if(session1.isOpen()){
+                System.out.println("-------------Closing session--------------");
+                session1.close();
+                }
+            }
         }
-}
+   }

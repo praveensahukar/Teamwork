@@ -9,6 +9,7 @@ import com.Paladion.teamwork.beans.EmailBean;
 import com.Paladion.teamwork.beans.SystemBean;
 import com.Paladion.teamwork.beans.UserDataBean;
 import com.Paladion.teamwork.services.AdminService;
+import com.Paladion.teamwork.services.EmailService;
 
 import com.Paladion.teamwork.services.LoginService;
 import com.Paladion.teamwork.services.TeamService;
@@ -65,6 +66,10 @@ UserService userService;
 TeamService TService;
 
 @Autowired
+@Qualifier(value="EmailService")
+EmailService EService;
+
+@Autowired
 @Qualifier(value="CommonUtil")
 CommonUtil CU;
 
@@ -81,10 +86,9 @@ AdminService AdminS;
  
     @RequestMapping(value="/CreateUser",method=RequestMethod.GET)
     public ModelAndView createUser(HttpServletRequest req)
-    {   
-        try{
-        String[] authorizedRoles = {"admin","manager"};
+    {   String[] authorizedRoles = {"admin","manager"};
         if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
+        try{
         ModelAndView result= new ModelAndView("CreateUser");
         result.addObject("AllTeams",TService.getAllTeams());
         return result;
@@ -96,7 +100,7 @@ AdminService AdminS;
     }
 	
     @RequestMapping(value="/CreateUser",method=RequestMethod.POST)
-    public ModelAndView createUser(@ModelAttribute("UserM")@Validated UserDataBean loginBean,BindingResult result,HttpServletRequest req )
+    public ModelAndView createUser(@ModelAttribute("UserM")@Validated UserDataBean userBean,BindingResult result,HttpServletRequest req )
     {
         String[] authorizedRoles = {"admin","manager"};
         if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
@@ -110,36 +114,46 @@ AdminService AdminS;
         }
         System.out.println("in user controller create user post method");
     
-	boolean results = userService.addUser(loginBean);
+	boolean results = userService.addUser(userBean);
 	if(results==true){
                
+            if(EService.sendUserCreationMail(userBean))
+            {
+                 ModelAndView model= new ModelAndView("CreateUser");
+                 model.addObject("AllTeams",TService.getAllTeams());
+                 model.addObject("Message","User has been created successfully");
+                 return model;
+            }
+            else{
+                return new ModelAndView("Error");
+            }
             //Send Email to user
-            EmailBean ebean=new EmailBean();
-            EmailUtil eutil=new EmailUtil();
-            ebean.setTo(loginBean.getEmail());
-            String subject="Paladion TeamWork- User Account Created";
-            StringBuilder mess=new StringBuilder();
-                
-            mess.append("Dear ").append(loginBean.getUsername())
-            .append("\n\nYour account has been created in the Paladion Teamwork Protal ")
-            .append("(http://10.0.1.128/TeamWork/).\nPlease Log into your account using the following credentials.\n\n")
-            .append("UserName : ").append(loginBean.getEmail()).append("\nPassword : ").append(loginBean.getPassword())
-            .append("\n\nBest Regards,\nTeam Paladion");
-               
-            String message=mess.toString();
-                
-            //String message="Dear "+loginBean.getUsername()+"\n\nYour account has been created in the Paladion Teamwork Application ( http://10.0.1.128/TeamWork/ ).\nPlease Log into your account using the following credentials\n\nUsername: "+loginBean.getEmail() +"\nPassword: "+loginBean.getPassword()+"\n\n\n\nBest Regards\nTeam Paladion";
-            ebean.setSubject(subject);
-            ebean.setMessage(message);
-            HttpSession Sess=req.getSession(false);
-            SystemBean syssetting = AdminS.getSystemSettings();
-            eutil.sendEmail(ebean, syssetting);
+//            EmailBean ebean=new EmailBean();
+//            EmailUtil eutil=new EmailUtil();
+//            ebean.setTo(userBean.getEmail());
+//            String subject="Paladion TeamWork- User Account Created";
+//            StringBuilder mess=new StringBuilder();
+//                
+//            mess.append("Dear ").append(loginBean.getUsername())
+//            .append("\n\nYour account has been created in the Paladion Teamwork Protal ")
+//            .append("(http://10.0.1.128/TeamWork/).\nPlease Log into your account using the following credentials.\n\n")
+//            .append("UserName : ").append(loginBean.getEmail()).append("\nPassword : ").append(loginBean.getPassword())
+//            .append("\n\nBest Regards,\nTeam Paladion");
+//               
+//            String message=mess.toString();
+//                
+//            //String message="Dear "+loginBean.getUsername()+"\n\nYour account has been created in the Paladion Teamwork Application ( http://10.0.1.128/TeamWork/ ).\nPlease Log into your account using the following credentials\n\nUsername: "+loginBean.getEmail() +"\nPassword: "+loginBean.getPassword()+"\n\n\n\nBest Regards\nTeam Paladion";
+//            ebean.setSubject(subject);
+//            ebean.setMessage(message);
+//            HttpSession Sess=req.getSession(false);
+//            SystemBean syssetting = AdminS.getSystemSettings();
+//            eutil.sendEmail(ebean, syssetting);
                
             //Update user list in session
                 
             //important get current user deatils
-            Sess.setAttribute("AllUsers", userService.GetAllUser());
-            return new ModelAndView("CreateUser","Message","User Created Successfully");
+            //Sess.setAttribute("AllUsers", userService.GetAllUser());
+           
         }
            
         else{

@@ -66,7 +66,7 @@ public class ActivityDAOImpl implements ActivityDAO
 	List <ActivityBean> allProjects=new ArrayList<>();
         List<ActivityTransactionBean> PTbeanList=new ArrayList<>();
         
-        if (role.equalsIgnoreCase("Manager")||role.equalsIgnoreCase("Admin")||role.equalsIgnoreCase("scheduling")){
+        if (role.contains("manager")||role.equalsIgnoreCase("scheduling")){
             Criteria criteria = session1.createCriteria(ActivityBean.class);
             allProjects= criteria.list();
             }
@@ -474,7 +474,7 @@ public class ActivityDAOImpl implements ActivityDAO
         Session session1 = sessionFactory.getCurrentSession();
         Transaction tx = session1.beginTransaction();
         try{
-        String sql = "UPDATE activity SET status = 'On Hold' WHERE activityid IN (SELECT t.activityid FROM activity_transaction t WHERE t.status = 'On Hold' AND t.holddate < (LOCALTIME() - INTERVAL 10 MINUTE));";
+        String sql = "UPDATE activity SET status = 'On Hold' WHERE activityid IN (SELECT t.activityid FROM activity_transaction t WHERE t.status = 'On Hold' AND t.holddate < (LOCALTIME() - INTERVAL 5 HOUR));";
         SQLQuery query = session1.createSQLQuery(sql);
         query.executeUpdate();
         tx.commit();

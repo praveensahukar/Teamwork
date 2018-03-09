@@ -65,10 +65,10 @@ public class CommonUtil {
 
 	String[] taskID=req.getParameterValues("task");
 	
-           int[] taskid=new int[taskID.length];
+        int[] taskid=new int[taskID.length];
 	i=0;
 	
-           for(String str:taskID)
+        for(String str:taskID)
           {
             taskid[i]=Integer.parseInt(str);//Exception in this line
             i++;
@@ -87,7 +87,7 @@ public class CommonUtil {
 	System.out.println(Arrays.toString(weight));	
 	System.out.println("The sum of all the weights entered: "+sum);
         
-           if(sum==100)
+        if(sum==100)
           {
             for(i=0;i<taskid.length;i++)
                  {
@@ -112,8 +112,6 @@ public class CommonUtil {
     }
     
  
-    
-    
     public List<ActivityTransactionBean> devideDaysfortasks(ActivityBean PB, List<MapTemplateTaskBean> MTTP) throws ParseException
     {
         try{
@@ -542,7 +540,7 @@ Date calculateResponseTime(Calendar ProjectTime, float ProjectDurationinHours) {
         String userRole = uBean.getRole();
         
         for(String role : roles){
-            if(userRole.equalsIgnoreCase(role)){
+            if(userRole.contains(role)){
                 return true;
             }
         }

@@ -8,6 +8,7 @@ package com.Paladion.teamwork.services;
 import com.Paladion.teamwork.beans.ActivityBean;
 import com.Paladion.teamwork.beans.EmailTemplateBean;
 import com.Paladion.teamwork.beans.ProjectBean;
+import com.Paladion.teamwork.beans.UserDataBean;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 
@@ -30,5 +31,7 @@ public boolean deleteEmailTemplate(EmailTemplateBean emailTempBean);
 public boolean sendSchedulingMailToLead(ActivityBean AB, HttpSession sess, ProjectBean PB);
 
 public void sendReminder(ActivityBean AB);
+
+public boolean sendUserCreationMail(UserDataBean UB);
 	
 }

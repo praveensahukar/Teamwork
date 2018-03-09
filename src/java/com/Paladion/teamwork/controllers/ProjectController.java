@@ -85,7 +85,7 @@ public class ProjectController {
 
 
     @RequestMapping(value="/CreateProject",method=RequestMethod.POST)
-    public ModelAndView CreateCompany(@ModelAttribute("ProjectM")@Validated ProjectBean PB,BindingResult result,HttpServletRequest req) 
+    public ModelAndView CreateProject(@ModelAttribute("ProjectM")@Validated ProjectBean PB,BindingResult result,HttpServletRequest req) 
     {
         String[] authorizedRoles = {"admin","manager","lead"};
         if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
@@ -133,9 +133,14 @@ public ModelAndView GetAllProjectActivities(@RequestParam int pid, HttpServletRe
     String[] authorizedRoles = {"admin","manager","lead"};
     if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
     try{
-    ModelAndView result=new ModelAndView("DisplayProjectActivities");
+    ModelAndView result=new ModelAndView("DisplayActivity");
     List<ActivityBean> AList= PS.getProjectActivities(pid);
-    result.addObject("AllActivity",AList);
+    if(AList.size()>0){
+    result.addObject("AllProjects",AList);
+    }
+    else{
+        result.addObject("Message", "No Activities Are Scheduled Under This Project");
+    }
     return result;
     }
     catch(Exception ex){

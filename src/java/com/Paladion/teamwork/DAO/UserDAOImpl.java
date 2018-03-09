@@ -25,48 +25,58 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 public class UserDAOImpl implements UserDAO{
 
-	 @Autowired
-           @Qualifier(value="hibernate4AnnotatedSessionFactory")
-           private SessionFactory sessionFactory;
+    @Autowired
+    @Qualifier(value="hibernate4AnnotatedSessionFactory")
+    private SessionFactory sessionFactory;
 
-           public void setSessionFactory(SessionFactory sessionFactory) {
-                       this.sessionFactory = sessionFactory;
-           }
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 	
 	
-	@Override
-	public boolean addUser(UserDataBean userBean) {
-		try{
-		Session session = sessionFactory.getCurrentSession();
-		Transaction tx = session.beginTransaction();
-		session.save(userBean);
-		System.out.println("User added succefully ");
-				 
-	        tx.commit();
-                return true;
-		}catch(Exception ex){
-			System.out.println("In catch block: Exception raised");
-			return false;
-		}
-	}
+    @Override
+    public boolean addUser(UserDataBean userBean) {
+        Session session = sessionFactory.getCurrentSession();
+        Transaction tx = session.beginTransaction();
+        try{
+            session.save(userBean);
+            System.out.println("User added succefully ");
+            tx.commit();
+            return true;
+        }catch(Exception e){
+        System.out.println("Exception occured. "+e.getMessage());
+        return false;
+        }
+        finally{
+            if(session.isOpen()){
+            System.out.println("---------Closing session----------");
+            session.close();
+            }
+        }
+    }
         
-   @Override
-    public List getAvailableEngineers(Date projStartDate, Date projEndDate)
-    {
-        
+    @Override
+    public List getAvailableEngineers(Date projStartDate, Date projEndDate){
         Session session1 = sessionFactory.getCurrentSession();
-	Transaction tx;
-		tx = session1.beginTransaction();
-		
-                String SQL_QUERY1= "select distinct userid from ActivityTransactionBean PB where PB.taskenddate > :projstartdate and PB.taskstartdate < :projenddate";
-                Query query = session1.createQuery(SQL_QUERY1);
-                query.setParameter("projstartdate",projStartDate);
-                query.setParameter("projenddate",projEndDate);
-	        List list2 = query.list();
-                
-                tx.commit();
-        
-        return list2;
+	Transaction tx = session1.beginTransaction();
+	try{	
+            String SQL_QUERY1= "select distinct userid from ActivityTransactionBean PB where PB.taskenddate > :projstartdate and PB.taskstartdate < :projenddate";
+            Query query = session1.createQuery(SQL_QUERY1);
+            query.setParameter("projstartdate",projStartDate);
+            query.setParameter("projenddate",projEndDate);
+	    List list2 = query.list();
+            tx.commit();
+            return list2;
+        }catch(Exception e){
+        System.out.println("Exception occured. "+e.getMessage());
+        return null;
+        }
+        finally{
+            if(session1.isOpen()){
+            System.out.println("---------Closing session------------");
+            session1.close();
+            }
+        }
     }
 
         
@@ -103,53 +113,62 @@ public class UserDAOImpl implements UserDAO{
 //	}
         
   
-       @Override
-	public List<UserDataBean> GetAllUser()
-	{
-		List<UserDataBean> UserList=new ArrayList<UserDataBean>();
-                
-		Session session1 = sessionFactory.getCurrentSession();
-		Transaction tx;
-		tx = session1.beginTransaction();
-		
-                String SQL_QUERY1= "from UserDataBean";
-                Query query2 = session1.createQuery(SQL_QUERY1);
-	        List list2 = query2.list();
-                tx.commit();
-                   
-	        Iterator it= list2.iterator();
-                   while(it.hasNext())
-                    {
-                       UserDataBean ubean=new UserDataBean();
-		       ubean=(UserDataBean)it.next();
-                       UserList.add(ubean);
-                    }
-		return UserList;	
+    @Override
+    public List<UserDataBean> GetAllUser(){
+        Session session1 = sessionFactory.getCurrentSession();
+	Transaction tx = session1.beginTransaction();
+        try{        
+            String SQL_QUERY1= "from UserDataBean";
+            Query query2 = session1.createQuery(SQL_QUERY1);
+	    List<UserDataBean> UserList = query2.list();
+            tx.commit();
+            return UserList;	
 	}
+        catch(Exception e){
+        System.out.println("Exception occured. "+e.getMessage());
+        return null;
+        }
+        finally{
+            if(session1.isOpen()){
+            System.out.println("-----------Closing session-------------");
+            session1.close();
+            }
+        }
+    }
         
         
-        @Override
-	public boolean DeleteUser(int id)
-	{
-            Session session = this.sessionFactory.openSession();
+    @Override
+    public boolean DeleteUser(int id){
+        Session session = this.sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        try{
             String sql = "Delete from users where userid=?";
             SQLQuery query = session.createSQLQuery(sql);
             query.setParameter(0, id);
             query.executeUpdate();
+            tx.commit();
             return true;	
-	}
+	}catch(Exception e){
+        System.out.println("Exception occured. "+e.getMessage());
+        return false;
+        }
+        finally{
+            if(session.isOpen()){
+            System.out.println("--------Closing session----------");
+            session.close();
+            }
+        }
+    }
         
         
-        @Override
-	public boolean UpdateUserDetails(UserDataBean UB)
-	{
-            Session session = this.sessionFactory.openSession();
-            Transaction tx;
-            tx = session.beginTransaction();
+    @Override
+    public boolean UpdateUserDetails(UserDataBean UB){
+        Session session = this.sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        try{
             String sql = "UPDATE users SET username=?,email=?,team=?,phone=?,role=? WHERE userid=?";
             SQLQuery query = session.createSQLQuery(sql);
             query.setParameter(0,UB.getUsername());
-            System.out.println("usrname is "+UB.getUsername());
             query.setParameter(1,UB.getEmail());
             query.setParameter(2,UB.getTeam());
             query.setParameter(3,UB.getPhone());
@@ -157,53 +176,69 @@ public class UserDAOImpl implements UserDAO{
             query.setParameter(5,UB.getUserid());
             query.executeUpdate();
             tx.commit();
-            return true;	
-	}
+            return true;
+        }catch(Exception e){
+        System.out.println("Exception occured. "+e.getMessage());
+        return false;
+        }
+        finally{
+            if(session.isOpen()){
+            System.out.println("-----------Closing session------------");
+            session.close();
+            }
+        }
+    }
         
-        @Override
-        public UserDataBean GetUserById(int id)
-        {
-            Session session1 = sessionFactory.getCurrentSession();
-            Transaction tx = session1.beginTransaction();
+    @Override
+    public UserDataBean GetUserById(int id){
+        Session session1 = sessionFactory.getCurrentSession();
+        Transaction tx = session1.beginTransaction();
+        try{ 
             UserDataBean ubean=new UserDataBean();
-		
             String SQL_QUERY1= "from UserDataBean where userid=?";
             Query query2 = session1.createQuery(SQL_QUERY1);
             query2.setParameter(0, id);
 	    List list2 = query2.list();
             Iterator it= list2.iterator();
-               while(it.hasNext())
-                  {
+                while(it.hasNext()){
                      ubean=(UserDataBean)it.next();
-                  }
-                tx.commit();
-                return ubean;       
-        }
-        
-        public List<UserDataBean> GetUsersByRole(String role){
-            List<UserDataBean> UserList=new ArrayList<UserDataBean>();
-            Session session1 = sessionFactory.getCurrentSession();
-            Transaction tx = session1.beginTransaction();
-            try{
-            Criteria criteria = session1.createCriteria(UserDataBean.class);
-            criteria.add(Restrictions.eq("role", role));
-            UserList = criteria.list();
+                }
             tx.commit();
-            return UserList;
-            }
-            catch(Exception e){
-            System.out.println("Exception occured. "+e.getMessage());
-            return null;
-            }
-            finally{
+            return ubean;       
+        }catch(Exception e){
+        System.out.println("Exception occured. "+e.getMessage());
+        return null;
+        }
+        finally{
             if(session1.isOpen()){
-            System.out.println("-----------------Closing session---------------");
+            System.out.println("----------Closing session------------");
             session1.close();
             }
-            }
         }
-	
-
+    }
+        
+    public List<UserDataBean> GetUsersByRole(String role){
+        Session session1 = sessionFactory.getCurrentSession();
+        Transaction tx = session1.beginTransaction();
+            try{
+                List<UserDataBean> UserList=new ArrayList<UserDataBean>();
+                Criteria criteria = session1.createCriteria(UserDataBean.class);
+                criteria.add(Restrictions.eq("role", role));
+                UserList = criteria.list();
+                tx.commit();
+                return UserList;
+            }
+            catch(Exception e){
+                System.out.println("Exception occured. "+e.getMessage());
+                return null;
+            }
+            finally{
+                if(session1.isOpen()){
+                System.out.println("-----------------Closing session---------------");
+                session1.close();
+                }
+            }
+    }
 }
 
     

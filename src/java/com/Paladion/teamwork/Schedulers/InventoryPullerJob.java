@@ -44,28 +44,31 @@ public class InventoryPullerJob {
 //       
 //    }
 //    
-//    @Scheduled(cron = "0 30 09 * * ?")
-//    public void activityReminderEmail(){
-//        
-//        //Fetch all the activity starting from tomorrow
-//        
-//        List <ActivityBean> AList=AS.getUpcomingActivities();
-//        
-//        for(ActivityBean ABean: AList){
-//        System.out.println("Activity "+ABean.getActivityname() +" is scheduled from: "+ABean.getStartdate());
-//        //Send reminder email to lead and engineer
-//        EmailS.sendReminder(ABean);
-//        }
-//        Date now=new Date();
-//        System.out.println(" ----- Time the scheduler run : " + now+"-------");
-//        System.out.println("----- Sending Activity start reminder completed ----");
-//    }
-//    
-//    
-//    @Scheduled(cron = "0 */4 * * * ?")
-//    public void checkOnHoldTaskAndUpdateActivityStatus(){
-//        System.out.println("---------Inside checkOnHoldTaskAndUpdateActivityStatus() ------------- ");
-//        AS.checkTaskStatusOnhold();
-//    }
-     
+    @Scheduled(cron = "0 30 09 * * ?")
+    public void activityReminderEmail(){
+        try{
+        //Fetch all the activity starting from next day
+        List <ActivityBean> AList=AS.getUpcomingActivities();
+        for(ActivityBean ABean: AList){
+            System.out.println("Activity "+ABean.getActivityname() +" is scheduled from: "+ABean.getStartdate());
+            //Send reminder email to lead and engineer
+            EmailS.sendReminder(ABean);
+            }
+        Date now=new Date();
+        System.out.println(" ----- Time the scheduler run : " + now+"-------");
+        System.out.println("----- Sending Activity start reminder completed ----");
+        }catch(Exception ex){
+             System.out.println("Error Occured : "+ex.getMessage());
+        }
+    }
+    
+    @Scheduled(cron = "0 */4 * * * ?")
+    public void checkOnHoldTaskAndUpdateActivityStatus(){
+        try{
+        System.out.println("---------Inside checkOnHoldTaskAndUpdateActivityStatus() ------------- ");
+        AS.checkTaskStatusOnhold();
+        }catch(Exception ex){
+             System.out.println("Error Occured : "+ex.getMessage());
+        }
+    }
 }

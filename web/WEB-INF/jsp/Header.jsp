@@ -108,29 +108,33 @@
     <ul>
         <li><a href="Welcome.do">Home</a></li>
         
+        <% if(role.contains("manager")||role.equalsIgnoreCase("Admin"))
+        {%>
         <div class="dropdown">
             <button class="dropbtn">Projects</button>
                 <div class="dropdown-content">
-                    <% if(role.equalsIgnoreCase("Manager")||role.equalsIgnoreCase("scheduling"))
+                    <% if(role.contains("manager")||role.equalsIgnoreCase("scheduling"))
                     {%>
                     <a href="CreateProject.do">Create New Project</a>
-                    <%}%>
+                  
                     <a href="GetAllProjects.do">View All Projects</a>
+                      <%}%>
                 </div>
         </div>
-        
+        <%}%>
         <div class="dropdown">
             <button class="dropbtn">Activities</button>
                 <div class="dropdown-content">
-                    <% if(role.equalsIgnoreCase("Manager")||role.equalsIgnoreCase("scheduling"))
+                    <% if(role.contains("manager")||role.equalsIgnoreCase("scheduling"))
                     {%>
                     <a href="CreateActivity.do">Schedule Activity</a>
                     <%}%>
                     <a href="showAllActivity.do">View All Activities</a>
+                    
                 </div>
         </div> 
         
-        <% if(role.equalsIgnoreCase("Manager")||role.equalsIgnoreCase("Admin"))
+        <% if(role.contains("manager")||role.equalsIgnoreCase("Admin"))
         {%>
         <div class="dropdown">
             <button class="dropbtn">Administration</button>
@@ -145,7 +149,7 @@
         </div> 
         <%}%>
         
-        <% if(role.equalsIgnoreCase("lead")||role.equalsIgnoreCase("manager"))
+        <% if(role.equalsIgnoreCase("lead")||role.contains("manager"))
         {%>
           <div class="dropdown">
             <button class="dropbtn">Tasks</button>
@@ -157,7 +161,7 @@
         <%}%>
         
         
-         <% if(role.equalsIgnoreCase("lead")||role.equalsIgnoreCase("manager"))
+         <% if(role.equalsIgnoreCase("lead")||role.contains("manager"))
         {%>
           <div class="dropdown">
             <button class="dropbtn">Activity Template</button>

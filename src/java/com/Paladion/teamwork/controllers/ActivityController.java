@@ -164,9 +164,7 @@ public fileuploadBean populate1()
         {
         String[] authorizedRoles = {"admin","manager","lead","scheduling"};
         if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
-        
-        HttpSession sess=req.getSession(false);
-	ModelAndView model=new ModelAndView("CreateActivity");
+        ModelAndView model=new ModelAndView("CreateActivity");
 	
             model.addObject("AllTemplates", TS.getAllTemplates());
             model.addObject("AllLeads", US.GetUsersByRole("lead"));
@@ -175,7 +173,7 @@ public fileuploadBean populate1()
             return model;
 	}
         catch(Exception ex){
-        ex.printStackTrace();
+        System.out.println("Exception occured. "+ex.getMessage());
         return new ModelAndView("Error");
         }   
     }
@@ -187,8 +185,7 @@ public fileuploadBean populate1()
         try{ 
         String[] authorizedRoles = {"admin","manager","lead","scheduling"};
         if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
-       
-        HttpSession sess=req.getSession(false);
+        
 	List<UserDataBean> availableEngineers = US.getAvailableEngineers(AB.getStartdate(),AB.getEnddate(),US.GetUsersByRole("engineer"));
         AB.setLead(US.GetUserById(AB.getLeadid()).getUsername());
         List <TemplateBean> TemplateList = TS.getAllTemplates();
@@ -198,9 +195,8 @@ public fileuploadBean populate1()
         model.addObject("activitybean", AB);
         return model;
 	}
-        
         catch(Exception ex){
-            ex.printStackTrace();
+            System.out.println("Exception occured. "+ex.getMessage());
             return new ModelAndView("Error");
         }
     }
@@ -245,7 +241,7 @@ public fileuploadBean populate1()
         ProjectBean PB= PS.getProjectOPID(AB.getProjectid());
         AB.setOpid(PB.getOpid());
                 
-        AS.addProject(AB);
+        
         AllocationBean AloB = new AllocationBean();
                 
         AloB.setActivityId(AB.getActivityid());
@@ -253,37 +249,30 @@ public fileuploadBean populate1()
         AloB.setAllocationEndenddate(AB.getEnddate());
         AloB.setStatus("Allocated");
         AloB.setEngineerId(AB.getEngtracker());
-                
         if(AS.allocateResource(AloB)!=true){
                     
         }
-                
-        SystemBean sys=Aservice.getSystemSettings();
         EmailS.sendSchedulingMailToLead(AB, req.getSession(false), PB);
+        AS.addProject(AB);
         System.out.println("Project Created with Project id"+AB.getActivityid());
         System.out.println("Man days :"+AB.getMandays());
-        UserDataBean sessuser=(UserDataBean) sess.getAttribute("Luser");
-                
-        if(sessuser.getRole().equalsIgnoreCase("scheduling")){
-            return new ModelAndView("Welcome","Message","Activity has been scheduled");
-        }
-           
+       
         ActivityTransactionWrapper PTW=new ActivityTransactionWrapper();
         List<ActivityTransactionBean> PSBList;
         List<ActivityTransactionBean> PTBList1;
-        ActivityBean PRDATA=AS.getProjectById(AB.getActivityid());
-        List<MapTemplateTaskBean> MTTB=TS.getAllWeights(PRDATA.getTemplateid());
+        //ActivityBean PRDATA=AS.getProjectById(AB.getActivityid());
+        List<MapTemplateTaskBean> MTTB=TS.getAllWeights(AB.getTemplateid());
             
         UserDataBean engBean = US.GetUserById(AB.getEngtracker());
             
-        PSBList=  CU.setTaskHours(PRDATA, MTTB);
+        PSBList=  CU.setTaskHours(AB, MTTB);
         PTW.setProjectlist(PSBList);
         for(ActivityTransactionBean PTB: PSBList){
             PTB.setUserid(engBean.getUserid());
             PTB.setEngname(engBean.getUsername());
         }
             
-        PTBList1= CU.updateProjectTransaction(PSBList, PRDATA,req.getSession(false));
+        PTBList1= CU.updateProjectTransaction(PSBList, AB,req.getSession(false));
         for(ActivityTransactionBean PTB : PTBList1){
         AS.insertProjectTransaction(PTB);
         }
@@ -295,13 +284,18 @@ public fileuploadBean populate1()
 //      results.addObject("AllEngineers",availableEngineers);
 //      results.addObject("ProjectW",PTW);
 
+        
+        UserDataBean sessuser=(UserDataBean) sess.getAttribute("Luser");
+        if(sessuser.getRole().equalsIgnoreCase("scheduling")){
+            return new ModelAndView("Welcome","Message","Activity has been scheduled");
+        }
         results=new ModelAndView("DisplayActivityProgress");
-        results.addObject("ProjectData",PRDATA);
+        results.addObject("ProjectData",AB);
         results.addObject("TaskDetails",PTBList1);
         return results;
     }
     catch(Exception ex){
-        ex.printStackTrace();
+        System.out.println("Exception occured. "+ex.getMessage());
         TemplateList=TS.getAllTemplates();
         LeadList=US.GetUsersByRole("lead");   
         results = new ModelAndView("CreateActivity","Message","Activity Creation failed due to an error");
@@ -329,7 +323,7 @@ public fileuploadBean populate1()
 	return  result;
         }
         catch(Exception ex){
-            ex.printStackTrace();
+            System.out.println("Exception occured. "+ex.getMessage());
             return new ModelAndView("Error");
         }
     }
@@ -348,7 +342,7 @@ public fileuploadBean populate1()
         return result;
         }
         catch(Exception ex){
-            ex.printStackTrace();
+            System.out.println("Exception occured. "+ex.getMessage());
             return new ModelAndView("Error");
         }
     }
@@ -378,7 +372,7 @@ public fileuploadBean populate1()
         return result;
         }
         catch(Exception ex){
-            ex.printStackTrace();
+            System.out.println("Exception occured. "+ex.getMessage());
             return new ModelAndView("Error");
         }
     }
@@ -417,7 +411,7 @@ public fileuploadBean populate1()
            }
         }
         catch(Exception ex){
-            ex.printStackTrace();
+            System.out.println("Exception occured. "+ex.getMessage());
             return new ModelAndView("Error");
         }
     }
@@ -448,7 +442,7 @@ public fileuploadBean populate1()
         }
         }
         catch(Exception ex){
-            ex.printStackTrace();
+            System.out.println("Exception occured. "+ex.getMessage());
             return new ModelAndView("Error");
         }
     }
@@ -464,7 +458,7 @@ public fileuploadBean populate1()
         HttpSession sess= req.getSession(false);
         UserDataBean sessuser=(UserDataBean) sess.getAttribute("Luser");
         String role=sessuser.getRole();
-        if(role.equalsIgnoreCase("manager")||role.equalsIgnoreCase("lead")){
+        if(role.contains("manager")||role.equalsIgnoreCase("lead")){
         value= AS.updateProjectStatus(pid,status);
 //        if(status.equalsIgnoreCase("completed")){
 //          //  PS.updateTaskStatus(pid);
