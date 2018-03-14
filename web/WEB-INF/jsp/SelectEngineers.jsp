@@ -174,6 +174,7 @@ font-style: italic;
 
 <%@include file="Header.jsp"%>
 	   <div class="login-card">
+               <center><h4 style="color: #ffffff"><b>${Message}</b></h4></center>
 	   <div align="left">  <h2 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">Assign/Block Resource</h2></div>
 <form:form action="ScheduleActivity.do" method="post" commandName="ProjectM">
 <div align="left">
@@ -185,10 +186,11 @@ font-style: italic;
 
 <tr><td align="right"><h4>Available Engineers :</td>
     <td><form:select path="engtracker" id="engineer">
-        <option class="login login-submit" value="">None</option>
+        <option class="login login-submit">
 	           <c:forEach  items="${engineers}" var="eng"> 
 	           <form:option class="login login-submit" value="${eng.userid}">${eng.username}  :  ${eng.team} </form:option>
 	           </c:forEach>
+                   </option>
         </form:select>
         <form:errors path="engtracker" cssClass="error"/>
     </td>

@@ -205,7 +205,7 @@ th {
    
 <tr><td align="center"><h4 >User Name :</td>
     <form:errors path="username" cssClass="error"/><br>
-    <td><form:input placeHolder="Enter the Username"  path="username" htmlEscape="true" autocomplete="false"/></h4></td></tr>    
+    <td><form:input placeHolder="Enter the Username"  path="username" htmlEscape="true" autocomplete="false" require="email"/></h4></td></tr>    
 <form:errors path="email" cssClass="error"/>
 <tr><td align="center"><h4 >Email id :</td>
     <td><form:input placeHolder="Enter the Email ID" path="email" htmlEscape="true" autocomplete="false"/></h4></td></tr>  

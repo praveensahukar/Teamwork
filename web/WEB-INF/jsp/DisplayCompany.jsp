@@ -328,7 +328,7 @@ body {
         <c:forEach  items="${AllCompany}" var="company">     
            <tr>
                 <td> ${fn:escapeXml(company.companyname)}</td>
-                <td><a href="${(company.website)}"> ${fn:escapeXml(company.website)}</a></td>
+                <td> ${fn:escapeXml(company.website)}</td>
                 <td><a href="DeleteCompany.do?id=${company.companyid}">DELETE</td>
            </tr> 
         </c:forEach>

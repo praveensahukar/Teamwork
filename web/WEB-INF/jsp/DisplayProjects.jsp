@@ -333,7 +333,7 @@ body {
                <td> ${fn:escapeXml(project.opid)}</td>
                <td> ${fn:escapeXml(project.region)}</td>
                
-               <td><a href="DeleteProject.do?id=${project.projectid}">DELETE</td>
+               <td><a href="DeleteProject.do?id=${project.projectid}">DELETE</a></td>
            </tr> 
         </c:forEach>
                 

@@ -16,6 +16,7 @@ import com.Paladion.teamwork.services.TeamService;
 import com.Paladion.teamwork.services.UserService;
 import com.Paladion.teamwork.utils.CommonUtil;
 import com.Paladion.teamwork.utils.EmailUtil;
+import com.Paladion.teamwork.utils.userUpdateValidator;
 import com.Paladion.teamwork.utils.userValidator;
 import java.text.ParseException;
 import java.util.List;
@@ -49,7 +50,7 @@ userValidator UV;
 @InitBinder
 protected void initBinder(WebDataBinder binder) {
       binder.addValidators(UV);
-}   
+} 
     
  @Autowired
  @Qualifier(value="LoginService")
@@ -238,10 +239,12 @@ public ModelAndView GetUserDetails(@RequestParam int id, HttpServletRequest req)
 }
     
     @RequestMapping(value="/UpdateUserDetails",method=RequestMethod.POST)
-    public ModelAndView updateUserDetails(@ModelAttribute("UserM")UserDataBean UserBean, HttpServletRequest req)
+    public ModelAndView updateUserDetails(@ModelAttribute("UserM")@Validated UserDataBean UserBean, BindingResult results, HttpServletRequest req)
     {
         String[] authorizedRoles = {"admin","manager"};
         if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
+        if (results.hasErrors()) 
+        {
         try{
         System.out.println("in update user details controller method");
         userService.UpdateUserDetails(UserBean);
@@ -255,6 +258,8 @@ public ModelAndView GetUserDetails(@RequestParam int id, HttpServletRequest req)
         ex.printStackTrace();
         return new ModelAndView("Error");
         }
+        }
+        else{ return new ModelAndView("Error");}
     } 
 }
 

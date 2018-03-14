@@ -11,6 +11,7 @@ import com.Paladion.teamwork.utils.CommonUtil;
 import java.text.ParseException;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -105,11 +106,13 @@ public ModelAndView GetAllTasks(HttpServletRequest req)
         String[] authorizedRoles = {"admin","manager"};
         if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
         try{
+            ModelAndView result=new ModelAndView("CreateTeam");
         if(id!=0)
            {
                boolean value= TS.deleteTeam(id);
-               ModelAndView result=new ModelAndView("CreateTeam");
                List<TeamBean> TBList= TS.getAllTeams();
+               HttpSession Sess=req.getSession(false);
+               Sess.setAttribute("AllUsers", TBList);
                result.addObject("AllTeams",TBList);
                result.addObject("Message","Team Deleted Succefully");
                return result; 

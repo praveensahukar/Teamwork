@@ -194,10 +194,7 @@ th {
 }
 </style>
 
-<script type="text/javascript">
-    var form = document.getElementById('taskform');
-form.reset();
-</script>
+
 <title>Create Task</title>
 </head>
    <body>   
@@ -207,7 +204,7 @@ form.reset();
     <h2 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">Create Team</h2>
     <form:form action="CreateTeam.do" method="post" modelAttribute="TeamM" id="teamform">
     <table>
-    <tr><td align="center"><h4>Team Name:</td><td><form:input placeholder="Enter Team Name" path="teamname" /></h4></td></tr>    
+    <tr><td align="center"><h4>Team Name:</td><td><form:input placeholder="Enter Team Name" path="teamname" required="true"/></h4></td></tr>    
     <br>
     <input type="hidden" name="AntiCSRFToken" value="${csrfPreventionSalt}"/> 
     <tr><td align="center"><input type="submit" value="Create" class="login login-submit"/></td></tr>            

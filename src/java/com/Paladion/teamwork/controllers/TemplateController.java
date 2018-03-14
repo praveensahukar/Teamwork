@@ -168,7 +168,7 @@ public ModelAndView AddTaskToTemplate(@ModelAttribute("TaskW")TaskTemplateWrappe
        }
     
     if(weight!=100 || MttbList==null){
-          return new ModelAndView("AddTasksToTemplate","Message", "Total weight is not 100% or something went wrong" );
+          return new ModelAndView("Welcome","Message", "Total weight is not 100% or please try again" );
     }
     else
     {

@@ -191,10 +191,10 @@ th {
 
     <form:form action="UpdateUserDetails.do" method="POST" modelAttribute="UserM">
         <table>
-           <tr><td align="center"><h4 >User Name:</td><td><form:input placeHolder="Enter the username"  path="username" value="${fn:escapeXml(UserDetail.username)}" /></td></tr>    
-            <tr><td align="center"><h4 >Email id</td><td><form:input placeHolder="Enter the email" path="email" value="${fn:escapeXml(UserDetail.email)}"/></td></tr>  
-            <tr><td align="center"><h4>Mobile</td><td><form:input placeHolder="Enter the mobile" path="phone" value="${fn:escapeXml(UserDetail.phone)}" /></td></tr>
-            <tr><td align="center"><h4 >Team</td><td><form:input placeHolder="Enter the team" path="team" value="${fn:escapeXml(UserDetail.team)}" /></td></tr>
+           <tr><td align="center"><h4 >User Name:</td><td><form:input placeHolder="Enter the username"  path="username" value="${fn:escapeXml(UserDetail.username)}" required="true"/></td></tr>    
+            <tr><td align="center"><h4 >Email id</td><td><form:input placeHolder="Enter the email" path="email" value="${fn:escapeXml(UserDetail.email)}" required="email"/></td></tr>  
+            <tr><td align="center"><h4>Mobile</td><td><form:input placeHolder="Enter the mobile" path="phone" value="${fn:escapeXml(UserDetail.phone)}" required="true"/></td></tr>
+            <tr><td align="center"><h4 >Team</td><td><form:input placeHolder="Enter the team" path="team" value="${fn:escapeXml(UserDetail.team)}" required="true"/></td></tr>
             <%-- <tr><td align="center"><h4 >Password</td><td><form:input type="password" placeHolder="Enter the password" path="password" /></td></tr> --%>
             <tr><td align="center"><h4 >Change Role</td><td>
                     

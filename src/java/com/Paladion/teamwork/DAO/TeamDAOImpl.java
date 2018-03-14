@@ -78,13 +78,18 @@ public class TeamDAOImpl implements TeamDAO{
         
     @Override
     public boolean deleteTeam(int id){
-        Session session=sessionFactory.openSession();
+        Session session = this.sessionFactory.openSession();
         Transaction tx = session.beginTransaction();
         try{
-            String sql = "delete from teams where teamid=?";
+            
+            String sql = "Delete from teams where teamid=?";
             SQLQuery query = session.createSQLQuery(sql);
+            System.out.println("Inside teamDAOimpl:");
+            System.out.println("==================================");
+            System.out.println("teamid:"+id);
             query.setParameter(0, id);
             query.executeUpdate();
+            tx.commit();
             return true;
         }
         catch(Exception e){
