@@ -5,8 +5,9 @@
 --%>
 <%@page import="net.tanesha.recaptcha.ReCaptchaFactory"%>
 <%@page import="net.tanesha.recaptcha.ReCaptcha"%>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <link rel="icon" href="Network-Security.png" type="image/x-icon">
 <script src="jquery-1.12.4.js"></script>
 <script src="canvasjs.min.js"></script>
@@ -19,6 +20,7 @@
 
 <link rel="stylesheet" href="jquery-ui.css">
 <link rel="stylesheet" href="jquery.dataTables.min.css">
+
 <!DOCTYPE html>
 <html>
 
@@ -42,10 +44,11 @@ body {
   top: 30%;
   padding: 40px;
   width: 500px;
-   background-color: white;
+  height:500px;
+  background-image: url("2.jpg");
   margin: 0 auto 10px;
-  border-radius: 20px;
-  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+  border-radius: 0px;
+  
   overflow: hidden;
 }
 
@@ -134,38 +137,46 @@ body {
   text-align: center;
   font-size: 12px;
 }
-
-
+.error {
+color: black;
+font-style: italic;
+}
 
 </style>
-
-
-
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+.footer {
+   position: fixed;
+   left: 0;
+   bottom: 0;
+   width: 100%;
+   height: 8%;
+   background-color: #79a6d2;
+   color: white;
+   text-align: center;
+}
+</style>
   <meta charset="UTF-8">
 
-  <title>Forgot Password</title>
-
-  <link rel='stylesheet' href='http://codepen.io/assets/libs/fullpage/jquery-ui.css'>
-
+  <title>Log-in</title>
+  
     <link rel="stylesheet" href="css/style.css" media="screen" type="text/css" />
-<title>Forgot Password</title>
+
 </head>
-<br><br><br><br><br>
+<br><br>
   <div class="login-card">
-  <div align="center">
-    <img src="PaladionLogo.png"/>
+  <div align="left">
+<img src="PaladionLogo.png"/>
     </div>
-    <center><h4 style="color: #ff0000">${Message}</h4></center>
+      <br><br>
+      
+      <center><h4 style="color: #ffffff"><b>${Message}</b></h4></center>
     <h1>Forgot Password</h1><br>
-    
     <!-- UI goes here-->
     <form:form action="ForgotPassword.do" method="post"> 
-        Email ID: <input type="email" name="emailId"/>
-        <%
-          ReCaptcha c = ReCaptchaFactory.newReCaptcha("6LdILiQUAAAAADnLG0a6cHtsTag3ey10y652yvGK", "6LdILiQUAAAAAPJwovQaU6ezxtcIoa2FEFS70KgO", false);
-          out.print(c.createRecaptchaHtml(null, null));
-        %>
-        <br>
+        Email ID: <input style="width: 100%;height: 40px" placeholder="Enter the emailid" type="email" name="emailId" required/>
+        
+        <br><br>
         <button type="submit" class="login login-submit">Reset</button><br><br>
            
         </form:form>
@@ -173,10 +184,11 @@ body {
        <form action="Login.do" method="GET">
             <div align="left"><button type="submit" class="login login-submit">Go to Login</button></a></div>
             </form>
-        <!-- UI goes here-->
-        <script src='http://codepen.io/assets/libs/fullpage/jquery_and_jqueryui.js'></script>
+        
   </div>
-  
+  <div class="footer">
+  <p>Copyright © 2007-2018 Paladion Team Version: 1.0 All rights reserved. </p>
+</div>
  
 </body>  
 </html>

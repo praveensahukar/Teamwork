@@ -168,7 +168,7 @@ font-style: italic;
   <div align="left">
 <img src="PaladionLogo.png"/>
     </div>
-      <h1><b>Teamwork</b></h1>
+      <h1>Teamwork</h1>
       
       <center><h4 style="color: #ffffff"><b>${Message}</b></h4></center>
 <!-- UI goes here-->

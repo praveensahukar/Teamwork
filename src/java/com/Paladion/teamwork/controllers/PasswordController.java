@@ -61,15 +61,8 @@ public class PasswordController {
     public ModelAndView ForgotPassword(HttpServletRequest req )
     {
         try{
-        String remoteAddr = req.getRemoteAddr();
-        ReCaptchaImpl reCaptcha = new ReCaptchaImpl();
-        reCaptcha.setPrivateKey("6LdILiQUAAAAAPJwovQaU6ezxtcIoa2FEFS70KgO");
-        String challenge = req.getParameter("recaptcha_challenge_field");
-	String uresponse = req.getParameter("recaptcha_response_field");
-	ReCaptchaResponse reCaptchaResponse = reCaptcha.checkAnswer(remoteAddr, challenge, uresponse);
-        if (!reCaptchaResponse.isValid()) {
-             return new ModelAndView("ForgotPassword","Lerror", "Captcha failed");
-	} 
+        
+        
         String emailId=req.getParameter("emailId");
         boolean state=PS.ForgotPassword(emailId);
 

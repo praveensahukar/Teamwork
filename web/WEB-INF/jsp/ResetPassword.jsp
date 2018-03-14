@@ -3,8 +3,11 @@
     Created on : 12 Apr, 2017, 8:31:39 PM
     Author     : Administrator
 --%>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@page import="net.tanesha.recaptcha.ReCaptchaFactory"%>
+<%@page import="net.tanesha.recaptcha.ReCaptcha"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <link rel="icon" href="Network-Security.png" type="image/x-icon">
 <script src="jquery-1.12.4.js"></script>
 <script src="canvasjs.min.js"></script>
@@ -17,6 +20,7 @@
 
 <link rel="stylesheet" href="jquery-ui.css">
 <link rel="stylesheet" href="jquery.dataTables.min.css">
+
 <!DOCTYPE html>
 <html>
 
@@ -26,7 +30,7 @@
 
 body {
 
-	background-image: url("grey.jpg");
+  background-image: url("grey.jpg");
   background-repeat: repeat-y;
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -40,10 +44,11 @@ body {
   top: 30%;
   padding: 40px;
   width: 500px;
-   background-color: white;
+  height:500px;
+  background-image: url("2.jpg");
   margin: 0 auto 10px;
-  border-radius: 20px;
-  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+  border-radius: 0px;
+  
   overflow: hidden;
 }
 
@@ -97,6 +102,7 @@ body {
 
 .login-submit {
   /* border: 1px solid #3079ed; */
+  width: 150px;
   border: 0px;
   color: #fff;
   text-shadow: 0 1px rgba(0,0,0,0.1); 
@@ -131,24 +137,40 @@ body {
   text-align: center;
   font-size: 12px;
 }
+.error {
+color: black;
+font-style: italic;
+}
 
-
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+.footer {
+   position: fixed;
+   left: 0;
+   bottom: 0;
+   width: 100%;
+   height: 8%;
+   background-color: #79a6d2;
+   color: white;
+   text-align: center;
+}
 </style>
   <meta charset="UTF-8">
 
-  <title>Forgot Password</title>
-
-  <link rel='stylesheet' href='http://codepen.io/assets/libs/fullpage/jquery-ui.css'>
-
+  <title>Log-in</title>
+  
     <link rel="stylesheet" href="css/style.css" media="screen" type="text/css" />
 
 </head>
-<br><br><br><br><br>
+<br><br>
   <div class="login-card">
-  <div align="center">
+  <div align="left">
 <img src="PaladionLogo.png"/>
     </div>
-       <center><h4 style="color: #ff0000">${Message}</h4></center>
+      
+      <center><h4 style="color: #ffffff"><b>${Message}</b></h4></center>
+<!-- UI goes here-->
     <h1>Reset Password</h1><br>
     
 <!-- UI goes here-->
@@ -163,12 +185,10 @@ body {
     </body>
     </form>
   </form:form>
-	  
-          
-  <!-- UI goes here-->
-<script src='http://codepen.io/assets/libs/fullpage/jquery_and_jqueryui.js'></script>
   </div>
- 
+ <div class="footer">
+  <p>Copyright © 2007-2018 Paladion Team Version: 1.0 All rights reserved. </p>
+</div>
 </html>
 </body>
 
