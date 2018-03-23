@@ -191,27 +191,35 @@ th {
 
     <form:form action="UpdateUserDetails.do" method="POST" modelAttribute="UserM">
         <table>
-           <tr><td align="center"><h4 >User Name:</td><td><form:input placeHolder="Enter the username"  path="username" value="${fn:escapeXml(UserDetail.username)}" required="true"/></td></tr>    
-            <tr><td align="center"><h4 >Email id</td><td><form:input placeHolder="Enter the email" path="email" value="${fn:escapeXml(UserDetail.email)}" required="email"/></td></tr>  
-            <tr><td align="center"><h4>Mobile</td><td><form:input placeHolder="Enter the mobile" path="phone" value="${fn:escapeXml(UserDetail.phone)}" required="true"/></td></tr>
-            <tr><td align="center"><h4 >Team</td><td><form:input placeHolder="Enter the team" path="team" value="${fn:escapeXml(UserDetail.team)}" required="true"/></td></tr>
+            <tr><td align="center"><h4 >User Name :</td><td><form:input placeHolder="Enter the username"  path="username" value="${fn:escapeXml(UserDetail.username)}" required="true"/></td></tr>    
+            <tr><td align="center"><h4 >Email id :</td><td><form:input placeHolder="Enter the email" path="email" value="${fn:escapeXml(UserDetail.email)}" required="email"/></td></tr>  
+            <tr><td align="center"><h4>Mobile :</td><td><form:input placeHolder="Enter the mobile" path="phone" value="${fn:escapeXml(UserDetail.phone)}" required="true"/></td></tr>
+            
+            <tr><td align="right"><h4>Team :</td>
+            <td><form:select path="team" >
+                    <c:forEach  items="${AllTeams}" var="teams"> 
+                    <form:option class="login login-submit" value="${teams.teamname}">${teams.teamname}</form:option>
+                    </c:forEach>
+                </form:select>
+            </td>
+            </tr>
+            
             <%-- <tr><td align="center"><h4 >Password</td><td><form:input type="password" placeHolder="Enter the password" path="password" /></td></tr> --%>
-            <tr><td align="center"><h4 >Change Role</td><td>
-                    
-                   
-            <form:label path=""> ${fn:escapeXml(UserDetail.role)} </form:label>
-            <form:select path="role" value="${UserDetail.role}">
-            <form:option class="login login-submit" value="">Select</form:option>
-	    <form:option class="login login-submit" value="admin">Admin</form:option>
-	    <form:option class="login login-submit" value="manager">Manager</form:option>
-            <form:option class="login login-submit" value="lead">Lead</form:option>
-            <form:option class="login login-submit" value="engineer">Engineer</form:option>   
-            <form:option class="login login-submit" value="scheduling">Scheduling</form:option>
+            
+            <tr><td align="center"><h4 >Change Role</td>
+            <td>
+            
+            <form:select  path="role" >
+            <form:option class="login login-submit" value="${UserDetail.role}" path="role">${UserDetail.role}</form:option>
+	    <form:option class="login login-submit" value="Admin" path="role">Admin</form:option>
+	    <form:option class="login login-submit" value="Manager" path="role">Manager</form:option>
+            <form:option class="login login-submit" value="Lead" path="role">Lead</form:option>
+            <form:option class="login login-submit" value="Engineer" path="role">Engineer</form:option>   
+            <form:option class="login login-submit" value="Scheduling" path="role">Scheduling</form:option>
             </form:select>
-                    
-                    
-                </td></tr>
-            <input type="hidden" name="userid" value="${UserDetail.userid}"/>
+            </td>
+
+          <input type="hidden" name="userid" value="${UserDetail.userid}"/>
             
             <input type="hidden" name="AntiCSRFToken" value="${csrfPreventionSalt}"/> 
             

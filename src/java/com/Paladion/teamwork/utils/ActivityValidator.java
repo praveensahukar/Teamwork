@@ -38,13 +38,13 @@ public class ActivityValidator implements org.springframework.validation.Validat
         Logger.getLogger(ActivityValidator.class.getName()).log(Level.SEVERE, null, ex);
         }
                 
-	if(pbean.getOpid().length() == 0)
-        {
-	    errors.rejectValue("opid","opid.required");
-	}
-        else if(pbean.getActivityname().length() == 0)
+//	if(pbean.getOpid().length() == 0)
+//        {
+//	    errors.rejectValue("opid","opid.required");
+//	}
+        if(pbean.getActivityname().length() == 0)
 	{
-	    errors.rejectValue("projectname","projectname.required");
+	    errors.rejectValue("activityname","projectname.required");
 	}
         else if(pbean.getLeadid()<=0)
 	{
@@ -58,14 +58,14 @@ public class ActivityValidator implements org.springframework.validation.Validat
 	{
 	    errors.rejectValue("enddate","enddate.required");
 	}      
-        else if(pbean.getTemplateid()<=0)
-	{
-	    errors.rejectValue("templateid","templateid.required");
-	}
-        else if(pbean.getTeam().isEmpty())
-	{
-	    errors.rejectValue("team","team.required");
-	}
+//        else if(pbean.getTemplateid()<=0)
+//	{
+//	    errors.rejectValue("templateid","templateid.required");
+//	}
+//        else if(pbean.getTeam().isEmpty())
+//	{
+//	    errors.rejectValue("team","team.required");
+//	}
         else if (startDate.after(endDate))
         {
             errors.rejectValue("startdate","dates.invalid");

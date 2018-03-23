@@ -60,8 +60,10 @@ import com.Paladion.teamwork.services.ProjectService;
 import com.Paladion.teamwork.services.TaskService;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -120,12 +122,12 @@ TeamService TeamS;
 EmailService EmailS;
 
 @Autowired
-@Qualifier(value="ActivityValidator")
-ActivityValidator projectBeanValidator;
-
-@Autowired
 @Qualifier(value="EmailBean")
 EmailBean eBean;
+
+@Autowired
+@Qualifier(value="ActivityValidator")
+ActivityValidator projectBeanValidator;
    
 @InitBinder("ProjectM")
 protected void initProjectBeanBinder(WebDataBinder binder) {
@@ -206,7 +208,7 @@ public fileuploadBean populate1()
 
     //Schedule a activity
     @RequestMapping(value="/ScheduleActivity",method=RequestMethod.POST)
-    public Object CreateNewProject(@ModelAttribute("ProjectM")ActivityBean AB, HttpServletRequest req,Model E) throws Exception
+    public Object CreateNewProject(@ModelAttribute("ProjectM")@Validated ActivityBean AB, BindingResult result, HttpServletRequest req,Model E) throws Exception
     {
         HttpSession sess= req.getSession(false);
         ModelAndView results = null;
@@ -216,23 +218,21 @@ public fileuploadBean populate1()
         String[] authorizedRoles = {"admin","manager","lead","scheduling"};
         if(!CU.checkUserAuthorization(authorizedRoles, req))  return new ModelAndView("Error");
        
-//        if (result.hasErrors()) {
-//            //validates the user input, this is server side validation
-//            System.out.println("error!!!!!!!!");
-//            ModelAndView model=new ModelAndView("CreateActivity");
-//            try{
-//                TemplateList=TS.getAllTemplates();
-//                LeadList=CU.getUsersByRole("lead",sess);
-//                model.addObject("AllTemplates", TemplateList);
-//                model.addObject("AllLeads", LeadList);
-//                model.addObject("AllTeams",  TeamS.getAllTeams());
-//                model.addObject("AllProjects",PS.getAllProjects());
-//                return model;
-//            }
-//            catch(Exception ex){
-//            return new ModelAndView("Error");
-//            }                    
-//        }
+        if (result.hasErrors()) {
+            //validates the user input, this is server side validation
+            System.out.println("error!!!!!!!!");
+            ModelAndView model=new ModelAndView("CreateActivity");
+            try{
+                model.addObject("AllTemplates", TS.getAllTemplates());
+                model.addObject("AllLeads", US.GetUsersByRole("lead"));
+                model.addObject("AllTeams",  TeamS.getAllTeams());
+                model.addObject("AllProjects",PS.getAllProjects());
+                return model;
+            }
+            catch(Exception ex){
+            return new ModelAndView("Error");
+            }                    
+        }
 	    
         System.out.println("\n inside create Project POST method ");
         AB.setMandays(CU.getWorkingDays(AB.getStartdate(),AB.getEnddate()));
@@ -436,7 +436,7 @@ public fileuploadBean populate1()
            return result;
         }
         else{
-            ModelAndView result=new ModelAndView("Customerror");
+            ModelAndView result=new ModelAndView("Error");
             result.addObject("Message","Something Went Wrong");
             return result;
         }
@@ -671,7 +671,6 @@ public ModelAndView Downloadfiles(@RequestParam String pid,HttpServletRequest re
         for(ActivityBean PB:PBList){
             if(PB.getStatus().equalsIgnoreCase("new")){
                 project_new++;
-               
             }
             if(PB.getStatus().equalsIgnoreCase("progress")){
                 project_progress++;
@@ -750,7 +749,10 @@ public ModelAndView Downloadfiles(@RequestParam String pid,HttpServletRequest re
         //List<ProjectTransactionBean> PTBList=PS.getProjectTransaction(pid);
         ActivityTransactionBean PTBean = AS.getTransactionOnTransID(tid);
         List<ActivityTransactionBean> PTBList2=new ArrayList<>();
-        ActivityBean PRDATA=AS.getProjectById(pid);
+        
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+        String defaultD = "1990-01-01 00:00:00";
+        Date defaultDate = formatter.parse(defaultD);
       
         //Get current system time
 //      DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -792,21 +794,32 @@ public ModelAndView Downloadfiles(@RequestParam String pid,HttpServletRequest re
                         System.out.println("\n ---- Task was on hold for "+diffHours+" Hours and "+diffMinutes+ " Minutes ----- \n" );
                         
                         //Update the delay time into the activity
-                        
                         PTBean.setStatus("Progress");
-                                             
+                        PTBean.setStartdate(date1);
                     }
-                    else{
+                    else if (PTBean.getStatus().equalsIgnoreCase("Completed")){
+                        PTBean.setEnddate(defaultDate);
+                        PTBean.setStatus("Progress");
+                    }
+                    
+                    else if (PTBean.getStatus().equalsIgnoreCase("progress")){
+                        
+                    }
+                    
+                    else if(PTBean.getStatus().equalsIgnoreCase("new")){
                         PTBean.setStartdate(date1); 
                         PTBean.setStatus("Progress");
                     }
                 }
                 
-                
                 if(status.equalsIgnoreCase("completed"))
                 {
+                    
                      if(PTBean.getStatus().equalsIgnoreCase("On Hold")){
+                        if(PTBean.getStartdate().compareTo(defaultDate) == 0){
                         
+                        }
+                        else{
                         Date holdDate=PTBean.getHolddate();
                         long diff = date1.getTime() - holdDate.getTime();
                         long diffMinutes = diff / (60 * 1000) % 60;
@@ -814,19 +827,43 @@ public ModelAndView Downloadfiles(@RequestParam String pid,HttpServletRequest re
                         System.out.println("\n ---- Task was on hold for "+diffHours+" Hours and "+diffMinutes+ " Minutes ----- \n" );
                         
                         //Update the delay time into the activity
-                        
+                        PTBean.setEnddate(date1);
                         PTBean.setStatus("Completed");
-                                             
-                    }
+                     }
+                       }
+                     
+                     else if(PTBean.getStatus().equalsIgnoreCase("new")){
+                         
+                     }
+                     else if(PTBean.getStatus().equalsIgnoreCase("completed")){
+                         
+                     }
                     
-                    else{
+                     else if(PTBean.getStatus().equalsIgnoreCase("progress")){
                         PTBean.setEnddate(date1); 
                         PTBean.setStatus("Completed");
                     }
                 }
                 if(status.equalsIgnoreCase("Hold")){
+                    
+                    if(PTBean.getStatus().equalsIgnoreCase("progress")){
                     PTBean.setHolddate(date1);
                     PTBean.setStatus("On Hold");
+                    }
+                    
+                    else if(PTBean.getStatus().equalsIgnoreCase("completed")){
+                    PTBean.setHolddate(date1);
+                    PTBean.setStatus("On Hold");
+                    PTBean.setEnddate(defaultDate); 
+                    }
+                    
+                    else if(PTBean.getStatus().equalsIgnoreCase("new")){
+                    PTBean.setHolddate(date1);
+                    PTBean.setStatus("On Hold");
+                    }
+                    else if(PTBean.getStatus().equalsIgnoreCase("On Hold")){
+                  
+                    }
                 }
 
                 PTBList2.add(PTBean);
@@ -839,14 +876,10 @@ public ModelAndView Downloadfiles(@RequestParam String pid,HttpServletRequest re
         
        // List<ProjectTransactionBean> PTBList3=CU.updateDelayForTasks(PTBList2, (int)diffHours);
         AS.updateProjectTransaction(PTBList2);
-        ModelAndView result;
-        List<ActivityTransactionBean> PSBList;
-       
-        PSBList = AS.getProjectTransaction(pid);   
-        result=new ModelAndView("DisplayActivityProgress");
+        ModelAndView result=new ModelAndView("DisplayActivityProgress");
         result.addObject("Message","Status updated successfully");
-        result.addObject("ProjectData",PRDATA);
-        result.addObject("TaskDetails",PSBList);
+        result.addObject("ProjectData",AS.getProjectById(pid));
+        result.addObject("TaskDetails",AS.getProjectTransaction(pid));
         return result;
         }
         catch(Exception ex){
@@ -905,24 +938,58 @@ public ModelAndView Downloadfiles(@RequestParam String pid,HttpServletRequest re
     }
     
     @RequestMapping(value="/addActivityTask",method=RequestMethod.POST)
-    public ModelAndView addTasktoActivity(HttpServletRequest req, @ModelAttribute("ActivityTB") ActivityTransactionBean ATB)
+    public ModelAndView addTasktoActivity(HttpServletRequest req)
     {   
         try
         {
         String[] authorizedRoles = {"admin","manager","lead"};
         if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+        
+        SimpleDateFormat formatter1 = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         String defaultDate = "1990-01-01 00:00:00";
         Date parsedDate = formatter.parse(defaultDate);
+        ActivityTransactionBean ATB = new ActivityTransactionBean();
+        Calendar cal = Calendar.getInstance();
+        String aID= req.getParameter("activityid");
+        int activityID = Integer.parseInt(aID);
         
-        UserDataBean eng = US.GetUserById(ATB.getUserid());
+        String uID= req.getParameter("userid");
+        int UserID = Integer.parseInt(uID);
+        
+            System.out.println(req.getParameter("taskstartdate"));
+        
+        String tsDate = req.getParameter("taskstartdate")+" 10:00:00";
+        String teDate = req.getParameter("taskenddate")+" 19:00:00";
+        
+        Date startD = formatter1.parse(tsDate);
+        Date endD = formatter1.parse(teDate);
+        
+        long diff = endD.getTime() - startD.getTime();
+        int days = (int)TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) + 1;
+        
+        UserDataBean eng = US.GetUserById(UserID);
+        
+        cal.setTime(startD);
+        ATB.setActivityid(activityID);
+        ATB.setTaskstartdate(cal);
+        ATB.setTaskenddate(endD);
+        //ATB.setActivityid(Integer.parseInt(req.getParameter("activityid")));
+        ATB.setTaskname(req.getParameter("taskname"));
+        ATB.setTaskdays(days);
+        ATB.setTaskhours(days*9);
+        ATB.setUserid(UserID);
         ATB.setEngname(eng.getUsername());
         ATB.setStatus("New");
         ATB.setStartdate(parsedDate);
         ATB.setEnddate(parsedDate);
+        ATB.setHolddate(parsedDate);
         AS.insertProjectTransaction(ATB);
-        ModelAndView model=new ModelAndView("addTasktoActivity");
-	return model;
+        ModelAndView result=new ModelAndView("DisplayActivityProgress");
+        result.addObject("Message","Task has been added successfully");
+        result.addObject("ProjectData",AS.getProjectById(activityID));
+        result.addObject("TaskDetails",AS.getProjectTransaction(activityID));
+        return result;
 	}
         catch(Exception ex){
         ex.printStackTrace();

@@ -30,7 +30,7 @@ public class LoginDAOImpl implements LoginDAO{
 
     @Override
     public UserDataBean Login(UserDataBean LB) {
-        Session session = this.sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         Transaction tx = session.beginTransaction();
         try{
         UserDataBean SessUserBean=null;

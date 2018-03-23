@@ -45,8 +45,6 @@ public class UserController {
 @Qualifier(value="userValidator")
 userValidator UV;
    
-
-
 @InitBinder
 protected void initBinder(WebDataBinder binder) {
       binder.addValidators(UV);
@@ -84,7 +82,6 @@ AdminService AdminS;
    return new UserDataBean(); // populates form for the first time if its null
 }
 	
- 
     @RequestMapping(value="/CreateUser",method=RequestMethod.GET)
     public ModelAndView createUser(HttpServletRequest req)
     {   String[] authorizedRoles = {"admin","manager"};
@@ -223,12 +220,12 @@ public ModelAndView GetUserDetails(@RequestParam int id, HttpServletRequest req)
     ModelAndView result=new ModelAndView("UpdateUser");
     if(id!=0)
     {
-        UserDataBean userBean=userService.GetUserById(id);
-        result.addObject("UserDetail",userBean);
+        result.addObject("UserDetail",userService.GetUserById(id));
+        result.addObject("AllTeams",TService.getAllTeams());
         return result;
     }
     else{
-        result=new ModelAndView("fail");
+        result=new ModelAndView("Error");
     }
     return result;
     }
@@ -239,12 +236,11 @@ public ModelAndView GetUserDetails(@RequestParam int id, HttpServletRequest req)
 }
     
     @RequestMapping(value="/UpdateUserDetails",method=RequestMethod.POST)
-    public ModelAndView updateUserDetails(@ModelAttribute("UserM")@Validated UserDataBean UserBean, BindingResult results, HttpServletRequest req)
+    public ModelAndView updateUserDetails(@ModelAttribute("UserM") UserDataBean UserBean,  HttpServletRequest req)
     {
         String[] authorizedRoles = {"admin","manager"};
         if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
-        if (results.hasErrors()) 
-        {
+        
         try{
         System.out.println("in update user details controller method");
         userService.UpdateUserDetails(UserBean);
@@ -258,8 +254,7 @@ public ModelAndView GetUserDetails(@RequestParam int id, HttpServletRequest req)
         ex.printStackTrace();
         return new ModelAndView("Error");
         }
-        }
-        else{ return new ModelAndView("Error");}
+        
     } 
 }
 

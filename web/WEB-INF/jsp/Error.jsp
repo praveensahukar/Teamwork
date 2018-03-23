@@ -18,5 +18,7 @@
         <hr>
         <h3><center>The requested resource is unavailable or you are unauthorized to access this page.</center></h3>
         <hr>
+        <br>
+        <div> <font color="red"><b><center>${Message}</center><br></font> </div>
     </body>
 </html>

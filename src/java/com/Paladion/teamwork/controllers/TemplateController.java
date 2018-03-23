@@ -168,7 +168,7 @@ public ModelAndView AddTaskToTemplate(@ModelAttribute("TaskW")TaskTemplateWrappe
        }
     
     if(weight!=100 || MttbList==null){
-          return new ModelAndView("Welcome","Message", "Total weight is not 100% or please try again" );
+          return new ModelAndView("Error","Message", "Total weight is not 100%. Please try again." );
     }
     else
     {
@@ -177,11 +177,11 @@ public ModelAndView AddTaskToTemplate(@ModelAttribute("TaskW")TaskTemplateWrappe
            { MTT.setTemplateid(TempB.getTemplateid());
             if(!TempS.addTaskToTemplate(MTT))
                 {
-                    return new ModelAndView("AddTasksToTemplate","Temperror", "Something went wrong during save" );
+                    return new ModelAndView("Error","Message", "Something went wrong during save!!" );
                 }
             }	
     }
-    return new ModelAndView("CreateTaskTemplate","Message","Template Created Successfully");
+    return new ModelAndView("redirect:/Welcome.do","Message","Template Created Successfully!!");
     }
     catch(Exception ex){
     ex.printStackTrace();

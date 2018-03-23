@@ -61,8 +61,6 @@ public class PasswordController {
     public ModelAndView ForgotPassword(HttpServletRequest req )
     {
         try{
-        
-        
         String emailId=req.getParameter("emailId");
         boolean state=PS.ForgotPassword(emailId);
 
@@ -92,14 +90,22 @@ public class PasswordController {
         String conPassword=req.getParameter("conPassword");
         if(password.equals(conPassword)){
             if(PS.validatePassword(password)){
-            boolean state=PS.ResetPassword(otp,email,password);
-            ModelAndView result=new ModelAndView("Login");
-            result.addObject("Message","Password updated successfully.");
-            return result;
+                boolean state=PS.ResetPassword(otp,email,password);
+                if(state==true){
+                ModelAndView result=new ModelAndView("Login");
+                result.addObject("Message","Password updated successfully.");
+                return result;
+                }
+                else{
+                ModelAndView result1=new ModelAndView("ResetPassword");
+                result1.addObject("Message","Incorrect OTP.");
+                result1.addObject("email",email);
+                return result1;
+                }
             }
             else{
             ModelAndView result1=new ModelAndView("ResetPassword");
-            result1.addObject("Message","Not a strong password.");
+            result1.addObject("Message","Not a strong password mate :(");
             result1.addObject("email",email);
             return result1;
             }

@@ -109,14 +109,19 @@ public ModelAndView GetAllTasks(HttpServletRequest req)
             ModelAndView result=new ModelAndView("CreateTeam");
         if(id!=0)
            {
-               boolean value= TS.deleteTeam(id);
+               boolean status = TS.deleteTeam(id);
                List<TeamBean> TBList= TS.getAllTeams();
-               HttpSession Sess=req.getSession(false);
-               Sess.setAttribute("AllUsers", TBList);
+              // HttpSession Sess=req.getSession(false);
+              // Sess.setAttribute("AllUsers", TBList);
+              if(status == true){
                result.addObject("AllTeams",TBList);
-               result.addObject("Message","Team Deleted Succefully");
+               result.addObject("Message","Team Deleted Successfully");
                return result; 
-           }
+              }
+              else{
+                  return new ModelAndView("Error");
+              }
+            }
            else{
                 return new ModelAndView("Error");
             }

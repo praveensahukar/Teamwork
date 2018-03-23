@@ -267,8 +267,8 @@ Date calculateResponseTime(Calendar ProjectTime, float ProjectDurationinHours) {
          HashMap<Integer, List<ActivityTransactionBean>> hashMap = new HashMap<Integer, List<ActivityTransactionBean>>();
          List <ActivityTransactionBean> ResultList=new ArrayList();
          SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
-         String defaultDate = "1990-01-01 00:00:00";
-         Date parsedDate = formatter.parse(defaultDate);
+         String defaultD = "1990-01-01 00:00:00";
+         Date defaultDate = formatter.parse(defaultD);
 
          for(ActivityTransactionBean PTBean : PTBList)
          {
@@ -302,9 +302,9 @@ Date calculateResponseTime(Calendar ProjectTime, float ProjectDurationinHours) {
                     PTBean.setEngname(US.GetUserById(PTBean.getUserid()).getUsername());
                     TaskEndDate=calculateResponseTime(ProjectTime, PTBean.getTaskhours());
                     PTBean.setTaskenddate(TaskEndDate);
-                    PTBean.setStartdate(parsedDate);
-                    PTBean.setEnddate(parsedDate);
-                    PTBean.setHolddate(parsedDate);
+                    PTBean.setStartdate(defaultDate);
+                    PTBean.setEnddate(defaultDate);
+                    PTBean.setHolddate(defaultDate);
                   }
                 else
                   {
@@ -320,8 +320,8 @@ Date calculateResponseTime(Calendar ProjectTime, float ProjectDurationinHours) {
                     TaskEndDate=calculateResponseTime(ProjectTime,PTBean.getTaskhours());
                     PTBean.setEngname(US.GetUserById(PTBean.getUserid()).getUsername());
                     PTBean.setTaskenddate(TaskEndDate);
-                     PTBean.setStartdate(parsedDate);
-                    PTBean.setEnddate(parsedDate);
+                     PTBean.setStartdate(defaultDate);
+                    PTBean.setEnddate(defaultDate);
                   }
                 ResultList.add(PTBean);
             }

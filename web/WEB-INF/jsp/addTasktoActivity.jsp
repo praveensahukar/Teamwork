@@ -16,17 +16,21 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 <head>
-<script type="text/javascript">
-  $(document).ready(function() {
-    $("#date").datepicker();
-    format: 'dd/mm/yyyy'
-  });
-  </script>
-  <script type="text/javascript">
-  $(document).ready(function() {
-    $("#datepicker").datepicker();
-    format: 'dd/mm/yyyy'
-  });
+   <script>
+  $(document).ready(function(){
+    $("#txtFromDate").datepicker({
+        numberOfMonths: 1,
+        onSelect: function(selected) {
+          $("#txtToDate").datepicker("option","minDate", selected)
+        }
+    });
+    $("#txtToDate").datepicker({ 
+        numberOfMonths: 1,
+        onSelect: function(selected) {
+           $("#txtFromDate").datepicker("option","maxDate", selected)
+        }
+    });  
+});
   </script>
 <style>
 ul {
@@ -204,8 +208,8 @@ font-style: italic;
     </td>
     </tr>
 
-    <tr><td align="right"><h4>Allocation Start Time :<td><form:input placeholder="Start Time" id="date" path="taskstartdate" /><form:errors path="taskstartdate" cssClass="error"/></h4></td></tr>
-    <tr><td align="right"><h4>Allocation End Time :</td><td><form:input placeholder="End Time" id="datepicker" path="taskenddate"/><form:errors path="taskenddate" cssClass="error"/></h4></td></tr>
+    <tr><td align="right"><h4>Allocation Start Time :<td><input placeholder="Start Time" id="txtFromDate" name="taskstartdate" /></h4></td></tr>
+    <tr><td align="right"><h4>Allocation End Time :</td><td><input placeholder="End Time" id="txtToDate" name="taskenddate"/></h4></td></tr>
     <input type="hidden" name="activityid" value="${ActivityId}"/>
     <br>
     <tr><td align="right"><input type="submit" value="Create" class="login login-submit"/></td></tr>           
@@ -215,18 +219,22 @@ font-style: italic;
 
 </div>
      
-<script>
-  $(document).ready(function() {
-    $("#datepicker").datepicker();
-    format: 'dd/mm/yyyy';
-  });
-</script>
-<script>
-  $(document).ready(function() {
-    $("#datepickers").datepicker();
-    format: 'dd/mm/yyyy';
-  });
-</script>
+	   <script>
+  $(document).ready(function(){
+    $("#txtFromDate").datepicker({
+        numberOfMonths: 1,
+        onSelect: function(selected) {
+          $("#txtToDate").datepicker("option","minDate", selected)
+        }
+    });
+    $("#txtToDate").datepicker({ 
+        numberOfMonths: 1,
+        onSelect: function(selected) {
+           $("#txtFromDate").datepicker("option","maxDate", selected)
+        }
+    });  
+});
+  </script>
 </body>
 </html>
 
