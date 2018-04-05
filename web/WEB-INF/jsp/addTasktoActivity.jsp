@@ -127,7 +127,7 @@ body {
 }
 .login-submit {
   /* border: 1px solid #3079ed; */
-  width: 50%;
+  width: 70%;
   border: 0px;
   color: #fff;
   text-shadow: 0 1px rgba(0,0,0,0.1); 
@@ -169,7 +169,7 @@ th {
     text-align: center;
 }
 .error {
-color: black;
+color: red;
 font-style: italic;
 }
 </style> 
@@ -187,7 +187,7 @@ font-style: italic;
     <table  align="left" border="0" width="50%">
 
     <tr><td align="right"><h4>Select Task :</td>
-    <td><form:select path="taskname">
+    <td><form:select path="taskname" class="login login-submit">
                   <option class="login login-submit" value="">Select Task</option>
 	           <c:forEach  items="${AllTasks}" var="task"> 
 	           <form:option class="login login-submit" value="${task.taskname}">${task.taskname}</form:option>    
@@ -198,18 +198,18 @@ font-style: italic;
     </tr>
 
     <tr><td align="right"><h4>Select from Available Engineers :</td>
-    <td><form:select path="userid" id="userid">
+    <td><form:select path="userid" id="userid" class="login login-submit">
         <option class="login login-submit" value="">Engineer</option>
-	           <c:forEach  items="${AllEngineers}" var="engineer"> 
-	           <form:option class="login login-submit" value="${engineer.userid}">${engineer.username}</form:option>
-	           </c:forEach>
+	    <c:forEach  items="${AllEngineers}" var="engineer"> 
+	    <form:option class="login login-submit" value="${engineer.userid}">${engineer.username}  :  ${engineer.team} </form:option>
+            </c:forEach>
         </form:select>
         <form:errors path="userid" cssClass="error"/>
     </td>
     </tr>
 
-    <tr><td align="right"><h4>Allocation Start Time :<td><input placeholder="Start Time" id="txtFromDate" name="taskstartdate" /></h4></td></tr>
-    <tr><td align="right"><h4>Allocation End Time :</td><td><input placeholder="End Time" id="txtToDate" name="taskenddate"/></h4></td></tr>
+    <tr><td align="right"><h4>Allocation Start Date :<td><form:input placeholder="Start Time" id="txtFromDate" path="" name="taskstartdate" /></h4></td></tr>
+    <tr><td align="right"><h4>Allocation End Date :</td><td><form:input placeholder="End Time" id="txtToDate" path="" name="taskenddate"/></h4></td></tr>
     <input type="hidden" name="activityid" value="${ActivityId}"/>
     <br>
     <tr><td align="right"><input type="submit" value="Create" class="login login-submit"/></td></tr>           

@@ -240,21 +240,19 @@ public fileuploadBean populate1()
          
         ProjectBean PB= PS.getProjectOPID(AB.getProjectid());
         AB.setOpid(PB.getOpid());
-                
-        
+        EmailS.sendSchedulingMailToLead(AB, req.getSession(false), PB);        
+        AS.addProject(AB);
         AllocationBean AloB = new AllocationBean();
-                
         AloB.setActivityId(AB.getActivityid());
         AloB.setAllocationStartdate(AB.getStartdate());
         AloB.setAllocationEndenddate(AB.getEnddate());
         AloB.setStatus("Allocated");
         AloB.setEngineerId(AB.getEngtracker());
         if(AS.allocateResource(AloB)!=true){
-                    
         }
-        EmailS.sendSchedulingMailToLead(AB, req.getSession(false), PB);
-        AS.addProject(AB);
-        System.out.println("Project Created with Project id"+AB.getActivityid());
+       
+        
+        System.out.println("Project Created with Project id "+AB.getActivityid());
         System.out.println("Man days :"+AB.getMandays());
        
         ActivityTransactionWrapper PTW=new ActivityTransactionWrapper();
@@ -287,7 +285,7 @@ public fileuploadBean populate1()
         
         UserDataBean sessuser=(UserDataBean) sess.getAttribute("Luser");
         if(sessuser.getRole().equalsIgnoreCase("scheduling")){
-            return new ModelAndView("Welcome","Message","Activity has been scheduled");
+            return new ModelAndView("redirect:/Welcome.do","Message","Activity has been scheduled successfully.");
         }
         results=new ModelAndView("DisplayActivityProgress");
         results.addObject("ProjectData",AB);
@@ -458,16 +456,35 @@ public fileuploadBean populate1()
         HttpSession sess= req.getSession(false);
         UserDataBean sessuser=(UserDataBean) sess.getAttribute("Luser");
         String role=sessuser.getRole();
-        if(role.contains("manager")||role.equalsIgnoreCase("lead")){
+        
+        ActivityBean AB = AS.getProjectById(pid);
+        
+        if(AB.getStatus().equalsIgnoreCase("progress") && status.equalsIgnoreCase("completed")){
         value= AS.updateProjectStatus(pid,status);
 //        if(status.equalsIgnoreCase("completed")){
 //          //  PS.updateTaskStatus(pid);
 //        }
         }
         
+        else if(AB.getStatus().equalsIgnoreCase("new") && status.equalsIgnoreCase("progress"))
+        {
+            value= AS.updateProjectStatus(pid,status);
+        }
+        
+        else if(AB.getStatus().equalsIgnoreCase("completed") && status.equalsIgnoreCase("progress")){
+            value= AS.updateProjectStatus(pid,status);
+        }
+        
+        else{
+            ModelAndView result=new ModelAndView("DisplayActivity");
+            result.addObject("Message","Invalid status selected.");
+            result.addObject("AllProjects", AS.getAllProjects(sessuser.getUserid(), role));
+            return  result;
+        }
        
-        if(value==true){
+        if(value == true){
           ModelAndView result=new ModelAndView("DisplayActivity");
+          result.addObject("Message","Status updated successfully.");
 	  result.addObject("AllProjects", AS.getAllProjects(sessuser.getUserid(), role));
 	  return  result;
         }
@@ -893,7 +910,7 @@ public ModelAndView Downloadfiles(@RequestParam String pid,HttpServletRequest re
     public ModelAndView delete_Project(@RequestParam int pid, HttpServletRequest req) throws ParseException
     {
         try{
-            if(AS.deleteProject(pid)){
+            if(AS.deleteProject(pid) ){
             return new ModelAndView("redirect:/Welcome.do","Message","Project Deleted Successfully");
             }
             else{

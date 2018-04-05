@@ -58,7 +58,7 @@ public CompanyBean populate()
 @RequestMapping(value="/CreateCompany",method=RequestMethod.GET)
      public ModelAndView CreateCompany(HttpServletRequest req)
     {   
-        String[] authorizedRoles = {"admin","manager","lead"};
+        String[] authorizedRoles = {"admin","manager","lead","scheduling"};
         if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
         
 	return new ModelAndView("CreateCompany");
@@ -67,7 +67,7 @@ public CompanyBean populate()
 @RequestMapping(value="/CreateCompany",method=RequestMethod.POST)
     public ModelAndView CreateCompany(@ModelAttribute("CompanyM")@Validated CompanyBean CB,BindingResult result,HttpServletRequest req) 
     {
-        String[] authorizedRoles = {"admin","manager","lead"};
+        String[] authorizedRoles = {"admin","manager","lead","scheduling"};
         if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
         try{
         if (result.hasErrors()) {
@@ -91,7 +91,7 @@ public CompanyBean populate()
 @RequestMapping(value="/GetAllCompany",method=RequestMethod.GET)
 public ModelAndView GetAllTasks(HttpServletRequest req)
 { 
-    String[] authorizedRoles = {"admin","manager","lead"};
+    String[] authorizedRoles = {"admin","manager","lead","scheduling"};
     if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
     try{
     ModelAndView result=new ModelAndView("DisplayCompany");
@@ -109,7 +109,7 @@ public ModelAndView GetAllTasks(HttpServletRequest req)
 @RequestMapping(value="/DeleteCompany",method=RequestMethod.GET)
     public ModelAndView DeleteCompany(@RequestParam int id, HttpServletRequest req) throws ParseException
     {
-        String[] authorizedRoles = {"admin","manager","lead"};
+        String[] authorizedRoles = {"admin","manager","lead","scheduling"};
         if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
         try{
         if(id!=0)

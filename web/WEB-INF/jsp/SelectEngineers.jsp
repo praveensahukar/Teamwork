@@ -163,7 +163,7 @@ th {
     text-align: left;
 }
 .error {
-color: black;
+color: red;
 font-style: italic;
 }
 </style>
@@ -185,19 +185,18 @@ font-style: italic;
 <tr><td align="right"><h4>Activity : ${fn:escapeXml(activitybean.activityname)}</td> </tr>
 
 <tr><td align="right"><h4>Available Engineers :</td>
-    <td><form:select path="engtracker" id="engineer">
-        <option class="login login-submit">
-	           <c:forEach  items="${engineers}" var="eng"> 
-	           <form:option class="login login-submit" value="${eng.userid}">${eng.username}  :  ${eng.team} </form:option>
-	           </c:forEach>
-                   </option>
+    <td><form:select path="engtracker" id="engineer" class="login login-submit">
+        <option class="login login-submit" value="">Select Engineer</option>
+	    <c:forEach  items="${engineers}" var="eng"> 
+	    <form:option class="login login-submit" value="${eng.userid}">${eng.username}  :  ${eng.team} </form:option>
+	    </c:forEach>
         </form:select>
         <form:errors path="engtracker" cssClass="error"/>
     </td>
 </tr>
 
 <tr><td align="right"><h4>Template :</td>
-    <td><form:select  path="templateid" itemLabel="Select"> 
+    <td><form:select  path="templateid" itemLabel="Select" class="login login-submit"> 
          <option class="login login-submit" value="">Select Template</option>
 	  <c:forEach items="${AllTemplates}" var="template">     
 	  <option class="login login-submit" value="${template.templateid}">${template.templatename}</option>

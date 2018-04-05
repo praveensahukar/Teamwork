@@ -56,7 +56,7 @@
        
 <style>
 .error {
-color: black;
+color: red;
 font-style: italic;
 }
 ul {

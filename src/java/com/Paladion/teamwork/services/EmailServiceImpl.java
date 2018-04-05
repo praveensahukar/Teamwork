@@ -80,14 +80,34 @@ public class EmailServiceImpl implements EmailService{
          UserDataBean eng=UserS.GetUserById(AB.getEngtracker());
          UserDataBean pmbean=UserS.GetUserById(PB.getProjectmanager());
          UserDataBean dmbean=UserS.GetUserById(PB.getDeliverymanager());
+         List <UserDataBean> scheduling = UserS.GetUsersByRole("scheduling");
          
          CompanyBean CB = CompanyS.getCompanyByID(PB.getCompanyid());
          
-         String to = leadb.getEmail()+","+eng.getEmail()+","+pmbean.getEmail()+","+dmbean.getEmail();
+         StringBuilder emails =new StringBuilder();
+         
+         if(leadb.getEmail()!=null){
+             emails.append(leadb.getEmail()).append(",");
+         }
+         if(eng.getEmail()!=null){
+             emails.append(eng.getEmail()).append(",");
+         }
+         if(pmbean.getEmail()!=null){
+             emails.append(pmbean.getEmail()).append(",");
+         }
+         if(dmbean.getEmail()!=null){
+             emails.append(dmbean.getEmail()).append(",");
+         }
+         
+         for(UserDataBean ubean : scheduling){
+             emails.append(ubean.getEmail()).append(",");
+         }
+         
+         String to = emails.toString();
          
          ebean.setTo(to);
          
-         ebean.setSubject("Project Scheduling Mail");
+         ebean.setSubject("Project Scheduling Mail :: "+PB.getProjectname());
   
          SimpleDateFormat sm = new SimpleDateFormat("dd-MM-yyyy");
          String sDate = sm.format(AB.getStartdate());

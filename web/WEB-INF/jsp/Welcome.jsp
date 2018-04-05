@@ -213,9 +213,10 @@ window.onload = function () {
 			showInLegend: true,
 			toolTipContent:"{legendText} {y}",
 			dataPoints: [
-				{  y: "${Completed_proj}", legendText:"Projects Completed", label: "Projects Completed" },
-				{  y: "${Progress_proj}", legendText:"Projects In Progress", label: "Projects In Progress" },
-				{  y: "${New_proj}", legendText:"New Projects" , label: "New Projects"},       
+				{  y: "${Completed_proj}", legendText:"Activities Completed", label: "Activities Completed" },
+				{  y: "${Progress_proj}", legendText:"Activities In Progress", label: "Activities In Progress" },
+				{  y: "${New_proj}", legendText:"Scheduled Activities" , label: "Scheduled Activities"}, 
+                                {  y: "${On_Hold}", legendText:"Activities On Hold" , label: "Activities On Hold"},
 				
 			]
 		}

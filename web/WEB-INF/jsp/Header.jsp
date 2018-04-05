@@ -108,7 +108,7 @@
     <ul>
         <li><a href="Welcome.do">Home</a></li>
         
-        <% if(role.contains("manager")||role.equalsIgnoreCase("Admin"))
+        <% if(role.contains("manager")||role.equalsIgnoreCase("Admin")||role.equalsIgnoreCase("Scheduling"))
         {%>
         <div class="dropdown">
             <button class="dropbtn">Projects</button>
@@ -134,15 +134,18 @@
                 </div>
         </div> 
         
-        <% if(role.contains("manager")||role.equalsIgnoreCase("Admin"))
+        <% if(role.contains("manager")||role.equalsIgnoreCase("Admin")||role.equalsIgnoreCase("scheduling"))
         {%>
         <div class="dropdown">
             <button class="dropbtn">Administration</button>
                 <div class="dropdown-content">
+                <% if(role.contains("manager")||role.equalsIgnoreCase("Admin"))
+                {%>
                 <a href="CreateUser.do">Create User</a>
                 <a href="ViewAllUser.do">View Users</a>
                 <a href="CreateTeam.do">Teams</a>
                 <a href="Administration.do">System Properties</a>
+                <%}%>
                 <a href="CreateCompany.do">Create Company</a>
                 <a href="GetAllCompany.do">View All Companies</a>
                 </div>

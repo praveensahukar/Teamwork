@@ -400,7 +400,7 @@ public class ActivityDAOImpl implements ActivityDAO
         Session session1 = sessionFactory.getCurrentSession();
 	Transaction tx = session1.beginTransaction();
         try{
-        String sql = "delete p.*, pt.* from activity p left join activity_transaction pt on p.activityid=pt.activityid where p.activityid=?";
+        String sql = "delete a.*, p.*, pt.* from activity p left join activity_transaction pt on p.activityid = pt.activityid join resource_tracker a on a.activityid = pt.activityid where p.activityid=?";
         SQLQuery query = session1.createSQLQuery(sql);
         query.setParameter(0, id);
         query.executeUpdate();
@@ -443,8 +443,7 @@ public class ActivityDAOImpl implements ActivityDAO
                 }
             }
         }
-   
-
+        
         public List<ActivityBean> getUpcomingActivities(Date today, Date maxDate){
         Session session1 = sessionFactory.getCurrentSession();    
         Transaction tx = session1.beginTransaction();

@@ -92,7 +92,7 @@ public String Login()
         if (result.hasErrors()) {
             //validates the user input, this is server side validation
             System.out.println("error!!!!!!!!");   
-         return new ModelAndView("Login");
+            return new ModelAndView("Login");
         }
         
         //Captcha code begins
@@ -155,7 +155,7 @@ public String Login()
             ModelAndView result=new ModelAndView("Welcome");
             int [] counts = new int[3];
             counts = PS.getProjectsCount(req);
-            result.addObject("On_Hold",counts[0]);
+            result.addObject("On_Hold",counts[4]);
             result.addObject("New_proj",counts[3]);
             result.addObject("Progress_proj",counts[2]);
             result.addObject("Completed_proj",counts[1]);

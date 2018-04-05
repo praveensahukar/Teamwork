@@ -95,6 +95,7 @@ ActivityDAO PD;
         int project_new=0;
         int project_progress=0;
         int project_completed=0;
+        int on_hold=0;
         for(ActivityBean PB:PBList){
             if(PB.getStatus().equalsIgnoreCase("new")){
                 project_new++;
@@ -105,15 +106,19 @@ ActivityDAO PD;
             if(PB.getStatus().equalsIgnoreCase("completed")){
                 project_completed++;
             }
+            if(PB.getStatus().equalsIgnoreCase("on hold")){
+                on_hold++;
+            }
         }
         System.out.println("No of completed projects : "+project_completed);
         System.out.println("No of on going projects : "+project_progress);
         System.out.println("No of new projects : "+project_new);
-        int [] counts = new int[4];
+        int [] counts = new int[5];
         counts[0]=total_projects;
         counts[1]=project_completed;
         counts[2]=project_progress;
         counts[3]=project_new;
+        counts[4]=on_hold;
         return counts;
     }
     

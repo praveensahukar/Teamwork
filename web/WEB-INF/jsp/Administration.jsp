@@ -192,6 +192,11 @@ th {
     background-color: #a6a6a6;
     color: white;
 }
+
+.error {
+color: red;
+font-style: italic;
+}
 </style>
 
 <script type="text/javascript">

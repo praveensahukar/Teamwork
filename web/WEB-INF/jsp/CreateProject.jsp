@@ -121,7 +121,7 @@ body {
 }
 .login-submit {
   /* border: 1px solid #3079ed; */
-  width: 50%;
+  width: 30%;
   border: 0px;
   color: #fff;
   text-shadow: 0 1px rgba(0,0,0,0.1); 
@@ -163,7 +163,7 @@ th {
     text-align: center;
 }
 .error {
-color: black;
+color: red;
 font-style: italic;
 }
 </style>
@@ -235,7 +235,7 @@ font-style: italic;
 <tr><td align="right"><h4>Project Name :</td><td><form:input placeholder="Enter Activity Name" path="projectname" /><form:errors path="projectname" cssClass="error"/></h4></td></tr>  
 
 <tr><td align="right"><h4>Company :</td>
-    <td><form:select path="companyid">
+    <td><form:select path="companyid" class="login login-submit">
     <option class="login login-submit" value="">Select</option>
 	           <c:forEach  items="${AllCompany}" var="company"> 
 	           <form:option class="login login-submit" value="${company.companyid}">${company.companyname}</form:option>
@@ -246,7 +246,7 @@ font-style: italic;
 </tr>
 
 <tr><td align="right"><h4>Delivery Manager :</td>
-    <td><form:select  path="deliverymanager" itemLabel="Select"> 
+    <td><form:select  path="deliverymanager" itemLabel="Select" class="login login-submit"> 
          <option class="login login-submit" value="">Select</option>
 	  <c:forEach items="${AllDManagers}" var="dmanager">     
 	  <option class="login login-submit" value="${dmanager.userid}">${dmanager.username}</option>
@@ -257,7 +257,7 @@ font-style: italic;
         </tr>
 
 <tr><td align="right"><h4>Project Manager :</td>
-    <td><form:select  path="projectmanager" itemLabel="Select"> 
+    <td><form:select  path="projectmanager" itemLabel="Select" class="login login-submit"> 
          <option class="login login-submit" value="">Select</option>
 	  <c:forEach items="${AllPManagers}" var="pmanager">     
 	  <option class="login login-submit" value="${pmanager.userid}">${pmanager.username}</option>

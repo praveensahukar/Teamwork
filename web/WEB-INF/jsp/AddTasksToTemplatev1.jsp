@@ -58,7 +58,7 @@
        
 <style>
 .error {
-color: black;
+color: red;
 font-style: italic;
 }
 ul {
@@ -189,6 +189,11 @@ body {
   opacity: 0.6;
   transition: opacity ease 0.5s;
 }
+
+.cellpadding {
+   padding-left: 15px;
+   padding-right: 15px;
+}
 .login-card a:hover {
   opacity: 1;
 }
@@ -226,7 +231,12 @@ table.dataTable thead th:first-child {
   background-color: white;
   z-index: 1002;
   overflow: auto;
-}      
+}
+
+.error {
+color: red;
+font-style: italic;
+}
 </style>  
                    
         </head>
@@ -240,16 +250,17 @@ table.dataTable thead th:first-child {
         
         <div class="login-card">
         
-        <h2>Assign Weights To Selected Tasks</h2>
+            <h2>Assign Weights To Selected Tasks</h2>
+            <div> <font color="red"><h3>Note: Sum of weights must be 100.</h3></font> </div> 
         
-        <form:form action="AddTaskTemplate.do" method="post" modelAttribute="TaskW">
+           <form:form action="AddTaskTemplate.do" method="post" modelAttribute="TaskW">
            <table>
-               <tr> <th>Task Name</th>  <th>Weight</th>  
+               <tr> <th class="cellpadding">Task Name</th>  <th class="cellpadding">Weight</th>  </tr>
               <c:forEach  varStatus="status" items="${taskwrapper.mttblist}" var="task"> 
               <tr> 
                 
-                <td  ><c:out value="${task.taskname}"/></td>
-                <td  ><input type="text" name="mttblist[${status.index}].weight"></td>
+                <td class="cellpadding"><c:out value="${task.taskname}"/></td>
+                <td class="cellpadding"><input type="text" name="mttblist[${status.index}].weight"></td>
               </tr>
              
               <input type="hidden" name="mttblist[${status.index}].taskname" value="${task.taskname}"/>
@@ -261,6 +272,7 @@ table.dataTable thead th:first-child {
             
            </table>
         </form:form>
+        </div>
 
     </body>
 </html>

@@ -190,6 +190,10 @@ th {
     background-color: #a6a6a6;
     color: white;
 }
+.error {
+color: red;
+font-style: italic;
+}
 </style>
 <title>New User</title>
 </head>
@@ -214,7 +218,7 @@ th {
     <td><form:input placeHolder="Enter the Mobile Number" path="phone" htmlEscape="true" autocomplete="false" /></h4></td></tr>
 <form:errors path="team" cssClass="error"/>
     <tr><td align="right"><h4>Team :</td>
-    <td><form:select path="team">
+    <td><form:select path="team" class="login login-submit">
              <form:option class="login login-submit" value="">Select</form:option>
 	           <c:forEach  items="${AllTeams}" var="team"> 
 	           <form:option class="login login-submit" value="${team.teamname}">${team.teamname}</form:option>

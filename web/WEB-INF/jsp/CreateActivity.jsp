@@ -127,7 +127,7 @@ body {
 }
 .login-submit {
   /* border: 1px solid #3079ed; */
-  width: 50%;
+  width: 30%;
   border: 0px;
   color: #fff;
   text-shadow: 0 1px rgba(0,0,0,0.1); 
@@ -169,7 +169,7 @@ th {
     text-align: center;
 }
 .error {
-color: black;
+color: red;
 font-style: italic;
 }
 </style>
@@ -248,7 +248,7 @@ font-style: italic;
     <table  align="center" border="0">
 
 <tr><td align="right"><h4>Project :</td>
-    <td><form:select path="projectid">
+    <td><form:select class="login login-submit" path="projectid">
                   <option class="login login-submit" value="">None</option>
 	           <c:forEach  items="${AllProjects}" var="project"> 
 	           <form:option class="login login-submit" value="${project.projectid}">${project.projectname}</form:option>    
@@ -261,7 +261,7 @@ font-style: italic;
 <tr><td align="right"><h4>Activity Name :</td><td><form:input placeholder="Enter Activity Name" path="activityname" /><form:errors path="activityname" cssClass="error"/></h4></td></tr>  
 
 <tr><td align="right"><h4>Team :</td>
-    <td><form:select path="team" id="team">
+    <td><form:select path="team" id="team" class="login login-submit">
         <option class="login login-submit" value="">None</option>
 	           <c:forEach  items="${AllTeams}" var="team"> 
 	           <form:option class="login login-submit" value="${team.teamname}">${team.teamname}</form:option>
@@ -272,7 +272,7 @@ font-style: italic;
 </tr>
 
 <tr><td align="right"><h4>Lead :</td>
-    <td><form:select path="leadid">
+    <td><form:select path="leadid" class="login login-submit">
             <c:forEach  items="${AllLeads}" var="lead"> 
 	    <form:option class="login login-submit" value="${lead.userid}">${lead.username}</form:option>
 	    </c:forEach>

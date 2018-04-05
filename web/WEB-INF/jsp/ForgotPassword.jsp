@@ -138,7 +138,7 @@ body {
   font-size: 12px;
 }
 .error {
-color: black;
+color: red;
 font-style: italic;
 }
 

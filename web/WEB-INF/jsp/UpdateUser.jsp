@@ -125,7 +125,7 @@ body {
 
 .login-submit {
   /* border: 1px solid #3079ed; */
-  width: 50%;
+  width: 30%;
   border: 0px;
   color: #fff;
   text-shadow: 0 1px rgba(0,0,0,0.1); 
@@ -196,9 +196,10 @@ th {
             <tr><td align="center"><h4>Mobile :</td><td><form:input placeHolder="Enter the mobile" path="phone" value="${fn:escapeXml(UserDetail.phone)}" required="true"/></td></tr>
             
             <tr><td align="right"><h4>Team :</td>
-            <td><form:select path="team" >
+            <td><form:select path="team" class="login login-submit">
+                    <form:option class="login login-submit" value="${UserDetail.team}" path="team">${UserDetail.team}</form:option>
                     <c:forEach  items="${AllTeams}" var="teams"> 
-                    <form:option class="login login-submit" value="${teams.teamname}">${teams.teamname}</form:option>
+                    <form:option class="login login-submit" value="${teams.teamname}" path="team">${teams.teamname}</form:option>
                     </c:forEach>
                 </form:select>
             </td>
@@ -209,7 +210,7 @@ th {
             <tr><td align="center"><h4 >Change Role</td>
             <td>
             
-            <form:select  path="role" >
+            <form:select  path="role" class="login login-submit">
             <form:option class="login login-submit" value="${UserDetail.role}" path="role">${UserDetail.role}</form:option>
 	    <form:option class="login login-submit" value="Admin" path="role">Admin</form:option>
 	    <form:option class="login login-submit" value="Manager" path="role">Manager</form:option>
