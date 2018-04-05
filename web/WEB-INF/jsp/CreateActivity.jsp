@@ -249,7 +249,7 @@ font-style: italic;
 
 <tr><td align="right"><h4>Project :</td>
     <td><form:select class="login login-submit" path="projectid">
-                  <option class="login login-submit" value="">None</option>
+                  <option class="login login-submit" value="0">Select</option>
 	           <c:forEach  items="${AllProjects}" var="project"> 
 	           <form:option class="login login-submit" value="${project.projectid}">${project.projectname}</form:option>    
                    </c:forEach>
@@ -258,37 +258,53 @@ font-style: italic;
     </td>
 </tr>
 
-<tr><td align="right"><h4>Activity Name :</td><td><form:input placeholder="Enter Activity Name" path="activityname" /><form:errors path="activityname" cssClass="error"/></h4></td></tr>  
+<tr><td align="right"><h4>Activity Name :</td><td><form:input placeholder="Enter Activity Name" path="activityname" />
+        <span class='red'>*</span>
+        <form:errors path="activityname" cssClass="error"/>
+        </td></tr>  
 
 <tr><td align="right"><h4>Team :</td>
     <td><form:select path="team" id="team" class="login login-submit">
-        <option class="login login-submit" value="">None</option>
+        <option class="login login-submit" value="">Select</option>
 	           <c:forEach  items="${AllTeams}" var="team"> 
 	           <form:option class="login login-submit" value="${team.teamname}">${team.teamname}</form:option>
 	           </c:forEach>
         </form:select>
+        <span class='red'>*</span>
         <form:errors path="team" cssClass="error"/>
     </td>
 </tr>
 
 <tr><td align="right"><h4>Lead :</td>
     <td><form:select path="leadid" class="login login-submit">
+         <option class="login login-submit" value="0">Select</option>
             <c:forEach  items="${AllLeads}" var="lead"> 
 	    <form:option class="login login-submit" value="${lead.userid}">${lead.username}</form:option>
 	    </c:forEach>
         </form:select>
+         <span class='red'>*</span>
         <form:errors path="leadid" cssClass="error"/>
-    </td>
+     </td>
 </tr>
-<tr><td align="right"><h4>Start Date :<td><form:input placeholder="Enter Start Date" id="txtFromDate" path="startdate" /><form:errors path="startdate" cssClass="error"/></h4></td></tr>
-<tr><td align="right"><h4>End Date :</td><td><form:input placeholder="Enter End Date" id="txtToDate" path="enddate"/><form:errors path="enddate" cssClass="error"/></h4></td></tr>
+<tr><td align="right"><h4>Start Date :<td><form:input placeholder="Enter Start Date" id="txtFromDate" path="startdate" />
+            <span class='red'>*</span>
+            <form:errors path="startdate" cssClass="error"/>
+    </td></tr>
+<tr><td align="right"><h4>End Date :</td><td><form:input placeholder="Enter End Date" id="txtToDate" path="enddate"/>
+         <span class='red'>*</span>
+        <form:errors path="enddate" cssClass="error"/>
+    </td></tr>
 
-<tr><td align="right"><h4>Type of Assessment:</td><td><form:input placeholder="Initial/Confirmatory" name="type" path="assessmentType"/></h4></td></tr> 
+<tr><td align="right"><h4>Type of Assessment:</td><td><form:input placeholder="Initial/Confirmatory" name="type" path="assessmentType"/></h4>
+ <span class='red'>*</span>
+</td></tr> 
 
-<tr><td align="right"><h4>Regulation Compliance:</td><td><form:input placeholder="PCIDSS/HIPPA" name="complience" path="compliance"/></h4></td></tr> 
+<tr><td align="right"><h4>Regulation Compliance:</td><td><form:input placeholder="PCIDSS/HIPPA" name="complience" path="compliance"/>
+    <span class='red'>*</span>
+    </td></tr> 
 
 <tr><td align="right"><h4>Pre-requisites:</td><td><form:input placeholder="URL/Credentials/SourceCode"  path=""/></h4></td></tr> 
-
+        
 <tr><td align="right"><h4>Whitelisting Confirmation:</td><td><form:input placeholder="Yes/No" name="whitelisting" path="" /></h4></td></tr> 
 
 <tr><td align="right"><h4>Scope/Other Details :</td><td><form:textarea rows="3" cols="40" path="" name="description"/></h4></td></tr>

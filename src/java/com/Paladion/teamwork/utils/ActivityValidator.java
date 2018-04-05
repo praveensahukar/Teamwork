@@ -50,6 +50,10 @@ public class ActivityValidator implements org.springframework.validation.Validat
 	{
 	    errors.rejectValue("leadid","leadid.required");
 	}
+        else if(pbean.getTeam().length() == 0)
+	{
+	    errors.rejectValue("team","team.required");
+	}
         else if(null == startDate)
         {
 	    errors.rejectValue("startdate","startdate.required");

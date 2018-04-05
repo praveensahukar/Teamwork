@@ -182,11 +182,27 @@ public fileuploadBean populate1()
     
     
     @RequestMapping(value="/getEngineers",method=RequestMethod.POST)
-    public @ResponseBody ModelAndView getEngineers(@ModelAttribute("ProjectM") ActivityBean AB,  HttpServletRequest req, HttpServletResponse response)
+    public @ResponseBody ModelAndView getEngineers(@ModelAttribute("ProjectM")@Validated ActivityBean AB, BindingResult result, HttpServletRequest req, HttpServletResponse response)
     {   
         try{ 
         String[] authorizedRoles = {"admin","manager","lead","scheduling"};
         if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
+        
+        if (result.hasErrors()) {
+            //validates the user input, this is server side validation
+            System.out.println("error!!!!!!!!");
+            try{
+                ModelAndView model=new ModelAndView("CreateActivity");
+                model.addObject("AllTemplates", TS.getAllTemplates());
+                model.addObject("AllLeads", US.GetUsersByRole("lead"));
+                model.addObject("AllTeams",  TeamS.getAllTeams());
+                model.addObject("AllProjects",PS.getAllProjects());  
+                return model;
+            }
+            catch(Exception ex){
+            return new ModelAndView("Error");
+            }                    
+        }
         
 	List<UserDataBean> availableEngineers = US.getAvailableEngineers(AB.getStartdate(),AB.getEnddate(),US.GetUsersByRole("engineer"));
         AB.setLead(US.GetUserById(AB.getLeadid()).getUsername());
