@@ -227,9 +227,7 @@ font-style: italic;
         
     </td>
 </tr>
-      <form:errors path="password" cssClass="error"/><br>
-<tr><td align="center"><h4 >Password :</td>
-    <td><form:input type="password" placeHolder="Enter the password" path="password" htmlEscape="true" autocomplete="false" /></h4></td></tr>
+      
  <form:errors path="role" cssClass="error"/>
 <tr><td align="center"><h4>Select the Role</td>
     <td>

@@ -89,11 +89,11 @@ public String Login()
     public ModelAndView Login(@ModelAttribute("LoginM")@Validated UserDataBean LB, BindingResult result,HttpServletRequest req )
     {
         try{
-        if (result.hasErrors()) {
-            //validates the user input, this is server side validation
-            System.out.println("error!!!!!!!!");   
-            return new ModelAndView("Login");
-        }
+//        if (result.hasErrors()) {
+//            //validates the user input, this is server side validation
+//            System.out.println("error!!!!!!!!");   
+//            return new ModelAndView("Login");
+//        }
         
         //Captcha code begins
         String remoteAddr = req.getRemoteAddr();

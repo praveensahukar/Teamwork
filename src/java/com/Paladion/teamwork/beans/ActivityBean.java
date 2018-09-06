@@ -62,6 +62,15 @@ String assessmentType;
 @Column(name = "compliance")
 String compliance;
 
+@Column(name = "whitelisting")
+String whitelisting;
+
+@Column(name = "details")
+String details;
+
+@Column(name = "requirements")
+String requirements;
+
 @Column(name = "startdate")
 @DateTimeFormat (pattern="MM/dd/yyyy")
 @Temporal(javax.persistence.TemporalType.DATE)
@@ -195,6 +204,30 @@ public void setEnddate(Date enddate)  {
 
     public void setCompliance(String compliance) {
         this.compliance = compliance;
+    }
+
+    public String getWhitelisting() {
+        return whitelisting;
+    }
+
+    public void setWhitelisting(String whitelisting) {
+        this.whitelisting = whitelisting;
+    }
+
+    public String getDetails() {
+        return details;
+    }
+
+    public void setDetails(String details) {
+        this.details = details;
+    }
+
+    public String getRequirements() {
+        return requirements;
+    }
+
+    public void setRequirements(String requirements) {
+        this.requirements = requirements;
     }
 
 

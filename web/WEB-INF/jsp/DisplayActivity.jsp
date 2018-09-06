@@ -351,7 +351,7 @@ html {
 		<div>
 			<div>
            
-           <table id="team">
+           <table id="team" cellpadding="3">
         <thead>
             <tr >
                 

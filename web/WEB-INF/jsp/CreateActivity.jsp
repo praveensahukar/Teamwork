@@ -295,19 +295,52 @@ font-style: italic;
         <form:errors path="enddate" cssClass="error"/>
     </td></tr>
 
-<tr><td align="right"><h4>Type of Assessment:</td><td><form:input placeholder="Initial/Confirmatory" name="type" path="assessmentType"/></h4>
+<tr><td align="right"><h4>Type of Assessment:</td><td>
+        <form:select class="login login-submit" path="assessmentType">
+        <form:option class="login login-submit" value="">Select</form:option>
+	<form:option class="login login-submit" value="Initial">Initial</form:option>
+	<form:option class="login login-submit" value="Confirmatory">Confirmatory</form:option>
+        <form:option class="login login-submit" value="Other">Other</form:option>
+    </form:select>
+        
+    </h4>
  <span class='red'>*</span>
 </td></tr> 
 
-<tr><td align="right"><h4>Regulation Compliance:</td><td><form:input placeholder="PCIDSS/HIPPA" name="complience" path="compliance"/>
+<tr><td align="right"><h4>Regulation Compliance:</td><td>
+        <form:select class="login login-submit" placeholder="PCIDSS/HIPPA" path="compliance">
+        <form:option class="login login-submit" value="">Select</form:option>
+	<form:option class="login login-submit" value="PCI DSS">PCI DSS</form:option>
+	<form:option class="login login-submit" value="HIPAA">HIPAA</form:option>
+        <form:option class="login login-submit" value="Plynt Certification">PLYNT Certification</form:option>
+        <form:option class="login login-submit" value="Others">Others</form:option>
+        <form:option class="login login-submit" value="None">None</form:option>
+    </form:select>
+        
+        
     <span class='red'>*</span>
     </td></tr> 
 
-<tr><td align="right"><h4>Pre-requisites:</td><td><form:input placeholder="URL/Credentials/SourceCode"  path=""/></h4></td></tr> 
+<tr><td align="right"><h4>Pre-requisites:</td><td>
+    <form:select class="login login-submit"  path="requirements">
+        <form:option class="login login-submit" value="">Select</form:option>
+	<form:option class="login login-submit" value="Shared and Validated">Received and Validated</form:option>
+	<form:option class="login login-submit" value="Shared, Needs Validation">Received, Needs Validation</form:option>
+        <form:option class="login login-submit" value="Shared, Needs Validation">Not Received</form:option>
+    </form:select>    
         
-<tr><td align="right"><h4>Whitelisting Confirmation:</td><td><form:input placeholder="Yes/No" name="whitelisting" path="" /></h4></td></tr> 
+    
+    </h4></td></tr> 
+        
+<tr><td align="right"><h4>Whitelisting Confirmation:</td><td>
+          <form:select class="login login-submit"  path="whitelisting">
+        <form:option class="login login-submit" value="">Select</form:option>
+	<form:option class="login login-submit" value="Yes">Yes</form:option>
+	<form:option class="login login-submit" value="No, Need Confirmation">No, Need Confirmation</form:option>
+   </form:select>
+   </h4></td></tr> 
 
-<tr><td align="right"><h4>Scope/Other Details :</td><td><form:textarea rows="3" cols="40" path="" name="description"/></h4></td></tr>
+<tr><td align="right"><h4>Scope/Other Details :</td><td><form:textarea rows="3" cols="40" path="details" name="details"/></h4></td></tr>
 <br>
 <tr><td align="right"><input type="submit" value="Create" class="login login-submit"/></td></tr>           
 </table>

@@ -119,7 +119,7 @@ public class EmailServiceImpl implements EmailService{
          mess.append("Dear ").append(leadb.getUsername()).append("/").append(eng.getUsername()).append("</br></br>").append("You have been scheduled to execute the below activity. Please find the activity details below. </h4><br>");
              
                  
-         mess.append( "<table border='2' style='border-collapse:collapse' width='70%'>");
+         mess.append( "<table border=\"2\" cellpadding=\"5\" cellspacing=\"5\" style=\"border-collapse:collapse\" width='70%'>");
          
          mess.append("<tr style = /'color:#000055/'> <td bgcolor=/'#ccddff/' > <b>Project Name</b> </td> <td>").append(PB.getProjectname()).append("</td> <tr>");
          
@@ -145,11 +145,15 @@ public class EmailServiceImpl implements EmailService{
         
         mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Project Manager</b> </td> <td>").append(pmbean.getUsername()).append("</td> <tr>");
 
+        mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Pre-requisites</b> </td> <td>").append(AB.getRequirements()).append("</td> <tr>");
+        
+        mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Whitelisting Confirmation</b> </td> <td>").append(AB.getWhitelisting()).append("</td> <tr>");
+        
         mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Region</b> </td> <td>").append(PB.getRegion()).append("</td> <tr>");
         
-        mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Other Details</b> </td> <td>").append(PB.getDescription()).append("</td> <tr>");
+        mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Other Details</b> </td> <td>").append(AB.getDetails()).append("</td> <tr>");
    
-        mess.append("</table>").append("</br>").append("<b> Best Regards,").append("</br>").append("Teamwork Team,</br> Paladion Networks <b></body></html>");        
+        mess.append("</table>").append("</br>").append("<b>Regards,").append("</br>").append("Team Paladion Networks <b></body></html>");        
         String message=mess.toString();
          
          ebean.setMessage(message);
@@ -206,13 +210,14 @@ public class EmailServiceImpl implements EmailService{
         EmailBean ebean=new EmailBean();
         EmailUtil eutil=new EmailUtil();
         ebean.setTo(UB.getEmail());
-        String subject="Paladion TeamWork- User Account Created";
+        String subject="Paladion TeamWork - User Account Created";
         StringBuilder mess=new StringBuilder();
                 
         mess.append("Dear ").append(UB.getUsername())
-            .append("<br><br>Your account has been created in the <a href = 'http://10.0.100.123:8000/TeamWorkAlpha/Login.do'> Paladion Teamwork Protal</a> ")
+            .append(",<br><br>Your account has been created in the <a href = 'http://10.0.1.11:8090/TeamWorkAlpha/Login.do'> Paladion Teamwork Protal.</a> ")
             .append("<br>Please Log into your account using the following credentials.<br><br>")
             .append("UserName : ").append(UB.getEmail()).append("<br>Password : ").append(UB.getPassword())
+            .append("<br><br> <b>Note: This is a auto generated temporary password. Request you to update your password.</b>")
             .append("<br><br>Best Regards,<br>Team Paladion");
                
             String message=mess.toString();

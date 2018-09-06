@@ -111,7 +111,7 @@ AdminService AdminS;
             return model;
         }
         System.out.println("in user controller create user post method");
-    
+        userBean.setPassword(CU.randomGenetator(12));
 	boolean results = userService.addUser(userBean);
 	if(results==true){
                

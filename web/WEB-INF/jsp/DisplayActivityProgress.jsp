@@ -323,7 +323,7 @@ body {
         <thead>
             <tr >
         <th><div label="Task Name"></div> </th>
-        <th><div label="Engineer Name"> </div></th>
+       <%-- <th><div label="Engineer Name"> </div></th> --%>
         <th><div label="Scheduled Start Date"> </div></th>
         <th><div label="Scheduled End Date"> </div></th>
         <th><div label="Hours"> </div></th>
@@ -345,7 +345,7 @@ body {
         
         <tr> 
             <td style="color: black">${fn:escapeXml(ProjectTaskList.taskname)}</td>
-            <td style="color: black">${fn:escapeXml(ProjectTaskList.engname)}</td>
+            <%-- <td style="color: black">${fn:escapeXml(ProjectTaskList.engname)}</td> --%>
             <td style="color: black">${fn:escapeXml(SDate)}</td>
 	        <td style="color: black">${fn:escapeXml(EDate)}</td>
             <td style="color: black">${fn:escapeXml(ProjectTaskList.taskhours)}</td>

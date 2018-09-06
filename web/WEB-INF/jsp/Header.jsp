@@ -175,7 +175,7 @@
         </div> 
           <%}%>
         <div class="dropdown">
-            <a href="index.do"><button class="dropbtn">Knowledge Base</button></a>
+            <a href="index.do"><button class="dropbtn">KB (In Progress)</button></a>
                 <div class="dropdown-content">
                 <a href="threatProfile.do">Threat Profile</a>
                 <a href="CodeUnderstanding.do">Code Understanding</a>

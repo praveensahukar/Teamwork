@@ -43,9 +43,9 @@ public class userValidator implements org.springframework.validation.Validator{
                 else if(ubean.getTeam().length()==0){
                     errors.rejectValue("team","team.required");
                 }
-                else if(ubean.getPassword().length()==0 || ubean.getPassword().length()< 5 || ubean.getPassword().length() > 16 ){
-                    errors.rejectValue("password","password.required");
-                }
+//                else if(ubean.getPassword().length()==0 || ubean.getPassword().length()< 5 || ubean.getPassword().length() > 16 ){
+//                    errors.rejectValue("password","password.required");
+//                }
                 else if(ubean.getRole().length()==0){
                     errors.rejectValue("role","role.required");
                 }

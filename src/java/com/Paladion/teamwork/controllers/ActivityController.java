@@ -253,7 +253,7 @@ public fileuploadBean populate1()
         System.out.println("\n inside create Project POST method ");
         AB.setMandays(CU.getWorkingDays(AB.getStartdate(),AB.getEnddate()));
         AB.setStatus("New");
-         
+        String confirmation = req.getParameter("whitelisting");
         ProjectBean PB= PS.getProjectOPID(AB.getProjectid());
         AB.setOpid(PB.getOpid());
         EmailS.sendSchedulingMailToLead(AB, req.getSession(false), PB);        
@@ -786,6 +786,7 @@ public ModelAndView Downloadfiles(@RequestParam String pid,HttpServletRequest re
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
         String defaultD = "1990-01-01 00:00:00";
         Date defaultDate = formatter.parse(defaultD);
+        int flag=0;
       
         //Get current system time
 //      DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -836,7 +837,7 @@ public ModelAndView Downloadfiles(@RequestParam String pid,HttpServletRequest re
                     }
                     
                     else if (PTBean.getStatus().equalsIgnoreCase("progress")){
-                        
+                        flag=1;
                     }
                     
                     else if(PTBean.getStatus().equalsIgnoreCase("new")){
@@ -850,7 +851,7 @@ public ModelAndView Downloadfiles(@RequestParam String pid,HttpServletRequest re
                     
                      if(PTBean.getStatus().equalsIgnoreCase("On Hold")){
                         if(PTBean.getStartdate().compareTo(defaultDate) == 0){
-                        
+                        flag=1;
                         }
                         else{
                         Date holdDate=PTBean.getHolddate();
@@ -862,14 +863,14 @@ public ModelAndView Downloadfiles(@RequestParam String pid,HttpServletRequest re
                         //Update the delay time into the activity
                         PTBean.setEnddate(date1);
                         PTBean.setStatus("Completed");
-                     }
+                        }
                        }
                      
                      else if(PTBean.getStatus().equalsIgnoreCase("new")){
-                         
+                         flag=1;
                      }
                      else if(PTBean.getStatus().equalsIgnoreCase("completed")){
-                         
+                         flag=1;
                      }
                     
                      else if(PTBean.getStatus().equalsIgnoreCase("progress")){
@@ -895,7 +896,7 @@ public ModelAndView Downloadfiles(@RequestParam String pid,HttpServletRequest re
                     PTBean.setStatus("On Hold");
                     }
                     else if(PTBean.getStatus().equalsIgnoreCase("On Hold")){
-                  
+                    flag=1;
                     }
                 }
 
@@ -910,7 +911,12 @@ public ModelAndView Downloadfiles(@RequestParam String pid,HttpServletRequest re
        // List<ProjectTransactionBean> PTBList3=CU.updateDelayForTasks(PTBList2, (int)diffHours);
         AS.updateProjectTransaction(PTBList2);
         ModelAndView result=new ModelAndView("DisplayActivityProgress");
+        if(flag==1){
+            result.addObject("Message","Invalid Status Selected");
+        }
+        else{
         result.addObject("Message","Status updated successfully");
+        }
         result.addObject("ProjectData",AS.getProjectById(pid));
         result.addObject("TaskDetails",AS.getProjectTransaction(pid));
         return result;
@@ -925,6 +931,8 @@ public ModelAndView Downloadfiles(@RequestParam String pid,HttpServletRequest re
     @RequestMapping(value="/deleteProject",method=RequestMethod.GET)
     public ModelAndView delete_Project(@RequestParam int pid, HttpServletRequest req) throws ParseException
     {
+        String[] authorizedRoles = {"admin","manager","lead"};
+        if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
         try{
             if(AS.deleteProject(pid) ){
             return new ModelAndView("redirect:/Welcome.do","Message","Project Deleted Successfully");
@@ -972,7 +980,7 @@ public ModelAndView Downloadfiles(@RequestParam String pid,HttpServletRequest re
     
     @RequestMapping(value="/addActivityTask",method=RequestMethod.POST)
     public ModelAndView addTasktoActivity(HttpServletRequest req)
-    {   
+    { 
         try
         {
         String[] authorizedRoles = {"admin","manager","lead"};

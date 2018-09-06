@@ -16,4 +16,6 @@ public interface LoginDAO {
     
     public UserDataBean Login(UserDataBean LB);
     
+     //public UserDataBean LoginTest(UserDataBean LB);
+    
 }
