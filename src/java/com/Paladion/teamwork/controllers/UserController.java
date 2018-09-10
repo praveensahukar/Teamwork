@@ -155,7 +155,10 @@ AdminService AdminS;
         }
            
         else{
-        return new ModelAndView("CreateUser","Message","User Creation Failed Due to Error");
+            ModelAndView object= new ModelAndView("CreateUser");
+            object.addObject("AllTeams",TService.getAllTeams());
+            object.addObject("Message","User creation failed. Email is registered.");
+        return object;
         }
         }
         catch(Exception ex){

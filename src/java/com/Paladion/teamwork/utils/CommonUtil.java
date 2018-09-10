@@ -540,7 +540,7 @@ Date calculateResponseTime(Calendar ProjectTime, float ProjectDurationinHours) {
         String userRole = uBean.getRole();
         
         for(String role : roles){
-            if(userRole.contains(role)){
+            if(userRole.equalsIgnoreCase(role)){
                 return true;
             }
         }

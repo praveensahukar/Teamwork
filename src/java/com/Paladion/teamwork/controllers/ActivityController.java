@@ -253,10 +253,18 @@ public fileuploadBean populate1()
         System.out.println("\n inside create Project POST method ");
         AB.setMandays(CU.getWorkingDays(AB.getStartdate(),AB.getEnddate()));
         AB.setStatus("New");
-        String confirmation = req.getParameter("whitelisting");
-        ProjectBean PB= PS.getProjectOPID(AB.getProjectid());
-        AB.setOpid(PB.getOpid());
-        EmailS.sendSchedulingMailToLead(AB, req.getSession(false), PB);        
+        //int opid=Integer.parseInt(AB.getOpid());
+        
+        if(AB.getOpid() == null){
+            AB.setOpid("Not Received");
+           EmailS.sendSchedulingMail(AB, req.getSession(false));
+        }
+        else{
+            ProjectBean PB= PS.getProjectOPID(AB.getProjectid());
+            AB.setOpid(PB.getOpid());
+            EmailS.sendSchedulingMail(AB, req.getSession(false), PB);
+        }
+                
         AS.addProject(AB);
         AllocationBean AloB = new AllocationBean();
         AloB.setActivityId(AB.getActivityid());

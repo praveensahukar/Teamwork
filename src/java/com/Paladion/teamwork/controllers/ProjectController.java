@@ -7,6 +7,7 @@ package com.Paladion.teamwork.controllers;
 
 import com.Paladion.teamwork.beans.ActivityBean;
 import com.Paladion.teamwork.beans.ProjectBean;
+import com.Paladion.teamwork.beans.UserDataBean;
 import com.Paladion.teamwork.services.CompanyService;
 import com.Paladion.teamwork.services.ProjectService;
 import com.Paladion.teamwork.services.UserService;
@@ -71,10 +72,11 @@ public class ProjectController {
         String[] authorizedRoles = {"admin","manager","lead","scheduling"};
         if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
         try{
+        List<UserDataBean> ManagerList=US.GetUsersByRole("manager");
 	ModelAndView model=new ModelAndView("CreateProject");
         model.addObject("AllCompany", CS.getAllCompany());
-        model.addObject("AllDManagers", US.GetUsersByRole("manager"));
-        model.addObject("AllPManagers", US.GetUsersByRole("pmanager"));
+        model.addObject("AllDManagers", ManagerList);
+        model.addObject("AllPManagers", ManagerList);
         return model;
 	}
         catch(Exception ex){

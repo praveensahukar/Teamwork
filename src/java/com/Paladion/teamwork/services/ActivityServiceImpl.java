@@ -91,6 +91,7 @@ ActivityDAO PD;
         UserDataBean sessuser=(UserDataBean) sess.getAttribute("Luser");
 	ModelAndView result=new ModelAndView("Welcome");
         List<ActivityBean> PBList=(List<ActivityBean>)this.getAllProjects(sessuser.getUserid(), sessuser.getRole());
+     
         int total_projects=PBList.size();
         int project_new=0;
         int project_progress=0;

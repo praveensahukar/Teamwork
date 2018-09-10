@@ -71,7 +71,7 @@ public class EmailServiceImpl implements EmailService{
         
         
         @Override
-        public boolean sendSchedulingMailToLead(ActivityBean AB, HttpSession sess, ProjectBean PB){
+        public boolean sendSchedulingMail(ActivityBean AB, HttpSession sess, ProjectBean PB){
         
         try{
          EmailUtil EU=new EmailUtil();
@@ -167,7 +167,109 @@ public class EmailServiceImpl implements EmailService{
         }
     }
         
-	
+
+    @Override
+    public boolean sendSchedulingMail(ActivityBean AB, HttpSession sess){
+        
+        try{
+         EmailUtil EU=new EmailUtil();
+         EmailBean ebean=new EmailBean();
+         UserDataBean leadb=UserS.GetUserById(AB.getLeadid());
+         UserDataBean eng=UserS.GetUserById(AB.getEngtracker());
+        // UserDataBean pmbean=UserS.GetUserById(PB.getProjectmanager());
+        // UserDataBean dmbean=UserS.GetUserById(PB.getDeliverymanager());
+         List <UserDataBean> scheduling = UserS.GetUsersByRole("scheduling");
+         
+        // CompanyBean CB = CompanyS.getCompanyByID(PB.getCompanyid());
+         
+         StringBuilder emails =new StringBuilder();
+         
+         if(leadb.getEmail()!=null){
+             emails.append(leadb.getEmail()).append(",");
+         }
+         if(eng.getEmail()!=null){
+             emails.append(eng.getEmail()).append(",");
+         }
+        // if(pmbean.getEmail()!=null){
+        //     emails.append(pmbean.getEmail()).append(",");
+        // }
+        // if(dmbean.getEmail()!=null){
+        //     emails.append(dmbean.getEmail()).append(",");
+        // }
+         
+         for(UserDataBean ubean : scheduling){
+             emails.append(ubean.getEmail()).append(",");
+         }
+         
+         String to = emails.toString();
+         
+         ebean.setTo(to);
+         
+         ebean.setSubject("Activity Scheduling Mail :: "+AB.getActivityname());
+  
+         SimpleDateFormat sm = new SimpleDateFormat("dd-MM-yyyy");
+         String sDate = sm.format(AB.getStartdate());
+         String eDate = sm.format(AB.getEnddate());
+         
+         StringBuilder mess=new StringBuilder();
+         mess.append("<html><body>");
+         mess.append("<h4 style = \"color:#000033\">");
+         mess.append("Dear ").append(leadb.getUsername()).append("/").append(eng.getUsername()).append("</br></br>").append("You have been scheduled to execute the below activity. Please find the activity details below. </h4><br>");
+             
+                 
+         mess.append( "<table border=\"2\" cellpadding=\"5\" cellspacing=\"5\" style=\"border-collapse:collapse\" width='70%'>");
+         
+        // mess.append("<tr style = /'color:#000055/'> <td bgcolor=/'#ccddff/' > <b>Project Name</b> </td> <td>").append(PB.getProjectname()).append("</td> <tr>");
+         
+        // mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Client</b> </td> <td>").append(CB.getCompanyname()).append("</td> <tr>");
+        
+         mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>OPID</b> </td> <td>").append("Not yet received.").append("</td> <tr>");
+         
+        mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Activity</b> </td> <td>").append(AB.getActivityname()).append("</td> <tr>");
+        
+        mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Assessment Type</b> </td> <td>").append(AB.getAssessmentType()).append("</td> <tr>");
+        
+        mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Compliance</b> </td> <td>").append(AB.getCompliance()).append("</td> <tr>");
+        
+        mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Activity Start Date</b> </td> <td>").append(sDate).append("</td> <tr>");
+       
+        mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Activity End Date</b> </td> <td>").append(eDate).append("</td> <tr>");
+         
+        mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Lead Assigned</b> </td> <td>").append(AB.getLead()).append("</td> <tr>");
+        
+         mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Engineer Assigned</b> </td> <td>").append(eng.getUsername()).append("</td> <tr>");
+        
+        // mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Delivery Manager</b> </td> <td>").append(dmbean.getUsername()).append("</td> <tr>");
+        
+        // mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Project Manager</b> </td> <td>").append(pmbean.getUsername()).append("</td> <tr>");
+
+        mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Pre-requisites</b> </td> <td>").append(AB.getRequirements()).append("</td> <tr>");
+        
+        mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Whitelisting Confirmation</b> </td> <td>").append(AB.getWhitelisting()).append("</td> <tr>");
+        
+        // mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Region</b> </td> <td>").append(PB.getRegion()).append("</td> <tr>");
+        
+        mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Other Details</b> </td> <td>").append(AB.getDetails()).append("</td> <tr>");
+   
+        mess.append("</table>").append("</br>").append("<b>Regards,").append("</br>").append("Team Paladion Networks <b></body></html>");        
+        String message=mess.toString();
+         
+         ebean.setMessage(message);
+         SystemBean syssetting = AdminS.getSystemSettings();
+         EU.sendEmail(ebean, syssetting);
+        return true;
+        }
+        catch (Exception ex){
+            ex.printStackTrace();
+            return false;
+        }
+    }    
+        
+        
+        
+        
+        
+        
         
      @Override
         public void sendReminder(ActivityBean AB){

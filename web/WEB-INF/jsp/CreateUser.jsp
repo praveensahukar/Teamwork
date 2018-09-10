@@ -233,12 +233,12 @@ font-style: italic;
     <td>
     <form:select class="login login-submit" path="role">
         <form:option class="login login-submit" value="">Select</form:option>
-	<form:option class="login login-submit" value="admin">Admin</form:option>
-	<form:option class="login login-submit" value="manager">Delivery Manager</form:option>
-        <form:option class="login login-submit" value="pmanager">Project Manager</form:option>
-        <form:option class="login login-submit" value="lead">Delivery Lead</form:option>
-        <form:option class="login login-submit" value="engineer">Engineer</form:option>   
-        <form:option class="login login-submit" value="scheduling">Scheduling</form:option>
+	<form:option class="login login-submit" value="Admin">Admin</form:option>
+	<form:option class="login login-submit" value="Manager">Delivery Manager</form:option>
+        <form:option class="login login-submit" value="Manager">Project Manager</form:option>
+        <form:option class="login login-submit" value="Lead">Delivery Lead</form:option>
+        <form:option class="login login-submit" value="Engineer">Engineer</form:option>   
+        <form:option class="login login-submit" value="Scheduling">Scheduling</form:option>
     </form:select></h4></td></tr>
 
 <input type="hidden" name="AntiCSRFToken" value="${csrfPreventionSalt}"/> 
