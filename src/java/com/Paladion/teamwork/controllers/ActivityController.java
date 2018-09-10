@@ -255,13 +255,18 @@ public fileuploadBean populate1()
         AB.setStatus("New");
         //int opid=Integer.parseInt(AB.getOpid());
         
-        if(AB.getOpid() == null){
-            AB.setOpid("Not Received");
+        if(AB.getProjectid() == 0){
+            AB.setOpid("No Project Selected");
            EmailS.sendSchedulingMail(AB, req.getSession(false));
         }
         else{
             ProjectBean PB= PS.getProjectOPID(AB.getProjectid());
+            if(PB.getOpid() == null){
+                AB.setOpid("Awaiting OPID");
+            }
+            else{
             AB.setOpid(PB.getOpid());
+            }
             EmailS.sendSchedulingMail(AB, req.getSession(false), PB);
         }
                 

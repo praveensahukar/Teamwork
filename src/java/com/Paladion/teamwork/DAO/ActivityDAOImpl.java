@@ -66,7 +66,7 @@ public class ActivityDAOImpl implements ActivityDAO
 	List <ActivityBean> allProjects=new ArrayList<>();
         List<ActivityTransactionBean> PTbeanList=new ArrayList<>();
         
-        if (role.contains("manager")||role.equalsIgnoreCase("scheduling")){
+        if (role.equalsIgnoreCase("manager")||role.equalsIgnoreCase("scheduling")){
             Criteria criteria = session1.createCriteria(ActivityBean.class);
             allProjects= criteria.list();
             }

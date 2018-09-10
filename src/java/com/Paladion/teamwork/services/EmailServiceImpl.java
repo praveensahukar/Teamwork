@@ -125,8 +125,12 @@ public class EmailServiceImpl implements EmailService{
          
          mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Client</b> </td> <td>").append(CB.getCompanyname()).append("</td> <tr>");
         
+         if(PB.getOpid()==null){
+          mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>OPID</b> </td> <td>").append("Awaiting OPID").append("</td> <tr>");    
+         }
+         else{
          mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>OPID</b> </td> <td>").append(PB.getOpid()).append("</td> <tr>");
-         
+         }
         mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Activity</b> </td> <td>").append(AB.getActivityname()).append("</td> <tr>");
         
         mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Assessment Type</b> </td> <td>").append(AB.getAssessmentType()).append("</td> <tr>");

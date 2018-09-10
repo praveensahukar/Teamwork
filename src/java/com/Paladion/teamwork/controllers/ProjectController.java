@@ -97,6 +97,9 @@ public class ProjectController {
 //            System.out.println("error!!!!!!!!");
 //            return new ModelAndView("CreateProject");
 //        }
+        if(PB.getOpid().isEmpty()){
+            PB.setOpid(null);
+        }
 	PS.addProject(PB);
         System.out.println("Project Created with projectid "+PB.getProjectid());
         
