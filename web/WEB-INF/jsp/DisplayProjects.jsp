@@ -184,12 +184,12 @@ body {
 	display: inline-block;
 	vertical-align: middle;
 	overflow: hidden;
-	width: 100%; /*set table width here if using fixed value*/
+	width: 95%; /*set table width here if using fixed value*/
 	/*min-width: 100%;*/ /*set table width here if using %*/
-	height: 80%; /*set table height here; can be fixed value or %*/
+	height: 90%; /*set table height here; can be fixed value or %*/
 	/*min-height: 104px;*/ /*if using % height, make this at least large enough to fit scrollbar arrows + captions + thead*/
 	font-family: Verdana, Tahoma, sans-serif;
-	font-size: 15px;
+	font-size: 20px;
 	line-height: 20px;
 	padding-top: 20px; /*this determines top caption height*/
 	padding-bottom: 20px; /*this determines bottom caption height*/
@@ -198,12 +198,12 @@ body {
 .scrollingtable * {box-sizing: border-box;}
 .scrollingtable > div {
 	position: relative;
-	border-top: 1px solid black; /*top table border*/
+	border-top: 5px solid black; /*top table border*/
 	height: 100%;
-	padding-top: 20px; /*this determines column header height*/
+	padding-top: 30px; /*this determines column header height*/
 }
 .scrollingtable > div:before {
-	top: 0;
+	top: 0px;
 	background: cornflowerblue; /*column header background color*/
 }
 .scrollingtable > div:before,
@@ -220,12 +220,12 @@ body {
 	max-height: 100%;
 	overflow: scroll; /*set to auto if using fixed or % width; else scroll*/
 	overflow-x: hidden;
-	border: 1px solid black; /*border around table body*/
+	border: 3px solid black; /*border around table body*/
 }
 .scrollingtable > div > div:after {background: white;} /*match page background color*/
 .scrollingtable > div > div > table {
-	width: 100%;
-	border-spacing: 0;
+	width: 99.5%;
+	border-spacing: 2px;
 	margin-top: -20px; /*inverse of column header height*/
 	/*margin-right: 17px;*/ /*uncomment if using % width*/
 }
@@ -250,8 +250,8 @@ body {
 .scrollingtable > div > div > table > thead > tr > :first-child:before {
 	content: "";
 	position: absolute;
-	top: 0;
-	left: 0;
+	top: 1px;
+	left: 1px;
 	height: 20px; /*match column header height*/
 	border-left: 1px solid black; /*leftmost header border*/
 }
@@ -268,9 +268,10 @@ body {
 .scrollingtable > div > div > table > thead > tr > * + :before {
 	content: "";
 	display: block;
-	min-height: 20px; /*match column header height*/
-	padding-top: 1px;
-	border-left: 1px solid black; /*borders between header cells*/
+	min-height: 30px; /*match column header height*/
+	padding-top: 3px;
+	border-left: 2px solid black; /*borders between header cells*/
+        border-right: 2px solid black;
 }
 .scrollingtable .scrollbarhead {float: right;}
 .scrollingtable .scrollbarhead:before {
@@ -290,13 +291,13 @@ body {
 .scrollingtable > div > div > table > tbody {vertical-align: top;}
 .scrollingtable > div > div > table > tbody > tr {background: white;}
 .scrollingtable > div > div > table > tbody > tr > * {
-	border-bottom: 1px solid black;
-	padding: 0 6px 0 6px;
-	height: 20px; /*match column header height*/
+	border-bottom: 2px solid black;
+	padding: 10px;
+	height: 50px; /*match column header height*/
 }
 .scrollingtable > div > div > table > tbody:last-of-type > tr:last-child > * {border-bottom: none;}
 .scrollingtable > div > div > table > tbody > tr:nth-child(even) {background: gainsboro;} /*alternate row color*/
-.scrollingtable > div > div > table > tbody > tr > * + * {border-left: 1px solid black;}
+.scrollingtable > div > div > table > tbody > tr > * + * {border-left: 2px solid black; boder-right: 2px solid black}
 
 
 </style>
@@ -316,11 +317,15 @@ body {
     <table>
         <thead>
             <tr bgcolor="#a6a6a6">
-                <th><div label="Project Name"></div> </th>
+                <th><div label="Projects"></div> </th>
             <th><div label="OPID"></div> </th>
             <th><div label="Region"></div> </th>
             
-            <th><div label="Delete"></div> </th>
+            <% if(role.equalsIgnoreCase("Manager") || role.equalsIgnoreCase("admin")){ %>
+               <th> <div label="Revenue"></div> </th>
+               <% } %>
+            
+           <%-- <th><div label="Delete"></div> </th> --%>
         </tr>
         </thead>
     
@@ -329,11 +334,25 @@ body {
             
         <c:forEach  items="${AllProjects}" var="project">     
            <tr>
-               <td> <a href="GetProjectActivities.do?pid=${project.projectid}">${fn:escapeXml(project.projectname)}</a></td>
+               <td> <a href="GetProjectActivities.do?pid=${project.projectid}">${fn:escapeXml(project.projectname)}</a>
+                
+                <a href="EditProject.do?pid=${project.projectid}" style="float:right;">
+                <img src="icons8-edit.png" alt="Edit Project" style="width:18px;height:18px;border:0;">
+                </a>
+               
+               </td>
                <td> ${fn:escapeXml(project.opid)}</td>
                <td> ${fn:escapeXml(project.region)}</td>
                
-               <td><a href="DeleteProject.do?id=${project.projectid}">DELETE</a></td>
+               <% if(role.equalsIgnoreCase("Manager")|| role.equalsIgnoreCase("admin")){ %>
+               
+               <td> 
+                 ${project.revenue} 
+               </td>
+               
+               <% } %>
+               
+              <%-- <td><a href="DeleteProject.do?id=${project.projectid}">DELETE</a></td> --%>
            </tr> 
         </c:forEach>
                 

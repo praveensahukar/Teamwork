@@ -80,6 +80,7 @@ public boolean sendEmail(EmailBean ebean, SystemBean syssetting)
 			System.out.println("Done");
 
 		} catch (MessagingException e) {
+                    e.printStackTrace();
 			throw new RuntimeException(e);
 		}
 		

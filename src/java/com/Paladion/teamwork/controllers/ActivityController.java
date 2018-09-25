@@ -948,7 +948,7 @@ public ModelAndView Downloadfiles(@RequestParam String pid,HttpServletRequest re
         if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
         try{
             if(AS.deleteProject(pid) ){
-            return new ModelAndView("redirect:/Welcome.do","Message","Project Deleted Successfully");
+            return new ModelAndView("redirect:/Welcome.do","Message","Activity Deleted Successfully");
             }
             else{
             return new ModelAndView("Error","Message","Something Went Wrong");

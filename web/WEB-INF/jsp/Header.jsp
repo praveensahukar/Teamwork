@@ -12,7 +12,12 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
 <head>
+    
    <style>
+       
+    .zoom {
+    zoom: 80%;
+    }
 .container {
     overflow: hidden;
     background-color: #333;
@@ -83,7 +88,7 @@
 </style>
 </head>
     
-<body>
+<body class="zoom">
     <%-- Session Validation Code --%>
     <% 
         if (session==null||null==session.getAttribute("Luser"))

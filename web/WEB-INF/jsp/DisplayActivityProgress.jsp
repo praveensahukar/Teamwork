@@ -65,7 +65,7 @@ body {
 .login-card {
   padding: 40px;
   width: 1420px;
-  height: 750px;
+  height: 900px;
   background-color: white;
   margin: 0 auto 10px;
   border-radius: 2px;
@@ -378,6 +378,7 @@ body {
        
 
         </div>
+        <br>
         <a href="/TeamWorkAlpha/uploadfiles.do?pid=${ProjectData.activityid}" 
   target="popup" 
   onclick="window.open('/TeamWorkAlpha/uploadfiles.do?pid=${ProjectData.activityid}','popup','width=800,height=600'); return false;">
@@ -392,7 +393,9 @@ body {
 </a>
     <br>  
     <br>
-    <a href="addActivityTask.do?activityId=${ProjectData.activityid}"><button>Add Task to Activity</button></a>
+    <a href="addActivityTask.do?activityId=${ProjectData.activityid}"><button>Add Task</button></a> <br>
+    
+    <br>  <a href="deleteProject.do?pid=${ProjectData.activityid}"><button>Delete Activity</button></a>
 
 <br>
 

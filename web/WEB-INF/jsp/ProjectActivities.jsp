@@ -356,7 +356,7 @@ html {
             <tr >
                 
                 <th><div label="OPID"></div> OPID</th>
-                <th><div label="Project Title"></div>Project Title</th>
+                <th><div label="Project Title"></div>Activity</th>
                 <th><div label="Lead"></div>Lead</th>
                 <th><div label="Start Date"></div>Start Date</th>
                 <th><div label="End Date"></div>End Date</th>

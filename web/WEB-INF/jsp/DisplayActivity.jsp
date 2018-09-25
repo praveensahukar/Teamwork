@@ -185,18 +185,19 @@ html {
 	height: 80%; /*set table height here; can be fixed value or %*/
 	/*min-height: 104px;*/ /*if using % height, make this at least large enough to fit scrollbar arrows + captions + thead*/
 	font-family: Verdana, Tahoma, sans-serif;
-	font-size: 15px;
+	font-size: 20px;
 	line-height: 20px;
 	padding-top: 20px; /*this determines top caption height*/
 	padding-bottom: 20px; /*this determines bottom caption height*/
 	text-align: left;
+        
 }
 .scrollingtable * {box-sizing: border-box;}
 .scrollingtable > div {
 	position: relative;
-	border-top: 1px solid black; /*top table border*/
+	border-top: 5px solid black; /*top table border*/
 	height: 100%;
-	padding-top: 20px; /*this determines column header height*/
+	padding-top: 30px; /*this determines column header height*/
 }
 .scrollingtable > div:before {
 	top: 0;
@@ -216,12 +217,12 @@ html {
 	max-height: 100%;
 	overflow: scroll; /*set to auto if using fixed or % width; else scroll*/
 	overflow-x: hidden;
-	border: 1px solid black; /*border around table body*/
+	border: 3px solid black; /*border around table body*/
 }
 .scrollingtable > div > div:after {background: white;} /*match page background color*/
 .scrollingtable > div > div > table {
-	width: 100%;
-	border-spacing: 0;
+	width: 99.5%;
+	border-spacing: 2px;
 	margin-top: -20px; /*inverse of column header height*/
 	/*margin-right: 17px;*/ /*uncomment if using % width*/
 }
@@ -241,13 +242,13 @@ html {
 }
 .scrollingtable > div > div > table > thead > tr > * > div {
 	display: inline-block;
-	padding: 0 6px 0 6px; /*header cell padding*/
+	padding: 0px 3px 0px 3px; /*header cell padding*/ 
 }
 .scrollingtable > div > div > table > thead > tr > :first-child:before {
 	content: "";
 	position: absolute;
-	top: 0;
-	left: 0;
+	top: 1px;
+	left: 1px;
 	height: 20px; /*match column header height*/
 	border-left: 1px solid black; /*leftmost header border*/
 }
@@ -264,9 +265,10 @@ html {
 .scrollingtable > div > div > table > thead > tr > * + :before {
 	content: "";
 	display: block;
-	min-height: 20px; /*match column header height*/
-	padding-top: 1px;
+	min-height: 30px; /*match column header height*/
+	padding-top: 3px;
 	border-left: 1px solid black; /*borders between header cells*/
+        border-right: 2px solid black;
 }
 .scrollingtable .scrollbarhead {float: right;}
 .scrollingtable .scrollbarhead:before {
@@ -355,14 +357,14 @@ html {
         <thead>
             <tr >
                 
-                <th><div label="OPID"></div> OPID</th>
-                <th><div label="Project Title"></div>Project Title</th>
-                <th><div label="Lead"></div>Lead</th>
-                <th><div label="Start Date"></div>Start Date</th>
-                <th><div label="End Date"></div>End Date</th>
-                <th><div label="Man Days"></div>Status</th>
-                <th><div label="Status"></div>Status</th>
-                <th><div label="Delete"></div>Delete Project</th>
+                <th><div label="OPID"></div> </th>
+                <th><div label="Activity"></div></th>
+                <th><div label="Lead"></div></th>
+                <th><div label="Start Date"></div></th>
+                <th><div label="End Date"></div></th>
+                <th><div label="Man Days"></div></th>
+                <th><div label="Status"></div></th>
+               <%-- <th><div label="Delete"></div></th> --%>
            
             </tr>
         </thead>
@@ -392,7 +394,7 @@ html {
                       </div>
                     </div> 
                 </td>
-                <td >  <div class="dropdown"><a href="deleteProject.do?pid=${project.activityid}"><button class="dropbtn1">Delete</button></a> </div></td>
+               <%-- <td >  <div class="dropdown"><a href="deleteProject.do?pid=${project.activityid}"><button class="dropbtn1">Delete</button></a> </div></td> --%>
 	   </tr>
            
 </c:forEach>
