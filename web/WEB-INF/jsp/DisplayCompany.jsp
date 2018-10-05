@@ -59,20 +59,19 @@ li a:hover:not(.active) {
 @import url(http://fonts.googleapis.com/css?family=Roboto:400,100);
 
 body {
-
-	background-image: url("grey.jpg");
-  background-repeat: repeat-y;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  font-family: 'Roboto', sans-serif;
+    background-image: url("grey.jpg");
+    background-repeat: repeat-y;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    font-family: 'Roboto', sans-serif;
 }
 
 .login-card {
   padding: 40px;
   width: 1420px;
-  height: 550px;
+  min-height: 550px;
   background-color: white;
   margin: 0 auto 10px;
   border-radius: 2px;
@@ -87,7 +86,7 @@ body {
 }
 
 .login-card input[type=submit] {
-  width: 10%;
+  width: 300px;
   display: block;
   margin-bottom: 10px;
   position: relative;
@@ -97,7 +96,7 @@ body {
 .login-card input[type=text], input[type=password] {
   height: 44px;
   font-size: 16px;
-  width: auto;
+  width: 300px;
   margin-bottom: 10px;
   -webkit-appearance: none;
   background: #fff;
@@ -130,8 +129,6 @@ body {
   user-select: none; */
 }
 
-
-
 .login-submit:hover {
   /* border: 1px solid #2f5bb7; */
   border: 0px;
@@ -142,20 +139,12 @@ body {
 
 .login-submit {
   /* border: 1px solid #3079ed; */
-  width: 20%;
+  width: 200px;
   border: 0px;
   color: #fff;
   text-shadow: 0 1px rgba(0,0,0,0.1); 
   background-color: #a6a6a6;
   /* background-image: -webkit-gradient(linear, 0 0, 0 100%,   from(#4d90fe), to(#4787ed)); */
-}
-
-.login-submit:hover {
-  /* border: 1px solid #2f5bb7; */
-  border: 0px;
-  text-shadow: 0 1px rgba(0,0,0,0.3);
-  background-color: #ff8080;
-  /* background-image: -webkit-gradient(linear, 0 0, 0 100%,   from(#4d90fe), to(#357ae8)); */
 }
 
 .login-card a {
@@ -178,19 +167,23 @@ body {
   font-size: 12px;
 }
 
+table {
+    border-collapse: collapse;
+    width: 60%;
+}
 
 .scrollingtable {
 	box-sizing: border-box;
 	display: inline-block;
 	vertical-align: middle;
 	overflow: hidden;
-	width: 100%; /*set table width here if using fixed value*/
+	width: 60%; /*set table width here if using fixed value*/
 	/*min-width: 100%;*/ /*set table width here if using %*/
-	height: 80%; /*set table height here; can be fixed value or %*/
+	height: 60%; /*set table height here; can be fixed value or %*/
 	/*min-height: 104px;*/ /*if using % height, make this at least large enough to fit scrollbar arrows + captions + thead*/
 	font-family: Verdana, Tahoma, sans-serif;
 	font-size: 15px;
-	line-height: 20px;
+	line-height: 30px;
 	padding-top: 20px; /*this determines top caption height*/
 	padding-bottom: 20px; /*this determines bottom caption height*/
 	text-align: left;
@@ -198,9 +191,12 @@ body {
 .scrollingtable * {box-sizing: border-box;}
 .scrollingtable > div {
 	position: relative;
-	border-top: 1px solid black; /*top table border*/
+	
+        border-top: 4px solid black;
+        border-bottom: 4px solid black;
 	height: 100%;
-	padding-top: 20px; /*this determines column header height*/
+	padding-top: 10px; /*this determines column header height*/
+        padding-bottom: 0px;
 }
 .scrollingtable > div:before {
 	top: 0;
@@ -220,40 +216,42 @@ body {
 	max-height: 100%;
 	overflow: scroll; /*set to auto if using fixed or % width; else scroll*/
 	overflow-x: hidden;
-	border: 1px solid black; /*border around table body*/
+	border: 0px solid black; /*border around table body*/
 }
 .scrollingtable > div > div:after {background: white;} /*match page background color*/
 .scrollingtable > div > div > table {
-	width: 100%;
-	border-spacing: 0;
-	margin-top: -20px; /*inverse of column header height*/
+	width: 99.9%;
+	margin-top: -100px; /*inverse of column header height*/
 	/*margin-right: 17px;*/ /*uncomment if using % width*/
 }
 .scrollingtable > div > div > table > caption {
 	position: absolute;
-	top: -20px; /*inverse of caption height*/
+        height: 40px;
+	top: 20px; /*inverse of caption height*/
 	margin-top: -1px; /*inverse of border-width*/
 	width: 100%;
 	font-weight: bold;
-	text-align: center;
+	text-align: left;
 }
-.scrollingtable > div > div > table > * > tr > * {padding: 0;}
+.scrollingtable > div > div > table > * > tr > * {padding: 0px;}
 .scrollingtable > div > div > table > thead {
 	vertical-align: bottom;
 	white-space: nowrap;
 	text-align: center;
+        
 }
 .scrollingtable > div > div > table > thead > tr > * > div {
 	display: inline-block;
-	padding: 0 6px 0 6px; /*header cell padding*/
+	padding: 40px 60px 40px 60px; /*header cell padding*/
+       
 }
 .scrollingtable > div > div > table > thead > tr > :first-child:before {
 	content: "";
 	position: absolute;
 	top: 0;
 	left: 0;
-	height: 20px; /*match column header height*/
-	border-left: 1px solid black; /*leftmost header border*/
+	height: 0px; /*match column header height*/
+	border-left: 4px solid black; /*leftmost header border*/
 }
 .scrollingtable > div > div > table > thead > tr > * > div[label]:before,
 .scrollingtable > div > div > table > thead > tr > * > div > div:first-child,
@@ -262,15 +260,16 @@ body {
 	top: 0;
 	white-space: pre-wrap;
 	color: black; /*header row font color*/
+     
 }
 .scrollingtable > div > div > table > thead > tr > * > div[label]:before,
 .scrollingtable > div > div > table > thead > tr > * > div[label]:after {content: attr(label);}
 .scrollingtable > div > div > table > thead > tr > * + :before {
 	content: "";
 	display: block;
-	min-height: 20px; /*match column header height*/
-	padding-top: 1px;
-	border-left: 1px solid black; /*borders between header cells*/
+	min-height: 40px; /*match column header height*/
+	padding-top: 10px;
+	border-left: 0px solid black; /*borders between header cells*/
 }
 .scrollingtable .scrollbarhead {float: right;}
 .scrollingtable .scrollbarhead:before {
@@ -284,60 +283,65 @@ body {
 	display: table-cell;
 	position: relative;
 	padding: 0;
-	border-top: 1px solid black;
+	border-top: 0px solid black;
 	top: -1px; /*inverse of border width*/
 }
 .scrollingtable > div > div > table > tbody {vertical-align: top;}
 .scrollingtable > div > div > table > tbody > tr {background: white;}
 .scrollingtable > div > div > table > tbody > tr > * {
-	border-bottom: 1px solid black;
-	padding: 0 6px 0 6px;
-	height: 20px; /*match column header height*/
+	border: 0px solid black;
+	padding: 15px 6px 15px 6px;
+	height: 30px; /*match column header height*/
 }
-.scrollingtable > div > div > table > tbody:last-of-type > tr:last-child > * {border-bottom: none;}
+.scrollingtable > div > div > table > tbody:last-of-type > tr:last-child > * {border-bottom: 0px solid black;}
 .scrollingtable > div > div > table > tbody > tr:nth-child(even) {background: gainsboro;} /*alternate row color*/
-.scrollingtable > div > div > table > tbody > tr > * + * {border-left: 1px solid black;}
+.scrollingtable > div > div > table > tbody > tr > * + * {border-left: 3px solid black; padding: 4px; border-right:3px solid black;}
+
+
 
 
 </style>
 
-
-
 <title>All Companies</title>
 </head>
-    
 <body>
     <%@include file="Header.jsp" %>        
     <div class="login-card">
-    <div align="left">  <h2 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">All Companies</h2><br></div>
-    <div class="scrollingtable">
-		<div>
-			<div>
-    <table width="50%">
-        <thead>
-            <tr bgcolor="#a6a6a6">
-                <th><div label="Company Name"></div> </th>
-            <th><div label="Website"></div> </th>
-            <th><div label="Delete"></div> </th>
-        </tr>
-        </thead>
+    <div align="left"> 
+        <h2 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">All Companies</h2>
+    </div>
     
+    
+        
+    <div class="scrollingtable" style= "display: inline-block; float: left; margin-right: 30px;">
+    <div>
+    <div>
+  
+    <table boder="0">
     
     <tbody>
             
         <c:forEach  items="${AllCompany}" var="company">     
            <tr>
-                <td> ${fn:escapeXml(company.companyname)}</td>
-                <td> ${fn:escapeXml(company.website)}</td>
-                <td><a href="DeleteCompany.do?id=${company.companyid}">DELETE</td>
+               <td><a href="${company.website}"> ${fn:escapeXml(company.companyname)}</a>
+                    <a href="DeleteCompany.do?id=${company.companyid}" style="float:right;">
+                    <img  src="delete.png" alt="Delete User" style="width:18px;height:18px;border:0; margin-right:30px;" 
+                          onclick="return confirm('Are you sure you want to delete this Company?')">
+                    </a>
+                </td>
+               
+        
            </tr> 
         </c:forEach>
                 
     </tbody>
     </table>
-          </div>
-                    </div>
-			</div>
+    </div>
+    </div>
+    </div>
+        
+        
+        
     </div>
     </body>
 </html>

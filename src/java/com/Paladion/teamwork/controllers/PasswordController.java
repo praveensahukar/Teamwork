@@ -132,11 +132,11 @@ public class PasswordController {
         String newPass=req.getParameter("newPass");
         String confPass=req.getParameter("confPass");
         
-        if(!PS.validatePassword(newPass))
+        if(PS.validatePassword(newPass))
         {
             if(!newPass.equals(confPass)){
             ModelAndView result1=new ModelAndView("ChangePassword");
-            result1.addObject("Message","New Password and Confirm Password do not match.");
+            result1.addObject("Message","New Password and Confirm Password does not match.");
             return result1;
             }
                 

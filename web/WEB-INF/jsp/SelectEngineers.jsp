@@ -168,9 +168,10 @@ font-style: italic;
 }
 </style>
     
-  <title>Assign Engineers</title>
-    </head>
-    <body>
+<title>Assign Engineers</title>
+</head>
+    
+<body>
 
 <%@include file="Header.jsp"%>
 	   <div class="login-card">

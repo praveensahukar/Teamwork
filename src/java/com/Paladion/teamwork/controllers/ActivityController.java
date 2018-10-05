@@ -158,8 +158,8 @@ public fileuploadBean populate1()
     return new fileuploadBean();
 }
 
-	
-    @RequestMapping(value="/CreateActivity",method=RequestMethod.GET)
+	//Copy of this method is present below which redirects to beutifully arranged JSP page.
+    @RequestMapping(value="/CreateActivity1",method=RequestMethod.GET)
     public ModelAndView CreateActivity(HttpServletRequest req)
     {   
         try
@@ -260,7 +260,7 @@ public fileuploadBean populate1()
            EmailS.sendSchedulingMail(AB, req.getSession(false));
         }
         else{
-            ProjectBean PB= PS.getProjectOPID(AB.getProjectid());
+            ProjectBean PB= PS.getProjectDeatails(AB.getProjectid());
             if(PB.getOpid() == null){
                 AB.setOpid("Awaiting OPID");
             }
@@ -413,6 +413,10 @@ public fileuploadBean populate1()
            List<ActivityTransactionBean> PSBList;
            ActivityBean PRDATA=AS.getProjectById(id);
            PSBList = AS.getProjectTransaction(id);
+           String eng=null;
+           for(ActivityTransactionBean PSB : PSBList){
+               eng = PSB.getEngname();
+           }
            
            //If engineers not assigned, redirect to assign engineers to tasks.
            if(PSBList.isEmpty()){
@@ -434,6 +438,7 @@ public fileuploadBean populate1()
            result=new ModelAndView("DisplayActivityProgress");
            result.addObject("ProjectData",PRDATA);
            result.addObject("TaskDetails",PSBList);
+           result.addObject("Engineer",eng);
            return result;
            }
         }
@@ -501,6 +506,10 @@ public fileuploadBean populate1()
         }
         
         else if(AB.getStatus().equalsIgnoreCase("completed") && status.equalsIgnoreCase("progress")){
+            value= AS.updateProjectStatus(pid,status);
+        }
+        
+        else if(AB.getStatus().equalsIgnoreCase("On Hold") && status.equalsIgnoreCase("progress")){
             value= AS.updateProjectStatus(pid,status);
         }
         
@@ -1050,6 +1059,34 @@ public ModelAndView Downloadfiles(@RequestParam String pid,HttpServletRequest re
         return new ModelAndView("Error");
         }
     }
+    
+    
+    //Delete deblow method TestCreateAct
+  
+    @RequestMapping(value="/CreateActivity",method=RequestMethod.GET)
+    public ModelAndView TestCreateAct(HttpServletRequest req)
+    {   
+        try
+        {
+        String[] authorizedRoles = {"admin","manager","lead","scheduling"};
+        if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
+        ModelAndView model=new ModelAndView("CreateActivity");
+	
+            model.addObject("AllTemplates", TS.getAllTemplates());
+            model.addObject("AllLeads", US.GetUsersByRole("lead"));
+            model.addObject("AllTeams",  TeamS.getAllTeams());
+            model.addObject("AllProjects",PS.getAllProjects());  
+            return model;
+	}
+        catch(Exception ex){
+        System.out.println("Exception occured. "+ex.getMessage());
+        return new ModelAndView("Error");
+        }   
+    }
+  
+    
+    
+    
     
     
 }

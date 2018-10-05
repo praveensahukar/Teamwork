@@ -92,7 +92,7 @@ public class EmailServiceImpl implements EmailService{
          if(eng.getEmail()!=null){
              emails.append(eng.getEmail()).append(",");
          }
-         if(pmbean.getEmail()!=null){
+         if((pmbean.getEmail()!=null) && !(pmbean.getEmail().equalsIgnoreCase(dmbean.getEmail()))){
              emails.append(pmbean.getEmail()).append(",");
          }
          if(dmbean.getEmail()!=null){
@@ -107,7 +107,7 @@ public class EmailServiceImpl implements EmailService{
          
          ebean.setTo(to);
          
-         ebean.setSubject("Project Scheduling Mail :: "+PB.getProjectname());
+         ebean.setSubject("Activity Scheduling Mail :: "+PB.getProjectname());
   
          SimpleDateFormat sm = new SimpleDateFormat("dd-MM-yyyy");
          String sDate = sm.format(AB.getStartdate());
@@ -116,48 +116,54 @@ public class EmailServiceImpl implements EmailService{
          StringBuilder mess=new StringBuilder();
          mess.append("<html><body>");
          mess.append("<h4 style = \"color:#000033\">");
-         mess.append("Dear ").append(leadb.getUsername()).append("/").append(eng.getUsername()).append("</br></br>").append("You have been scheduled to execute the below activity. Please find the activity details below. </h4><br>");
+         mess.append("Dear ").append(leadb.getUsername()).append("/").append(eng.getUsername()).append("</br></br>").append("You have been scheduled to the below activity. Please find the activity details below. </h4><br>");
              
                  
          mess.append( "<table border=\"2\" cellpadding=\"5\" cellspacing=\"5\" style=\"border-collapse:collapse\" width='70%'>");
          
-         mess.append("<tr style = /'color:#000055/'> <td bgcolor=/'#ccddff/' > <b>Project Name</b> </td> <td>").append(PB.getProjectname()).append("</td> <tr>");
+         mess.append("<tr style = /'color:#000055/'> <td bgcolor=/'#ccddff/' > <b>Project Name:</b> </td> <td>").append(PB.getProjectname()).append("</td> <tr>");
          
-         mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Client</b> </td> <td>").append(CB.getCompanyname()).append("</td> <tr>");
+         mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Client:</b> </td> <td>").append(CB.getCompanyname()).append("</td> <tr>");
         
          if(PB.getOpid()==null){
-          mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>OPID</b> </td> <td>").append("Awaiting OPID").append("</td> <tr>");    
+          mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>OPID:</b> </td> <td>").append("Awaiting OPID").append("</td> <tr>");    
          }
          else{
-         mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>OPID</b> </td> <td>").append(PB.getOpid()).append("</td> <tr>");
+         mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>OPID:</b> </td> <td>").append(PB.getOpid()).append("</td> <tr>");
          }
-        mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Activity</b> </td> <td>").append(AB.getActivityname()).append("</td> <tr>");
+        mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Activity:</b> </td> <td>").append(AB.getActivityname()).append("</td> <tr>");
         
-        mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Assessment Type</b> </td> <td>").append(AB.getAssessmentType()).append("</td> <tr>");
+        mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Assessment Type:</b> </td> <td>").append(AB.getAssessmentType()).append("</td> <tr>");
         
-        mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Compliance</b> </td> <td>").append(AB.getCompliance()).append("</td> <tr>");
+        mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Compliance:</b> </td> <td>").append(AB.getCompliance()).append("</td> <tr>");
         
-        mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Activity Start Date</b> </td> <td>").append(sDate).append("</td> <tr>");
+        mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Activity Start Date:</b> </td> <td>").append(sDate).append("</td> <tr>");
        
-        mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Activity End Date</b> </td> <td>").append(eDate).append("</td> <tr>");
+        mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Activity End Date:</b> </td> <td>").append(eDate).append("</td> <tr>");
          
-        mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Lead Assigned</b> </td> <td>").append(AB.getLead()).append("</td> <tr>");
+        mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Lead Assigned:</b> </td> <td>").append(AB.getLead()).append("</td> <tr>");
         
-         mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Engineer Assigned</b> </td> <td>").append(eng.getUsername()).append("</td> <tr>");
+         mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Engineer Assigned:</b> </td> <td>").append(eng.getUsername()).append("</td> <tr>");
         
-        mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Delivery Manager</b> </td> <td>").append(dmbean.getUsername()).append("</td> <tr>");
+        mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Delivery Manager:</b> </td> <td>").append(dmbean.getUsername()).append("</td> <tr>");
         
-        mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Project Manager</b> </td> <td>").append(pmbean.getUsername()).append("</td> <tr>");
+        mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Project Manager:</b> </td> <td>").append(pmbean.getUsername()).append("</td> <tr>");
 
-        mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Pre-requisites</b> </td> <td>").append(AB.getRequirements()).append("</td> <tr>");
+        mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Pre-requisites:</b> </td> <td>").append(AB.getRequirements()).append("</td> <tr>");
         
-        mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Whitelisting Confirmation</b> </td> <td>").append(AB.getWhitelisting()).append("</td> <tr>");
+        mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Whitelisting Confirmation:</b> </td> <td>").append(AB.getWhitelisting()).append("</td> <tr>");
         
-        mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Region</b> </td> <td>").append(PB.getRegion()).append("</td> <tr>");
+        mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Region:</b> </td> <td>").append(PB.getRegion()).append("</td> <tr>");
         
-        mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Other Details</b> </td> <td>").append(AB.getDetails()).append("</td> <tr>");
+        mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Other Details:</b> </td> <td>").append(AB.getDetails()).append("</td> <tr>");
    
-        mess.append("</table>").append("</br>").append("<b>Regards,").append("</br>").append("Team Paladion Networks <b></body></html>");        
+        mess.append("</table>").append("</br>")
+                
+        .append("</br>")
+        .append("<b>This is a system generated mail. Please donot reply to this mail.")
+        .append("</br></br>")
+        .append("Yours robotically,</br>TeamWork Admin (http://10.0.1.11:8090/TeamWorkAlpha)</br>Paladion Networks<br> <b></body></html>");        
+        
         String message=mess.toString();
          
          ebean.setMessage(message);
@@ -255,7 +261,13 @@ public class EmailServiceImpl implements EmailService{
         
         mess.append("<tr style = /'color:#000033/'> <td bgcolor=/'#ccddff/' > <b>Other Details</b> </td> <td>").append(AB.getDetails()).append("</td> <tr>");
    
-        mess.append("</table>").append("</br>").append("<b>Regards,").append("</br>").append("Team Paladion Networks <b></body></html>");        
+        mess.append("</table>").append("</br>")
+                
+        .append("</br>")
+        .append("<b>This is a system generated mail. Please donot reply to this mail.")
+        .append("</br></br>")
+        .append("Yours robotically,</br>TeamWork Admin (http://10.0.1.11:8090/TeamWorkAlpha)</br>Paladion Networks<br> <b></body></html>");      
+        
         String message=mess.toString();
          
          ebean.setMessage(message);
@@ -298,8 +310,13 @@ public class EmailServiceImpl implements EmailService{
                 .append(AB.getStartdate()).append(". ")
                 .append("Kindly ensure to have all the pre-requisites ready to start the activity.")
                 .append("<br> <br>Please inform the scheduling and project team in case the activity is delayed. </h4>");
-            mess.append("</br>").append("<b> Best Regards,").append("</br>").append("COE Team,</br> Paladion Networks <b></body></html>");  
-        
+            mess.append("</br>")
+                    
+            .append("</br><b>")
+        .append("<b>This is a system generated mail. Please donot reply to this mail.")
+        .append("</br></br>")
+        .append("Yours robotically,</br>TeamWork Admin (http://10.0.1.11:8090/TeamWorkAlpha)</br>Paladion Networks<br> <b></body></html>");      
+       
             String message=mess.toString();
             ebean.setMessage(message);
             SystemBean syssetting = AdminS.getSystemSettings();
@@ -324,7 +341,11 @@ public class EmailServiceImpl implements EmailService{
             .append("<br>Please Log into your account using the following credentials.<br><br>")
             .append("UserName : ").append(UB.getEmail()).append("<br>Password : ").append(UB.getPassword())
             .append("<br><br> <b>Note: This is a auto generated temporary password. Request you to update your password.</b>")
-            .append("<br><br>Best Regards,<br>Team Paladion");
+            .append("</br><b>")
+            .append("<b>This is a system generated mail. Please donot reply to this mail.")
+            .append("</br></br>")
+            .append("Yours robotically,</br>TeamWork Admin (http://10.0.1.11:8090/TeamWorkAlpha)</br>Paladion Networks<br> <b></body></html>");      
+       
                
             String message=mess.toString();
                 

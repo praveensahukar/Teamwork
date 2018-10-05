@@ -67,7 +67,7 @@ body {
 .login-card {
   padding: 40px;
   width: 1420px;
-  height: 550px;
+  min-height: 550px;
    background-color: white;
   margin: 0 auto 10px;
   border-radius: 2px;
@@ -211,7 +211,7 @@ th {
     <td><input type="password" placeHolder="Enter the new password" name="newPass"/></td></tr>  
 <tr><td align="center">Confirm Password</td>
     <td><input type="password" placeHolder="Re-enter new password" name="confPass" /></td></tr>
-
+<input type="hidden" name="AntiCSRFToken" value="${csrfPreventionSalt}"/>
 <tr><td align="center"><input type="submit" value="Update Password" class="login login-submit"/></td></tr>
 
 </table>

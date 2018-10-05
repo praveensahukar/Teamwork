@@ -171,7 +171,7 @@ AdminService AdminS;
 @RequestMapping(value="/ViewAllUser",method=RequestMethod.GET)
 public ModelAndView ViewAllUser(HttpServletRequest req )
     {
-        String[] authorizedRoles = {"admin","manager"};
+        String[] authorizedRoles = {"admin","manager","scheduling"};
         if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
         try{
         System.out.println("ViewAllUser");

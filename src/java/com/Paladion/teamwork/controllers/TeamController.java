@@ -47,7 +47,7 @@ public TeamBean populate()
      public ModelAndView CreateTeam(HttpServletRequest req)
     {   
         try{
-        String[] authorizedRoles = {"admin","manager"};
+        String[] authorizedRoles = {"admin","manager","scheduling"};
         if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
         ModelAndView result=new ModelAndView("CreateTeam");
         List<TeamBean> TeamList= TS.getAllTeams();
@@ -85,7 +85,7 @@ public TeamBean populate()
 @RequestMapping(value="/GetAllTeams",method=RequestMethod.GET)
 public ModelAndView GetAllTasks(HttpServletRequest req)
 { 
-    String[] authorizedRoles = {"admin","manager"};
+    String[] authorizedRoles = {"admin","manager","scheduling"};
     if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
     try{
     ModelAndView result=new ModelAndView("DisplayTasks");

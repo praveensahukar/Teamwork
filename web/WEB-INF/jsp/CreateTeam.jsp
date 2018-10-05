@@ -72,7 +72,7 @@ body {
 .login-card {
   padding: 40px;
   width: 1420px;
-  height: 550px;
+  min-height: 550px;
   background-color: white;
   margin: 0 auto 10px;
   border-radius: 2px;
@@ -97,7 +97,7 @@ body {
 .login-card input[type=text], input[type=password] {
   height: 44px;
   font-size: 16px;
-  width: 30%;
+  width: 300px;
   margin-bottom: 10px;
   -webkit-appearance: none;
   background: #fff;
@@ -132,7 +132,7 @@ body {
 
 .login-submit {
   /* border: 1px solid #3079ed; */
-  width: 50%;
+  width: 200px;
   border: 0px;
   color: #fff;
   text-shadow: 0 1px rgba(0,0,0,0.1); 
@@ -172,7 +172,7 @@ body {
 
 table {
     border-collapse: collapse;
-    width: 80%;
+    width: 35%;
 }
 
 
@@ -182,7 +182,7 @@ table {
 }
 
 th, td {
-    text-align: left;
+   
     padding: 8px;
 }
 
@@ -195,31 +195,31 @@ th {
 </style>
 
 
-<title>Create Task</title>
+<title>Create Team</title>
 </head>
    <body>   
-   <%@include file="Header.jsp" %>
+    <%@include file="Header.jsp" %>
     
     <div class="login-card">
     <h2 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">Create Team</h2>
     <form:form action="CreateTeam.do" method="post" modelAttribute="TeamM" id="teamform">
-    <table>
-    <tr><td align="center"><h4>Team Name:</td><td><form:input placeholder="Enter Team Name" path="teamname" required="true"/></h4></td></tr>    
+        <table border="0">
+            <tr>
+                <td width="100px" align="right">Team Name:</td>
+                <td><form:input placeholder="Enter Team Name" path="teamname" required="true" /></td>
+            </tr>    
     <br>
     <input type="hidden" name="AntiCSRFToken" value="${csrfPreventionSalt}"/> 
-    <tr><td align="center"><input type="submit" value="Create" class="login login-submit"/></td></tr>            
+    <tr><td colspan="2" align="left"><input type="submit" value="Create" class="login login-submit"/></td></tr>            
     </table>
     </form:form>
 
-    <table class="table1">
-        <tr>
-            <th><div label="Team Name">Team Name</div> </th>
-            <th><div label="Delete">Delete</div></th>
-        </tr>         
+    <table border="0">
+               
         <c:forEach  items="${AllTeams}" var="team">     
            <tr>
-                <td> ${fn:escapeXml(team.teamname)}</td>
-                <td><a href="DeleteTeam.do?id=${team.teamid}">DELETE</td>
+                <td> ${fn:escapeXml(team.teamname)}
+                <a href="DeleteTeam.do?id=${team.teamid}" style="float:right;"><img src="delete.png" alt="Edit Project" style="width:18px;height:18px;border:0;"> </a></td>
            </tr> 
         </c:forEach>
     </table>

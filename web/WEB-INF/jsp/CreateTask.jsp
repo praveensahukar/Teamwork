@@ -61,12 +61,12 @@ li a:hover:not(.active) {
 body {
 
 	background-image: url("grey.jpg");
-  background-repeat: repeat-y;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  font-family: 'Roboto', sans-serif;
+    background-repeat: repeat-y;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    font-family: 'Roboto', sans-serif;
 }
 
 .login-card {
@@ -132,7 +132,7 @@ body {
 
 .login-submit {
   /* border: 1px solid #3079ed; */
-  width: 50%;
+  width: 90%;
   border: 0px;
   color: #fff;
   text-shadow: 0 1px rgba(0,0,0,0.1); 
@@ -203,20 +203,29 @@ form.reset();
 <form:form action="CreateTask.do" method="post" modelAttribute="TaskM" id="taskform">
 <table>
 
-<tr><td align="center"><h4>Task Name:</td><td><form:input placeholder="Enter Task Name" path="taskname" /></h4></td></tr>    
-<form:errors path="taskname" cssClass="error"/><br>
-<tr><td align="center"><h4>Description:</td><td><form:input placeholder="Enter Description" path="Description" /></h4></td></tr>  
-<form:errors path="Description" cssClass="error"/><br>
-<tr></tr>
-<tr></tr>
-<tr></tr>
+    <tr>
+        <td align="center">Task Name:</td>
+        <td><form:input placeholder="Enter Task Name" path="taskname" /></td>
+    </tr>    
+    <form:errors path="taskname" cssClass="error"/><br>
 
-<input type="hidden" name="AntiCSRFToken" value="${csrfPreventionSalt}"/> 
-<tr><td align="center"><input type="submit" value="Create" class="login login-submit"/></td></tr>            
+    <tr>
+        <td align="center">Description:</td>
+        <td><form:textarea rows="3" cols="40" name="t2" path="Description" class="textarea"/></td>
+    </tr>  
+    <form:errors path="Description" cssClass="error"/><br>
+
+    <input type="hidden" name="AntiCSRFToken" value="${csrfPreventionSalt}"/> 
+
+    <tr>
+        <td align="center" colspan="2"><input type="submit" value="Create" class="login login-submit"/></td>
+    </tr>            
+
 </table>
 <center>${TaskSuccess}</center>
+
 </form:form>
-	   </div>
+</div>
 <br>      
-    </body>
+</body>
 </html>

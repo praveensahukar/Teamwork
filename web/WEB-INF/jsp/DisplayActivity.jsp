@@ -70,7 +70,7 @@ body {
 .login-card {
   padding: 40px;
   width: 1420px;
-  height: 550px;
+  min-height: 550px;
   background-color: white;
   margin: 0 auto 10px;
   border-radius: 2px;
@@ -123,7 +123,7 @@ body {
   font-family: 'Arial', sans-serif;
   font-weight: 700;
   height: 36px;
-  padding: 0 8px;
+  padding: 2px 8px;
 /* border-radius: 3px; */
 /* -webkit-user-select: none;
   user-select: none; */
@@ -168,11 +168,9 @@ body {
   font-size: 12px;
 }
 
-
-
 html {
-	/*width: 100%;*/ /*required if using % width*/
-	/*height: 100%;*/ /*required if using % height*/
+	width: 100%; /*required if using % width*/
+	height: 100%; /*required if using % height*/
 }
 
 .scrollingtable {
@@ -195,9 +193,9 @@ html {
 .scrollingtable * {box-sizing: border-box;}
 .scrollingtable > div {
 	position: relative;
-	border-top: 5px solid black; /*top table border*/
+	border-top: 4px solid black; /*top table border*/
 	height: 100%;
-	padding-top: 30px; /*this determines column header height*/
+	padding-top: 25px; /*this determines column header height*/
 }
 .scrollingtable > div:before {
 	top: 0;
@@ -292,7 +290,7 @@ html {
 	padding: 0 6px 0 6px;
 	height: 20px; /*match column header height*/
 }
-.scrollingtable > div > div > table > tbody:last-of-type > tr:last-child > * {border-bottom: none;}
+.scrollingtable > div > div > table > tbody:last-of-type > tr:last-child > * {border-bottom: 1px solid black;}
 .scrollingtable > div > div > table > tbody > tr:nth-child(even) {background: gainsboro;} /*alternate row color*/
 .scrollingtable > div > div > table > tbody > tr > * + * {border-left: 1px solid black;} /*borders between body cells*/
 </style>
@@ -349,13 +347,14 @@ html {
 	   <div align="left">  <h2 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">All Activities</h2><br></div>
            <div align="right" style="top: 10px"> <button  class="login login-submit" id="btnExport" onclick="fnExcelReport();"> EXPORT TO EXCEL </button></div>
      
-           <div class="scrollingtable">
-		<div>
-			<div>
-           
-           <table id="team" cellpadding="3">
-        <thead>
-            <tr >
+        <div class="scrollingtable">
+	<div>
+	<div>
+        
+        <table id="team" cellpadding="3">
+        
+            <thead>
+            <tr>
                 
                 <th><div label="OPID"></div> </th>
                 <th><div label="Activity"></div></th>
@@ -369,7 +368,7 @@ html {
             </tr>
         </thead>
             
-            <tbody>
+        <tbody>
             
 <c:forEach items="${AllProjects}" var="project">     
     
@@ -387,11 +386,11 @@ html {
                 <td >
                     <div class="dropdown">
                     <button class="dropbtn1">${fn:escapeXml(project.status)}</button>
-                      <div class="dropdown-content">
+                    <%--  <div class="dropdown-content">
                         <a href="updateProjectStatus.do?pid=${project.activityid}&status=New">New</a>
                         <a href="updateProjectStatus.do?pid=${project.activityid}&status=Progress">Progress</a>
                         <a href="updateProjectStatus.do?pid=${project.activityid}&status=Completed">Completed</a> 
-                      </div>
+                      </div> --%>
                     </div> 
                 </td>
                <%-- <td >  <div class="dropdown"><a href="deleteProject.do?pid=${project.activityid}"><button class="dropbtn1">Delete</button></a> </div></td> --%>

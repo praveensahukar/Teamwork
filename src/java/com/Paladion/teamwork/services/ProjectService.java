@@ -19,6 +19,8 @@ public interface ProjectService {
     public void editProject(ProjectBean pb);
     public List<ProjectBean> getAllProjects();
     public boolean deleteProject(int id);
-    public ProjectBean getProjectOPID(int pid);
+    //public ProjectBean getProjectOPID(int pid);
     public List<ActivityBean> getProjectActivities(int pid);
+    public ProjectBean getProjectDeatails(int pid);
+    public boolean updateProjectDetails(ProjectBean PB);
 }

@@ -40,9 +40,10 @@ public class PasswordServiceImpl  implements PasswordService {
     public boolean validatePassword(String password){
         Pattern pattern;
 	Matcher matcher;
-	String PASSWORD_PATTERN ="((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,20})";
+	String PASSWORD_PATTERN ="^.*(?=.{8,})(?=..*[0-9])(?=.*[a-z])(?=.*[A-Z]).*$";
 	pattern = Pattern.compile(PASSWORD_PATTERN);
 	matcher = pattern.matcher(password);
+        System.out.println(matcher.matches());
 	return matcher.matches();
     }
 }

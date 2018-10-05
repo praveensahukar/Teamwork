@@ -47,12 +47,18 @@ public class ProjectServiceImpl  implements ProjectService {
     
     
       @Override
-        public ProjectBean getProjectOPID( int pid){
-        return PD.getProjectOPID(pid);
+        public ProjectBean getProjectDeatails( int pid){
+        return PD.getProjectDetails(pid);
    }
     
     @Override
         public List<ActivityBean> getProjectActivities(int pid){
         return PD.getProjectActivities(pid);
     }
+    
+    @Override
+    public boolean updateProjectDetails(ProjectBean PB){
+        return PD.updateProjectDetails(PB);
+    }
+    
 }

@@ -12,6 +12,7 @@ import java.util.Iterator;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -110,7 +111,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
     }
     
     @Override
-    public ProjectBean getProjectOPID(int projectid){
+    public ProjectBean getProjectDetails(int projectid){
         Session session1 = sessionFactory.getCurrentSession();
         Transaction tx = session1.beginTransaction();
         try{
@@ -136,4 +137,37 @@ import org.springframework.beans.factory.annotation.Qualifier;
             }
         }
     }
+    
+    
+    @Override
+    public boolean updateProjectDetails(ProjectBean PB){
+        Session session = this.sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        try{
+            String sql = "UPDATE projects SET companyid=?,opid=?,deliverymanager=?,projectmanager=?,description=?,region=?,projectname=?,revenue=? WHERE projectid=?";
+            SQLQuery query = session.createSQLQuery(sql);
+            query.setParameter(0,PB.getCompanyid());
+            query.setParameter(1,PB.getOpid());
+            query.setParameter(2,PB.getDeliverymanager());
+            query.setParameter(3,PB.getProjectmanager());
+            query.setParameter(4,PB.getDescription());
+            query.setParameter(5,PB.getRegion());
+            query.setParameter(6,PB.getProjectname());
+            query.setParameter(7,PB.getRevenue());
+            query.setParameter(8,PB.getProjectid());
+            query.executeUpdate();
+            tx.commit();
+            return true;
+        }catch(Exception e){
+        System.out.println("Exception occured. "+e.getMessage());
+        return false;
+        }
+        finally{
+            if(session.isOpen()){
+            System.out.println("-----------Closing session------------");
+            session.close();
+            }
+        }
+    }
+    
 }

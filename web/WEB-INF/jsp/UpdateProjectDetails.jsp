@@ -1,7 +1,7 @@
 <%-- 
-    Document   : CreateProject
-    Created on : 24 Apr, 2017, 5:28:38 PM
-    Author     : Administrator
+    Document   : UpdateProjectDetails
+    Created on : Sep 28, 2018, 6:35:48 PM
+    Author     : santosh.babar
 --%>
 
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
@@ -13,10 +13,8 @@
   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-
 <head>
-
-    <script type="text/javascript">
+<script type="text/javascript">
   $(document).ready(function() {
     $("#date").datepicker();
     format: 'dd/mm/yyyy'
@@ -69,7 +67,7 @@ body {
 .login-card {
   padding: 40px;
   width: 1420px;
-  height: 550px;
+  min-height: 550px;
    background-color: white;
   margin: 0 auto 10px;
   border-radius: 2px;
@@ -98,7 +96,7 @@ body {
   border: 1px solid #d9d9d9;
   border-top: 1px solid #c0c0c0;
   /* border-radius: 2px; */
-  padding: 0 8px;
+  padding: 0px 8px;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
 }
@@ -242,65 +240,64 @@ font-style: italic;
 }     
 </script>
     
-<title>Create Project</title>
+<title>Update Project</title>
+</head>
 
 <%@include file="Header.jsp"%>
-
-
-
+	  
 <div class="login-card">
+	   
 <div align="left">  
-
-<h2 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">Create Project</h2></div>
-
-<form:form action="CreateProject.do" method="post" commandName="ProjectM" id="form" autocomplete="off">
     
-    <div align="center">
+    <h2 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">Edit Project Details</h2></div>
 
-    <table  border="0" cellpadding="10" cellspacing="2" align="left">
+    <div>
+    <form:form action="UpdateProjectDetails.do" method="post" commandName="ProjectM" id="form" autocomplete="off">
+
+    <table  border="0" cellpadding="10" cellspacing="3" align="left">
 
     <tr>
-        <td align="right" >Project Name :</td>
-        <td colspan="3"><form:input placeholder="Enter Project Name" path="projectname"/>
+        <td align="right">Project Name :</td>
+        <td colspan="3"><form:input placeholder="Enter Activity Name" path="projectname" value="${fn:escapeXml(ProjectData.projectname)}" />
             <span class='red'>*</span>
             <form:errors path="projectname" cssClass="error"/>
         </td>
-    </tr>      
-        
+    </tr>  
+    
     <tr>
         <td align="right">OPID :</td>
-        
-        <td><form:input placeholder="Enter OPID" path="opid" />
+        <td><form:input placeholder="Enter OPID" path="opid" value="${fn:escapeXml(ProjectData.opid)}"/>
+            
             <form:errors path="opid" cssClass="error"/>
         </td>
     
         <td align="right">Company :</td>
         <td><form:select path="companyid" class="login login-drop">
-            <option class="login login-submit" value="0">Select</option>
+        <form:option class="login login-submit" value="${fn:escapeXml(ProjectData.companyid)}" path="companyid">${CompanyName}</form:option>
 	    <c:forEach  items="${AllCompany}" var="company"> 
-	    <form:option class="login login-submit" value="${company.companyid}">${company.companyname}</form:option>
+            <form:option class="login login-submit" value="${company.companyid}">${company.companyname}</form:option>
 	    </c:forEach>
-            </form:select>
+        </form:select>
             <span class='red'>*</span>
-            <form:errors path="companyid" cssClass="error"/>
+        <form:errors path="companyid" cssClass="error"/>
         </td>
     </tr>
 
     <tr>
         <td align="right">Delivery Manager :</td>
         <td><form:select  path="deliverymanager" itemLabel="Select" class="login login-drop"> 
-            <option class="login login-submit" value="0">Select</option>
+        <form:option class="login login-submit" value="${ProjectData.deliverymanager}" path="deliverymanager">${Dmanager}</form:option>
             <c:forEach items="${AllDManagers}" var="dmanager">     
             <option class="login login-submit" value="${dmanager.userid}">${dmanager.username}</option>
             </c:forEach>
-            </form:select>
+        </form:select>
             <span class='red'>*</span>
-            <form:errors path="deliverymanager" cssClass="error"/>
+        <form:errors path="deliverymanager" cssClass="error"/>
         </td>	  
-
+    
         <td align="right">Project Manager :</td>
         <td><form:select  path="projectmanager" itemLabel="Select" class="login login-drop"> 
-            <option class="login login-submit" value="0">Select</option>
+            <form:option class="login login-submit" value="${ProjectData.projectmanager}" path="projectmanager">${Pmanager}</form:option>
             <c:forEach items="${AllPManagers}" var="pmanager">     
             <option class="login login-submit" value="${pmanager.userid}">${pmanager.username}</option>
             </c:forEach>
@@ -308,53 +305,64 @@ font-style: italic;
             <span class='red'>*</span>
             <form:errors path="projectmanager" cssClass="error"/>
         </td>	  
+        
     </tr>
         
     <tr>
         <td align="right">Revenue :</td>
-        <td><form:input placeholder="Enter Revenue in INR" path="revenue" id="revenue" type="text" maxlength="15"/>
+        <td><form:input placeholder="Enter Revenue in INR" path="revenue" value="${ProjectData.revenue}" id="revenue" type="text" maxlength="15"/>
             <form:errors path="revenue" cssClass="error"/>
         </td>
     
         <td align="right">Region :</td>
-        <td><form:input placeholder="Enter Region" path="region" />
+        <td><form:input placeholder="Enter Region" path="region" value="${ProjectData.region}" />
             <span class='red'>*</span>
             <form:errors path="region" cssClass="error"/>
         </td>
     </tr>
 
-    <tr><td align="right">Other Details :</td>
-        <td  colspan="2"><form:textarea rows="3" cols="40" path="description" class="textarea" />
+    <tr>
+        <td align="right">Other Details :</td>
+        <td colspan="2"><form:textarea rows="3" cols="40" id="discription" path="description" class="textarea"  />
             <form:errors path="description" cssClass="error"/>
         </td>
     
 
     <input type="hidden" name="AntiCSRFToken" value="${csrfPreventionSalt}"/> 
+        
+    <input type="hidden" name="projectid" value="${ProjectData.projectid}"/>
 
     
-        <td><input type="button" value="Create"  onclick="sanitize()" class="login login-submit"/>
+        <td align="center"><input type="button" value="Update"  onclick="sanitize()" class="login login-submit"/>
         </td>
     </tr>           
 
+    
     </table>
 
     </div>
 
-</form:form>
-</div>
+    </form:form>
+    </div>
      
-<script>
+	   <script>
   $(document).ready(function() {
     $("#datepicker").datepicker();
     format: 'dd/mm/yyyy';
   });
-</script>
-<script>
+  </script>
+  <script>
   $(document).ready(function() {
     $("#datepickers").datepicker();
     format: 'dd/mm/yyyy';
   });
-</script>
-
-</body>
+  </script>
+           
+     <script>
+        function fillDiscription() {
+        document.getElementById("discription").value = "${ProjectData.description}";
+        }
+        window.onload = fillDiscription();
+    </script>
+    </body>
 </html>

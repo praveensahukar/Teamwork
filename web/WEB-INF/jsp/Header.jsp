@@ -11,13 +11,10 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
-<head>
-    
+
+<head>  
    <style>
        
-    .zoom {
-    zoom: 80%;
-    }
 .container {
     overflow: hidden;
     background-color: #333;
@@ -35,7 +32,7 @@
 
 .dropdown {
     float: left;
-    overflow: hidden;
+    overflow: auto;
 }
 
 .dropdown .dropbtn {
@@ -85,10 +82,30 @@
 .dropdown:hover .dropdown-content {
     display: block;
 }
+
+.textarea{
+    text-align: left;
+    font-size: 16px;
+    font-family: 'Roboto', sans-serif;
+    height: 80px;
+    padding: 4px 6px 6px 6px; 
+    border: 2px solid #b9b9b9;
+}  
+
+.textarea:hover {
+  border: 2px solid #b9b9b9;
+  
+  border-top: 5px solid #a0a0a0;
+  -moz-box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+  -webkit-box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+}
+
+
 </style>
 </head>
     
-<body class="zoom">
+<body>
     <%-- Session Validation Code --%>
     <% 
         if (session==null||null==session.getAttribute("Luser"))
@@ -144,15 +161,15 @@
         <div class="dropdown">
             <button class="dropbtn">Administration</button>
                 <div class="dropdown-content">
-                <% if(role.equalsIgnoreCase("Manager")||role.equalsIgnoreCase("Admin"))
-                {%>
-                <a href="CreateUser.do">Create User</a>
-                <a href="ViewAllUser.do">View Users</a>
-                <a href="CreateTeam.do">Teams</a>
-                <a href="Administration.do">System Properties</a>
-                <%}%>
                 <a href="CreateCompany.do">Create Company</a>
                 <a href="GetAllCompany.do">View All Companies</a>
+                <a href="CreateTeam.do">Teams</a>
+                <a href="ViewAllUser.do">View Users</a>
+                <% if(role.equalsIgnoreCase("Manager")||role.equalsIgnoreCase("Admin"))
+                    {%>
+                    <a href="CreateUser.do">Create User</a>
+                    <a href="Administration.do">System Properties</a>
+                <%}%>
                 </div>
         </div> 
         <%}%>

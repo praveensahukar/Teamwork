@@ -26,7 +26,13 @@
 
 <head>
 <style>
+    
+    .zoom {
+    zoom: 80%;
+    }
 @import url(http://fonts.googleapis.com/css?family=Roboto:400,100);
+       
+    
 
 body {
 

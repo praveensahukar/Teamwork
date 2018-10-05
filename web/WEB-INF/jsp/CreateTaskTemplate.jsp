@@ -236,7 +236,7 @@ table.dataTable thead th:first-child {
     <tr><td ><h4>Template Name:</td><td>   <form:input placeholder="Enter template name" name="t1"  path="templatename" /> </h4></td></tr>     
     <form:errors path="templatename" cssClass="error"/>
     <br><br>
-     <tr><td><h4>Description:  </td><td>   <form:textarea rows="3" cols="40" name="t2" path="templateDesc" /></h4></td></tr>
+     <tr><td><h4>Description:  </td><td>   <form:textarea rows="3" cols="40" name="t2" path="templateDesc" class="textarea"/></h4></td></tr>
     <form:errors path="templateDesc" cssClass="error"/>
      <br><br>
     </table>

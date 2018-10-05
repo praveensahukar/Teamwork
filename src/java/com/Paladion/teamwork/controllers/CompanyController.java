@@ -93,11 +93,12 @@ public ModelAndView GetAllTasks(HttpServletRequest req)
 { 
     String[] authorizedRoles = {"admin","manager","lead","scheduling"};
     if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
+    
     try{
-    ModelAndView result=new ModelAndView("DisplayCompany");
+    ModelAndView view=new ModelAndView("DisplayCompany");
     List<CompanyBean> CBList= CS.getAllCompany();
-    result.addObject("AllCompany",CBList);
-    return result; 
+    view.addObject("AllCompany",CBList);
+    return view; 
     }
     catch(Exception ex){
     ex.printStackTrace();

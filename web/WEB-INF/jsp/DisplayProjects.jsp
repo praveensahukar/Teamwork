@@ -72,7 +72,7 @@ body {
 .login-card {
   padding: 40px;
   width: 1420px;
-  height: 550px;
+  min-height: 550px;
   background-color: white;
   margin: 0 auto 10px;
   border-radius: 2px;
@@ -186,7 +186,7 @@ body {
 	overflow: hidden;
 	width: 95%; /*set table width here if using fixed value*/
 	/*min-width: 100%;*/ /*set table width here if using %*/
-	height: 90%; /*set table height here; can be fixed value or %*/
+	height: 60%; /*set table height here; can be fixed value or %*/
 	/*min-height: 104px;*/ /*if using % height, make this at least large enough to fit scrollbar arrows + captions + thead*/
 	font-family: Verdana, Tahoma, sans-serif;
 	font-size: 20px;
@@ -295,7 +295,7 @@ body {
 	padding: 10px;
 	height: 50px; /*match column header height*/
 }
-.scrollingtable > div > div > table > tbody:last-of-type > tr:last-child > * {border-bottom: none;}
+.scrollingtable > div > div > table > tbody:last-of-type > tr:last-child > * {border-bottom: 1px solid black;}
 .scrollingtable > div > div > table > tbody > tr:nth-child(even) {background: gainsboro;} /*alternate row color*/
 .scrollingtable > div > div > table > tbody > tr > * + * {border-left: 2px solid black; boder-right: 2px solid black}
 
@@ -336,7 +336,7 @@ body {
            <tr>
                <td> <a href="GetProjectActivities.do?pid=${project.projectid}">${fn:escapeXml(project.projectname)}</a>
                 
-                <a href="EditProject.do?pid=${project.projectid}" style="float:right;">
+                <a href="EditProjectDetails.do?pid=${project.projectid}" style="float:right;">
                 <img src="icons8-edit.png" alt="Edit Project" style="width:18px;height:18px;border:0;">
                 </a>
                

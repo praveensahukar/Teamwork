@@ -65,7 +65,7 @@ body {
 .login-card {
   padding: 40px;
   width: 1420px;
-  height: 900px;
+  min-height: 550px;
   background-color: white;
   margin: 0 auto 10px;
   border-radius: 2px;
@@ -155,26 +155,28 @@ body {
 	display: inline-block;
 	vertical-align: middle;
 	overflow: hidden;
-	width: 100%; /*set table width here if using fixed value*/
+	width: 99%; /*set table width here if using fixed value*/
 	/*min-width: 100%;*/ /*set table width here if using %*/
-	height: 80%; /*set table height here; can be fixed value or %*/
+	min-height: 550px; /*set table height here; can be fixed value or %*/
 	/*min-height: 104px;*/ /*if using % height, make this at least large enough to fit scrollbar arrows + captions + thead*/
 	font-family: Verdana, Tahoma, sans-serif;
 	font-size: 15px;
 	line-height: 20px;
-	padding-top: 20px; /*this determines top caption height*/
+	padding-top: 10px; /*this determines top caption height*/
 	padding-bottom: 20px; /*this determines bottom caption height*/
 	text-align: left;
 }
 .scrollingtable * {box-sizing: border-box;}
 .scrollingtable > div {
 	position: relative;
-	border-top: 1px solid black; /*top table border*/
+	border-top: 4px solid black; /*top table border*/
+        border-bottom: 0px solid black;
+        border-left: 0px solid black;
 	height: 100%;
 	padding-top: 20px; /*this determines column header height*/
 }
 .scrollingtable > div:before {
-	top: 0;
+	top: 20px;
 	background: cornflowerblue; /*column header background color*/
 }
 .scrollingtable > div:before,
@@ -188,21 +190,22 @@ body {
 }
 .scrollingtable > div > div {
 	/*min-height: 43px;*/ /*if using % height, make this at least large enough to fit scrollbar arrows*/
-	max-height: 100%;
+	max-height: 550px;
 	overflow: scroll; /*set to auto if using fixed or % width; else scroll*/
 	overflow-x: hidden;
-	border: 1px solid black; /*border around table body*/
+	border: 3px solid black; /*border around table body*/
+        margin-top: 20px;
 }
 .scrollingtable > div > div:after {background: white;} /*match page background color*/
 .scrollingtable > div > div > table {
 	width: 100%;
-	border-spacing: 0;
-	margin-top: -20px; /*inverse of column header height*/
+	border-spacing: 1px;
+	margin-top: -45px; /*inverse of column header height*/
 	/*margin-right: 17px;*/ /*uncomment if using % width*/
 }
 .scrollingtable > div > div > table > caption {
 	position: absolute;
-	top: -20px; /*inverse of caption height*/
+	top: 20px; /*inverse of caption height*/
 	margin-top: -1px; /*inverse of border-width*/
 	width: 100%;
 	font-weight: bold;
@@ -214,9 +217,11 @@ body {
 	white-space: nowrap;
 	text-align: center;
 }
+
+/*Table header */
 .scrollingtable > div > div > table > thead > tr > * > div {
 	display: inline-block;
-	padding: 0 6px 0 6px; /*header cell padding*/
+	padding: 10px 10px 10px 10px; /*header cell padding*/
 }
 .scrollingtable > div > div > table > thead > tr > :first-child:before {
 	content: "";
@@ -255,19 +260,79 @@ body {
 	display: table-cell;
 	position: relative;
 	padding: 0;
-	border-top: 1px solid black;
+	border-top: 6px solid black;
 	top: -1px; /*inverse of border width*/
 }
 .scrollingtable > div > div > table > tbody {vertical-align: top;}
 .scrollingtable > div > div > table > tbody > tr {background: white;}
 .scrollingtable > div > div > table > tbody > tr > * {
-	border-bottom: 1px solid black;
-	padding: 0 6px 0 6px;
+	border-bottom: 2px solid black;
+	padding: 4px 4px 4px 4px;
 	height: 20px; /*match column header height*/
 }
 .scrollingtable > div > div > table > tbody:last-of-type > tr:last-child > * {border-bottom: none;}
 .scrollingtable > div > div > table > tbody > tr:nth-child(even) {background: gainsboro;} /*alternate row color*/
 .scrollingtable > div > div > table > tbody > tr > * + * {border-left: 1px solid black;}
+
+.dropdown3 {
+    float: left;
+    overflow: auto;
+}
+
+.dropdown3 .dropbtn3 {
+    font-size: 16px;    
+    border: none;
+    outline: none;
+    color: white;
+    padding: 14px 16px;
+    background-color: white;
+}
+
+.dropdown3 .dropbtn13 {
+    font-size: 16px;    
+    border: none;
+    outline: none;
+    height: 40px;
+    width: 200px;
+    color: #111;
+    padding: 10px 10px;
+    background-color: #b9b9b9;
+    text-align: left;
+}
+
+.container a:hover, .dropdown3:hover .dropbtn3 {
+    background-color: #cc0000;
+}
+
+.dropdown-content3 {
+    display: none;
+    position: absolute;
+    background-color: #999966;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content3 a {
+    float: none;
+    color: black;
+    padding: 10px 12px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.dropdown-content3 a:hover {
+    background-color: #ddd;
+}
+
+.dropdown3:hover .dropdown-content3 {
+    display: block;
+}
+
+
+
+
 </style>
 
 
@@ -284,7 +349,7 @@ body {
 	<div class="right">
             
             
-    <table border="1">
+    <table border="1" >
         <thead>
             <tr>
                 <td colspan="2"><h4 style="color: grey; font-size: 15px"><g style="color:black">Activity Name:</g> ${fn:escapeXml(ProjectData.activityname)}</h2></td>
@@ -298,7 +363,7 @@ body {
         
             <tr>
             <td><h4 style="color: grey; font-size: 15px"><g style="color:black">Lead Assigned:</g> ${fn:escapeXml(ProjectData.lead)}</h4></td>
-            <td><h4 style="color: grey; font-size: 15px"><g style="color:black">Project Status: </g>${fn:escapeXml(ProjectData.status)}</h4></td>
+            <td><h4 style="color: grey; font-size: 15px"><g style="color:black">Test Engineer: </g> ${fn:escapeXml(Engineer)}</h4></td>
             </tr>
         
             <tr>
@@ -308,8 +373,23 @@ body {
             <td> <h4 style="color: grey; font-size: 15px" ><g style="color:black">End Date: </g>
                     <fmt:formatDate type = "date" value = "${ProjectData.enddate}"/></h4></td>
             
+           </tr>
            
-            </tr>
+           <tr>
+               <td>
+                <h4 style="color: grey; font-size: 15px"><g style="color:black">Status:</g>
+                    </td>
+                    <td>
+               <div class="dropdown3">
+                    <button class="dropbtn13">${fn:escapeXml(ProjectData.status)}</button>
+                     <div class="dropdown-content3">
+                        <a href="updateProjectStatus.do?pid=${ProjectData.activityid}&status=New">New</a>
+                        <a href="updateProjectStatus.do?pid=${ProjectData.activityid}&status=Progress">Progress</a>
+                        <a href="updateProjectStatus.do?pid=${ProjectData.activityid}&status=Completed">Completed</a> 
+                      </div>
+                    </div> 
+                    </td>
+           </tr>
         </table>
         <br>
 	</div>
@@ -395,7 +475,7 @@ body {
     <br>
     <a href="addActivityTask.do?activityId=${ProjectData.activityid}"><button>Add Task</button></a> <br>
     
-    <br>  <a href="deleteProject.do?pid=${ProjectData.activityid}"><button>Delete Activity</button></a>
+    <br>  <a href="deleteProject.do?pid=${ProjectData.activityid}"><button onclick="return confirm('Are you sure you want to delete this activity?')">Delete Activity</button></a>
 
 <br>
 

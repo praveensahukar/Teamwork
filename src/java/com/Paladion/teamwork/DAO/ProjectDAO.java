@@ -17,6 +17,8 @@ public interface ProjectDAO {
     public void addProjectDao(ProjectBean tb);
     public List<ProjectBean> getAllProject();
     public boolean deleteProject(int id);
-    public ProjectBean getProjectOPID(int pid);
+  //  public ProjectBean getProjectOPID(int pid);
     public List<ActivityBean> getProjectActivities(int pid);
+    public ProjectBean getProjectDetails(int pid);
+    public boolean updateProjectDetails(ProjectBean PB);
 }

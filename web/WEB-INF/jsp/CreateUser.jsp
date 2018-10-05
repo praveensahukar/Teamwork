@@ -82,7 +82,7 @@ body {
 }
 
 .login-card input[type=submit] {
-  width: 20%;
+  width: 200px;
   display: block;
   margin-bottom: 10px;
   position: relative;
@@ -101,7 +101,7 @@ body {
 .login-card input[type=text], input[type=password] {
   height: 44px;
   font-size: 16px;
-  width: 30%;
+  width: 300px;
   margin-bottom: 10px;
   -webkit-appearance: none;
   background: #fff;
@@ -136,11 +136,15 @@ body {
 
 .login-submit {
   /* border: 1px solid #3079ed; */
-  width: 30%;
+  width: 300px;
   border: 0px;
+  height: 38px;
+  
   color: #fff;
+  margin-bottom: 10px;
   text-shadow: 0 1px rgba(0,0,0,0.1); 
   background-color: #a6a6a6;
+  padding: 0 8px;
   /* background-image: -webkit-gradient(linear, 0 0, 0 100%,   from(#4d90fe), to(#4787ed)); */
 }
 
@@ -176,12 +180,15 @@ body {
 
 table {
     border-collapse: collapse;
-    width: 100%;
+    width: 70%;
 }
 
 th, td {
-    text-align: left;
+    font-size: 1.0em;
     padding: 8px;
+    font-family: 'Roboto', sans-serif;
+    color: #cd0a0a;
+    font-weight:bolder;
 }
 
 tr:nth-child(even){background-color: #F7F7F7}
@@ -195,43 +202,60 @@ color: red;
 font-style: italic;
 }
 </style>
-<title>New User</title>
+<title>Add New User</title>
 </head>
     <body>
     
    <%@include file="Header.jsp" %>   
    
         <div class="login-card">
-	   <div align="left">  <h2 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">Create User</h2></div>
+	   <div align="left">  <h2 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">Add New User</h2></div>
 
 	   <form:form action="CreateUser.do" method="POST" modelAttribute="UserM">
-<table>
+<table border="0">
    
-<tr><td align="center"><h4 >User Name :</td>
+<tr>
+    <td align="right"><b>User Name :</b></td>
     <form:errors path="username" cssClass="error"/><br>
-    <td><form:input placeHolder="Enter the Username"  path="username" htmlEscape="true" autocomplete="false" require="email"/></h4></td></tr>    
+    <td>
+        <form:input placeHolder="Enter the Username"  path="username" htmlEscape="true" autocomplete="false" require="email"/>
+    </td>
+</tr>    
+
 <form:errors path="email" cssClass="error"/>
-<tr><td align="center"><h4 >Email id :</td>
-    <td><form:input placeHolder="Enter the Email ID" path="email" htmlEscape="true" autocomplete="false"/></h4></td></tr>  
+
+<tr>
+    <td align="right">Email id :</td>
+    <td>
+        <form:input placeHolder="Enter the Email ID" path="email" htmlEscape="true" autocomplete="false"/>
+    </td>
+</tr>  
+
 <form:errors path="phone" cssClass="error"/>
-<tr><td align="center"><h4>Mobile :</td>
-    <td><form:input placeHolder="Enter the Mobile Number" path="phone" htmlEscape="true" autocomplete="false" /></h4></td></tr>
+
+<tr>
+    <td align="right">Mobile :</td>
+    <td>
+        <form:input placeHolder="Enter the Mobile Number" path="phone" htmlEscape="true" autocomplete="false" />
+    </td>
+</tr>
+
 <form:errors path="team" cssClass="error"/>
-    <tr><td align="right"><h4>Team :</td>
+    
+<tr>
+    <td align="right">Team :</td>
     <td><form:select path="team" class="login login-submit">
-             <form:option class="login login-submit" value="">Select</form:option>
-	           <c:forEach  items="${AllTeams}" var="team"> 
-	           <form:option class="login login-submit" value="${team.teamname}">${team.teamname}</form:option>
-	           </c:forEach>
+            <form:option class="login login-submit" value="">Select</form:option>
+	    <c:forEach  items="${AllTeams}" var="team"> 
+	    <form:option class="login login-submit" value="${team.teamname}">${team.teamname}</form:option>
+	    </c:forEach>
         </form:select>
-        
     </td>
 </tr>
       
- <form:errors path="role" cssClass="error"/>
-<tr><td align="center"><h4>Select the Role</td>
-    <td>
-    <form:select class="login login-submit" path="role">
+<form:errors path="role" cssClass="error"/>
+<tr><td align="right">User Role :</td>
+    <td><form:select class="login login-submit" path="role">
         <form:option class="login login-submit" value="">Select</form:option>
 	<form:option class="login login-submit" value="Admin">Admin</form:option>
 	<form:option class="login login-submit" value="Manager">Delivery Manager</form:option>
@@ -239,16 +263,23 @@ font-style: italic;
         <form:option class="login login-submit" value="Lead">Delivery Lead</form:option>
         <form:option class="login login-submit" value="Engineer">Engineer</form:option>   
         <form:option class="login login-submit" value="Scheduling">Scheduling</form:option>
-    </form:select></h4></td></tr>
+    </form:select>
+    </td>
+</tr>
 
 <input type="hidden" name="AntiCSRFToken" value="${csrfPreventionSalt}"/> 
-<tr><td align="center"><input type="submit" value="Create" class="login login-submit"/></td></tr>
 
+<tr>
+    <td></td>
+    <td align="left"><input type="submit" value="Create" class="login login-submit"/></td>
+</tr>
 
-    
 </table>
+
 </form:form>
      
 <center>${Lerror}</center>      
-    </body>
+
+</body>
+
 </html>

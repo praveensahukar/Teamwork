@@ -86,7 +86,7 @@ body {
   font-size: 2.3em;
 }
 .login-card input[type=submit] {
-  width: 60%;
+  width: 200px;
   display: block;
   margin-bottom: 10px;
   position: relative;
@@ -95,7 +95,7 @@ body {
 .login-card input[type=text], input[type=password] {
   height: 44px;
   font-size: 16px;
-  width: 90%;
+  width: 300px;
   margin-bottom: 10px;
   -webkit-appearance: none;
   background: #fff;
@@ -127,7 +127,7 @@ body {
 }
 .login-submit {
   /* border: 1px solid #3079ed; */
-  width: 300px;
+  width: 30%;
   border: 0px;
   color: #fff;
   text-shadow: 0 1px rgba(0,0,0,0.1); 
@@ -160,10 +160,10 @@ body {
 }
 table {
     border-collapse: collapse;
-    width: 80%;
+    width: 100%;
     color: #ff0000;
     border-color: white;
-    align-items: left;
+    align-items: center;
 }
 th {
     text-align: center;
@@ -176,6 +176,8 @@ font-style: italic;
 
  <script >  
    function doAjaxPost() {  
+       
+       
     var sdate = $('#date').val();  
     var edate = $('#datepicker').val();  
     var team = $('#team').val();
@@ -228,143 +230,126 @@ font-style: italic;
    }  
  </script>  
     
-<title>Schedule Activity</title>
-</head>
-
-<body>
-<%@include file="Header.jsp"%>
-	   
-<div class="login-card">
-	   
-    <div>  <h2 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">Schedule Activity</h2></div>
-
-    <form:form action="getEngineers.do" method="post" commandName="ProjectM">
-    <div>
-        
-        <input type="hidden" name="AntiCSRFToken" id="token" value="${csrfPreventionSalt}"/>
     
-        <table border="0" cellpadding="10" cellspacing="2" >
+    
+    
+    
+  <title>Schedule Activity</title>
+    </head>
+    <body>
 
-        <tr>
-            <td align="right">Project :</td>
-            <td><form:select class="login login-submit" path="projectid">
-                <option class="login login-submit" value="0">Select</option>
-                <c:forEach  items="${AllProjects}" var="project"> 
-                <form:option class="login login-submit" value="${project.projectid}">${project.projectname}</form:option>    
-                </c:forEach>
-                </form:select>
-                <form:errors path="projectid" cssClass="error"/>
-            </td>
-        
-            <td align="right">Activity Name :</td>
-            <td><form:input placeholder="Enter Activity Name" path="activityname" />
-            <span class='red'>*</span>
-            <form:errors path="activityname" cssClass="error"/>
-            </td>
-        </tr>  
+<%@include file="Header.jsp"%>
+	   <div class="login-card">
+	   <div align="center">  <h2 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">Schedule Activity</h2></div>
+<form:form action="getEngineers.do" method="post" commandName="ProjectM">
+<div align="center">
+    <input type="hidden" name="AntiCSRFToken" id="token" value="${csrfPreventionSalt}"/>
+    
+    <table  align="center" border="0">
 
-         <tr>
-            <td align="right">Start Date :</td>
-            <td><form:input placeholder="Enter Start Date" id="txtFromDate" path="startdate" />
+<tr><td align="right"><h4>Project :</td>
+    <td><form:select class="login login-submit" path="projectid">
+                  <option class="login login-submit" value="0">Select</option>
+	           <c:forEach  items="${AllProjects}" var="project"> 
+	           <form:option class="login login-submit" value="${project.projectid}">${project.projectname}</form:option>    
+                   </c:forEach>
+        </form:select>
+        <form:errors path="projectid" cssClass="error"/>
+    </td>
+</tr>
+
+<tr><td align="right"><h4>Activity Name :</td><td><form:input placeholder="Enter Activity Name" path="activityname" />
+        <span class='red'>*</span>
+        <form:errors path="activityname" cssClass="error"/>
+        </td></tr>  
+
+<tr><td align="right"><h4>Team :</td>
+    <td><form:select path="team" id="team" class="login login-submit">
+        <option class="login login-submit" value="">Select</option>
+	           <c:forEach  items="${AllTeams}" var="team"> 
+	           <form:option class="login login-submit" value="${team.teamname}">${team.teamname}</form:option>
+	           </c:forEach>
+        </form:select>
+        <span class='red'>*</span>
+        <form:errors path="team" cssClass="error"/>
+    </td>
+</tr>
+
+<tr><td align="right"><h4>Lead :</td>
+    <td><form:select path="leadid" class="login login-submit">
+         <option class="login login-submit" value="0">Select</option>
+            <c:forEach  items="${AllLeads}" var="lead"> 
+	    <form:option class="login login-submit" value="${lead.userid}">${lead.username}</form:option>
+	    </c:forEach>
+        </form:select>
+         <span class='red'>*</span>
+        <form:errors path="leadid" cssClass="error"/>
+     </td>
+</tr>
+<tr><td align="right"><h4>Start Date :<td><form:input placeholder="Enter Start Date" id="txtFromDate" path="startdate" />
             <span class='red'>*</span>
             <form:errors path="startdate" cssClass="error"/>
-            </td>
-        
-            <td align="right">End Date :</td>
-            <td><form:input placeholder="Enter End Date" id="txtToDate" path="enddate"/>
-            <span class='red'>*</span>
-            <form:errors path="enddate" cssClass="error"/>
-            </td>
-        </tr>
-        
-        
-        
-        <tr>
-            <td align="right">Team :</td>
-            <td><form:select path="team" id="team" class="login login-submit">
-                <option class="login login-submit" value="">Select</option>
-	        <c:forEach  items="${AllTeams}" var="team"> 
-	        <form:option class="login login-submit" value="${team.teamname}">${team.teamname}</form:option>
-	        </c:forEach>
-                </form:select>
-                <span class='red'>*</span>
-                <form:errors path="team" cssClass="error"/>
-            </td>
-        
-            <td align="right">Lead :</td>
-            <td><form:select path="leadid" class="login login-submit">
-                <option class="login login-submit" value="0">Select</option>
-                <c:forEach  items="${AllLeads}" var="lead"> 
-                <form:option class="login login-submit" value="${lead.userid}">${lead.username}</form:option>
-                </c:forEach>
-                </form:select>
-                <span class='red'>*</span>
-                <form:errors path="leadid" cssClass="error"/>
-            </td>
-        </tr>
+    </td></tr>
+<tr><td align="right"><h4>End Date :</td><td><form:input placeholder="Enter End Date" id="txtToDate" path="enddate"/>
+         <span class='red'>*</span>
+        <form:errors path="enddate" cssClass="error"/>
+    </td></tr>
 
-       
-
-        <tr>
-            <td align="right">Type of Assessment:</td>
-            <td><form:select class="login login-submit" path="assessmentType">
-                <form:option class="login login-submit" value="">Select</form:option>
-                <form:option class="login login-submit" value="Initial">Initial</form:option>
-                <form:option class="login login-submit" value="Confirmatory">Confirmatory</form:option>
-                <form:option class="login login-submit" value="Other">Other</form:option>
-                </form:select>
-                <span class='red'>*</span>
-            </td>
+<tr><td align="right"><h4>Type of Assessment:</td><td>
+        <form:select class="login login-submit" path="assessmentType">
+        <form:option class="login login-submit" value="">Select</form:option>
+	<form:option class="login login-submit" value="Initial">Initial</form:option>
+	<form:option class="login login-submit" value="Confirmatory">Confirmatory</form:option>
+        <form:option class="login login-submit" value="Other">Other</form:option>
+    </form:select>
         
-            <td align="right">Regulation Compliance:</td>
-            <td><form:select class="login login-submit" placeholder="PCIDSS/HIPPA" path="compliance">
-                <form:option class="login login-submit" value="">Select</form:option>
-                <form:option class="login login-submit" value="PCI DSS">PCI DSS</form:option>
-                <form:option class="login login-submit" value="HIPAA">HIPAA</form:option>
-                <form:option class="login login-submit" value="Plynt Certification">PLYNT Certification</form:option>
-                <form:option class="login login-submit" value="Others">Others</form:option>
-                <form:option class="login login-submit" value="None">None</form:option>
-                </form:select>
-                <span class='red'>*</span>
-            </td>
-        </tr> 
+    </h4>
+ <span class='red'>*</span>
+</td></tr> 
 
-        <tr>
-            <td align="right">Pre-requisites:</td>
-            <td><form:select class="login login-submit"  path="requirements">
-                <form:option class="login login-submit" value="">Select</form:option>
-                <form:option class="login login-submit" value="Shared and Validated">Received and Validated</form:option>
-                <form:option class="login login-submit" value="Shared, Needs Validation">Received, Needs Validation</form:option>
-                <form:option class="login login-submit" value="Shared, Needs Validation">Not Received</form:option>
-                </form:select>    
-            </td>
+<tr><td align="right"><h4>Regulation Compliance:</td><td>
+        <form:select class="login login-submit" placeholder="PCIDSS/HIPPA" path="compliance">
+        <form:option class="login login-submit" value="">Select</form:option>
+	<form:option class="login login-submit" value="PCI DSS">PCI DSS</form:option>
+	<form:option class="login login-submit" value="HIPAA">HIPAA</form:option>
+        <form:option class="login login-submit" value="Plynt Certification">PLYNT Certification</form:option>
+        <form:option class="login login-submit" value="Others">Others</form:option>
+        <form:option class="login login-submit" value="None">None</form:option>
+    </form:select>
         
-            <td align="right">Whitelisting Confirmation:</td>
-            <td><form:select class="login login-submit"  path="whitelisting">
-                <form:option class="login login-submit" value="">Select</form:option>
-                <form:option class="login login-submit" value="Yes">Yes</form:option>
-                <form:option class="login login-submit" value="No, Need Confirmation">No, Need Confirmation</form:option>
-                </form:select>
-            </td>
-        </tr> 
-
-        <tr>
-            <td align="right">Scope/Other Details :</td>
-            <td colspan="2"><form:textarea rows="3" cols="40" class="textarea" path="details" name="details"/></td>
         
-       
-            <td align="left"><input type="submit" value="Create" class="login login-submit"/></td>
-        </tr>           
+    <span class='red'>*</span>
+    </td></tr> 
 
-        </table>
+<tr><td align="right"><h4>Pre-requisites:</td><td>
+    <form:select class="login login-submit"  path="requirements">
+        <form:option class="login login-submit" value="">Select</form:option>
+	<form:option class="login login-submit" value="Shared and Validated">Received and Validated</form:option>
+	<form:option class="login login-submit" value="Shared, Needs Validation">Received, Needs Validation</form:option>
+        <form:option class="login login-submit" value="Shared, Needs Validation">Not Received</form:option>
+    </form:select>    
+        
+    
+    </h4></td></tr> 
+        
+<tr><td align="right"><h4>Whitelisting Confirmation:</td><td>
+          <form:select class="login login-submit"  path="whitelisting">
+        <form:option class="login login-submit" value="">Select</form:option>
+	<form:option class="login login-submit" value="Yes">Yes</form:option>
+	<form:option class="login login-submit" value="No, Need Confirmation">No, Need Confirmation</form:option>
+   </form:select>
+   </h4></td></tr> 
 
-    </div>
-
-    </form:form>
-
+<tr><td align="right"><h4>Scope/Other Details :</td><td><form:textarea rows="3" cols="40" class="textarea" path="details" name="details"/></h4></td></tr>
+<br>
+<tr><td align="right"><input type="submit" value="Create" class="login login-submit"/></td></tr>           
+</table>
 </div>
+</form:form>
+
+	   </div>
      
-<script>
+	   <script>
   $(document).ready(function(){
     $("#txtFromDate").datepicker({
         numberOfMonths: 1,
@@ -379,10 +364,8 @@ font-style: italic;
         }
     });  
 });
-</script>
-    
-</body>
-
+  </script>
+    </body>
 </html>
 
 
