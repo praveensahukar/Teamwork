@@ -61,19 +61,19 @@ li a:hover:not(.active) {
 
 body {
 
-	background-image: url("grey.jpg");
-  background-repeat: repeat-y;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  font-family: 'Roboto', sans-serif;
+    background-image: url("grey.jpg");
+    background-repeat: repeat-y;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    font-family: 'Roboto', sans-serif;
 }
 
 .login-card {
   padding: 40px;
   width: 1420px;
-  height: 550px;
+  min-height: 550px;
   background-color: white;
   margin: 0 auto 10px;
   border-radius: 2px;
@@ -161,16 +161,16 @@ body {
 
 .login-card a {
   text-decoration: none;
-  color: #666;
+  color: #333;
   font-weight: 400;
   text-align: center;
   display: inline-block;
-  opacity: 0.6;
+  opacity: .5;
   transition: opacity ease 0.5s;
 }
 
 .login-card a:hover {
-  opacity: 1;
+  opacity: 3;
 }
 
 .login-help {
@@ -181,30 +181,30 @@ body {
 
 
 .scrollingtable {
-	box-sizing: border-box;
-	display: inline-block;
-	vertical-align: middle;
+	box-sizing: initial;
+	display: list-item;
+	vertical-align: super;
 	overflow: hidden;
-	width: 100%; /*set table width here if using fixed value*/
+	width: 60%; /*set table width here if using fixed value*/
 	/*min-width: 100%;*/ /*set table width here if using %*/
-	height: 80%; /*set table height here; can be fixed value or %*/
+	height: 60%; /*set table height here; can be fixed value or %*/
 	/*min-height: 104px;*/ /*if using % height, make this at least large enough to fit scrollbar arrows + captions + thead*/
 	font-family: Verdana, Tahoma, sans-serif;
-	font-size: 15px;
-	line-height: 20px;
-	padding-top: 20px; /*this determines top caption height*/
+	font-size: 20px;
+	line-height: 0px;
+	padding-top: 0px; /*this determines top caption height*/
 	padding-bottom: 20px; /*this determines bottom caption height*/
 	text-align: left;
 }
-.scrollingtable * {box-sizing: border-box;}
+.scrollingtable * {box-sizing: content-box;}
 .scrollingtable > div {
 	position: relative;
-	border-top: 1px solid black; /*top table border*/
+	border-top: 0px solid black; /*top table border*/
 	height: 100%;
-	padding-top: 20px; /*this determines column header height*/
+	padding-top: 0px; /*this determines column header height*/
 }
 .scrollingtable > div:before {
-	top: 0;
+	top: 0px;
 	background: cornflowerblue; /*column header background color*/
 }
 .scrollingtable > div:before,
@@ -221,13 +221,16 @@ body {
 	max-height: 100%;
 	overflow: scroll; /*set to auto if using fixed or % width; else scroll*/
 	overflow-x: hidden;
-	border: 1px solid black; /*border around table body*/
+	border: 3px solid black; /*border around table body*/
 }
 .scrollingtable > div > div:after {background: white;} /*match page background color*/
+
+/*Below settings edit the internal table looks */
+
 .scrollingtable > div > div > table {
-	width: 100%;
-	border-spacing: 0;
-	margin-top: -20px; /*inverse of column header height*/
+	border-spacing: 2px;
+        width: 100%;
+	margin-top: 0px; /*inverse of column header height*/ /* Change value here to -25 */
 	/*margin-right: 17px;*/ /*uncomment if using % width*/
 }
 .scrollingtable > div > div > table > caption {
@@ -238,7 +241,7 @@ body {
 	font-weight: bold;
 	text-align: center;
 }
-.scrollingtable > div > div > table > * > tr > * {padding: 0;}
+.scrollingtable > div > div > table > * > tr > * {padding: 5px;}
 .scrollingtable > div > div > table > thead {
 	vertical-align: bottom;
 	white-space: nowrap;
@@ -251,9 +254,9 @@ body {
 .scrollingtable > div > div > table > thead > tr > :first-child:before {
 	content: "";
 	position: absolute;
-	top: 0;
-	left: 0;
-	height: 20px; /*match column header height*/
+	top: 1px;
+	left: 1px;
+	height: 0px; /*match column header height*/
 	border-left: 1px solid black; /*leftmost header border*/
 }
 .scrollingtable > div > div > table > thead > tr > * > div[label]:before,
@@ -269,9 +272,10 @@ body {
 .scrollingtable > div > div > table > thead > tr > * + :before {
 	content: "";
 	display: block;
-	min-height: 20px; /*match column header height*/
-	padding-top: 1px;
-	border-left: 1px solid black; /*borders between header cells*/
+	min-height: 30px; /*match column header height*/
+	padding-top: 3px;
+	border-left: 2px solid black; /*borders between header cells*/
+        border-right: 2px solid black;
 }
 .scrollingtable .scrollbarhead {float: right;}
 .scrollingtable .scrollbarhead:before {
@@ -291,17 +295,42 @@ body {
 .scrollingtable > div > div > table > tbody {vertical-align: top;}
 .scrollingtable > div > div > table > tbody > tr {background: white;}
 .scrollingtable > div > div > table > tbody > tr > * {
-	border-bottom: 1px solid black;
-	padding: 0 6px 0 6px;
-	height: 20px; /*match column header height*/
+	border-bottom: 2px solid black;
+	padding: 10px;
+	height: 50px; /*match column header height*/
 }
-.scrollingtable > div > div > table > tbody:last-of-type > tr:last-child > * {border-bottom: none;}
+.scrollingtable > div > div > table > tbody:last-of-type > tr:last-child > * {border-bottom: 1px solid black;}
 .scrollingtable > div > div > table > tbody > tr:nth-child(even) {background: gainsboro;} /*alternate row color*/
-.scrollingtable > div > div > table > tbody > tr > * + * {border-left: 1px solid black;}
+.scrollingtable > div > div > table > tbody > tr > * + * {border-left: 2px solid black; boder-right: 2px solid black}
+
+.descriptiontip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.descriptiontip .tiptext {
+  visibility: hidden;
+  width: 300px;
+  background-color: #a6a6a6;
+  color: #0c0c0c;
+  text-align: center;
+  border-radius: 5px;
+  border: 4px #0c0c0c;
+  padding: 10px 10px 10px 10px;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+
+.descriptiontip:hover .tiptext {
+  visibility: visible;
+}
+
 
 
 </style>
-
 
 <title>All Task-Templates</title>
 </head>
@@ -315,21 +344,32 @@ body {
 			<div>
     <table>
         <thead>
-            <tr bgcolor="#a6a6a6">
-            <th><div label="Template Name"></div></th>
-            <th><div label="Description"></div></th>
-           
-            <th><div label="Delete"></div>Delete</th>
-            </tr>
+          
         </thead>
     
           <tbody>  
-        <c:forEach  items="${AllTemplates}" var="template">     
+            <c:forEach  items="${AllTemplates}" var="template">     
             <tr>
-                <td> ${fn:escapeXml(template.templatename)}</td>
-                <td> ${fn:escapeXml(template.templateDesc)}</td>
-               
-                <td><a href="DeleteTemplate.do?id=${template.templateid}">DELETE</td>
+                <td> 
+                    <div class="descriptiontip">
+                        ${fn:escapeXml(template.templatename)}
+                        <span class="tiptext">
+                            <u> Description</u><br>
+                             ${fn:escapeXml(template.templateDesc)}
+                        </span>
+                    </div>
+                
+                    <a href="DeleteTemplate.do?id=${template.templateid}"" style="float:right; margin-right: 20px;">
+                        <img  src="delete.png" alt="Delete Template" style="width:18px;height:18px;border:0;" 
+                              onclick="return confirm('Are you sure you want to delete the template?')">
+                    </a>
+                    
+                    <a href="GetTemplateDetails.do?id=${template.templateid}" style="float:right; margin-right: 40px;">
+                        <img  src="icons8-edit.png" alt="Edit User" style="width:18px;height:18px;border:0;">
+                    </a>
+                </td>
+                
+              
             </tr>
         </c:forEach>
           </tbody>

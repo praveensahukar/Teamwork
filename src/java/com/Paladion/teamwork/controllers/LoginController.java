@@ -115,12 +115,6 @@ public String Login()
         System.out.println("in login");
            lb=LS.Login(LB);
            if (lb!=null) {
-               System.out.println("==================LOGS start========================");
-               System.out.println("use log4j to log these details for security reason");
-               System.out.println("system name:"+SystemInfo.getSystemName());
-               System.out.println("IP address: "+SystemInfo.getIPAddress());
-               System.out.println("MAC address: "+SystemInfo.getMAC());
-               System.out.println("==================LOGS end========================");
                
                //Invalidate pre-login session
                HttpSession currentSess=req.getSession(true);
@@ -133,8 +127,8 @@ public String Login()
                       String token = RandomStringUtils.random(30, 0, 0, true, true, null, new SecureRandom());
                       LoginSess.setAttribute("AntiCsrfToken",token);
                       if(!lb.getRole().equalsIgnoreCase("engineer")){
-//                      LoginSess.setAttribute("SysConfig", AS.getSystemSettings());
-//                      LoginSess.setAttribute("AllUsers", userService.GetAllUser());
+                      //LoginSess.setAttribute("SysConfig", AS.getSystemSettings());
+                      //LoginSess.setAttribute("AllUsers", userService.GetAllUser());
                       }
 	            return new ModelAndView("redirect:/Welcome.do");
            }

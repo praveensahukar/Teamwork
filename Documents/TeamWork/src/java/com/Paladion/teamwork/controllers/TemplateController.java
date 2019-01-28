@@ -64,19 +64,18 @@ public ModelAndView Template()
 @RequestMapping(value="/CreateTaskTemplate",method=RequestMethod.POST)
 public ModelAndView CreateTemplate(@ModelAttribute("TemplateM")TemplateBean TempB,HttpServletRequest req) 
 {
-        System.out.println("\n inside create Template method ");
-
-        List <TaskBean> Tasklist = null;
-        
+		List <TaskBean> Tasklist = null;
         HttpSession TempSession=req.getSession(false);
         TempSession.setAttribute("Template", TempB);
-	System.out.println("Template Created with Template id  "+TempB.getTemplateid());
+		System.out.println("Template Created with Template id  "+TempB.getTemplateid());
 	    
 	try
         {
             Tasklist =TempS.getAllTasksforTemplate();
-	}
-        catch(Exception ex){}
+		}
+        catch(Exception ex){
+			
+		}
 	    
         List<MapTemplateTaskBean> MTTBList = new ArrayList<MapTemplateTaskBean>();
 	
@@ -110,7 +109,7 @@ public String getTaskName(int taskid, List<TaskBean> Tasklist){
 @RequestMapping(value="/AddTaskTemplate",method=RequestMethod.POST)
 public ModelAndView AddTaskToTemplate(@ModelAttribute("TaskW")TaskTemplateWrapper TaskW, HttpServletRequest req)
 {
-    System.out.println("Inside Add Task to template controller");
+ 
     HttpSession session=req.getSession();
     TemplateBean TempB=(TemplateBean)session.getAttribute("Template"); 
     

@@ -240,6 +240,9 @@
             <definitions>.\lib\nblibraries.properties</definitions>
         </libraries>
         <libraries xmlns="http://www.netbeans.org/ns/cdnjs-libraries/1"/>
+        <spellchecker-wordlist xmlns="http://www.netbeans.org/ns/spellchecker-wordlist/1">
+            <word>tempDesc</word>
+        </spellchecker-wordlist>
         <spring-data xmlns="http://www.netbeans.org/ns/spring-data/1">
             <config-files>
                 <config-file>web/WEB-INF/applicationContext.xml</config-file>

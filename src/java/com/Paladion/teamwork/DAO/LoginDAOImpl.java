@@ -45,7 +45,6 @@ public class LoginDAOImpl implements LoginDAO{
         Iterator it= list1.iterator();
             while(it.hasNext()){
             SessUserBean=(UserDataBean) it.next();
-            System.out.println("Query succefully executed");
             }
             if ((list1 != null) && (list1.size() > 0)){
             return SessUserBean;
@@ -65,49 +64,6 @@ public class LoginDAOImpl implements LoginDAO{
                 }
             }
         }
-    
-    //Remove the below code, this was coded for testing only
-    
-  //  @Override
-    public UserDataBean LoginTest(UserDataBean LB) {
-        Session session = sessionFactory.getCurrentSession();
-        Transaction tx = session.beginTransaction();
-        try{
-        UserDataBean SessUserBean=null;
-        System.out.println("Inside LoginDao");
-        String SQL_QUERY1 ="from UserDataBean u where u.email = '"+LB.getEmail()+"' and u.password = '"+LB.getPassword()+"'";
-    
-
-        
-        
-        
-        Query query1 = session.createQuery(SQL_QUERY1);
-        List list1=query1.list();
-        Iterator it= list1.iterator();
-            while(it.hasNext()){
-            SessUserBean=(UserDataBean) it.next();
-            System.out.println("Query succefully executed");
-            }
-            if ((list1 != null) && (list1.size() > 0)){
-            return SessUserBean;
-            }
-            else{
-            return null;
-            }            
-        }
-        catch(Exception ex){
-                tx.rollback();
-                System.out.println("Error Occured : "+ex.getMessage());
-                return null;
-            }finally{
-                if(session.isOpen()){
-                System.out.println("-------------Closing session--------------");
-                session.close();
-                }
-            }
-        }
-    
-    
     }  
               
     

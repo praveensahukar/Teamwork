@@ -190,7 +190,7 @@ public fileuploadBean populate1()
         
         if (result.hasErrors()) {
             //validates the user input, this is server side validation
-            System.out.println("error!!!!!!!!");
+            System.out.println("Validation error in getEngineers()");
             try{
                 ModelAndView model=new ModelAndView("CreateActivity");
                 model.addObject("AllTemplates", TS.getAllTemplates());
@@ -236,7 +236,7 @@ public fileuploadBean populate1()
        
         if (result.hasErrors()) {
             //validates the user input, this is server side validation
-            System.out.println("error!!!!!!!!");
+            System.out.println("Validation error in Schedule Activity method");
             ModelAndView model=new ModelAndView("CreateActivity");
             try{
                 model.addObject("AllTemplates", TS.getAllTemplates());

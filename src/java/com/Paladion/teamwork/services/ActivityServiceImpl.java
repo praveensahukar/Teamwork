@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.servlet.ModelAndView;
 import com.Paladion.teamwork.DAO.ActivityDAO;
 import com.Paladion.teamwork.beans.AllocationBean;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -90,27 +91,38 @@ ActivityDAO PD;
         HttpSession sess= req.getSession(false);
         UserDataBean sessuser=(UserDataBean) sess.getAttribute("Luser");
 	ModelAndView result=new ModelAndView("Welcome");
-        List<ActivityBean> PBList=(List<ActivityBean>)this.getAllProjects(sessuser.getUserid(), sessuser.getRole());
-     
-        int total_projects=PBList.size();
+        List <ActivityBean> PBList=new ArrayList<>();
+        PBList=(List<ActivityBean>)this.getAllProjects(sessuser.getUserid(), sessuser.getRole());
+        int total_projects = 0;
         int project_new=0;
         int project_progress=0;
         int project_completed=0;
         int on_hold=0;
+        
+        
+       // System.out.println(PBList.size());
+       // System.out.println(PBList.isEmpty());
+        //total_projects=PBList.size();
+       
         for(ActivityBean PB:PBList){
             if(PB.getStatus().equalsIgnoreCase("new")){
                 project_new++;
+                total_projects++;
             }
             if(PB.getStatus().equalsIgnoreCase("progress")){
                 project_progress++;
+                total_projects++;
             }
             if(PB.getStatus().equalsIgnoreCase("completed")){
                 project_completed++;
+                total_projects++;
             }
             if(PB.getStatus().equalsIgnoreCase("on hold")){
                 on_hold++;
+                total_projects++;
             }
         }
+        
         System.out.println("No of completed projects : "+project_completed);
         System.out.println("No of on going projects : "+project_progress);
         System.out.println("No of new projects : "+project_new);

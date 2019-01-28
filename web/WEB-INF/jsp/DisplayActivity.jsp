@@ -335,7 +335,7 @@ html {
     return (sa);
 }
         </script>
-<title>All Projects</title>
+<title>All Activities</title>
 </head>
     <body>
          
