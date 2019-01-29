@@ -219,8 +219,21 @@ th {
             <form:option class="login login-submit" value="Scheduling" path="role">Scheduling</form:option>
             </form:select>
             </td>
+            </tr>
+            
+            <tr><td align="center"><h4 >Change Status</td>
+            <td>
+            <form:select  path="status" class="login login-submit">
+            <form:option class="login login-submit" value="${UserDetail.status}" path="status">${UserDetail.status}</form:option>
+	    <form:option class="login login-submit" value="Active" path="status">Active</form:option>
+	    <form:option class="login login-submit" value="Inactive" path="status">Inactive</form:option>
+            </form:select>
+            </td>
+            </tr>
+            
+            
 
-          <input type="hidden" name="userid" value="${UserDetail.userid}"/>
+            <input type="hidden" name="userid" value="${UserDetail.userid}"/>
             
             <input type="hidden" name="AntiCSRFToken" value="${csrfPreventionSalt}"/> 
             

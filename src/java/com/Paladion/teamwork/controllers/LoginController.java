@@ -114,6 +114,10 @@ public String Login()
         
         System.out.println("in login");
            lb=LS.Login(LB);
+           if(lb!=null && lb.getStatus().equalsIgnoreCase("inactive")){
+               return new ModelAndView("Login","Message", "User is inactive.");
+           }
+           
            if (lb!=null) {
                
                //Invalidate pre-login session

@@ -61,7 +61,6 @@ import com.Paladion.teamwork.services.TaskService;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -291,6 +290,7 @@ public fileuploadBean populate1()
         List<MapTemplateTaskBean> MTTB=TS.getAllWeights(AB.getTemplateid());
             
         UserDataBean engBean = US.GetUserById(AB.getEngtracker());
+        String eng =engBean.getUsername();
             
         PSBList=  CU.setTaskHours(AB, MTTB);
         PTW.setProjectlist(PSBList);
@@ -319,6 +319,7 @@ public fileuploadBean populate1()
         results=new ModelAndView("DisplayActivityProgress");
         results.addObject("ProjectData",AB);
         results.addObject("TaskDetails",PTBList1);
+        results.addObject("Engineer",eng);
         return results;
     }
     catch(Exception ex){

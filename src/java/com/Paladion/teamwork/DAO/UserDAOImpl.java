@@ -166,14 +166,15 @@ public class UserDAOImpl implements UserDAO{
         Session session = this.sessionFactory.openSession();
         Transaction tx = session.beginTransaction();
         try{
-            String sql = "UPDATE users SET username=?,email=?,team=?,phone=?,role=? WHERE userid=?";
+            String sql = "UPDATE users SET username=?,email=?,team=?,phone=?,role=?, status=? WHERE userid=?";
             SQLQuery query = session.createSQLQuery(sql);
             query.setParameter(0,UB.getUsername());
             query.setParameter(1,UB.getEmail());
             query.setParameter(2,UB.getTeam());
             query.setParameter(3,UB.getPhone());
             query.setParameter(4,UB.getRole());
-            query.setParameter(5,UB.getUserid());
+            query.setParameter(5,UB.getStatus());
+            query.setParameter(6,UB.getUserid());
             query.executeUpdate();
             tx.commit();
             return true;
@@ -224,6 +225,7 @@ public class UserDAOImpl implements UserDAO{
                 List<UserDataBean> UserList=new ArrayList<UserDataBean>();
                 Criteria criteria = session1.createCriteria(UserDataBean.class);
                 criteria.add(Restrictions.eq("role", role));
+                criteria.add(Restrictions.eq("status", "Active"));
                 UserList = criteria.list();
                 tx.commit();
                 return UserList;

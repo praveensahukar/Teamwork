@@ -24,10 +24,10 @@ UserDAO userDAO;
 	
 @Override
 	public boolean addUser(UserDataBean loginBean) {
+            loginBean.setStatus("Active");
 		return userDAO.addUser(loginBean);
 		//System.out.println("com.Paladion.teamwork.services.UserServiceImpl.addUser()");	
-
-}
+            }
 	
 	
 	
@@ -78,7 +78,7 @@ public List<UserDataBean> getAvailableEngineers(Date projStartDate, Date projEnd
         for(UserDataBean uBean : AllEng){
             boolean flag = true;
             for(i=0; i< list1.size();i++){
-            if(uBean.getUserid()== userIDs[i]){
+            if(uBean.getUserid()== userIDs[i] || uBean.getStatus().equalsIgnoreCase("inactive")){
                 flag=false;
                 }    
             }

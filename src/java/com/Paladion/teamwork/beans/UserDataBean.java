@@ -34,6 +34,7 @@ int userid;
      String team;
     String phone;
     String otp;
+    String status;
 
     public int getUserid() {
         return userid;
@@ -97,6 +98,14 @@ int userid;
 
     public void setOtp(String otp) {
         this.otp = otp;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
    
     
