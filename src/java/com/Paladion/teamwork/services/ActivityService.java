@@ -33,6 +33,7 @@ public interface ActivityService {
     public boolean allocateResource(AllocationBean AB);
     public List<ActivityBean> getUpcomingActivities();
     public void checkTaskStatusOnhold();
+    public List<AllocationBean> getEngAllocationForActivity(int activityId);
     
 }
 

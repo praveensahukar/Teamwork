@@ -163,5 +163,9 @@ ActivityDAO PD;
            PD.checkTaskStatusOnhold();  
     }
     
+    public List<AllocationBean> getEngAllocationForActivity(int activityId){
+        return PD.getEngAllocationForActivity(activityId);
+    }
+    
 	
 }

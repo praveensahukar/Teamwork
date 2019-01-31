@@ -55,8 +55,8 @@ public class UserDAOImpl implements UserDAO{
         }
     }
         
-    @Override
-    public List getAvailableEngineers(Date projStartDate, Date projEndDate){
+    //@Override
+    public List getAvailableEngineers2(Date projStartDate, Date projEndDate){
         Session session1 = sessionFactory.getCurrentSession();
 	Transaction tx = session1.beginTransaction();
 	try{	
@@ -78,6 +78,33 @@ public class UserDAOImpl implements UserDAO{
             }
         }
     }
+    
+    
+    
+    @Override
+    public List getAvailableEngineers(Date projStartDate, Date projEndDate){
+        Session session1 = sessionFactory.getCurrentSession();
+	Transaction tx = session1.beginTransaction();
+	try{	
+            String SQL_QUERY1= "select distinct engineerId from AllocationBean AB where AB.allocationEndenddate > :projstartdate and AB.allocationStartdate < :projenddate";
+            Query query = session1.createQuery(SQL_QUERY1);
+            query.setParameter("projstartdate",projStartDate);
+            query.setParameter("projenddate",projEndDate);
+	    List list2 = query.list();
+            tx.commit();
+            return list2;
+        }catch(Exception e){
+        System.out.println("Exception occured. "+e.getMessage());
+        return null;
+        }
+        finally{
+            if(session1.isOpen()){
+            System.out.println("---------Closing session------------");
+            session1.close();
+            }
+        }
+    }
+    
 
         
         
@@ -142,7 +169,7 @@ public class UserDAOImpl implements UserDAO{
         Session session = this.sessionFactory.openSession();
         Transaction tx = session.beginTransaction();
         try{
-            String sql = "Delete from users where userid=?";
+            String sql = "update users set status = \"Inactive\" where userid=?";
             SQLQuery query = session.createSQLQuery(sql);
             query.setParameter(0, id);
             query.executeUpdate();

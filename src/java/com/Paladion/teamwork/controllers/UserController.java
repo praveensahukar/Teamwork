@@ -18,9 +18,11 @@ import com.Paladion.teamwork.utils.CommonUtil;
 import com.Paladion.teamwork.utils.EmailUtil;
 import com.Paladion.teamwork.utils.userUpdateValidator;
 import com.Paladion.teamwork.utils.userValidator;
+import java.io.PrintWriter;
 import java.text.ParseException;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -201,7 +203,7 @@ public ModelAndView ViewAllUser(HttpServletRequest req )
             //update user list in session
             Sess.setAttribute("AllUsers", userList);
 	    result.addObject("AllUsers",userList);
-            result.addObject("Message","User deleted successfully");    
+            result.addObject("Message","User deactivated successfully");    
             }
             else{
             result=new ModelAndView("Welcome");
@@ -259,5 +261,56 @@ public ModelAndView GetUserDetails(@RequestParam int id, HttpServletRequest req)
         }
         
     } 
+    
+    //Method to test ajax call, delete the method method
+    
+    @RequestMapping(value="/GetUserServlet",method=RequestMethod.GET)
+public HttpServletResponse UserDetails(@RequestParam String userName, HttpServletRequest req, HttpServletResponse response)
+{
+    System.out.println("Reached method");
+    String[] authorizedRoles = {"admin","manager"};
+    if(!CU.checkUserAuthorization(authorizedRoles, req));
+    try{  
+      response.setContentType("text/plain");  
+        
+    
+    if(userName != null)
+    {
+        UserDataBean ub = userService.GetUserById(4089);
+        //result.addObject("AllTeams",TService.getAllTeams());
+       // return ub.toString();
+        
+        String greetings = "Hello " + userName;
+		
+        
+	response.getWriter().write("sas");
+        return response;
+    }
+  
+  //  return "User Not found!!";
+    }
+    catch(Exception ex){
+    ex.printStackTrace();
+    return response;
+    }
+    return response;
+}
+
+
+   @RequestMapping(value="/getAjax",method=RequestMethod.GET)
+    public ModelAndView getAjax(HttpServletRequest req)
+    {   String[] authorizedRoles = {"admin","manager"};
+        if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
+        try{
+        ModelAndView result= new ModelAndView("ajaxSample");
+       // result.addObject("AllTeams",TService.getAllTeams());
+        return result;
+        }
+        catch(Exception ex){
+        ex.printStackTrace();
+        return new ModelAndView("Error");
+        }
+    } 
+    
 }
 

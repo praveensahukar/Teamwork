@@ -93,6 +93,8 @@ public List<UserDataBean> getAvailableEngineers(Date projStartDate, Date projEnd
     public List<UserDataBean> GetUsersByRole(String role){
         return userDAO.GetUsersByRole(role);
     }
+    
+
 		
 }
 

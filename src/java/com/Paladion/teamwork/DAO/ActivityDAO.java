@@ -45,4 +45,6 @@ public interface ActivityDAO {
     public List<ActivityBean> getUpcomingActivities(Date today, Date nextDate);
     
     public void checkTaskStatusOnhold();
+    
+    public List<AllocationBean> getEngAllocationForActivity(int activityId);
 }

@@ -218,8 +218,6 @@ public fileuploadBean populate1()
         }
     }
     
-    
-    
 
     //Schedule a activity
     @RequestMapping(value="/ScheduleActivity",method=RequestMethod.POST)
@@ -954,7 +952,7 @@ public ModelAndView Downloadfiles(@RequestParam String pid,HttpServletRequest re
     @RequestMapping(value="/deleteProject",method=RequestMethod.GET)
     public ModelAndView delete_Project(@RequestParam int pid, HttpServletRequest req) throws ParseException
     {
-        String[] authorizedRoles = {"admin","manager","lead"};
+        String[] authorizedRoles = {"admin","manager","lead","scheduling"};
         if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
         try{
             if(AS.deleteProject(pid) ){
@@ -1087,7 +1085,45 @@ public ModelAndView Downloadfiles(@RequestParam String pid,HttpServletRequest re
   
     
     
-    
-    
+
+     @RequestMapping(value="/editActivityDetails",method=RequestMethod.GET)
+    public ModelAndView editActivityDetails(@RequestParam int activityId, HttpServletRequest req) throws ParseException
+    {
+        String[] authorizedRoles = {"admin","manager","lead","scheduling"};
+        if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
+        try{
+            
+            ActivityBean AB = AS.getProjectById(activityId);
+            
+            
+            ModelAndView model=new ModelAndView("UpdateActivityDetails");
+           
+            model.addObject("ActivityBean",AB);
+            //if(AB.getProjectid() > 0 )
+            ProjectBean PB =PS.getProjectDeatails(AB.getProjectid());
+            model.addObject("ProjectBean",PB );
+            List<AllocationBean> ListAloB = AS.getEngAllocationForActivity(activityId);
+            if(ListAloB.size() == 1){
+                model.addObject("AllocationBean",ListAloB.get(0));
+                model.addObject("EngineerBean", US.GetUserById(ListAloB.get(0).getEngineerId()));
+            }
+            if(ListAloB.size() > 1){
+                  model.addObject("AllocationBeanList",ListAloB);
+            }
+            model.addObject("AllTemplates", TS.getAllTemplates());
+            model.addObject("AllLeads", US.GetUsersByRole("lead"));
+            model.addObject("AllTeams",  TeamS.getAllTeams());
+            model.addObject("AllProjects",PS.getAllProjects());  
+            
+           
+            
+	
+            return model; 
+        }
+        catch(Exception e){
+        System.out.println("Exception occured. "+e.getMessage());
+        return new ModelAndView("Error");
+        }
+    }
     
 }

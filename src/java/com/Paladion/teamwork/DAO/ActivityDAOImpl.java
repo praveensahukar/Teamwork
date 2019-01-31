@@ -490,4 +490,32 @@ public class ActivityDAOImpl implements ActivityDAO
                 }
             }
         }
+        
+        
+         public List<AllocationBean> getEngAllocationForActivity(int activityId){
+        Session session1 = sessionFactory.getCurrentSession();    
+        Transaction tx = session1.beginTransaction();
+        try{    
+        Criteria criteria = session1.createCriteria(AllocationBean.class);
+        criteria.add(Restrictions.ge("activityId", activityId));
+        List<AllocationBean> ABList = new ArrayList<AllocationBean>();
+        ABList = criteria.list();
+        tx.commit();
+        return ABList;
+       
+        }
+        catch(Exception ex){
+                tx.rollback();
+                System.out.println("Error Occured : "+ex.getMessage());
+                return null;
+            }
+            finally{
+                if(session1.isOpen()){
+                System.out.println("-------------Closing session--------------");
+                session1.close();
+                }
+            }
+         }
+        
+        
     }
