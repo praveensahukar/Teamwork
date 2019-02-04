@@ -15,6 +15,8 @@
   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+
+
 <head>
 <script type="text/javascript">
   $(document).ready(function(){
@@ -175,57 +177,57 @@ font-style: italic;
 </style>
 
  <script >  
-   function doAjaxPost() {  
-    var sdate = $('#date').val();  
-    var edate = $('#datepicker').val();  
-    var team = $('#team').val();
-    var csrfPreventionSalt = $('#token').val();
-    alert(csrfPreventionSalt);
-    
-    if(!team)
-    {
-        alert("Select Team!!"); 
-        return; 
-    }
-    
-    if(!sdate)
-    {
-        alert("Select Start Date!!"); 
-        return; 
-    }
-    
-    if(!edate)
-    {
-        alert("Select End Date!!"); 
-        return; 
-    }
-    
-    var dropdown = $('#engineers');
-    
-    
-   $.ajax({
-     dataType : 'json',
-     type : "Post",   
-     url : "getEngineers.do",   
-     data : "sdate=" + sdate + "&edate=" + edate + "&team=" + team + "&AntiCSRFToken=" + csrfPreventionSalt,  
-     success : function(data){
-         alert(data);
-            var users = JSON.parse(data);
-              alert(users);
-              
-              $.each(data.users,function(i,obj)
-                {
-                        $.each(obj, function (key, val) {
-                        alert(key + val);
-                        });
-                });
-            }
-            ,  
-     error : function(e) {  
-      alert('Error: ' + e);   
-     }  
-    }); 
-   }  
+//   function doAjaxPost() {  
+//    var sdate = $('#date').val();  
+//    var edate = $('#datepicker').val();  
+//    var team = $('#team').val();
+//    var csrfPreventionSalt = $('#token').val();
+//    alert(csrfPreventionSalt);
+//    
+//    if(!team)
+//    {
+//        alert("Select Team!!"); 
+//        return; 
+//    }
+//    
+//    if(!sdate)
+//    {
+//        alert("Select Start Date!!"); 
+//        return; 
+//    }
+//    
+//    if(!edate)
+//    {
+//        alert("Select End Date!!"); 
+//        return; 
+//    }
+//    
+//    var dropdown = $('#engineers');
+//    
+//    
+//   $.ajax({
+//     dataType : 'json',
+//     type : "Post",   
+//     url : "getEngineers.do",   
+//     data : "sdate=" + sdate + "&edate=" + edate + "&team=" + team + "&AntiCSRFToken=" + csrfPreventionSalt,  
+//     success : function(data){
+//         alert(data);
+//            var users = JSON.parse(data);
+//              alert(users);
+//              
+//              $.each(data.users,function(i,obj)
+//                {
+//                        $.each(obj, function (key, val) {
+//                        alert(key + val);
+//                        });
+//                });
+//            }
+//            ,  
+//     error : function(e) {  
+//      alert('Error: ' + e);   
+//     }  
+//    }); 
+//   }  
  </script>  
     
 <title>Schedule Activity</title>
@@ -292,12 +294,12 @@ font-style: italic;
                 <form:errors path="leadid" cssClass="error"/>
             </td>
             
-            <td align="right">Assigned Engineer :</td>
-            <td><form:select path="leadid" class="login login-submit">
-                <option class="login login-submit" value="${ActivityBean.leadid}">${fn:escapeXml(EngineerBean.username)}</option>
-                <c:forEach  items="${AvailableEngs}" var="AEngs"> 
-                <form:option class="login login-submit" value="${AEngs.userid}">${AEngs.username}</form:option>
-                </c:forEach>
+            <td align="right">Available Engineers :</td>
+            <td><form:select path="leadid" class="login login-submit" id="EngineerList">
+               <option class="login login-submit" value="" id="default">Select Dates</option>
+            
+               <%-- <form:option class="login login-submit" value="${AEngs.userid}">${AEngs.username}</form:option> --%>
+
                 </form:select>
                 <span class='red'>*</span>
                 <form:errors path="" cssClass="error"/>
@@ -358,7 +360,48 @@ font-style: italic;
         }
     });  
 });
+ 
+    
+$(document).ready(function() {
+        $('#txtToDate').blur(function(event) {
+                var sDate = $('#txtFromDate').val();
+                var eDate = $('#txtToDate').val();
+                var csrfPreventionSalt = $('#token').val();
+                $.post('getEngineersAjax.do', {
+                        txtFromDate : sDate,
+                        txtToDate : eDate,
+                        AntiCSRFToken : csrfPreventionSalt
+                }, function(responseJson) {
+                    
+                   if(responseJson.length == 0){
+                       alert("No engineers available for the selected dates.");
+                       return;
+                      
+                   }
+                   //  var $select = $("#EngineerList");
+                   var x = $('#default');
+                    x.remove();  
+                    $.each(responseJson, function(index, user) {
+                   // $("<option>").val(user.userid).text(user.username).appendTo($select);
+                   
+                      $('#EngineerList').append('<option class="login login-submit" value= ' + user.userid + '>' + user.username + ' : ' + user.team + '</option>');
+                  
+                    
+                });
+        });
+})});
+    
+    
 </script>
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
 </body>
 

@@ -58,6 +58,7 @@ import com.Paladion.teamwork.services.ActivityService;
 import com.Paladion.teamwork.services.EmailService;
 import com.Paladion.teamwork.services.ProjectService;
 import com.Paladion.teamwork.services.TaskService;
+import com.google.gson.Gson;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -202,7 +203,7 @@ public fileuploadBean populate1()
             return new ModelAndView("Error");
             }                    
         }
-        
+      
 	List<UserDataBean> availableEngineers = US.getAvailableEngineers(AB.getStartdate(),AB.getEnddate(),US.GetUsersByRole("engineer"));
         AB.setLead(US.GetUserById(AB.getLeadid()).getUsername());
         List <TemplateBean> TemplateList = TS.getAllTemplates();
@@ -1125,5 +1126,51 @@ public ModelAndView Downloadfiles(@RequestParam String pid,HttpServletRequest re
         return new ModelAndView("Error");
         }
     }
+    
+    
+    
+    
+     @RequestMapping(value="/getEngineersAjax",method=RequestMethod.POST)
+    public void getEngineersAjax(@RequestParam String txtFromDate,@RequestParam String txtToDate , HttpServletRequest req, HttpServletResponse response)
+    {   
+        try{ 
+        String[] authorizedRoles = {"admin","manager","lead","scheduling"};
+        if(!CU.checkUserAuthorization(authorizedRoles, req));
+         //response.setContentType("text/html"); 
+        
+         Date sDate=new SimpleDateFormat("yyyy-MM-dd").parse(txtFromDate);  
+         Date eDate=new SimpleDateFormat("yyyy-MM-dd").parse(txtToDate);  
+      
+	List<UserDataBean> availableEngineers = US.getAvailableEngineers(sDate,eDate,US.GetUsersByRole("engineer"));
+      //  AB.setLead(US.GetUserById(AB.getLeadid()).getUsername());
+      //  List <TemplateBean> TemplateList = TS.getAllTemplates();
+      //  ModelAndView model=new ModelAndView("SelectEngineers");
+      //  model.addObject("engineers",availableEngineers);
+      //  model.addObject("AllTemplates", TemplateList);
+      //  model.addObject("activitybean", AB);
+        response.setContentType("application/json");
+        
+        for(UserDataBean ub : availableEngineers){
+            ub.setPassword("");
+            ub.setOtp("");
+        }
+        
+         String json = new Gson().toJson(availableEngineers);
+         response.getWriter().write(json);  
+        }
+        catch(Exception ex){
+           ex.printStackTrace();
+          
+        }
+   
+    }
+    
+    
+    
+    
+    
+    
+    
+    
     
 }

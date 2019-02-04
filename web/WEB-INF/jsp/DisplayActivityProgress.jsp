@@ -476,12 +476,12 @@ body {
     <a href="addActivityTask.do?activityId=${ProjectData.activityid}"><button>Add Task</button></a> <br>
     
     <br>
-    <a href="editActivityDetails.do?activityId=${ProjectData.activityid}"><button>Edit Activity Details</button></a> <br>
+   <%-- <a href="editActivityDetails.do?activityId=${ProjectData.activityid}"><button>Edit Activity Details</button></a> <br> --%>
     
     <br>  <a href="deleteProject.do?pid=${ProjectData.activityid}"><button onclick="return confirm('Are you sure you want to delete this activity?')">Delete Activity</button></a>
 
-    <%-- Delete below line
-    <a href="getAjax.do"><button>Ajax Test</button></a> <br> --%>
+    <%-- Delete below line --%>
+    <%-- <a href="getAjax.do"><button>Ajax Test</button></a> <br> --%> 
     
     
 <br>
