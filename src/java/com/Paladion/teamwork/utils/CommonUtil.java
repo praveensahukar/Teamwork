@@ -512,7 +512,7 @@ Date calculateResponseTime(Calendar ProjectTime, float ProjectDurationinHours) {
         String Capital_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         String Small_chars = "abcdefghijklmnopqrstuvwxyz";
         String numbers = "0123456789";
-        String symbols = "!@#$%&?^";
+        String symbols = "!@#$";
         String values = Capital_chars + Small_chars + numbers + symbols;
  
         // Using random method

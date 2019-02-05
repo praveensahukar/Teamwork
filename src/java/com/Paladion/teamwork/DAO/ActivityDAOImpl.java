@@ -497,7 +497,7 @@ public class ActivityDAOImpl implements ActivityDAO
         Transaction tx = session1.beginTransaction();
         try{    
         Criteria criteria = session1.createCriteria(AllocationBean.class);
-        criteria.add(Restrictions.ge("activityId", activityId));
+        criteria.add(Restrictions.eq("activityId", activityId));
         List<AllocationBean> ABList = new ArrayList<AllocationBean>();
         ABList = criteria.list();
         tx.commit();

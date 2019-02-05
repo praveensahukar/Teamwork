@@ -5,8 +5,6 @@
  */
 package com.Paladion.teamwork.controllers;
 
-import com.Paladion.teamwork.beans.EmailBean;
-import com.Paladion.teamwork.beans.SystemBean;
 import com.Paladion.teamwork.beans.UserDataBean;
 import com.Paladion.teamwork.services.AdminService;
 import com.Paladion.teamwork.services.EmailService;
@@ -15,10 +13,7 @@ import com.Paladion.teamwork.services.LoginService;
 import com.Paladion.teamwork.services.TeamService;
 import com.Paladion.teamwork.services.UserService;
 import com.Paladion.teamwork.utils.CommonUtil;
-import com.Paladion.teamwork.utils.EmailUtil;
-import com.Paladion.teamwork.utils.userUpdateValidator;
 import com.Paladion.teamwork.utils.userValidator;
-import java.io.PrintWriter;
 import java.text.ParseException;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;

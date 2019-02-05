@@ -166,7 +166,7 @@ font-style: italic;
 <br><br>
   <div class="login-card">
   <div align="left">
-<img src="PaladionLogo.png"/>
+    <img src="PaladionLogo.png"/>
     </div>
       
       <center><h4 style="color: #ffffff"><b>${Message}</b></h4></center>
@@ -179,12 +179,16 @@ font-style: italic;
         New Password:<input type="password" name="newPassword" placeholder="Enter the password"/>
         Confirm Password:<input type="password" name="conPassword" placeholder="Re-enter the password"/>
         <input type="hidden" name="emailId" value="${email}"/>
+        <br>
+        <br>
+        <br>
         <button type="submit" value="Reset Password"class="login login-submit">Reset</button><br>
-	   
-	   
+        <br>
     </body>
+    </form:form>
+    <form action="Login.do" method="GET">
+        <div align="left"><button type="submit" class="login login-submit">Go to Login</button></a></div>
     </form>
-  </form:form>
   </div>
  <div class="footer">
   <p>Copyright © 2007-2018 Paladion Team Version: 1.0 All rights reserved. </p>

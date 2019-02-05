@@ -1138,10 +1138,10 @@ public ModelAndView Downloadfiles(@RequestParam String pid,HttpServletRequest re
         if(!CU.checkUserAuthorization(authorizedRoles, req));
          //response.setContentType("text/html"); 
         
-         Date sDate=new SimpleDateFormat("yyyy-MM-dd").parse(txtFromDate);  
-         Date eDate=new SimpleDateFormat("yyyy-MM-dd").parse(txtToDate);  
-      
-	List<UserDataBean> availableEngineers = US.getAvailableEngineers(sDate,eDate,US.GetUsersByRole("engineer"));
+         Date sDate=new SimpleDateFormat("MM/dd/yyyy").parse(txtFromDate);  
+         Date eDate=new SimpleDateFormat("MM/dd/yyyy").parse(txtToDate);  
+         List<UserDataBean> availableEngineers = new ArrayList<UserDataBean>();
+	availableEngineers = US.getAvailableEngineers(sDate,eDate,US.GetUsersByRole("engineer"));
       //  AB.setLead(US.GetUserById(AB.getLeadid()).getUsername());
       //  List <TemplateBean> TemplateList = TS.getAllTemplates();
       //  ModelAndView model=new ModelAndView("SelectEngineers");
@@ -1166,10 +1166,25 @@ public ModelAndView Downloadfiles(@RequestParam String pid,HttpServletRequest re
     }
     
     
-    
-    
-    
-    
+     @RequestMapping(value="/updateActivityDetails",method=RequestMethod.POST)
+    public Object updateActivityDetails(@ModelAttribute("ProjectM") ActivityBean AB, BindingResult result, HttpServletRequest req) throws Exception
+    {
+        HttpSession sess= req.getSession(false);
+        ModelAndView results = null;
+        List <TemplateBean> TemplateList;
+        List <UserDataBean> LeadList;
+        try{
+        String[] authorizedRoles = {"admin","manager","lead","scheduling"};
+        if(!CU.checkUserAuthorization(authorizedRoles, req))  return new ModelAndView("Error");
+       
+        String engID = req.getParameter("engid");
+  
+        }
+        catch(Exception ex){
+            
+        }
+        return null;
+    }
     
     
     

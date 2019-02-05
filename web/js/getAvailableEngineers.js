@@ -24,10 +24,11 @@ $(document).ready(function() {
                    //  var $select = $("#EngineerList");
                    var x = $('#default');
                     x.remove();  
-                    $.each(responseJson, function(index, user) {
+                     $('#EngineerList').html("");
+                    $.each(responseJson, function(index,user) {
                    // $("<option>").val(user.userid).text(user.username).appendTo($select);
                    
-                      $('#EngineerList').append('<option class="login login-submit" value= ' + user.userid + '>' + user.username + ' : ' + user.team + '</option>');
+                      $('#EngineerList').append('<option class="login login-submit"  value='+user.userid+'>' + user.username + ' : ' + user.team + '</option>');
                   
                     
                 });

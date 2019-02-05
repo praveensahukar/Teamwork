@@ -16,7 +16,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 
-
+<script src="js/getAvailableEngineers.js" type="text/javascript"></script>
 <head>
 <script type="text/javascript">
   $(document).ready(function(){
@@ -240,11 +240,11 @@ font-style: italic;
 	   
     <div>  <h2 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">Edit Activity Details for ${fn:escapeXml(ActivityBean.activityname)}  </h2></div>
 
-    <form:form action="getEngineers.do" method="post" commandName="ProjectM">
+    <form:form action="updateActivityDetails.do" method="post" commandName="ProjectM">
     <div>
         
         <input type="hidden" name="AntiCSRFToken" id="token" value="${csrfPreventionSalt}"/>
-    
+        <input path="activityid" type="hidden" name="activityid" value="${fn:escapeXml(ActivityBean.activityid)}"/> 
         <table border="0" cellpadding="10" cellspacing="2" >
 
         <tr>
@@ -295,7 +295,7 @@ font-style: italic;
             </td>
             
             <td align="right">Available Engineers :</td>
-            <td><form:select path="leadid" class="login login-submit" id="EngineerList">
+            <td><form:select path="" name="engid" class="login login-submit" id="EngineerList">
                <option class="login login-submit" value="" id="default">Select Dates</option>
             
                <%-- <form:option class="login login-submit" value="${AEngs.userid}">${AEngs.username}</form:option> --%>
@@ -332,7 +332,7 @@ font-style: italic;
                 <span class='red'>*</span>
             </td>
         </tr> 
-
+          
         <tr>
             <td align="left"><input type="submit" value="Update" class="login login-submit" onclick="return confirm('Are you sure you want to update the Activity details?')"/></td>
         </tr>           
@@ -360,48 +360,7 @@ font-style: italic;
         }
     });  
 });
- 
-    
-$(document).ready(function() {
-        $('#txtToDate').blur(function(event) {
-                var sDate = $('#txtFromDate').val();
-                var eDate = $('#txtToDate').val();
-                var csrfPreventionSalt = $('#token').val();
-                $.post('getEngineersAjax.do', {
-                        txtFromDate : sDate,
-                        txtToDate : eDate,
-                        AntiCSRFToken : csrfPreventionSalt
-                }, function(responseJson) {
-                    
-                   if(responseJson.length == 0){
-                       alert("No engineers available for the selected dates.");
-                       return;
-                      
-                   }
-                   //  var $select = $("#EngineerList");
-                   var x = $('#default');
-                    x.remove();  
-                    $.each(responseJson, function(index, user) {
-                   // $("<option>").val(user.userid).text(user.username).appendTo($select);
-                   
-                      $('#EngineerList').append('<option class="login login-submit" value= ' + user.userid + '>' + user.username + ' : ' + user.team + '</option>');
-                  
-                    
-                });
-        });
-})});
-    
-    
 </script>
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
 </body>
 

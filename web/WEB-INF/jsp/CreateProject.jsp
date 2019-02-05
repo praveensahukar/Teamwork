@@ -223,7 +223,7 @@ font-style: italic;
                     input = input ? parseInt( input, 10 ) : 0;
 
                     $this.val( function() {
-                        return ( input === 0 ) ? "" : input.toLocaleString( "en-IN" );
+                        return ( input === 0 ) ? 0 : input.toLocaleString( "en-IN" );
                     } );
         } );
     });
@@ -311,7 +311,7 @@ font-style: italic;
     </tr>
         
     <tr>
-        <td align="right">Revenue :</td>
+        <td align="right">Revenue (In INR) :</td>
         <td><form:input placeholder="Enter Revenue in INR" path="revenue" id="revenue" type="text" maxlength="15"/>
             <form:errors path="revenue" cssClass="error"/>
         </td>
