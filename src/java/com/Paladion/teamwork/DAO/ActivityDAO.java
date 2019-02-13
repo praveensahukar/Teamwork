@@ -47,4 +47,10 @@ public interface ActivityDAO {
     public void checkTaskStatusOnhold();
     
     public List<AllocationBean> getEngAllocationForActivity(int activityId);
+    
+    public void updateProjectTran(List <ActivityTransactionBean> PTBList);
+    
+    public void updateActivityBean(ActivityBean AB);
+    
+    public boolean updateResourceAllocation(AllocationBean AloB);
 }

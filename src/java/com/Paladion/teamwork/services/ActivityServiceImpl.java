@@ -167,5 +167,20 @@ ActivityDAO PD;
         return PD.getEngAllocationForActivity(activityId);
     }
     
+    @Override
+    public void updateProjectTran(List<ActivityTransactionBean> ATBL){
+        PD.updateProjectTran(ATBL);
+    }
+    
+    @Override
+    public void updateActivityBean(ActivityBean AB){
+        PD.updateActivityBean(AB);
+    }
+    
+    @Override
+    public boolean updateResourceAllocation(AllocationBean AloB){
+        return PD.updateResourceAllocation(AloB);
+    }
+    
 	
 }

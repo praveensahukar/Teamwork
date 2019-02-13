@@ -34,6 +34,9 @@ public interface ActivityService {
     public List<ActivityBean> getUpcomingActivities();
     public void checkTaskStatusOnhold();
     public List<AllocationBean> getEngAllocationForActivity(int activityId);
+    public void updateProjectTran(List<ActivityTransactionBean> ATBL);
+    public void updateActivityBean(ActivityBean AB);
+    public boolean updateResourceAllocation(AllocationBean AloB);
     
 }
 

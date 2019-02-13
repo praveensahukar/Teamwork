@@ -1,11 +1,5 @@
 
 
-<%-- 
-    Document   : CreateProject
-    Created on : 24 Apr, 2017, 5:28:38 PM
-    Author     : Administrator
---%>
-
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -18,6 +12,25 @@
 
 <script src="js/getAvailableEngineers.js" type="text/javascript"></script>
 <head>
+    
+    <%-- Code to load date on load on page --%>
+    <%-- 
+    <script type="text/javascript">
+  $(document).ready(function() {
+    $("#txtFromDate").datepicker();
+    format: 'dd/mm/yyyy'
+  });
+  </script>
+  <script type="text/javascript">
+  $(document).ready(function() {
+    $("#txtToDate").datepicker();
+    format: 'dd/mm/yyyy'
+  });
+  </script>
+     --%>
+    <%-- Code to load date on load on page ends --%>
+    
+   
 <script type="text/javascript">
   $(document).ready(function(){
     $("#txtFromDate").datepicker({
@@ -34,6 +47,10 @@
     });  
 });
   </script>
+    
+   
+    
+    
 <style>
 ul {
     list-style-type: none;
@@ -244,7 +261,8 @@ font-style: italic;
     <div>
         
         <input type="hidden" name="AntiCSRFToken" id="token" value="${csrfPreventionSalt}"/>
-        <input path="activityid" type="hidden" name="activityid" value="${fn:escapeXml(ActivityBean.activityid)}"/> 
+       
+        <input path="activityid" type="hidden" name="activityid" value="${ActivityBean.activityid}"/> 
         <table border="0" cellpadding="10" cellspacing="2" >
 
         <tr>
@@ -267,13 +285,14 @@ font-style: italic;
 
          <tr>
             <td align="right">Start Date :</td>
-            <td><form:input placeholder="Enter Start Date" id="txtFromDate" path="startdate" value="${fn:escapeXml(ActivityBean.startdate)}"/>
+            <td><form:input placeholder="Enter Start Date" id="txtFromDate" path="startdate" value="${ActivityBean.startdate}"/>
+               
             <span class='red'>*</span>
             <form:errors path="startdate" cssClass="error"/>
             </td>
         
             <td align="right">End Date :</td>
-            <td><form:input placeholder="Enter End Date" id="txtToDate" path="enddate" value="${fn:escapeXml(ActivityBean.enddate)}"/>
+            <td><form:input placeholder="Enter End Date" id="txtToDate" path="enddate" value="${ActivityBean.enddate}"/>
             <span class='red'>*</span>
             <form:errors path="enddate" cssClass="error"/>
             </td>
@@ -295,8 +314,8 @@ font-style: italic;
             </td>
             
             <td align="right">Available Engineers :</td>
-            <td><form:select path="" name="engid" class="login login-submit" id="EngineerList">
-               <option class="login login-submit" value="" id="default">Select Dates</option>
+            <td><form:select path="engtracker" class="login login-submit" id="EngineerList">
+               <option class="login login-submit" value="0" id="default">Select Dates</option>
             
                <%-- <form:option class="login login-submit" value="${AEngs.userid}">${AEngs.username}</form:option> --%>
 
@@ -344,7 +363,22 @@ font-style: italic;
     </form:form>
 
 </div>
-     
+ <%--   
+    <script>
+  $(document).ready(function() {
+    $("#txtFromDate").datepicker();
+    format: 'dd/mm/yyyy';
+  });
+  </script>
+  <script>
+  $(document).ready(function() {
+    $("#txtToDate").datepicker();
+    format: 'dd/mm/yyyy';
+  });
+  </script>  
+    
+    --%>
+    
 <script>
   $(document).ready(function(){
     $("#txtFromDate").datepicker({
@@ -361,6 +395,8 @@ font-style: italic;
     });  
 });
 </script>
+    
+    
     
 </body>
 

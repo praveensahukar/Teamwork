@@ -283,7 +283,7 @@ public fileuploadBean populate1()
         System.out.println("Man days :"+AB.getMandays());
        
         ActivityTransactionWrapper PTW=new ActivityTransactionWrapper();
-        List<ActivityTransactionBean> PSBList;
+        List<ActivityTransactionBean> PSBList ;
         List<ActivityTransactionBean> PTBList1;
         //ActivityBean PRDATA=AS.getProjectById(AB.getActivityid());
         List<MapTemplateTaskBean> MTTB=TS.getAllWeights(AB.getTemplateid());
@@ -413,14 +413,10 @@ public fileuploadBean populate1()
            List<ActivityTransactionBean> PSBList;
            ActivityBean PRDATA=AS.getProjectById(id);
            PSBList = AS.getProjectTransaction(id);
-           String eng=null;
-           for(ActivityTransactionBean PSB : PSBList){
-               eng = PSB.getEngname();
-           }
-           
+           String eng=PSBList.get(0).getEngname();
            //If engineers not assigned, redirect to assign engineers to tasks.
            if(PSBList.isEmpty()){
-           HttpSession sess=req.getSession(false);
+           //HttpSession sess=req.getSession(false);
            ActivityTransactionWrapper PTW=new ActivityTransactionWrapper();
            List<MapTemplateTaskBean> MTTB=TS.getAllWeights(PRDATA.getTemplateid());
            PSBList=  CU.setTaskHours(PRDATA, MTTB);
@@ -434,6 +430,7 @@ public fileuploadBean populate1()
            return result;
            }
            //return project progress
+           
            else{
            result=new ModelAndView("DisplayActivityProgress");
            result.addObject("ProjectData",PRDATA);
@@ -479,25 +476,27 @@ public fileuploadBean populate1()
         }
     }
     
-    //Update status of the individual project
+    //Update status of the individual Activity
     @RequestMapping(value="/updateProjectStatus",method=RequestMethod.GET)
     public ModelAndView updateProjectStatus(@RequestParam int pid,@RequestParam String status,HttpServletRequest req) throws ParseException
     {
         String[] authorizedRoles = {"admin","manager","lead"};
         if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
+        ModelAndView result=new ModelAndView();
         try{
         boolean value=false;
-        HttpSession sess= req.getSession(false);
-        UserDataBean sessuser=(UserDataBean) sess.getAttribute("Luser");
-        String role=sessuser.getRole();
+        //HttpSession sess= req.getSession(false);
+        //UserDataBean sessuser=(UserDataBean) sess.getAttribute("Luser");
+        //String role=sessuser.getRole();
         
         ActivityBean AB = AS.getProjectById(pid);
         
+        //Insert check for all task status to be completed
         if(AB.getStatus().equalsIgnoreCase("progress") && status.equalsIgnoreCase("completed")){
         value= AS.updateProjectStatus(pid,status);
-//        if(status.equalsIgnoreCase("completed")){
-//          //  PS.updateTaskStatus(pid);
-//        }
+        //        if(status.equalsIgnoreCase("completed")){
+        //            PS.updateTaskStatus(pid);
+        //        }
         }
         
         else if(AB.getStatus().equalsIgnoreCase("new") && status.equalsIgnoreCase("progress"))
@@ -514,21 +513,27 @@ public fileuploadBean populate1()
         }
         
         else{
-            ModelAndView result=new ModelAndView("DisplayActivity");
-            result.addObject("Message","Invalid status selected.");
-            result.addObject("AllProjects", AS.getAllProjects(sessuser.getUserid(), role));
-            return  result;
+           List <ActivityTransactionBean> ATBL = AS.getProjectTransaction(pid);
+           result=new ModelAndView("DisplayActivityProgress");
+           result.addObject("ProjectData",AS.getProjectById(pid));
+           result.addObject("TaskDetails",ATBL);
+           result.addObject("Engineer",ATBL.get(0).getEngname());
+           result.addObject("Message","Invalid status selected.");
+           return result;
         }
        
         if(value == true){
-          ModelAndView result=new ModelAndView("DisplayActivity");
-          result.addObject("Message","Status updated successfully.");
-	  result.addObject("AllProjects", AS.getAllProjects(sessuser.getUserid(), role));
+          List <ActivityTransactionBean> ATBL = AS.getProjectTransaction(pid);
+          result=new ModelAndView("DisplayActivityProgress");
+          result.addObject("ProjectData",AS.getProjectById(pid));
+          result.addObject("TaskDetails",ATBL);
+          result.addObject("Engineer",ATBL.get(0).getEngname());
+          result.addObject("Message","Activity status updated successfully.");
 	  return  result;
         }
         
         else{
-            ModelAndView result=new ModelAndView("Customerror");
+            result=new ModelAndView("Customerror");
             result.addObject("Message","You are not authorized to perform the action.");
             return result;
         }
@@ -1167,21 +1172,106 @@ public ModelAndView Downloadfiles(@RequestParam String pid,HttpServletRequest re
     
     
      @RequestMapping(value="/updateActivityDetails",method=RequestMethod.POST)
-    public Object updateActivityDetails(@ModelAttribute("ProjectM") ActivityBean AB, BindingResult result, HttpServletRequest req) throws Exception
+    public ModelAndView updateActivityDetails(@ModelAttribute("ProjectM") ActivityBean AB, BindingResult result, HttpServletRequest req) throws Exception
     {
-        HttpSession sess= req.getSession(false);
-        ModelAndView results = null;
-        List <TemplateBean> TemplateList;
-        List <UserDataBean> LeadList;
+       // HttpSession sess= req.getSession(false);
+       // ModelAndView results = null;
+       
         try{
         String[] authorizedRoles = {"admin","manager","lead","scheduling"};
         if(!CU.checkUserAuthorization(authorizedRoles, req))  return new ModelAndView("Error");
-       
-        String engID = req.getParameter("engid");
+        
+        ActivityBean ActBean = AS.getProjectById(AB.getActivityid());
+        
+         if(AB.getProjectid()!=0){
+            ProjectBean PB = PS.getProjectDeatails(AB.getProjectid());
+            AB.setOpid(PB.getOpid()); }
+        
+        if(AB.getStartdate() == null)
+        {AB.setStartdate(ActBean.getStartdate());}
+        
+        if(AB.getEnddate()== null)
+        {AB.setEnddate(ActBean.getEnddate());}
+        
+        if(AB.getStartdate()!=null && AB.getEnddate()!=null){
+        AB.setMandays(CU.getWorkingDays(AB.getStartdate(), AB.getEnddate()));
+        }
+        else{
+            //Error - return no dates selected.
+        }
+        
+        if(AB.getEngtracker() == 0)
+        {AB.setEngtracker(ActBean.getEngtracker());}
+      
+        if(AB.getLeadid()!=0){
+        AB.setLead(US.GetUserById(AB.getLeadid()).getUsername());}
+        
+        //update all feilds
+        AB.setTemplateid(ActBean.getTemplateid());
+        AB.setStatus(ActBean.getStatus());
+        AB.setAssessmentType(ActBean.getAssessmentType());
+        AB.setCompliance(ActBean.getCompliance());
+        AB.setWhitelisting(ActBean.getWhitelisting());
+        AB.setRequirements(ActBean.getRequirements());
+        AB.setDetails(ActBean.getDetails());
+        
+        AS.updateActivityBean(AB);
+        
+        List<ActivityTransactionBean> PTBList1 = new ArrayList<ActivityTransactionBean>();
+        //Update the activityTransactionBean if startdate or enddate or engineer is changed during update
+        if(AB.getStartdate()!=ActBean.getStartdate() || 
+                AB.getEnddate()!=ActBean.getEnddate() || ( 
+                AB.getEngtracker()!=ActBean.getEngtracker() && AB.getEngtracker()!=0))
+            {
+            ActivityTransactionWrapper PTW=new ActivityTransactionWrapper();
+            
+            List<ActivityTransactionBean> DBATB = new ArrayList<ActivityTransactionBean>();
+            List<ActivityTransactionBean> PSBList = new ArrayList<ActivityTransactionBean>();
+            
+            //ActivityBean PRDATA=AS.getProjectById(AB.getActivityid());
+            DBATB = AS.getProjectTransaction(AB.getActivityid());
+            List<MapTemplateTaskBean> MTTB=TS.getAllWeights(AB.getTemplateid());
+            UserDataBean engBean = US.GetUserById(AB.getEngtracker());
+            String eng =engBean.getUsername();
+            int engid = engBean.getUserid();
+            PSBList=  CU.setTaskHours(AB, MTTB);
+            PTW.setProjectlist(PSBList);
+                for(ActivityTransactionBean PTB: PSBList){
+                PTB.setUserid(engid);
+                PTB.setEngname(eng);
+                }
+                
+            int i=0;
+            PTBList1= CU.updateProjectTransaction(PSBList, AB,req.getSession(false));
+            for(ActivityTransactionBean PTB : PTBList1){
+                PTB.setTransid(DBATB.get(i).getTransid());
+                i++;
+                } 
+            //update the activityTansactionBeans to database
+            AS.updateProjectTran(PTBList1);
+            
+                List<AllocationBean> AloBList = AS.getEngAllocationForActivity(AB.getActivityid());
+                for(AllocationBean AloB : AloBList){
+                    if(AloB.getActivityId() == AB.getActivityid()){
+                    AloB.setAllocationStartdate(AB.getStartdate());
+                    AloB.setAllocationEndenddate(AB.getEnddate());
+                    AloB.setStatus("Allocated");
+                    AloB.setEngineerId(AB.getEngtracker());
+                    AS.updateResourceAllocation(AloB);
+                    }
+                }
+            }
   
+        String eng=PTBList1.get(0).getEngname();
+        ModelAndView model=new ModelAndView("DisplayActivityProgress");
+        model.addObject("ProjectData",AB);
+        model.addObject("TaskDetails",PTBList1);
+        model.addObject("Engineer",eng);
+        model.addObject("Message","Activity details are updated successfully.");
+        return model;
         }
         catch(Exception ex){
-            
+            ex.printStackTrace();
         }
         return null;
     }

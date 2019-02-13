@@ -492,7 +492,7 @@ public class ActivityDAOImpl implements ActivityDAO
         }
         
         
-         public List<AllocationBean> getEngAllocationForActivity(int activityId){
+        public List<AllocationBean> getEngAllocationForActivity(int activityId){
         Session session1 = sessionFactory.getCurrentSession();    
         Transaction tx = session1.beginTransaction();
         try{    
@@ -517,5 +517,73 @@ public class ActivityDAOImpl implements ActivityDAO
             }
          }
         
+         
+        @Override
+        public void updateProjectTran(List <ActivityTransactionBean> PTBList){
+            for(ActivityTransactionBean PTBean : PTBList){
+                Session session=sessionFactory.getCurrentSession();
+                Transaction tx = session.beginTransaction();
+                try{
+                session.update(PTBean);
+                tx.commit();
+                }
+                catch(Exception ex){
+                tx.rollback();
+                System.out.println("Error Occured : "+ex.getMessage());
+                return;
+                }
+                finally{
+                    if(session.isOpen()){
+                    System.out.println("-------------Closing session--------------");
+                    session.close();
+                    }
+                }
+              }
+            }
         
-    }
+        @Override
+        public void updateActivityBean(ActivityBean AB){
+            Session session=sessionFactory.getCurrentSession();
+            Transaction tx = session.beginTransaction();
+            try{
+            session.update(AB);
+            tx.commit();
+            }
+            catch(Exception ex){
+            tx.rollback();
+            System.out.println("Error Occured : "+ex.getMessage());
+            return;
+            }
+            finally{
+            if(session.isOpen()){
+                System.out.println("-------------Closing session--------------");
+                session.close();
+                }
+            }
+         
+        }
+        
+        @Override
+        public boolean updateResourceAllocation(AllocationBean AloB){
+            Session session=sessionFactory.getCurrentSession();
+            Transaction tx = session.beginTransaction();
+            try{
+            session.update(AloB);
+            tx.commit();
+            return true;
+            }
+            catch(Exception ex){
+            tx.rollback();
+            System.out.println("Error Occured : "+ex.getMessage());
+            return false;
+            }
+            finally{
+            if(session.isOpen()){
+                System.out.println("-------------Closing session--------------");
+                session.close();
+                }
+            }
+        }
+                
+         
+}
