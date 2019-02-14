@@ -90,7 +90,7 @@ ActivityDAO PD;
     public int[] getProjectsCount(javax.servlet.http.HttpServletRequest req) {
         HttpSession sess= req.getSession(false);
         UserDataBean sessuser=(UserDataBean) sess.getAttribute("Luser");
-	ModelAndView result=new ModelAndView("Welcome");
+	//ModelAndView result=new ModelAndView("Welcome");
         List <ActivityBean> PBList=new ArrayList<>();
         PBList=(List<ActivityBean>)this.getAllProjects(sessuser.getUserid(), sessuser.getRole());
         int total_projects = 0;

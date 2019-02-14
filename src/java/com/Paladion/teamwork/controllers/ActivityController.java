@@ -61,6 +61,8 @@ import com.Paladion.teamwork.services.TaskService;
 import com.google.gson.Gson;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -1143,35 +1145,29 @@ public ModelAndView Downloadfiles(@RequestParam String pid,HttpServletRequest re
         if(!CU.checkUserAuthorization(authorizedRoles, req));
          //response.setContentType("text/html"); 
         
-         Date sDate=new SimpleDateFormat("MM/dd/yyyy").parse(txtFromDate);  
-         Date eDate=new SimpleDateFormat("MM/dd/yyyy").parse(txtToDate);  
-         List<UserDataBean> availableEngineers = new ArrayList<UserDataBean>();
-	availableEngineers = US.getAvailableEngineers(sDate,eDate,US.GetUsersByRole("engineer"));
-      //  AB.setLead(US.GetUserById(AB.getLeadid()).getUsername());
-      //  List <TemplateBean> TemplateList = TS.getAllTemplates();
-      //  ModelAndView model=new ModelAndView("SelectEngineers");
-      //  model.addObject("engineers",availableEngineers);
-      //  model.addObject("AllTemplates", TemplateList);
-      //  model.addObject("activitybean", AB);
+        Date sDate=new SimpleDateFormat("MM/dd/yyyy").parse(txtFromDate);  
+        Date eDate=new SimpleDateFormat("MM/dd/yyyy").parse(txtToDate);  
+        List<UserDataBean> availableEngineers = new ArrayList<UserDataBean>();
+        availableEngineers = US.getAvailableEngineers(sDate,eDate,US.GetUsersByRole("engineer"));
+    
         response.setContentType("application/json");
         
         for(UserDataBean ub : availableEngineers){
             ub.setPassword("");
             ub.setOtp("");
-        }
+            }
         
-         String json = new Gson().toJson(availableEngineers);
-         response.getWriter().write(json);  
+        String json = new Gson().toJson(availableEngineers);
+        response.getWriter().write(json);  
         }
         catch(Exception ex){
            ex.printStackTrace();
-          
         }
    
     }
     
     
-     @RequestMapping(value="/updateActivityDetails",method=RequestMethod.POST)
+    @RequestMapping(value="/updateActivityDetails",method=RequestMethod.POST)
     public ModelAndView updateActivityDetails(@ModelAttribute("ProjectM") ActivityBean AB, BindingResult result, HttpServletRequest req) throws Exception
     {
        // HttpSession sess= req.getSession(false);
@@ -1182,7 +1178,7 @@ public ModelAndView Downloadfiles(@RequestParam String pid,HttpServletRequest re
         if(!CU.checkUserAuthorization(authorizedRoles, req))  return new ModelAndView("Error");
         
         ActivityBean ActBean = AS.getProjectById(AB.getActivityid());
-        
+       
          if(AB.getProjectid()!=0){
             ProjectBean PB = PS.getProjectDeatails(AB.getProjectid());
             AB.setOpid(PB.getOpid()); }
@@ -1243,11 +1239,25 @@ public ModelAndView Downloadfiles(@RequestParam String pid,HttpServletRequest re
                 
             int i=0;
             PTBList1= CU.updateProjectTransaction(PSBList, AB,req.getSession(false));
+            
             for(ActivityTransactionBean PTB : PTBList1){
                 PTB.setTransid(DBATB.get(i).getTransid());
+                //if(DBATB.get(i).getStatus().equalsIgnoreCase("completed")){
+                //    Date date = DBATB.get(i).getTaskstartdate();
+                //    Calendar cal = Calendar.getInstance();
+                //    cal.setTime(date);
+                //   PTB.setTaskstartdate(cal);
+                //   PTB.setTaskenddate(DBATB.get(i).getTaskenddate());
+                //   PTB.setEnddate(DBATB.get(i).getEnddate());
+                //   PTB.setStartdate(DBATB.get(i).getStartdate());
+                //   PTB.setStatus(DBATB.get(i).getStatus());
+                //}
                 i++;
-                } 
+                }
+            
             //update the activityTansactionBeans to database
+            
+            
             AS.updateProjectTran(PTBList1);
             
                 List<AllocationBean> AloBList = AS.getEngAllocationForActivity(AB.getActivityid());
@@ -1261,19 +1271,20 @@ public ModelAndView Downloadfiles(@RequestParam String pid,HttpServletRequest re
                     }
                 }
             }
-  
-        String eng=PTBList1.get(0).getEngname();
+        
+        List<ActivityTransactionBean> ActTB = AS.getProjectTransaction(AB.getActivityid());
+        String actEng=ActTB.get(0).getEngname();
         ModelAndView model=new ModelAndView("DisplayActivityProgress");
         model.addObject("ProjectData",AB);
-        model.addObject("TaskDetails",PTBList1);
-        model.addObject("Engineer",eng);
+        model.addObject("TaskDetails",ActTB);
+        model.addObject("Engineer",actEng);
         model.addObject("Message","Activity details are updated successfully.");
         return model;
         }
         catch(Exception ex){
-            ex.printStackTrace();
+        System.out.println("Exception occured. "+ex.getMessage());
+        return new ModelAndView("Error");
         }
-        return null;
     }
     
     
