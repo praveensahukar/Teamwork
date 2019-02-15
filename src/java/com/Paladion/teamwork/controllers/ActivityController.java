@@ -18,7 +18,6 @@ import com.Paladion.teamwork.beans.ActivityTransactionBean;
 import com.Paladion.teamwork.beans.ActivityTransactionWrapper;
 import com.Paladion.teamwork.beans.AllocationBean;
 import com.Paladion.teamwork.beans.ProjectBean;
-import com.Paladion.teamwork.beans.SystemBean;
 import com.Paladion.teamwork.beans.fileuploadBean;
 import com.Paladion.teamwork.services.AdminService;
 import com.Paladion.teamwork.services.TeamService;
@@ -61,11 +60,9 @@ import com.Paladion.teamwork.services.TaskService;
 import com.google.gson.Gson;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import org.apache.log4j.Logger;
 
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -159,6 +156,8 @@ public fileuploadBean populate1()
 {
     return new fileuploadBean();
 }
+
+static Logger log = Logger.getLogger(ActivityController.class.getName());
 
 	//Copy of this method is present below which redirects to beutifully arranged JSP page.
     @RequestMapping(value="/CreateActivity1",method=RequestMethod.GET)

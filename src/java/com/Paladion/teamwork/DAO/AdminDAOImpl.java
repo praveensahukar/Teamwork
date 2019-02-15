@@ -6,6 +6,7 @@
 package com.Paladion.teamwork.DAO;
 
 import com.Paladion.teamwork.beans.SystemBean;
+import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -19,13 +20,15 @@ import org.springframework.beans.factory.annotation.Qualifier;
  */
 public class AdminDAOImpl implements AdminDAO{
     
-      @Autowired
+    @Autowired
     @Qualifier(value="hibernate4AnnotatedSessionFactory")
     private SessionFactory sessionFactory;
 
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
+    
+    static Logger log = Logger.getLogger(ActivityDAOImpl.class.getName());
 
     @Override
     @SuppressWarnings("empty-statement")
@@ -39,12 +42,11 @@ public class AdminDAOImpl implements AdminDAO{
         }
         catch(Exception ex){
             tx.rollback();
-            System.out.println("Error Occured : "+ex.getMessage());
+            log.error("Expection occured : "+ex.getMessage());
             return false;
         }
         finally{
             if(session.isOpen()){
-            System.out.println("-------------Closing session--------------");
             session.close();
             }
         }
@@ -62,12 +64,11 @@ public class AdminDAOImpl implements AdminDAO{
         }
         catch(Exception ex){
             tx.rollback();
-            System.out.println("Error Occured : "+ex.getMessage());
+            log.error("Expection occured : "+ex.getMessage());
             return null;
         }
         finally{
             if(session1.isOpen()){
-            System.out.println("-------------Closing session--------------");
             session1.close();
             }
         }

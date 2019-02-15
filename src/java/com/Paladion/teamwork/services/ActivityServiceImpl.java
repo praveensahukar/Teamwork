@@ -122,10 +122,6 @@ ActivityDAO PD;
                 total_projects++;
             }
         }
-        
-        System.out.println("No of completed projects : "+project_completed);
-        System.out.println("No of on going projects : "+project_progress);
-        System.out.println("No of new projects : "+project_new);
         int [] counts = new int[5];
         counts[0]=total_projects;
         counts[1]=project_completed;

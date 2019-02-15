@@ -12,7 +12,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
+import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
@@ -36,6 +36,8 @@ public class ActivityDAOImpl implements ActivityDAO
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
+    
+    static Logger log = Logger.getLogger(ActivityDAOImpl.class.getName());
 	
     @Override
     public void addProjectDao(ActivityBean PB) {
@@ -44,15 +46,13 @@ public class ActivityDAOImpl implements ActivityDAO
         try{
         session1.save(PB );
         tx.commit();
-        System.out.println("Project created successfully");
         }
         catch(Exception e){
+        log.error("Expection occured : "+e.getMessage());
         tx.rollback();
-        System.out.println("Exception occured. "+e.getMessage());
         }
         finally{
         if(session1.isOpen()){
-	System.out.println("-------------Closing session--------------");
 	session1.close();
         }
         }
@@ -93,21 +93,18 @@ public class ActivityDAOImpl implements ActivityDAO
             return allProjects;
         }
         catch(Exception e){
-        System.out.println("Exception occured. "+e.getMessage());
+        log.error("Expection occured : "+e.getMessage());
         tx.rollback();
         return null;
         }
         finally{
         if(session1.isOpen()){
-	System.out.println("-------------Closing session--------------");
-	
-        }
+	}
         }
         }
         
         @Override
         public ActivityBean getProjectById(int id) {
-           
         Session session1 = sessionFactory.getCurrentSession();
 	Transaction tx = session1.beginTransaction();
 	try{
@@ -120,15 +117,13 @@ public class ActivityDAOImpl implements ActivityDAO
            return PB;
         }
         catch(Exception e){
+        log.error("Expection occured : "+e.getMessage());
         tx.rollback();
-        System.out.println("Exception occured. "+e.getMessage());
         return null;
         }
         finally{
         if(session1.isOpen()){
-	System.out.println("-------------Closing session--------------");
-	
-        }
+	}
         }
            
       }
@@ -139,21 +134,17 @@ public class ActivityDAOImpl implements ActivityDAO
         Transaction tx = session1.beginTransaction();
         try{
             session1.save(PTBean);
-            System.out.println("Project transaction updated successfully");
             tx.commit();
         }
         catch(Exception ex){
             tx.rollback();
-            System.out.println("Error Occured : "+ex.getMessage());
+            log.error("Expection occured : "+ex.getMessage());
         }
         finally{
         if(session1.isOpen()){
-	System.out.println("-------------Closing session--------------");
 	session1.close();
         }
         }
-        
-        
     }
     
     
@@ -173,12 +164,11 @@ public class ActivityDAOImpl implements ActivityDAO
             }
             catch(Exception ex){
             tx.rollback();
-            System.out.println("Error Occured : "+ex.getMessage());
+            log.error("Expection occured : "+ex.getMessage());
             return null;
             }
             finally{
             if(session1.isOpen()){
-            System.out.println("-------------Closing session--------------");
             session1.close();
             }
             }
@@ -201,13 +191,10 @@ public class ActivityDAOImpl implements ActivityDAO
                 Date date2 = PTBean.getTaskstartdate();
                 // Get msec from each, and subtract.
                 long diff = date1.getTime() - date2.getTime();
-                long diffSeconds = diff / 1000 % 60;
-                long diffMinutes = diff / (60 * 1000) % 60;
+                //long diffSeconds = diff / 1000 % 60;
+                //long diffMinutes = diff / (60 * 1000) % 60;
                 long diffHours = diff / (60 * 60 * 1000);
-                System.out.println("Time in seconds: " + diffSeconds + " seconds.");
-                System.out.println("Time in minutes: " + diffMinutes + " minutes.");
-                System.out.println("Time in hours: " + diffHours + " hours.");
-            
+               
                 if(diffHours >= 2){
                 //Redirect to update the delay reason
                 }
@@ -218,15 +205,11 @@ public class ActivityDAOImpl implements ActivityDAO
             if(status.equalsIgnoreCase("completed")){
                 
                 Date date2 = PTBean.getTaskenddate();
-              // Get msec from each, and subtract.
+                // Get msec from each, and subtract.
                 long diff = date1.getTime() - date2.getTime();
-                long diffSeconds = diff / 1000 % 60;
-                long diffMinutes = diff / (60 * 1000) % 60;
+                //long diffSeconds = diff / 1000 % 60;
+                //long diffMinutes = diff / (60 * 1000) % 60;
                 long diffHours = diff / (60 * 60 * 1000);
-                System.out.println("Time in seconds: " + diffSeconds + " seconds.");
-                System.out.println("Time in minutes: " + diffMinutes + " minutes.");
-                System.out.println("Time in hours: " + diffHours + " hours.");
-            
                 if(diffHours >= 2){
                 //Redirect to update the delay reason
                 }
@@ -259,7 +242,7 @@ public class ActivityDAOImpl implements ActivityDAO
            }           
            
            else{
-               System.out.println("Invalid option selected");
+               log.info("Invalid status " +status+" selected to update for transID "+transid);
                return false;
            }
            
@@ -282,12 +265,11 @@ public class ActivityDAOImpl implements ActivityDAO
             }
             catch(Exception ex){
             tx.rollback();
-            System.out.println("Error Occured : "+ex.getMessage());
+            log.error("Expection occured : "+ex.getMessage());
             return false;
             }
             finally{
             if(session.isOpen()){
-            System.out.println("-------------Closing session--------------");
             session.close();
             }
             }
@@ -314,12 +296,11 @@ public class ActivityDAOImpl implements ActivityDAO
             }
             catch(Exception ex){
                 tx.rollback();
-                System.out.println("Error Occured : "+ex.getMessage());
+                log.error("Expection occured : "+ex.getMessage());
                 return null;
             }
             finally{
                 if(session.isOpen()){
-                System.out.println("-------------Closing session--------------");
                 session.close();
                 }
             }
@@ -341,18 +322,17 @@ public class ActivityDAOImpl implements ActivityDAO
                 return true;
                 }           
                 else{
-                System.out.println("Invalid option selected");
+                log.info("Invalid project status: "+"status"+" selected for ProjectID: "+projid);
                 return false;
                 }
             }
             catch(Exception ex){
                 tx.rollback();
-                System.out.println("Error Occured : "+ex.getMessage());
+                log.error("Expection occured : "+ex.getMessage());
                 return false;
             }
             finally{
                 if(session.isOpen()){
-                System.out.println("-------------Closing session--------------");
                 session.close();
                 }
             }
@@ -379,16 +359,14 @@ public class ActivityDAOImpl implements ActivityDAO
                 
             query.executeUpdate();
             tx.commit();
-            System.out.println("Project transaction updated successfully");
             }
             catch(Exception ex){
                 tx.rollback();
-                System.out.println("Error Occured : "+ex.getMessage());
+                log.error("Expection occured : "+ex.getMessage());
                 return;
             }
             finally{
                 if(session1.isOpen()){
-                System.out.println("-------------Closing session--------------");
                 session1.close();
                 }
             }
@@ -409,12 +387,11 @@ public class ActivityDAOImpl implements ActivityDAO
         }
         catch(Exception ex){
                 tx.rollback();
-                System.out.println("Error Occured : "+ex.getMessage());
+                log.error("Expection occured : "+ex.getMessage());
                 return false;
             }
             finally{
                 if(session1.isOpen()){
-                System.out.println("-------------Closing session--------------");
                 session1.close();
                 }
             }
@@ -428,17 +405,15 @@ public class ActivityDAOImpl implements ActivityDAO
         try{
 	session1.save(AB);
 	tx.commit();
-	System.out.println("Resource "+AB.getEngineerId()+" allocated successfully");
         return true;
 	}
         catch(Exception ex){
                 tx.rollback();
-                System.out.println("Error Occured : "+ex.getMessage());
+                log.error("Expection occured : "+ex.getMessage());
                 return false;
             }
             finally{
                 if(session1.isOpen()){
-                System.out.println("-------------Closing session--------------");
                 session1.close();
                 }
             }
@@ -457,12 +432,11 @@ public class ActivityDAOImpl implements ActivityDAO
         }
         catch(Exception ex){
                 tx.rollback();
-                System.out.println("Error Occured : "+ex.getMessage());
+                log.error("Expection occured : "+ex.getMessage());
                 return null;
             }
             finally{
                 if(session1.isOpen()){
-                System.out.println("-------------Closing session--------------");
                 session1.close();
                 }
             }
@@ -480,12 +454,10 @@ public class ActivityDAOImpl implements ActivityDAO
         }
         catch(Exception ex){
                 tx.rollback();
-                System.out.println("Error Occured : "+ex.getMessage());
-                return;
+                log.error("Expection occured : "+ex.getMessage());
             }
             finally{
                 if(session1.isOpen()){
-                System.out.println("-------------Closing session--------------");
                 session1.close();
                 }
             }
@@ -502,16 +474,14 @@ public class ActivityDAOImpl implements ActivityDAO
         ABList = criteria.list();
         tx.commit();
         return ABList;
-       
         }
         catch(Exception ex){
                 tx.rollback();
-                System.out.println("Error Occured : "+ex.getMessage());
+                log.error("Expection occured : "+ex.getMessage());
                 return null;
             }
             finally{
                 if(session1.isOpen()){
-                System.out.println("-------------Closing session--------------");
                 session1.close();
                 }
             }
@@ -529,12 +499,11 @@ public class ActivityDAOImpl implements ActivityDAO
                 }
                 catch(Exception ex){
                 tx.rollback();
-                System.out.println("Error Occured : "+ex.getMessage());
+                log.error("Expection occured : "+ex.getMessage());
                 return;
                 }
                 finally{
                     if(session.isOpen()){
-                    System.out.println("-------------Closing session--------------");
                     session.close();
                     }
                 }
@@ -551,12 +520,10 @@ public class ActivityDAOImpl implements ActivityDAO
             }
             catch(Exception ex){
             tx.rollback();
-            System.out.println("Error Occured : "+ex.getMessage());
-            return;
+            log.error("Expection occured : "+ex.getMessage());
             }
             finally{
             if(session.isOpen()){
-                System.out.println("-------------Closing session--------------");
                 session.close();
                 }
             }
@@ -574,16 +541,13 @@ public class ActivityDAOImpl implements ActivityDAO
             }
             catch(Exception ex){
             tx.rollback();
-            System.out.println("Error Occured : "+ex.getMessage());
+            log.error("Expection occured : "+ex.getMessage());
             return false;
             }
             finally{
             if(session.isOpen()){
-                System.out.println("-------------Closing session--------------");
                 session.close();
                 }
             }
         }
-                
-         
-}
+    }

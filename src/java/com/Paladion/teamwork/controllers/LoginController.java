@@ -32,6 +32,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import com.Paladion.teamwork.services.ActivityService;
+import org.apache.log4j.Logger;
 /**
  *
  * @author Administrator
@@ -72,6 +73,8 @@ protected void initBinder(WebDataBinder binder) {
  AdminService AS;
  
  UserDataBean lb=null;
+ 
+ static Logger log = Logger.getLogger(LoginController.class.getName());
  
 @ModelAttribute("LoginM")
  public UserDataBean PopulateLoginBean() 
@@ -130,10 +133,7 @@ public String Login()
                       
                       String token = RandomStringUtils.random(30, 0, 0, true, true, null, new SecureRandom());
                       LoginSess.setAttribute("AntiCsrfToken",token);
-                      if(!lb.getRole().equalsIgnoreCase("engineer")){
-                      //LoginSess.setAttribute("SysConfig", AS.getSystemSettings());
-                      //LoginSess.setAttribute("AllUsers", userService.GetAllUser());
-                      }
+                      log.info("----------User "+lb.getEmail()+" logged in successfully.---------");
 	            return new ModelAndView("redirect:/Welcome.do");
            }
            else {
@@ -160,7 +160,7 @@ public String Login()
             return result;
         }
         catch(Exception ex){
-        ex.printStackTrace();
+        log.debug(ex);
         return new ModelAndView("Error");
         }
 }
