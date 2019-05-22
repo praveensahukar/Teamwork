@@ -33,7 +33,7 @@ public class EmailUtil {
 AdminService Aservice = new AdminServiceImpl();
 
  
-public boolean sendEmail(EmailBean ebean, SystemBean syssetting)
+public boolean sendEmail(EmailBean ebean, SystemBean syssetting) throws RuntimeException
 {
            
             System.out.println("com.Paladion.teamwork.utils.EmailUtil.sendEmail()");
@@ -73,14 +73,15 @@ public boolean sendEmail(EmailBean ebean, SystemBean syssetting)
 
 			Transport.send(message);
 
-			System.out.println("Done");
+			System.out.println("***** Mail Sent Successfully! *****");
+                        return true;
 
 		} catch (MessagingException e) {
                     e.printStackTrace();
-			throw new RuntimeException(e);
-		}
+                    System.out.println("----- Exception occured during sending mail!!! ----");
+                    return false;
+                }
 		
-		return true;
 	}
 	
 }

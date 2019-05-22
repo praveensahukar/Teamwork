@@ -18,7 +18,7 @@ import java.util.List;
  */
 public interface ActivityDAO {
     
-    public void addProjectDao(ActivityBean pb);
+    public boolean addProjectDao(ActivityBean pb);
    
     public List<ActivityBean> getAllProjects(int userid, String role);
 

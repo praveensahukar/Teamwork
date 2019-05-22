@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface ActivityService {
     
-    public void addProject(ActivityBean pb);
+    public boolean addProject(ActivityBean pb);
     public List<ActivityBean> getAllProjects(int userid, String role);
     public ActivityBean getProjectById(int id);
     public void insertProjectTransaction(ActivityTransactionBean PTB);

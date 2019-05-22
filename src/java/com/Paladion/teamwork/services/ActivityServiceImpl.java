@@ -32,8 +32,8 @@ public class ActivityServiceImpl implements ActivityService {
 ActivityDAO PD;
 	
     @Override
-    public void addProject(ActivityBean pb) {   
-	PD.addProjectDao(pb);
+    public boolean addProject(ActivityBean pb) {   
+	return PD.addProjectDao(pb);
     }
 
     @Override

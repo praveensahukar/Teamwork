@@ -25,6 +25,15 @@ public class SystemBean {
     int setid;
     String mailserver, port, mailuser, mailpass;
     String uploadpath;
+    boolean is_mail_enabled;
+
+    public boolean isIs_mail_enabled() {
+        return is_mail_enabled;
+    }
+
+    public void setIs_mail_enabled(boolean is_mail_enabled) {
+        this.is_mail_enabled = is_mail_enabled;
+    }
 
     public int getSetid() {
         return setid;
@@ -75,6 +84,6 @@ public class SystemBean {
     public void setUploadpath(String uploadpath) {
         this.uploadpath = uploadpath;
     }
-
+    
    
 }

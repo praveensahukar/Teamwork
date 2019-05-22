@@ -4,6 +4,7 @@
     Author     : Lenovo
 --%>
 
+<%@page import="com.Paladion.teamwork.beans.SystemBean"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -197,11 +198,16 @@ th {
 color: red;
 font-style: italic;
 }
+
+
+
+
 </style>
 
 <script type="text/javascript">
     var form = document.getElementById('Adminform');
-    form.reset();
+   
+    
 </script>
        <title>Administration</title>
     </head>
@@ -216,7 +222,10 @@ font-style: italic;
 <tr><td>Email Server Port&nbsp; <form:input placeholder="Enter upload path" path="port" value="${fn:escapeXml(SysSettings.port)}" /></h4></td></tr>    
 <tr><td>Email Username  &nbsp;&nbsp;  <form:input placeholder="Enter upload path" path="mailuser" value="${fn:escapeXml(SysSettings.mailuser)}" /></h4></td></tr>    
 <tr><td>Email Password  &nbsp; &nbsp; <form:input placeholder="Enter upload path" path="mailpass" value="${fn:escapeXml(SysSettings.mailpass)}" /></h4></td></tr>    
-<tr><td>File upload path  &nbsp;&nbsp;&nbsp;&nbsp;<form:input placeholder="Enter upload path" path="uploadpath" value="${fn:escapeXml(SysSettings.uploadpath)}" /></h4></td></tr>    
+
+<tr><td>Notification Mails:  &nbsp; &nbsp; <form:checkbox  path="is_mail_enabled" value="${SysSettings.is_mail_enabled}" checked="${SysSettings.is_mail_enabled == 'true' ? 'checked' : '' }" /> </h4></td></tr>   
+
+<tr><td>File upload path  &nbsp;&nbsp;&nbsp;&nbsp;<form:input  placeholder="Enter upload path" path="uploadpath" checked="${fn:escapeXml(SysSettings.uploadpath)}" /></h4></td></tr>    
 
 
 <input type="hidden" name="AntiCSRFToken" value="${csrfPreventionSalt}"/> 
@@ -224,7 +233,7 @@ font-style: italic;
 </table>
 <center>${TaskSuccess}</center>
 </form:form>
-	   </div>
+</div>
 <br> 
     </body>
 </html>

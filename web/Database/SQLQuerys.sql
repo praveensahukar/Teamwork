@@ -15,3 +15,7 @@ Query 1: Adding status column to users table
 Query 2: Update the status of all user to active*/ 
 alter table users add column status varchar(20);
 update users set status = "Active" where userid > 0;
+
+/*Update on 20/5/2019. Mail notification enable/disable feature */ 
+alter table sysprop add coloum is_mail_enabled boolean;
+update sysprop set is_mail_enabled = true ;

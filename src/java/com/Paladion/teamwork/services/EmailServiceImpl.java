@@ -71,9 +71,13 @@ public class EmailServiceImpl implements EmailService{
         
         
         @Override
-        public boolean sendSchedulingMail(ActivityBean AB, HttpSession sess, ProjectBean PB){
+        public boolean sendSchedulingMail(ActivityBean AB, ProjectBean PB){
         
         try{
+         SystemBean syssetting = AdminS.getSystemSettings();
+         if(syssetting.isIs_mail_enabled()==false){
+             return false;
+         }
          EmailUtil EU=new EmailUtil();
          EmailBean ebean=new EmailBean();
          UserDataBean leadb=UserS.GetUserById(AB.getLeadid());
@@ -167,9 +171,8 @@ public class EmailServiceImpl implements EmailService{
         String message=mess.toString();
          
          ebean.setMessage(message);
-         SystemBean syssetting = AdminS.getSystemSettings();
-         EU.sendEmail(ebean, syssetting);
-        return true;
+         
+         return(EU.sendEmail(ebean, syssetting));
         }
         catch (Exception ex){
             ex.printStackTrace();
@@ -182,17 +185,21 @@ public class EmailServiceImpl implements EmailService{
     public boolean sendSchedulingMail(ActivityBean AB, HttpSession sess){
         
         try{
-         EmailUtil EU=new EmailUtil();
-         EmailBean ebean=new EmailBean();
-         UserDataBean leadb=UserS.GetUserById(AB.getLeadid());
-         UserDataBean eng=UserS.GetUserById(AB.getEngtracker());
+            SystemBean syssetting = AdminS.getSystemSettings();
+             if(syssetting.isIs_mail_enabled()==false){
+             return false;
+            }
+            EmailUtil EU=new EmailUtil();
+            EmailBean ebean=new EmailBean();
+            UserDataBean leadb=UserS.GetUserById(AB.getLeadid());
+            UserDataBean eng=UserS.GetUserById(AB.getEngtracker());
         // UserDataBean pmbean=UserS.GetUserById(PB.getProjectmanager());
         // UserDataBean dmbean=UserS.GetUserById(PB.getDeliverymanager());
-         List <UserDataBean> scheduling = UserS.GetUsersByRole("scheduling");
+            List <UserDataBean> scheduling = UserS.GetUsersByRole("scheduling");
          
         // CompanyBean CB = CompanyS.getCompanyByID(PB.getCompanyid());
          
-         StringBuilder emails =new StringBuilder();
+            StringBuilder emails =new StringBuilder();
          
          if(leadb.getEmail()!=null){
              emails.append(leadb.getEmail()).append(",");
@@ -271,9 +278,9 @@ public class EmailServiceImpl implements EmailService{
         String message=mess.toString();
          
          ebean.setMessage(message);
-         SystemBean syssetting = AdminS.getSystemSettings();
-         EU.sendEmail(ebean, syssetting);
-        return true;
+         
+        return(EU.sendEmail(ebean, syssetting));
+         
         }
         catch (Exception ex){
             ex.printStackTrace();

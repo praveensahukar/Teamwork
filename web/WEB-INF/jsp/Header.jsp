@@ -218,8 +218,39 @@
     </div>
          
     <br>  
-
-    <div> <font color="red"><b><center>${Message}</center><br></font> </div>
+    <br>
+    <div> 
+        <script>
+        if("${Message}"){            
+        alert("${Message}");
+        setTimeout(Timeout,2000);
+        }
+        function TimeOut() {
+            $("${Message}").dialog("close");
+            //window.location = "Your redirect URL";
+        }
+        </script>
+        
+        
+        
+        
+    <script>
+        function showAlert() {
+            if("${Message}"){ 
+            $("${Message}").dialog();
+            setTimeout(TimeOut, 5000); //1000 ms = 1 second
+        }
+        function TimeOut() {
+            $("${Message}").dialog("close");
+            //window.location = "Your redirect URL";
+        }
+    </script>
+        
+        
+        
+        
+        
+        
     <%-- Header Code Ends --%>  
    
 

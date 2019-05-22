@@ -40,16 +40,18 @@ public class ActivityDAOImpl implements ActivityDAO
     static Logger log = Logger.getLogger(ActivityDAOImpl.class.getName());
 	
     @Override
-    public void addProjectDao(ActivityBean PB) {
+    public boolean addProjectDao(ActivityBean PB) {
         Session session1 = sessionFactory.getCurrentSession();
         Transaction tx = session1.beginTransaction();
         try{
-        session1.save(PB );
+        session1.save(PB);
         tx.commit();
+        return true;
         }
         catch(Exception e){
         log.error("Expection occured : "+e.getMessage());
         tx.rollback();
+        return false;
         }
         finally{
         if(session1.isOpen()){

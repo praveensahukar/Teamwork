@@ -248,7 +248,8 @@ static Logger log = Logger.getLogger(ActivityController.class.getName());
             return new ModelAndView("Error");
             }                    
         }
-	    
+	 
+        boolean mailStatus = false;
         System.out.println("\n inside create Project POST method ");
         AB.setMandays(CU.getWorkingDays(AB.getStartdate(),AB.getEnddate()));
         AB.setStatus("New");
@@ -256,7 +257,7 @@ static Logger log = Logger.getLogger(ActivityController.class.getName());
         
         if(AB.getProjectid() == 0){
             AB.setOpid("No Project Selected");
-           EmailS.sendSchedulingMail(AB, req.getSession(false));
+           mailStatus=EmailS.sendSchedulingMail(AB, req.getSession(false));
         }
         else{
             ProjectBean PB= PS.getProjectDeatails(AB.getProjectid());
@@ -266,10 +267,12 @@ static Logger log = Logger.getLogger(ActivityController.class.getName());
             else{
             AB.setOpid(PB.getOpid());
             }
-            EmailS.sendSchedulingMail(AB, req.getSession(false), PB);
+            mailStatus=EmailS.sendSchedulingMail(AB, PB);
         }
                 
         AS.addProject(AB);
+        
+        
         AllocationBean AloB = new AllocationBean();
         AloB.setActivityId(AB.getActivityid());
         AloB.setAllocationStartdate(AB.getStartdate());
@@ -314,9 +317,23 @@ static Logger log = Logger.getLogger(ActivityController.class.getName());
         
         UserDataBean sessuser=(UserDataBean) sess.getAttribute("Luser");
         if(sessuser.getRole().equalsIgnoreCase("scheduling")){
-            return new ModelAndView("redirect:/Welcome.do","Message","Activity has been scheduled successfully.");
+            if(mailStatus==true){
+            return new ModelAndView("redirect:/Welcome.do","Message","Activity has been scheduled. Mail sent successfully.");
+            }
+            else{
+            return new ModelAndView("redirect:/Welcome.do","Message","Activity has been scheduled. Scheduling mail not sent.");    
+            }
         }
+        
+        
         results=new ModelAndView("DisplayActivityProgress");
+        if(mailStatus == true){
+        results.addObject("Message","Activity has been scheduled. Mail sent successfully.");    
+        }
+        else{
+            results.addObject("Message","Activity has been scheduled. Scheduling mail not sent.");    
+        }
+        
         results.addObject("ProjectData",AB);
         results.addObject("TaskDetails",PTBList1);
         results.addObject("Engineer",eng);
