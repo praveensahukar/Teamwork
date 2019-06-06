@@ -7,6 +7,7 @@ package com.Paladion.teamwork.services;
 
 import com.Paladion.teamwork.beans.ActivityBean;
 import com.Paladion.teamwork.beans.ProjectBean;
+import com.Paladion.teamwork.beans.ProjectOPIDMapper;
 import com.Paladion.teamwork.beans.TaskBean;
 import java.util.List;
 
@@ -23,4 +24,6 @@ public interface ProjectService {
     public List<ActivityBean> getProjectActivities(int pid);
     public ProjectBean getProjectDeatails(int pid);
     public boolean updateProjectDetails(ProjectBean PB);
+    public List<ProjectOPIDMapper> getProjectOPID(int pid);
+ //   public boolean addOPID(ProjectOPIDMapper opid);
 }

@@ -150,6 +150,8 @@
                     <% if(role.equalsIgnoreCase("Manager")||role.equalsIgnoreCase("Scheduling"))
                     {%>
                     <a href="CreateActivity.do">Schedule Activity</a>
+                    
+                    <a href="RequestSchedule.do">Request Schedule</a>
                     <%}%>
                     <a href="showAllActivity.do">View All Activities</a>
                     

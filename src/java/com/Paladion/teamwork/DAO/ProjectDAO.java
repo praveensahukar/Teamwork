@@ -7,6 +7,7 @@ package com.Paladion.teamwork.DAO;
 
 import com.Paladion.teamwork.beans.ActivityBean;
 import com.Paladion.teamwork.beans.ProjectBean;
+import com.Paladion.teamwork.beans.ProjectOPIDMapper;
 import java.util.List;
 
 /**
@@ -21,4 +22,5 @@ public interface ProjectDAO {
     public List<ActivityBean> getProjectActivities(int pid);
     public ProjectBean getProjectDetails(int pid);
     public boolean updateProjectDetails(ProjectBean PB);
+    public List<ProjectOPIDMapper> getProjectOPID(int pid);
 }

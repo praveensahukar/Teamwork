@@ -8,14 +8,20 @@ package com.Paladion.teamwork.controllers;
 import com.Paladion.teamwork.beans.ActivityBean;
 import com.Paladion.teamwork.beans.CompanyBean;
 import com.Paladion.teamwork.beans.ProjectBean;
+import com.Paladion.teamwork.beans.ProjectOPIDMapper;
 import com.Paladion.teamwork.beans.UserDataBean;
 import com.Paladion.teamwork.services.CompanyService;
 import com.Paladion.teamwork.services.ProjectService;
 import com.Paladion.teamwork.services.UserService;
 import com.Paladion.teamwork.utils.CommonUtil;
 import com.Paladion.teamwork.utils.ProjectValidator;
+import com.google.gson.Gson;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -121,10 +127,27 @@ public class ProjectController {
             return new ModelAndView("Error");
             }
         }
+      
+        
+        
+        
         if(PB.getOpid().isEmpty()){
             PB.setOpid(null);
+            
+      
+            
+            
         }
+        else{
+          
+            
+           
+        }
+
+        
+        
 	PS.addProject(PB);
+
         System.out.println("Project Created with projectid "+PB.getProjectid());
         
         ModelAndView model=new ModelAndView("CreateProject");
@@ -284,7 +307,38 @@ public ModelAndView EditProjectDetails(@RequestParam int pid, HttpServletRequest
         ex.printStackTrace();
         return new ModelAndView("Error");
         }
-    }	
+    }
+    
+   @RequestMapping(value="/getProjectOPID",method=RequestMethod.POST)
+    public void getProjectOPIDAjax(@RequestParam String PID, HttpServletRequest req, HttpServletResponse response)
+    {   
+        try{ 
+        String[] authorizedRoles = {"admin","manager","lead","scheduling"};
+        if(!CU.checkUserAuthorization(authorizedRoles, req));
+         //response.setContentType("text/html"); 
+         
+        int pid = Integer.parseInt(PID);
+        
+    
+        response.setContentType("application/json");
+        List<ProjectOPIDMapper> OPIDList = PS.getProjectOPID(pid);
+        
+        String[] OPIDs = new String[OPIDList.size()];
+        int i=0;
+        for(ProjectOPIDMapper mapper : OPIDList)
+        {
+            OPIDs[i] = mapper.getOpid();
+            i++;
+        }
+        String json = new Gson().toJson(OPIDs);
+   
+        response.getWriter().write(json);  
+        }
+        catch(Exception ex){
+           ex.printStackTrace();
+        }
+   
+    }
 
 
 

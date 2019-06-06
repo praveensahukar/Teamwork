@@ -9,6 +9,7 @@ import com.Paladion.teamwork.DAO.ProjectDAO;
 import com.Paladion.teamwork.beans.ProjectBean;
 import java.util.List;
 import com.Paladion.teamwork.beans.ActivityBean;
+import com.Paladion.teamwork.beans.ProjectOPIDMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -60,5 +61,12 @@ public class ProjectServiceImpl  implements ProjectService {
     public boolean updateProjectDetails(ProjectBean PB){
         return PD.updateProjectDetails(PB);
     }
+    
+    @Override
+    public List<ProjectOPIDMapper> getProjectOPID(int pid){
+        return PD.getProjectOPID(pid);
+    }
+    
+  
     
 }

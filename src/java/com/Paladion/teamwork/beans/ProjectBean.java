@@ -6,10 +6,17 @@
 package com.Paladion.teamwork.beans;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -52,7 +59,9 @@ String region;
 @Column (name = "revenue")
 int revenue;
 
-    public String getProjectname() {
+  
+
+   public String getProjectname() {
         return projectname;
     }
 
@@ -123,6 +132,17 @@ int revenue;
 
     public void setProjectmanager(int projectmanager) {
         this.projectmanager = projectmanager;
+    }
+    
+    @OneToMany(targetEntity =ProjectOPIDMapper.class, mappedBy="pbean", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+    private List<ProjectOPIDMapper> OPIDList;
+    
+    public List<ProjectOPIDMapper> getOPIDList() {
+        return OPIDList;
+    }
+
+    public void setOPIDList(List<ProjectOPIDMapper> OPIDList) {
+        this.OPIDList = OPIDList;
     }
     
     

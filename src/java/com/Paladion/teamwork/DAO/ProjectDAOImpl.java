@@ -7,9 +7,12 @@ package com.Paladion.teamwork.DAO;
 
 import com.Paladion.teamwork.beans.ActivityBean;
 import com.Paladion.teamwork.beans.ProjectBean;
+import com.Paladion.teamwork.beans.ProjectOPIDMapper;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
@@ -39,13 +42,24 @@ import org.springframework.beans.factory.annotation.Qualifier;
 	Session session1 = sessionFactory.getCurrentSession();
 	Transaction tx = session1.beginTransaction();
             try{
+            
+            
+           
+            ProjectOPIDMapper opid = new ProjectOPIDMapper();
+            
+            opid.setOpid(PB.getOpid());
+            opid.setPbean(PB);
+            
             session1.save(PB);
+            session1.save(opid);
             tx.commit();
+            System.out.println(PB.getOpid());
             System.out.println("Project create successfully");
             }
             catch(Exception ex){
                 tx.rollback();
                 System.out.println("Error Occured : "+ex.getMessage());
+                ex.printStackTrace();
                 return;
             }finally{
                 if(session1.isOpen()){
@@ -62,7 +76,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
         try{
             List <ProjectBean> Projectlist=new ArrayList<ProjectBean>();
             String projectquery= "from ProjectBean";
-            System.out.println("Get all projects query");
+            //System.out.println("Get all projects query");
             Query query2 = session.createQuery(projectquery);
             Projectlist= query2.list();
             tx.commit();
@@ -170,4 +184,33 @@ import org.springframework.beans.factory.annotation.Qualifier;
         }
     }
     
+    @Override
+    public List<ProjectOPIDMapper> getProjectOPID(int pid){
+       
+        Session session1 = sessionFactory.getCurrentSession();
+        Transaction tx = session1.beginTransaction();
+        try{
+        Criteria criteria = session1.createCriteria(ProjectBean.class);
+        criteria.add(Restrictions.eq("projectid", pid));
+        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+	List<ProjectBean> PList = criteria.list();
+        tx.commit();
+        if(1 == PList.size()){
+            Iterator iter = PList.iterator();
+            ProjectBean PB =  (ProjectBean)iter.next();
+            return PB.getOPIDList();
+            }
+        return null;
+        }
+        catch(Exception e){
+        System.out.println("Exception occured. "+e.getMessage());
+        return null;
+        }
+        finally{
+            if(session1.isOpen()){
+            System.out.println("-----------Closing session------------");
+            session1.close();
+            }
+        }
+    }
 }
