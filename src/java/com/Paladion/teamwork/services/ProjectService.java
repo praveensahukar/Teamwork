@@ -24,6 +24,6 @@ public interface ProjectService {
     public List<ActivityBean> getProjectActivities(int pid);
     public ProjectBean getProjectDeatails(int pid);
     public boolean updateProjectDetails(ProjectBean PB);
-    public List<ProjectOPIDMapper> getProjectOPID(int pid);
+  //  public List<ProjectOPIDMapper> getProjectOPID(int pid);
  //   public boolean addOPID(ProjectOPIDMapper opid);
 }

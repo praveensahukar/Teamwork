@@ -45,13 +45,13 @@ import org.springframework.beans.factory.annotation.Qualifier;
             
             
            
-            ProjectOPIDMapper opid = new ProjectOPIDMapper();
+           // ProjectOPIDMapper opid = new ProjectOPIDMapper();
             
-            opid.setOpid(PB.getOpid());
-            opid.setPbean(PB);
+          //  opid.setOpid(PB.getOpid());
+         //   opid.setPbean(PB);
             
             session1.save(PB);
-            session1.save(opid);
+           // session1.save(opid);
             tx.commit();
             System.out.println(PB.getOpid());
             System.out.println("Project create successfully");
@@ -184,33 +184,38 @@ import org.springframework.beans.factory.annotation.Qualifier;
         }
     }
     
-    @Override
-    public List<ProjectOPIDMapper> getProjectOPID(int pid){
-       
-        Session session1 = sessionFactory.getCurrentSession();
-        Transaction tx = session1.beginTransaction();
-        try{
-        Criteria criteria = session1.createCriteria(ProjectBean.class);
-        criteria.add(Restrictions.eq("projectid", pid));
-        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-	List<ProjectBean> PList = criteria.list();
-        tx.commit();
-        if(1 == PList.size()){
-            Iterator iter = PList.iterator();
-            ProjectBean PB =  (ProjectBean)iter.next();
-            return PB.getOPIDList();
-            }
-        return null;
-        }
-        catch(Exception e){
-        System.out.println("Exception occured. "+e.getMessage());
-        return null;
-        }
-        finally{
-            if(session1.isOpen()){
-            System.out.println("-----------Closing session------------");
-            session1.close();
-            }
-        }
-    }
+    
+    //Must be used for OPID mapping with projects!!
+    
+//    @Override
+//    public List<ProjectOPIDMapper> getProjectOPID(int pid){
+//       
+//        Session session1 = sessionFactory.getCurrentSession();
+//        Transaction tx = session1.beginTransaction();
+//        try{
+//        Criteria criteria = session1.createCriteria(ProjectBean.class);
+//        criteria.add(Restrictions.eq("projectid", pid));
+//        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+//	List<ProjectBean> PList = criteria.list();
+//        tx.commit();
+//        if(1 == PList.size()){
+//            Iterator iter = PList.iterator();
+//            ProjectBean PB =  (ProjectBean)iter.next();
+//             PB.getOPIDList();
+//            }
+//        return null;
+//        }
+//        catch(Exception e){
+//        System.out.println("Exception occured. "+e.getMessage());
+//        return null;
+//        }
+//        finally{
+//            if(session1.isOpen()){
+//            System.out.println("-----------Closing session------------");
+//            session1.close();
+//            }
+//        }
+//    }
+    
+    
 }

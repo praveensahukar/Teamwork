@@ -111,16 +111,19 @@ AdminService AdminS;
         userBean.setPassword(CU.randomGenetator(12));
 	boolean results = userService.addUser(userBean);
 	if(results==true){
+            ModelAndView model= new ModelAndView("CreateUser");
+            model.addObject("AllTeams",TService.getAllTeams());
                
             if(EService.sendUserCreationMail(userBean))
             {
-                 ModelAndView model= new ModelAndView("CreateUser");
-                 model.addObject("AllTeams",TService.getAllTeams());
-                 model.addObject("Message","User has been created successfully");
+                
+                 model.addObject("Message","User has been created successfully. Mail sent!!");
                  return model;
             }
             else{
-                return new ModelAndView("Error");
+                 
+                 model.addObject("Message","User has been created successfully. Mail not sent!!");
+                 return model;
             }
             //Send Email to user
 //            EmailBean ebean=new EmailBean();

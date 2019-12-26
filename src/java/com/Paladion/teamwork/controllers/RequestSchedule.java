@@ -30,7 +30,6 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -119,18 +118,6 @@ public class RequestSchedule {
     {
     return new fileuploadBean();
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-
-
     @RequestMapping(value="/RequestSchedule",method=RequestMethod.GET)
     public ModelAndView requestSchedule(HttpServletRequest req)
     {   
@@ -152,6 +139,4 @@ public class RequestSchedule {
         }   
     }
 
-
-    
 }

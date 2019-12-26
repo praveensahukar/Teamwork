@@ -22,5 +22,5 @@ public interface ProjectDAO {
     public List<ActivityBean> getProjectActivities(int pid);
     public ProjectBean getProjectDetails(int pid);
     public boolean updateProjectDetails(ProjectBean PB);
-    public List<ProjectOPIDMapper> getProjectOPID(int pid);
+   // public List<ProjectOPIDMapper> getProjectOPID(int pid);
 }

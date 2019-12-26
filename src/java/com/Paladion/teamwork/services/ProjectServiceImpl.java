@@ -62,10 +62,10 @@ public class ProjectServiceImpl  implements ProjectService {
         return PD.updateProjectDetails(PB);
     }
     
-    @Override
-    public List<ProjectOPIDMapper> getProjectOPID(int pid){
-        return PD.getProjectOPID(pid);
-    }
+//    @Override
+//    public List<ProjectOPIDMapper> getProjectOPID(int pid){
+//        return PD.getProjectOPID(pid);
+//    }
     
   
     

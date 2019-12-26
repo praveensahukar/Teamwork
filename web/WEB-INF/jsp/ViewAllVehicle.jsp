@@ -7,6 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<link rel="icon" href="Network-Security.png" type="image/x-icon">
 <script src="jquery-1.12.4.js"></script>
 <script src="canvasjs.min.js"></script>
 <script src="jquery-2.1.1.js"></script>
@@ -18,7 +19,6 @@
 
 <link rel="stylesheet" href="jquery-ui.css">
 <link rel="stylesheet" href="jquery.dataTables.min.css">
-<link rel="icon" href="Network-Security.png" type="image/x-icon">
 <head>
     
 <style>
@@ -60,13 +60,13 @@ li a:hover:not(.active) {
 
 body {
 
-	background-image: url("grey.jpg");
-  background-repeat: repeat-y;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  font-family: 'Roboto', sans-serif;
+    background-image: url("grey.jpg");
+    background-repeat: repeat-y;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    font-family: 'Roboto', sans-serif;
 }
 
 .login-card {
@@ -160,16 +160,16 @@ body {
 
 .login-card a {
   text-decoration: none;
-  color: #666;
+  color: #333;
   font-weight: 400;
   text-align: center;
   display: inline-block;
-  opacity: 0.6;
+  opacity: .5;
   transition: opacity ease 0.5s;
 }
 
 .login-card a:hover {
-  opacity: 1;
+  opacity: 3;
 }
 
 .login-help {
@@ -180,27 +180,27 @@ body {
 
 
 .scrollingtable {
-	box-sizing: border-box;
-	display: inline-block;
-	vertical-align: middle;
+	box-sizing: initial;
+	display: list-item;
+	vertical-align: super;
 	overflow: hidden;
-	width: 95%; /*set table width here if using fixed value*/
+	width: 60%; /*set table width here if using fixed value*/
 	/*min-width: 100%;*/ /*set table width here if using %*/
 	height: 60%; /*set table height here; can be fixed value or %*/
 	/*min-height: 104px;*/ /*if using % height, make this at least large enough to fit scrollbar arrows + captions + thead*/
 	font-family: Verdana, Tahoma, sans-serif;
 	font-size: 20px;
-	line-height: 20px;
-	padding-top: 20px; /*this determines top caption height*/
+	line-height: 0px;
+	padding-top: 0px; /*this determines top caption height*/
 	padding-bottom: 20px; /*this determines bottom caption height*/
 	text-align: left;
 }
-.scrollingtable * {box-sizing: border-box;}
+.scrollingtable * {box-sizing: content-box;}
 .scrollingtable > div {
 	position: relative;
-	border-top: 5px solid black; /*top table border*/
+	border-top: 0px solid black; /*top table border*/
 	height: 100%;
-	padding-top: 30px; /*this determines column header height*/
+	padding-top: 0px; /*this determines column header height*/
 }
 .scrollingtable > div:before {
 	top: 0px;
@@ -223,10 +223,13 @@ body {
 	border: 3px solid black; /*border around table body*/
 }
 .scrollingtable > div > div:after {background: white;} /*match page background color*/
+
+/*Below settings edit the internal table looks */
+
 .scrollingtable > div > div > table {
-	width: 99.5%;
 	border-spacing: 2px;
-	margin-top: -20px; /*inverse of column header height*/
+        width: 100%;
+	margin-top: 0px; /*inverse of column header height*/ /* Change value here to -25 */
 	/*margin-right: 17px;*/ /*uncomment if using % width*/
 }
 .scrollingtable > div > div > table > caption {
@@ -237,7 +240,7 @@ body {
 	font-weight: bold;
 	text-align: center;
 }
-.scrollingtable > div > div > table > * > tr > * {padding: 0;}
+.scrollingtable > div > div > table > * > tr > * {padding: 5px;}
 .scrollingtable > div > div > table > thead {
 	vertical-align: bottom;
 	white-space: nowrap;
@@ -252,7 +255,7 @@ body {
 	position: absolute;
 	top: 1px;
 	left: 1px;
-	height: 20px; /*match column header height*/
+	height: 0px; /*match column header height*/
 	border-left: 1px solid black; /*leftmost header border*/
 }
 .scrollingtable > div > div > table > thead > tr > * > div[label]:before,
@@ -303,61 +306,44 @@ body {
 </style>
 
 
-
-<title>All Projects</title>
+<title>All Users</title>
 </head>
     
 <body>
     <%@include file="Header.jsp" %>        
     <div class="login-card">
-    <div align="left">  <h2 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">All Projects</h2><br></div>
+    <div align="left">  <h2 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">All Vehicles</h2><br></div>
+           
     <div class="scrollingtable">
-		<div>
-			<div>
-    <table>
-        <thead>
-            <tr bgcolor="#a6a6a6">
-                <th><div label="Projects"></div> </th>
-            <th><div label="OPID"></div> </th>
-            <th><div label="Region"></div> </th>
-            
-            <% if(role.equalsIgnoreCase("Manager") || role.equalsIgnoreCase("admin")){ %>
-               <th> <div label="Revenue"></div> </th>
-               <% } %>
-            
-           <%-- <th><div label="Delete"></div> </th> --%>
-        </tr>
-        </thead>
+    <div>
+    <div>
     
-    
+    <table border="2">
+       
     <tbody>
-            
-        <c:forEach  items="${AllProjects}" var="project">     
-           <tr>
-               <td> <a href="GetProjectActivities.do?pid=${project.projectid}">${fn:escapeXml(project.projectname)}</a>
-                
-                <a href="EditProjectDetails.do?pid=${project.projectid}" style="float:right;">
-                <img src="icons8-edit.png" alt="Edit Project" style="width:18px;height:18px;border:0;">
-                </a>
-               </td>
-               <td> ${fn:escapeXml(project.opid)}</td>
-               <td> ${fn:escapeXml(project.region)}</td>
+        <c:forEach  items="${AllVehicle}" var="user">     
+            <tr> 
+                <td> 
+                    ${fn:escapeXml(user.model)}
+                    
+                    <a href="DeleteVehicle.do?id=${user.vehicleid}" style="float:right; margin-right: 20px;">
+                        <img  src="delete.png" alt="Delete Vehicle" style="width:18px;height:18px;border:0;" 
+                              onclick="return confirm('Are you sure you want to delete the Vehicle?')">
+                    </a>
+                    
+                    <a href="GetVehicleDetails.do?id=${user.vehicleid}" style="float:right; margin-right: 40px;">
+                        <img  src="icons8-edit.png" alt="Edit Vehicle" style="width:18px;height:18px;border:0;">
+                    </a>
                
-               <% if(role.equalsIgnoreCase("Manager")|| role.equalsIgnoreCase("admin")){ %>
-               
-               <td> 
-                 ${project.revenue} 
-               </td>
-               <% } %>
-              <%-- <td><a href="DeleteProject.do?id=${project.projectid}">DELETE</a></td> --%>
-           </tr> 
+                   
+                </td>
+            </tr>
         </c:forEach>
-                
-    </tbody>
+       </tbody>
     </table>
-          </div>
-                    </div>
-			</div>
+    
+    </div>
+    </div>
     </div>
     </body>
 </html>

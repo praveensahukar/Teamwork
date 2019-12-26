@@ -127,25 +127,13 @@ public class ProjectController {
             return new ModelAndView("Error");
             }
         }
-      
-        
-        
-        
         if(PB.getOpid().isEmpty()){
             PB.setOpid(null);
-            
-      
-            
-            
+
         }
         else{
-          
-            
-           
-        }
 
-        
-        
+        }
 	PS.addProject(PB);
 
         System.out.println("Project Created with projectid "+PB.getProjectid());
@@ -179,7 +167,6 @@ public ModelAndView GetAllProjects(HttpServletRequest req)
     return new ModelAndView("Error");
     }
 }
-
 @RequestMapping(value="/GetProjectActivities",method=RequestMethod.GET)
 public ModelAndView GetAllProjectActivities(@RequestParam int pid, HttpServletRequest req)
 { 
@@ -201,8 +188,6 @@ public ModelAndView GetAllProjectActivities(@RequestParam int pid, HttpServletRe
     return new ModelAndView("Error");
     }
 }
-
-
 @RequestMapping(value="/EditProjectDetails",method=RequestMethod.GET)
 public ModelAndView EditProjectDetails(@RequestParam int pid, HttpServletRequest req)
 { 
@@ -247,8 +232,6 @@ public ModelAndView EditProjectDetails(@RequestParam int pid, HttpServletRequest
     return new ModelAndView("Error");
     }
 }
-
-
     @RequestMapping(value="/UpdateProjectDetails",method=RequestMethod.POST)
     public ModelAndView UpdateProjectDetails(@ModelAttribute("ProjectM")@Validated ProjectBean PB, BindingResult result, HttpServletRequest req) 
     {
@@ -309,34 +292,37 @@ public ModelAndView EditProjectDetails(@RequestParam int pid, HttpServletRequest
         }
     }
     
-   @RequestMapping(value="/getProjectOPID",method=RequestMethod.POST)
-    public void getProjectOPIDAjax(@RequestParam String PID, HttpServletRequest req, HttpServletResponse response)
-    {   
-        try{ 
-        String[] authorizedRoles = {"admin","manager","lead","scheduling"};
-        if(!CU.checkUserAuthorization(authorizedRoles, req));
-         //response.setContentType("text/html"); 
-         
-        int pid = Integer.parseInt(PID);
-        
+//   @RequestMapping(value="/getProjectOPID",method=RequestMethod.POST)
+//    public void getProjectOPIDAjax(@RequestParam String PID, HttpServletRequest req, HttpServletResponse response)
+//    {   
+//        try{ 
+//        String[] authorizedRoles = {"admin","manager","lead","scheduling"};
+//        if(!CU.checkUserAuthorization(authorizedRoles, req));
+//         //response.setContentType("text/html"); 
+//         
+//        int pid = Integer.parseInt(PID);
+//        
+//    
+//        response.setContentType("application/json");
+//        List<ProjectOPIDMapper> OPIDList = PS.getProjectOPID(pid);
+//        
+//        String[] OPIDs = new String[OPIDList.size()];
+//        int i=0;
+//        for(ProjectOPIDMapper mapper : OPIDList)
+//        {
+//            OPIDs[i] = mapper.getOpid();
+//            i++;
+//        }
+//        String json = new Gson().toJson(OPIDs);
+//   
+//        response.getWriter().write(json);  
+//        }
+//        catch(Exception ex){
+//           ex.printStackTrace();
+//        }
     
-        response.setContentType("application/json");
-        List<ProjectOPIDMapper> OPIDList = PS.getProjectOPID(pid);
-        
-        String[] OPIDs = new String[OPIDList.size()];
-        int i=0;
-        for(ProjectOPIDMapper mapper : OPIDList)
-        {
-            OPIDs[i] = mapper.getOpid();
-            i++;
-        }
-        String json = new Gson().toJson(OPIDs);
-   
-        response.getWriter().write(json);  
-        }
-        catch(Exception ex){
-           ex.printStackTrace();
-        }
+    
+    
    
     }
 
@@ -357,4 +343,3 @@ public ModelAndView EditProjectDetails(@RequestParam int pid, HttpServletRequest
 
 
 
-}

@@ -61,13 +61,14 @@
     <bean id="CompanyService" class="com.Paladion.teamwork.services.CompanyServiceImpl" />
     <bean id="ProjectService" class="com.Paladion.teamwork.services.ProjectServiceImpl" />
     <bean id="ScheduleService" class="com.Paladion.teamwork.services.ScheduleServiceImpl" />
+    <bean id="VehicleService" class="com.Paladion.teamwork.services.VehicleServiceImpl" />
 
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close"> 
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
 
         <property name="url" value="jdbc:mysql://127.0.0.1:3306/teamwork" /> 
         <property name="username" value="root" />
-        <property name="password" value="Pal@2018#"/>
+        <property name="password" value="bulbul@12"/>
     </bean>
 <!-- Hibernate 4 SessionFactory Bean definition -->
     <bean id="hibernate4AnnotatedSessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
@@ -78,6 +79,7 @@
                 <value>com.Paladion.teamwork.beans.UserDataBean</value>
                 
                 <value>com.Paladion.teamwork.beans.TaskBean</value>
+                <value>com.Paladion.teamwork.beans.Vehiclebean</value>
                 <value>com.Paladion.teamwork.beans.TemplateBean</value>
                 <value>com.Paladion.teamwork.beans.ActivityBean</value>
                 <value>com.Paladion.teamwork.beans.MapTemplateTaskBean</value>
@@ -110,7 +112,11 @@
         <bean id="LoginDAO" class="com.Paladion.teamwork.DAO.LoginDAOImpl">
         <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
         </bean>
-
+        
+        <bean id="VehicleDAO" class="com.Paladion.teamwork.DAO.VehicleDAOImpl">
+        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+        </bean>
+        
         <bean id="UserDAO" class="com.Paladion.teamwork.DAO.UserDAOImpl">
         <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
         </bean>

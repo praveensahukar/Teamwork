@@ -134,16 +134,16 @@ int revenue;
         this.projectmanager = projectmanager;
     }
     
-    @OneToMany(targetEntity =ProjectOPIDMapper.class, mappedBy="pbean", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
-    private List<ProjectOPIDMapper> OPIDList;
-    
-    public List<ProjectOPIDMapper> getOPIDList() {
-        return OPIDList;
-    }
-
-    public void setOPIDList(List<ProjectOPIDMapper> OPIDList) {
-        this.OPIDList = OPIDList;
-    }
+//    @OneToMany(targetEntity =ProjectOPIDMapper.class, mappedBy="pbean", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+//    private List<ProjectOPIDMapper> OPIDList;
+//    
+//    public List<ProjectOPIDMapper> getOPIDList() {
+//        return OPIDList;
+//    }
+//
+//    public void setOPIDList(List<ProjectOPIDMapper> OPIDList) {
+//        this.OPIDList = OPIDList;
+//    }
     
     
 }
