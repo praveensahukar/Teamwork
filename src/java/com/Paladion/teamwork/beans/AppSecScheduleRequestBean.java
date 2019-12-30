@@ -23,8 +23,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Table(name = "appsecschedulereq",catalog="teamwork")
 public class AppSecScheduleRequestBean {
-    
-    
+
     @Id
 @GenericGenerator(name="gen",strategy="increment")
 @GeneratedValue(generator="gen")
@@ -40,6 +39,8 @@ Date prefstartdate;
  @Column(name = "proj_scheduleid")
 int proj_scheduleid;
 
+ @Column(name = "projectid")
+int projectid;
  
  @Column(name = "assesstype")
 String assesstype;
@@ -49,6 +50,14 @@ String scope;
 
 @Column(name = "appname")
 String appname;
+
+    public int getProjectid() {
+        return projectid;
+    }
+
+    public void setProjectid(int projectid) {
+        this.projectid = projectid;
+    }
 
     public int getAs_scheduleid() {
         return as_scheduleid;

@@ -105,8 +105,6 @@
 	    </props>
         </property>
   
-
-        
     </bean>
 
         <bean id="LoginDAO" class="com.Paladion.teamwork.DAO.LoginDAOImpl">
@@ -166,9 +164,7 @@
         <bean id="TaskValidator" class="com.Paladion.teamwork.utils.TaskValidator"></bean>
          
         <bean id="userValidator" class="com.Paladion.teamwork.utils.userValidator"></bean>
-        
-      
-        
+
         <bean id="TaskTemplateValidator" class="com.Paladion.teamwork.utils.TaskTemplateValidator"></bean>
         
         <bean id="ActivityValidator" class="com.Paladion.teamwork.utils.ActivityValidator"></bean>
@@ -183,7 +179,5 @@
          <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
        <property name="basename"  value="/WEB-INF/classes/messages" />
        </bean>
-       
-
-       
+   
     </beans>

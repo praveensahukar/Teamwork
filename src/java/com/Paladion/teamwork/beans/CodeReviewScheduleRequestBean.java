@@ -39,6 +39,10 @@ Date prefstartdate;
 @Column(name = "proj_scheduleid")
 int proj_scheduleid;
 
+
+@Column(name = "projectid")
+int projectid;
+
 @Column(name = "assesstype")
 String assesstype;
 
@@ -127,6 +131,14 @@ String prerequisites;
 
     public void setPrerequisites(String prerequisites) {
         this.prerequisites = prerequisites;
+    }
+
+    public int getProjectid() {
+        return projectid;
+    }
+
+    public void setProjectid(int projectid) {
+        this.projectid = projectid;
     }
 
     

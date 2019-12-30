@@ -261,7 +261,7 @@ font-style: italic;
             <td><form:select class="login login-submit" id="projectID" path="projectid" onchange="getOpidForProject(this.${project.projectid})">
                 <option class="login login-submit" value="0">Select</option>
                 <c:forEach  items="${AllProjects}" var="project"> 
-                <form:option class="login login-submit" value="${project.projectid}">${project.projectname}</form:option>    
+                <form:option class="login login-submit"  value="${project.projectid}">${project.projectname}</form:option>    
                 </c:forEach>
                 </form:select>
                 <form:errors path="projectid" cssClass="error"/>
@@ -386,11 +386,11 @@ font-style: italic;
                 <div> 
                     <td align="right">Activity Type:</td>
             <td>
-            <form:select  class="login login-submit" path="">
+            <form:select  class="login login-submit" path=""  id="activityType"  >
                 <form:option class="login login-submit" value="">Select</form:option>
-                    <form:option class="login login-submit" value="C">Code review</form:option>
+                    <form:option class="login login-submit" value="CodeReview">Code review</form:option>
                   
-                    <form:option class="login login-submit" value="Python">Application Security</form:option>
+                    <form:option class="login login-submit" value="Grey">GrayBox Activity</form:option>
                     <form:option class="login login-submit" value="EPT">EPT/Exploratory EPT</form:option>
                     <form:option class="login login-submit" value="IPT">IPT</form:option>
                     <form:option class="login login-submit" value="VAscan">VA Scan</form:option>
@@ -403,239 +403,7 @@ font-style: italic;
                 
                 
             </table>
-            
-        <div> 
-            <div class="C GFG" 
-                 style="padding: 30px;  
-                        margin-top: 30px; 
-                        width :60%;margin-left: 100px;
-                        "> 
-                <table align="right" border="0" cellpadding="10" cellspacing="2">
-                    <tr>
-                        <td>
-                            <label>Preferred start Date:</label>
-                            <form:input placeholder="Enter Start Date" id="txtFromDate" path="startdate" />
-                        </td>
-                        <td >
-                            <label>Type of Assessment:</label>
-                            <form:select class="login login-submit" path="assessmentType" id="assess">
-                <form:option class="login login-submit" value="">Select</form:option>
-                <form:option class="login login-submit" value="Initial">Initial</form:option>
-                <form:option class="login login-submit" value="Confirmatory">Confirmatory</form:option>
-                <form:option class="login login-submit" value="Other">Other</form:option>
-                </form:select>
-                        </td>
-                        
-                    </tr>
-                    <tr>
-                        <td>
-                            <label>Efforts:</label>
-                            <input type="text" name="eft" id="efrt">
-                              <span class='red'>*</span>
-            <form:errors path="" cssClass="error"/>
-                        </td>
-                        <td>
-                            <label>Upload files:</label>
-                            <input id="fileSelect" type="file"  accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" /> 
-                    </tr>
-                    <tr>
-                        <td>
-                            <label>Name of application:</label>
-                            <input type="text" name="eft" id="task1">
-                        </td>
-                        <td>
-                             <label>Lines of codes:</label>
-                            <input type="text" name="eft" id="task2">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label>Code access:</label>
-                            <input type="text" name="eft" id="task5">
-                        </td>
-                        <td>
-                             <label>Technology:</label>
-                            <input type="text" name="eft" id="task6">
-                        </td>
-                        
-                    </tr>
-                    <tr>
-        
-            <td colspan="4" align="center"><input type="submit" value="Add Activity Details" onclick="AddRow1()" class="login login-submit"/></td>
-        </tr>
-                </table>    
-                            
-                            
-                           
-                            
-                           
-          </div> 
-            <div class="EPT GFG" 
-                 style="padding: 30px; 
-                        margin-top: 30px;  
-                        width :60%;margin-left: 100px;
-                        "> 
-              
-                <table align="right" border="0" cellpadding="10" cellspacing="2">
-                    <tr>
-                        <td>
-                            <label>Preferred start Date:</label>
-                            <form:input placeholder="Enter Start Date" id="txtFromDate2" path="startdate" />
-                        </td>
-                        <td>
-                            <label>Type of Assessment:</label>
-                            <form:select class="login login-submit" path="assessmentType" id="assess2">
-                <form:option class="login login-submit" value="">Select</form:option>
-                <form:option class="login login-submit" value="Initial">Initial</form:option>
-                <form:option class="login login-submit" value="Confirmatory">Confirmatory</form:option>
-                <form:option class="login login-submit" value="Other">Other</form:option>
-                </form:select>
-                        </td>
-                        
-                    </tr>
-                    <tr>
-                        <td>
-                            <label>Efforts:</label>
-                            <input type="text" name="eft" id="efrt2">
-                              <span class='red'>*</span>
-            <form:errors path="" cssClass="error"/>
-                        </td>
-                        <td>
-                            <label>Upload files:</label>
-                            <input id="fileSelect2" type="file"  accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
-                        
-                    </tr>
-                    <tr>
-                        <td>
-                            <label>Whitelisting Confirmation:</label>
-                            <input type="text" name="eft" id="task9">
-                        </td>
-                        <td>
-                             <label>Time window:</label>
-                            <input type="text" name="eft" id="task10">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label>Domain:</label>
-                            <input type="text" name="eft" id="task7">
-                        </td>
-                        <td>
-                             <label>IP's in proposal:</label>
-                            <input type="text" name="eft" id="task8">
-                        </td>
-                    </tr>
-                    <tr>
-        
-            <td colspan="4" align="center"><input type="submit" value="Add Activity Details" onclick="AddRow2()" class="login login-submit"/></td>
-        </tr>
-                </table>    
-          </div> 
-               
-            <div class="VAscan GFG" 
-                 style="padding: 30px; 
-                        margin-top: 30px;  
-                        width :60%;margin-left: 100px;
-                        "> 
-              
-                <table align="right" border="0" cellpadding="10" cellspacing="2">
-                    <tr>
-                        <td>
-                            <label>Preferred start Date:</label>
-                            <form:input placeholder="Enter Start Date" id="txtFromDate4" path="startdate" />
-                        </td>
-                        <td>
-                            <label>Type of Assessment:</label>
-                            <form:select class="login login-submit" path="assessmentType" id="assess4">
-                <form:option class="login login-submit" value="">Select</form:option>
-                <form:option class="login login-submit" value="Initial">Initial</form:option>
-                <form:option class="login login-submit" value="Confirmatory">Confirmatory</form:option>
-                <form:option class="login login-submit" value="Other">Other</form:option>
-                </form:select>
-                        </td>
-                        
-                    </tr>
-                    <tr>
-                        <td>
-                            <label>Efforts:</label>
-                            <input type="text" name="eft" id="efrt4">
-                              <span class='red'>*</span>
-            <form:errors path="" cssClass="error"/>
-                        </td>
-                        <td>
-                            <label>Upload files:</label>
-                            <input id="fileSelect4" type="file"  accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
-                        
-                    </tr>
-                    <tr>
-                        <td>
-                            <label>VPN Connectivity:</label>
-                            <input type="text" name="eft" id="task13">
-                        </td>
-                        <td>
-                             <label>Time window:</label>
-                            <input type="text" name="eft" id="task14">
-                        </td>
-                    </tr>
-                    <tr>
-        
-            <td colspan="4" align="center"><input type="submit" value="Add Activity Details" onclick="AddRow4()" class="login login-submit"/></td>
-        </tr>
-                </table>    
-          </div>            
-                        
              
-            <div class="IPT GFG" 
-                 style="padding: 30px; 
-                        margin-top: 30px;  
-                        width :60%;margin-left: 100px;
-                        "> 
-              
-                <table align="right" border="0" cellpadding="10" cellspacing="2">
-                    <tr>
-                        <td>
-                            <label>Preferred start Date:</label>
-                            <form:input placeholder="Enter Start Date" id="txtFromDate3" path="startdate" />
-                        </td>
-                        <td>
-                            <label>Type of Assessment:</label>
-                            <form:select class="login login-submit" path="assessmentType" id="assess3">
-                <form:option class="login login-submit" value="">Select</form:option>
-                <form:option class="login login-submit" value="Initial">Initial</form:option>
-                <form:option class="login login-submit" value="Confirmatory">Confirmatory</form:option>
-                <form:option class="login login-submit" value="Other">Other</form:option>
-                </form:select>
-                        </td>
-                        
-                    </tr>
-                    <tr>
-                        <td>
-                            <label>Efforts:</label>
-                            <input type="text" name="eft" id="efrt3">
-                              <span class='red'>*</span>
-            <form:errors path="" cssClass="error"/>
-                        </td>
-                        <td>
-                            <label>Upload files:</label>
-                            <input id="fileSelect3" type="file"  accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
-                        
-                    </tr>
-                    <tr>
-                        <td>
-                            <label>VPN Connectivity:</label>
-                            <input type="text" name="eft" id="task11">
-                        </td>
-                        <td>
-                             <label>Time window:</label>
-                            <input type="text" name="eft" id="task12">
-                        </td>
-                    </tr>
-                    <tr>
-        
-            <td colspan="4" align="center"><input type="submit" value="Add Activity Details" onclick="AddRow3()" class="login login-submit"/></td>
-        </tr>
-                </table>    
-          </div> 
             <div class="Cplus GFG" 
                  style="padding: 30px; 
                         margin-top: 30px;  
@@ -657,7 +425,6 @@ font-style: italic;
                 <form:option class="login login-submit" value="Other">Other</form:option>
                 </form:select>
                         </td>
-                        
                     </tr>
                     <tr>
                         <td>
@@ -669,11 +436,8 @@ font-style: italic;
                         <td>
                             <label>Upload files:</label>
                             <input id="fileSelect" type="file"  accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
-                        
                     </tr>
-                 
                     <tr>
-        
             <td colspan="4" align="center"><input type="submit" value="Add Activity Details" onclick="AddRow2()" class="login login-submit"/></td>
         </tr>
                 </table>    
@@ -691,25 +455,24 @@ font-style: italic;
                         <td>
                             <label>Type of Assessment:</label>
                             <form:select class="login login-submit" path="assessmentType" id="assess1" >
-                <form:option class="login login-submit" value="" id="assess">Select</form:option>
-                <form:option class="login login-submit" value="Initial" id="assess">Initial</form:option>
-                <form:option class="login login-submit" value="Confirmatory" id="assess">Confirmatory</form:option>
-                <form:option class="login login-submit" value="Other" id="assess">Other</form:option>
-                </form:select>
+                                <form:option class="login login-submit" value="" id="assess">Select</form:option>
+                                <form:option class="login login-submit" value="Initial" id="assess">Initial</form:option>
+                                <form:option class="login login-submit" value="Confirmatory" id="assess">Confirmatory</form:option>
+                                <form:option class="login login-submit" value="Other" id="assess">Other</form:option>
+                            </form:select>
                         </td>
                         
                     </tr>
                     <tr>
                         <td>
                             <label>Efforts:</label>
-                            <input type="text" name="eft" id="efrt1">
-                              <span class='red'>*</span>
-            <form:errors path="" cssClass="error"/>
+                                <input type="text" name="eft" id="efrt1">
+                                <span class='red'>*</span>
+                                <form:errors path="" cssClass="error"/>
                         </td>
                         <td>
                             <label>Upload files:</label>
                             <input id="fileSelect1" type="file"  accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
-                        
                     </tr>
                     <tr>
                         <td>
@@ -718,35 +481,31 @@ font-style: italic;
                         </td>
                         <td>
                              <label>Scope of app:</label>
-                            <input type="text" name="eft" id="sizeofapp">
+                             <input type="text" name="eft" id="sizeofapp">
                         </td>
                     </tr>
                     <tr>
-        
-            <td colspan="4" align="center"><input type="submit" value="Add Activity Details" onclick="AddRow()" class="login login-submit"/></td>
-        </tr>
-                    
-                </table> 
-                        
+                        <td colspan="4" align="center"><input type="submit" value="Add Activity Details" onclick="AddRow()" class="login login-submit"/></td>
+                    </tr>
+                </table>            
           </div> 
-                       
                         <div class="Python GFG" >
-                        <h2 align="center">Application security</h2>
-                        <table align="center" border="4" id="show" cellpadding="10" cellspacing="2">
-                           
-			<thead>
-                           
-				<tr>
-                                    
-					<th>Preferred start date:</th>
-					<th>Type of Assessment</th>
-					<th>Efforts:</th>
-					<th>Uplaoded files:</th>
-                                        <th>Application name:</th>
-                                        <th>Scope of app:</th>
-				</tr>
-			</thead>
-		</table>
+                            <h2 align="center">Application security</h2>
+                                <table align="center" border="4" id="show" cellpadding="10" cellspacing="2">
+
+                                    <thead>
+
+                                            <tr>
+
+                                                    <th>Preferred start date:</th>
+                                                    <th>Type of Assessment</th>
+                                                    <th>Efforts:</th>
+                                                    <th>Uplaoded files:</th>
+                                                    <th>Application name:</th>
+                                                    <th>Scope of app:</th>
+                                            </tr>
+                                    </thead>
+                                </table>
                         </div>      
                         <div class="C GFG">
                         <h2 align="center">Code review Activity</h2>
@@ -768,7 +527,7 @@ font-style: italic;
                         </div>
                         
                         
-                        <div class="EPT GFG">
+                    <!--    <div class="EPT GFG">
                             
                         
                          <h2 align="center">EPT/Exporatory activity</h2>  
@@ -787,7 +546,7 @@ font-style: italic;
 				</tr>
 			</thead>
 		</table>        
-        </div>
+        </div>  
                         
                         
                
@@ -828,14 +587,16 @@ font-style: italic;
 				</tr>
 			</thead>
 		</table>        
-        </div>
+        </div> !-->
         
-            <input type="submit" style="margin-left:170px;" value="Submit Details" class="login login-submit"/>
+           <!-- <input type="submit" style="margin-left:170px;" value="Submit Details" class="login login-submit"/> !-->
          
             
     </div>
 
     </form:form>
+
+ <div id = "page"> </div> 
 
 </div>
      
@@ -1185,6 +946,66 @@ font-style: italic;
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+        <h3> Activity Type:</h3> 
+        <div> 
+            <select id="activityType"> 
+                <option>Select</option> 
+                <option value="CodeReview">Code review</option> 
+                <option value="Network">Network</option> 
+                <option value="Grey">Gray-Box testing</option>  
+            </select> 
+        </div> -->
+
+
+
+        <script> 
+    $(document).ready(function() {
+    $('#activityType').on('change', function() {
+     
+      
+      
+     var ProjID= document.getElementById("projectID");
+     var pid = ProjID.value;
+      
+    
+       var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("page").innerHTML =
+            this.responseText;
+            }
+        };
+        xhttp.open("GET", "/TeamWorkAlpha/LoadScheduleRequestPage.do?page="+this.value+"&pid="+pid, true);
+        //Here param is used to pass the value of selected element
+        //We can also use here POST/PUT/DELETE methods..with some modification.
+        xhttp.send();
+      
+   });
+});
+</script>
+     
 
 
 
