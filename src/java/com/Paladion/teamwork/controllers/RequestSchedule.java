@@ -318,8 +318,7 @@ public class RequestSchedule {
         {
         String[] authorizedRoles = {"admin","manager","lead","scheduling"};
         if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
-        
-        
+
         int i = Integer.parseInt(req.getParameter("pid"));
         VAscanSRB.setProjectid(i);
         SS.VAscanActivity(VAscanSRB);

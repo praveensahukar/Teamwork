@@ -93,6 +93,10 @@
                  <value>com.Paladion.teamwork.beans.ScheduleBean</value>
                  <value>com.Paladion.teamwork.beans.ProjectOPIDMapper</value>
                <value>com.Paladion.teamwork.beans.CodeReviewScheduleRequestBean</value>
+            <value>com.Paladion.teamwork.beans.AppSecScheduleRequestBean</value>
+              <value>com.Paladion.teamwork.beans.eptScheduleRequestBean</value>
+              <value>com.Paladion.teamwork.beans.iptScheduleRequestBean</value>
+              <value>com.Paladion.teamwork.beans.vascanScheduleRequestBean</value>
             </list>
         </property>
 
