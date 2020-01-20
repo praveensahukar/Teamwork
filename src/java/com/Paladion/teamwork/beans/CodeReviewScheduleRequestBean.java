@@ -39,7 +39,6 @@ Date prefstartdate;
 @Column(name = "proj_scheduleid")
 int proj_scheduleid;
 
-
 @Column(name = "projectid")
 int projectid;
 
@@ -58,8 +57,8 @@ String access;
 @Column(name = "technology")
 String technology;
 
-@Column(name = "prerequisites")
-String prerequisites;
+@Column(name = "effort")
+String effort;
 
     public String getTechnology() {
         return technology;
@@ -124,21 +123,19 @@ String prerequisites;
     public void setAccess(String access) {
         this.access = access;
     }
-
-    public String getPrerequisites() {
-        return prerequisites;
-    }
-
-    public void setPrerequisites(String prerequisites) {
-        this.prerequisites = prerequisites;
-    }
-
     public int getProjectid() {
         return projectid;
     }
 
     public void setProjectid(int projectid) {
         this.projectid = projectid;
+    }
+
+    public String getEffort() {
+        return effort;
+    }
+    public void setEffort(String effort) {
+        this.effort = effort;
     }
 
     

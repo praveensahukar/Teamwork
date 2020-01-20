@@ -21,6 +21,7 @@ import com.Paladion.teamwork.services.ActivityService;
 import com.Paladion.teamwork.services.AdminService;
 import com.Paladion.teamwork.services.EmailService;
 import com.Paladion.teamwork.services.ProjectService;
+import com.Paladion.teamwork.services.ScheduleService;
 import com.Paladion.teamwork.services.TaskService;
 import com.Paladion.teamwork.services.TeamService;
 import com.Paladion.teamwork.services.TemplateService;
@@ -72,6 +73,11 @@ public class RequestSchedule {
     @Autowired
     @Qualifier(value="ProjectService")
     ProjectService PS;
+    
+    @Autowired
+    @Qualifier(value="ScheduleService")
+    ScheduleService SS;
+    
 
     @Autowired
     @Qualifier(value="UserService")
@@ -120,6 +126,7 @@ public class RequestSchedule {
     return new AllocationBean();
     }
 
+    
     @ModelAttribute("filebean")
     public fileuploadBean populate1()
     {
@@ -233,8 +240,10 @@ public class RequestSchedule {
         
         int i = Integer.parseInt(req.getParameter("pid"));
         CRSRB.setProjectid(i);
-        ModelAndView model=new ModelAndView("error");
+        SS.saveCodeReviewActvitiy(CRSRB);
+        ModelAndView model=new ModelAndView("CreateScheduleRequest");
         return model;
+        
         }
         catch(Exception ex){
         System.out.println("Exception occured. "+ex.getMessage());
@@ -252,7 +261,8 @@ public class RequestSchedule {
         
         int i = Integer.parseInt(req.getParameter("pid"));
         ASSRB.setProjectid(i);
-        ModelAndView model=new ModelAndView("error");
+        SS.saveAppSecActivity(ASSRB);
+        ModelAndView model=new ModelAndView("CreateScheduleRequest");
         return model;
         }
         catch(Exception ex){
@@ -272,7 +282,8 @@ public class RequestSchedule {
         
         int i = Integer.parseInt(req.getParameter("pid"));
         EPTSRB.setProjectid(i);
-        ModelAndView model=new ModelAndView("error");
+        SS.EPTActivity(EPTSRB);
+        ModelAndView model=new ModelAndView("CreateScheduleRequest");
         return model;
         }
         catch(Exception ex){
@@ -291,7 +302,8 @@ public class RequestSchedule {
         
         int i = Integer.parseInt(req.getParameter("pid"));
         IPTSRB.setProjectid(i);
-        ModelAndView model=new ModelAndView("error");
+        SS.IPTActivity(IPTSRB);
+        ModelAndView model=new ModelAndView("CreateScheduleRequest");
         return model;
         }
         catch(Exception ex){
@@ -310,7 +322,8 @@ public class RequestSchedule {
         
         int i = Integer.parseInt(req.getParameter("pid"));
         VAscanSRB.setProjectid(i);
-        ModelAndView model=new ModelAndView("error");
+        SS.VAscanActivity(VAscanSRB);
+        ModelAndView model=new ModelAndView("CreateScheduleRequest");
         return model;
         }
         catch(Exception ex){

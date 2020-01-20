@@ -92,7 +92,7 @@
                 <value>com.Paladion.teamwork.beans.AllocationBean</value>
                  <value>com.Paladion.teamwork.beans.ScheduleBean</value>
                  <value>com.Paladion.teamwork.beans.ProjectOPIDMapper</value>
-               
+               <value>com.Paladion.teamwork.beans.CodeReviewScheduleRequestBean</value>
             </list>
         </property>
 

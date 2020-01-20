@@ -27,8 +27,8 @@ public class vascanScheduleRequestBean {
     @Id
 @GenericGenerator(name="gen",strategy="increment")
 @GeneratedValue(generator="gen")
-@Column(name = "ept_scheduleid", unique = true, nullable = false, precision = 15, scale = 0)
-int ept_scheduleid;
+@Column(name = "va_scheduleid", unique = true, nullable = false, precision = 15, scale = 0)
+int va_scheduleid;
      
      
   @Column(name = "prefstartdate")
@@ -60,11 +60,11 @@ String timewindow;
     }
 
     public int getEpt_scheduleid() {
-        return ept_scheduleid;
+        return va_scheduleid;
     }
 
     public void setEpt_scheduleid(int ept_scheduleid) {
-        this.ept_scheduleid = ept_scheduleid;
+        this.va_scheduleid = ept_scheduleid;
     }
 
     public Date getPrefstartdate() {
