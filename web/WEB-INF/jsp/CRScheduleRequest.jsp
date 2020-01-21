@@ -269,7 +269,8 @@ font-style: italic;
                     <tr>
                         <td>
                             <label>Efforts:</label>
-                            <input type="text" name="eft" id="efrt">
+<!--                        <input type="text" name="eft" id="efrt">-->
+                            <form:input placeholder="Efforts" path="effort" />
                             <span class='red'>*</span>
                             <form:errors path="" cssClass="error"/>
                         </td>
