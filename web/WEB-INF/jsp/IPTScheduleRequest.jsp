@@ -276,9 +276,9 @@ font-style: italic;
                     <tr>
                         <td>
                             <label>Efforts:</label>
-                            <input type="text" name="eft" id="efrt3">
+                            <form:input placeholder="Efforts" path="effort" />
                               <span class='red'>*</span>
-            <form:errors path="" cssClass="error"/>
+                                <form:errors path="" cssClass="error"/>
                         </td>
                         <td>
                             <label>Upload files:</label>
@@ -288,11 +288,11 @@ font-style: italic;
                     <tr>
                         <td>
                             <label>VPN Connectivity:</label>
-                            <input type="text" name="eft" id="task11">
+                            <form:input type="text" name="eft" id="task11" path="vpnConn" />
                         </td>
                         <td>
                              <label>Time window:</label>
-                            <input type="text" name="eft" id="task12">
+                             <form:input type="text" name="eft" id="task12" path="timewindow"/>
                         </td>
                     </tr>
                     <tr>

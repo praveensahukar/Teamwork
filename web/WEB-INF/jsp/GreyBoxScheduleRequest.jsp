@@ -258,7 +258,7 @@ font-style: italic;
                     <tr>
                         <td>
                             <label>Preferred start Date:</label>
-                            <form:input placeholder="Enter Start Date" id="txtFromDate" path="" />
+                            <form:input placeholder="Enter Start Date" id="txtFromDate" path="prefstartdate" />
                         </td>
                         <td>
                             <label>Type of Assessment:</label>
@@ -275,7 +275,7 @@ font-style: italic;
                     <tr>
                         <td>
                                 <label>Efforts:</label>
-                                <input type="text" name="eft" id="efrt1">
+                                <form:input placeholder="Efforts" path="effort" />
                                 <span class='red'>*</span>
                                 <form:errors path="" cssClass="error"/>
                         </td>
@@ -287,11 +287,11 @@ font-style: italic;
                     <tr>
                         <td>
                             <label>Application name:</label>
-                            <input type="text" name="eft" id="appname">
+                            <form:input type="text" name="eft" id="appname" path="appname" />
                         </td>
                         <td>
                              <label>Scope of app:</label>
-                            <input type="text" name="eft" id="sizeofapp">
+                            <form:input type="text" name="eft" id="sizeofapp" path="scope" />
                         </td>
                     </tr>
                     <tr>

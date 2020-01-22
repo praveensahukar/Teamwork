@@ -282,21 +282,21 @@ font-style: italic;
                     <tr>
                         <td>
                             <label>Name of application:</label>
-                            <input type="text" name="eft" id="task1">
+                            <form:input type="text" name="eft" id="task1" path="appname" />
                         </td>
                         <td>
                              <label>Lines of codes:</label>
-                            <input type="text" name="eft" id="task2">
+                            <form:input type="text" name="eft" id="task2" path="scope" />
                         </td>
                     </tr>
                     <tr>
                         <td>
                             <label>Code access:</label>
-                            <input type="text" name="eft" id="task5">
+                            <form:input type="text" name="eft" id="task5" path="access" />
                         </td>
                         <td>
                              <label>Technology:</label>
-                            <input type="text" name="eft" id="task6">
+                            <form:input type="text" name="eft" id="task6" path="technology" />
                         </td>
                     </tr>
                     <tr>

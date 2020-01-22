@@ -51,6 +51,26 @@ String assesstype;
  @Column(name="timewindow")
 String timewindow;
 
+ @Column(name = "effort")
+String effort;
+
+    public int getVa_scheduleid() {
+        return va_scheduleid;
+    }
+
+    public void setVa_scheduleid(int va_scheduleid) {
+        this.va_scheduleid = va_scheduleid;
+    }
+
+    public String getEffort() {
+        return effort;
+    }
+
+    public void setEffort(String effort) {
+        this.effort = effort;
+    }
+ 
+    
     public int getProjectid() {
         return projectid;
     }
@@ -58,15 +78,6 @@ String timewindow;
     public void setProjectid(int projectid) {
         this.projectid = projectid;
     }
-
-    public int getEpt_scheduleid() {
-        return va_scheduleid;
-    }
-
-    public void setEpt_scheduleid(int ept_scheduleid) {
-        this.va_scheduleid = ept_scheduleid;
-    }
-
     public Date getPrefstartdate() {
         return prefstartdate;
     }

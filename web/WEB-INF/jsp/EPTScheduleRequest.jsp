@@ -276,9 +276,9 @@ font-style: italic;
                     <tr>
                         <td>
                             <label>Efforts:</label>
-                            <input type="text" name="eft" id="efrt2">
+                           <form:input placeholder="Efforts" path="effort" />
                               <span class='red'>*</span>
-            <form:errors path="" cssClass="error"/>
+                              <form:errors path="" cssClass="error"/>
                         </td>
                         <td>
                             <label>Upload files:</label>
@@ -288,21 +288,21 @@ font-style: italic;
                     <tr>
                         <td>
                             <label>Whitelisting Confirmation:</label>
-                            <input type="text" name="eft" id="task9">
+                            <form:input type="text" name="eft" id="task9" path="whitelistconf" />
                         </td>
                         <td>
                              <label>Time window:</label>
-                            <input type="text" name="eft" id="task10">
+                            <form:input type="text" name="eft" id="task10" path="timewindow" />
                         </td>
                     </tr>
                     <tr>
                         <td>
                             <label>Domain:</label>
-                            <input type="text" name="eft" id="task7">
+                            <form:input type="text" name="eft" id="task7" path="domain"/>
                         </td>
                         <td>
                              <label>IP's in proposal:</label>
-                            <input type="text" name="eft" id="task8">
+                            <form:input type="text" name="eft" id="task8" path="ipproposal" />
                         </td>
                     </tr>
                     <tr>

@@ -51,6 +51,17 @@ String scope;
 @Column(name = "appname")
 String appname;
 
+@Column(name = "effort")
+String effort;
+
+    public String getEffort() {
+        return effort;
+    }
+
+    public void setEffort(String effort) {
+        this.effort = effort;
+    }
+
     public int getProjectid() {
         return projectid;
     }
