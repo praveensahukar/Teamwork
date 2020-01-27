@@ -11,6 +11,7 @@ import com.Paladion.teamwork.beans.AllocationBean;
 import com.Paladion.teamwork.beans.AppSecScheduleRequestBean;
 import com.Paladion.teamwork.beans.CodeReviewScheduleRequestBean;
 import com.Paladion.teamwork.beans.EmailBean;
+import com.Paladion.teamwork.beans.ProjectScheduleRequestBean;
 import com.Paladion.teamwork.beans.ScheduleBean;
 import com.Paladion.teamwork.beans.TaskBean;
 import com.Paladion.teamwork.beans.eptScheduleRequestBean;
@@ -77,7 +78,6 @@ public class RequestSchedule {
     @Autowired
     @Qualifier(value="ScheduleService")
     ScheduleService SS;
-    
 
     @Autowired
     @Qualifier(value="UserService")
@@ -126,7 +126,6 @@ public class RequestSchedule {
     return new AllocationBean();
     }
 
-    
     @ModelAttribute("filebean")
     public fileuploadBean populate1()
     {
@@ -157,6 +156,11 @@ public class RequestSchedule {
     {
     return new vascanScheduleRequestBean();
     }
+     @ModelAttribute("Projschedule")
+    public ProjectScheduleRequestBean populateProjschedule()
+    {
+    return new ProjectScheduleRequestBean();
+    }
     
     @RequestMapping(value="/RequestSchedule",method=RequestMethod.GET)
     public ModelAndView requestSchedule(HttpServletRequest req)
@@ -166,6 +170,26 @@ public class RequestSchedule {
         String[] authorizedRoles = {"admin","manager","lead","scheduling"};
         if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
         ModelAndView model=new ModelAndView("CreateScheduleRequest");
+	
+            model.addObject("AllTemplates", TS.getAllTemplates());
+            model.addObject("AllLeads", US.GetUsersByRole("lead"));
+            model.addObject("AllTeams",  TeamS.getAllTeams());
+            model.addObject("AllProjects",PS.getAllProjects());  
+            return model;
+	}
+        catch(Exception ex){
+        System.out.println("Exception occured. "+ex.getMessage());
+        return new ModelAndView("Error");
+        }   
+    }
+    @RequestMapping(value="/ActivityRequestSchedule",method=RequestMethod.GET)
+    public ModelAndView ActivityRequestSchedule(HttpServletRequest req)
+    {   
+        try
+        {
+        String[] authorizedRoles = {"admin","manager","lead","scheduling"};
+        if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
+        ModelAndView model=new ModelAndView("ActivityScheduleRequest");
 	
             model.addObject("AllTemplates", TS.getAllTemplates());
             model.addObject("AllLeads", US.GetUsersByRole("lead"));
@@ -204,22 +228,17 @@ public class RequestSchedule {
         model.addObject("pid",pid);
         return model;
         }
-            
         if(page.equalsIgnoreCase("IPT")){
-        
+            
         ModelAndView model=new ModelAndView("IPTScheduleRequest");
         model.addObject("pid",pid);
         return model;
         }
         if(page.equalsIgnoreCase("VAscan")){
-        
         ModelAndView model=new ModelAndView("VAscanScheduleRequest");
         model.addObject("pid",pid);
         return model;
         }
-        
-        
-         
     ModelAndView model=new ModelAndView("error");
     return model;
 	}
@@ -229,6 +248,22 @@ public class RequestSchedule {
         }   
     }
     
+    @RequestMapping(value="/saveprojschedule",method=RequestMethod.POST)
+    public ModelAndView saveprojschedule(@ModelAttribute("Projschedule") ProjectScheduleRequestBean Projschedule, HttpServletRequest req )
+    {
+        try{
+             String[] authorizedRoles = {"admin","manager","lead","scheduling"};
+        if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
+            
+        SS.saveprojschedule(Projschedule);
+        ModelAndView model=new ModelAndView("CreateScheduleRequest");
+        return model;
+        }
+        catch(Exception ex){
+             System.out.println("Exception occured. "+ex.getMessage());
+        return new ModelAndView("Error");
+        }
+    }
     @RequestMapping(value="/saveCodeReviewActivity",method=RequestMethod.POST)
     public ModelAndView saveCodeReviewActvitiy(@ModelAttribute("CRBean") CodeReviewScheduleRequestBean CRSRB, HttpServletRequest req )
     {   
@@ -236,14 +271,11 @@ public class RequestSchedule {
         {
         String[] authorizedRoles = {"admin","manager","lead","scheduling"};
         if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
-        
-        
         int i = Integer.parseInt(req.getParameter("pid"));
         CRSRB.setProjectid(i);
         SS.saveCodeReviewActvitiy(CRSRB);
         ModelAndView model=new ModelAndView("CreateScheduleRequest");
         return model;
-        
         }
         catch(Exception ex){
         System.out.println("Exception occured. "+ex.getMessage());
@@ -257,8 +289,6 @@ public class RequestSchedule {
         {
         String[] authorizedRoles = {"admin","manager","lead","scheduling"};
         if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
-        
-        
         int i = Integer.parseInt(req.getParameter("pid"));
         ASSRB.setProjectid(i);
         SS.saveAppSecActivity(ASSRB);
@@ -270,7 +300,6 @@ public class RequestSchedule {
         return new ModelAndView("Error");
         }   
     }
-    
     @RequestMapping(value="/EPTActivity",method=RequestMethod.POST)
     public ModelAndView EPTActivity(@ModelAttribute("EPTBean") eptScheduleRequestBean EPTSRB, HttpServletRequest req )
     {   

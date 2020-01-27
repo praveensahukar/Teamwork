@@ -95,7 +95,6 @@ String effort;
     public String getAssesstype() {
         return assesstype;
     }
-
     public void setAssesstype(String assesstype) {
         this.assesstype = assesstype;
     }
@@ -137,6 +136,4 @@ String effort;
     public void setEffort(String effort) {
         this.effort = effort;
     }
-
-    
 }

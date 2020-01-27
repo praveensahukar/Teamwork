@@ -7,6 +7,7 @@ package com.Paladion.teamwork.DAO;
 
 import com.Paladion.teamwork.beans.AppSecScheduleRequestBean;
 import com.Paladion.teamwork.beans.CodeReviewScheduleRequestBean;
+import com.Paladion.teamwork.beans.ProjectScheduleRequestBean;
 import com.Paladion.teamwork.beans.eptScheduleRequestBean;
 import com.Paladion.teamwork.beans.iptScheduleRequestBean;
 import com.Paladion.teamwork.beans.vascanScheduleRequestBean;
@@ -146,6 +147,27 @@ public class ScheduleDAOImpl implements ScheduleDAO{
                 }
             }
     }
-    
-    
+
+    @Override
+    public void saveprojschedule(ProjectScheduleRequestBean Projschedule) {
+        Session session1 = sessionFactory.getCurrentSession();
+	Transaction tx = session1.beginTransaction();
+        
+           try{
+            session1.save(Projschedule);
+            System.out.println("project schedule added successfully");
+            tx.commit();
+            }
+            catch(Exception ex){
+                tx.rollback();
+                System.out.println("Error Occured : "+ex.getMessage());
+                ex.printStackTrace();
+                return;
+            }finally{
+                if(session1.isOpen()){
+                System.out.println("-------------Closing session--------------");
+                session1.close();
+                }
+            }
+    }
 }

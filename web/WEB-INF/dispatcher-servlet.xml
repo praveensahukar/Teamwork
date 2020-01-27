@@ -97,6 +97,7 @@
               <value>com.Paladion.teamwork.beans.eptScheduleRequestBean</value>
               <value>com.Paladion.teamwork.beans.iptScheduleRequestBean</value>
               <value>com.Paladion.teamwork.beans.vascanScheduleRequestBean</value>
+              <value>com.Paladion.teamwork.beans.ProjectScheduleRequestBean</value>
             </list>
         </property>
 

@@ -9,6 +9,7 @@ import com.Paladion.teamwork.DAO.ProjectDAO;
 import com.Paladion.teamwork.DAO.ScheduleDAO;
 import com.Paladion.teamwork.beans.AppSecScheduleRequestBean;
 import com.Paladion.teamwork.beans.CodeReviewScheduleRequestBean;
+import com.Paladion.teamwork.beans.ProjectScheduleRequestBean;
 import com.Paladion.teamwork.beans.eptScheduleRequestBean;
 import com.Paladion.teamwork.beans.iptScheduleRequestBean;
 import com.Paladion.teamwork.beans.vascanScheduleRequestBean;
@@ -46,10 +47,14 @@ public class ScheduleServiceImpl implements ScheduleService {
        
         SD.IPTActivity(IPTSRB);
     }
-
     @Override
     public void VAscanActivity(vascanScheduleRequestBean VAscanSRB) {
         SD.VAscanActivity(VAscanSRB);
+    }
+
+    @Override
+    public void saveprojschedule(ProjectScheduleRequestBean Projschedule) {
+        SD.saveprojschedule(Projschedule);
     }
     
 }

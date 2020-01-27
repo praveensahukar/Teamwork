@@ -7,6 +7,7 @@ package com.Paladion.teamwork.DAO;
 
 import com.Paladion.teamwork.beans.AppSecScheduleRequestBean;
 import com.Paladion.teamwork.beans.CodeReviewScheduleRequestBean;
+import com.Paladion.teamwork.beans.ProjectScheduleRequestBean;
 import com.Paladion.teamwork.beans.eptScheduleRequestBean;
 import com.Paladion.teamwork.beans.iptScheduleRequestBean;
 import com.Paladion.teamwork.beans.vascanScheduleRequestBean;
@@ -26,5 +27,7 @@ public interface ScheduleDAO {
     public void IPTActivity(iptScheduleRequestBean IPTSRB);
 
     public void VAscanActivity(vascanScheduleRequestBean VAscanSRB);
+
+    public void saveprojschedule(ProjectScheduleRequestBean Projschedule);
     
 }

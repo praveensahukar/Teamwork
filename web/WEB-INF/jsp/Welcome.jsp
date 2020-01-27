@@ -166,8 +166,6 @@ body {
   font-size: 12px;
 }
 
-
-
 table {
     border-collapse: collapse;
     width: 100%;
@@ -228,12 +226,8 @@ window.onload = function () {
 <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script> 
 </head>
 <body>
-     
-
-        
-              
-     </div>
-    </body>
+    
+</body>
     
 </html>
 	   

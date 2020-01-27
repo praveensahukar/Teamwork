@@ -114,7 +114,6 @@
                return;
            }
     %> <%-- Session Code Ends --%>
-    
      
     <%-- Fetch the UserName from the Session --%>
     <%! UserDataBean b; String name; String role;%>

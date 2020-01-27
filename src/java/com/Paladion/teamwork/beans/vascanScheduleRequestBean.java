@@ -15,11 +15,10 @@ import javax.persistence.Temporal;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.format.annotation.DateTimeFormat;
 
-/**
+/*
  *
  * @author pal
  */
-
 @Entity
 @Table(name = "vascanschedulereq",catalog="teamwork")
 public class vascanScheduleRequestBean {
@@ -70,7 +69,6 @@ String effort;
         this.effort = effort;
     }
  
-    
     public int getProjectid() {
         return projectid;
     }

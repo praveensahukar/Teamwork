@@ -1,3 +1,9 @@
+<%-- 
+    Document   : ActivityScheduleRequest
+    Created on : Jan 27, 2020, 11:10:47 AM
+    Author     : pal
+--%>
+
 
 
 <%-- 
@@ -238,20 +244,25 @@ font-style: italic;
     }); 
    }  
  </script>  
+    
 <title>Request Schedule</title>
 </head>
 
 <body>
-<%@include file="Header.jsp"%>  
+<%@include file="Header.jsp"%>
+	   
 <div class="login-card">
 	   
     <div>  <h2 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">Request For Schedule</h2></div>
 <!--action="getEngineers.do"-->
-<form:form  method="post" action="saveprojschedule.do" commandName="Projschedule" >
+    <form:form  method="post" commandName="ProjectM">
     <div>
+        
         <input type="hidden" name="AntiCSRFToken" id="token" value="${csrfPreventionSalt}"/>
-        <table border="0" cellpadding="10" cellspacing="2" >
-        <tr>
+    
+            <table align="center" border="0" cellpadding="10" cellspacing="2">
+                <tr>
+                   
             <td align="right">Project :</td>
             <td><form:select class="login login-submit" id="projectID" path="projectid" onchange="getOpidForProject(this.${project.projectid})">
                 <option class="login login-submit" value="0">Select</option>
@@ -261,80 +272,31 @@ font-style: italic;
                 </form:select>
                 <form:errors path="projectid" cssClass="error"/>
             </td>
-            <td align="right">OPID :</td>
-            <td><form:select placeholder="Select OPID" id="OPIDList" class="login login-submit" path="opid">
-                <option class="login login-submit" value="0" id="default">Select Project To Load OPID</option>
-                </form:select>
-                <span class='red'>*</span> <a href='addOpidToProject.do' id="addopid" onclick="addOpidForProject(this.projectID)">ADD OPID</a>
-            <form:errors path="opid" cssClass="error"/>
-            </td>
-        </tr>  
-        <tr>
-             <td align="right">Pre-requisites:</td>
-            <td><form:select class="login login-submit"  path="Pre_reques">
-                <form:option class="login login-submit" value="">Select</form:option>
-                <form:option class="login login-submit" value="Shared and Validated">Received and Validated</form:option>
-                <form:option class="login login-submit" value="Shared, Needs Validation">Received, Needs Validation</form:option>
-                <form:option class="login login-submit" value="Shared, Needs Validation">Not Received</form:option>
-                </form:select>    
-            </td>
-            <td align="right">Regulation Compliance:</td>
-            <td><form:select class="login login-submit" placeholder="PCIDSS/HIPPA" path="compliance">
-                <form:option class="login login-submit" value="">Select</form:option>
-                <form:option class="login login-submit" value="PCI DSS">PCI DSS</form:option>
-                <form:option class="login login-submit" value="HIPAA">HIPAA</form:option>
-                <form:option class="login login-submit" value="Plynt Certification">PLYNT Certification</form:option>
-                <form:option class="login login-submit" value="Others">Others</form:option>
-                <form:option class="login login-submit" value="None">None</form:option>
-                </form:select>
-                <span class='red'>*</span>
-            </td>
-        </tr> 
-        <tr>
-            <td align="right">Hosting Environment:</td>
-            <td><form:select class="login login-submit"  path="Hosting">
-                <form:option class="login login-submit" value="">Select</form:option>
-                <form:option class="login login-submit" value="UAT / Test Environment">UAT / Test Environment</form:option>
-                <form:option class="login login-submit" value="Production Environment">Production Environment</form:option>
-                </form:select>    
-            </td>
-            <td align="right">Whitelisting Confirmation:</td>
-            <td><form:select class="login login-submit"  path="whitelisting">
-                <form:option class="login login-submit" value="">Select</form:option>
-                <form:option class="login login-submit" value="Yes">Yes</form:option>
-                <form:option class="login login-submit" value="No, Need Confirmation">No, Need Confirmation</form:option>
+            <td align="right">Activity Type:</td>
+            <td>
+                <form:select  class="login login-submit" path=""  id="activityType"  >
+                    <form:option class="login login-submit" value="">Select</form:option>
+                    <form:option class="login login-submit" value="CodeReview">Code review</form:option>
+                    <form:option class="login login-submit" value="Grey">GrayBox Activity</form:option>
+                    <form:option class="login login-submit" value="EPT">EPT/Exploratory EPT</form:option>
+                    <form:option class="login login-submit" value="IPT">IPT</form:option>
+                    <form:option class="login login-submit" value="VAscan">VA Scan</form:option>
+                    <form:option class="login login-submit" value="Cplus">Segmentation</form:option>
+                    <form:option class="login login-submit" value="Cplus">Firewall Rolebase Audit</form:option>
+                    <form:option class="login login-submit" value="Cplus">Social Engg</form:option>
+                    <form:option class="login login-submit" value="Cplus">Wifi PT</form:option>
                 </form:select>
             </td>
-        </tr> 
-         <tr>
-            <td align="right">Client Technical SPOC :</td>
-            <td><form:input placeholder="Client SPOC" path="clspoc"  />
-            <span class='red'>*</span>
-            <form:errors path="" cssClass="error"/>
-            </td>
-      
-            <td align="right">Reporting Requirement:</td>
-            <td><form:select class="login login-submit"  path="requirements">
-                <form:option class="login login-submit" value="">Select</form:option>
-                <form:option class="login login-submit" value="Client Connect">Client Connect</form:option>
-                <form:option class="login login-submit" value="Provian">Provian</form:option>
-                <form:option class="login login-submit" value="AISAAC">AISAAC</form:option>
-                <form:option class="login login-submit" value="Word/Excel">Word/Excel</form:option>
-                <form:option class="login login-submit" value="Others">Others</form:option>
-                </form:select>
-            </td>
-        </tr>
-        <tr>
-                            <td colspan="4" align="right"><input type="submit" value="Submit"  class="login login-submit"/></td>
-                    </tr>
-        </table>
-        
-            <a href="ActivityRequestSchedule.do" style="color: black;">Click to add activity</a>
-                  
-  
+            </tr>
+</table>
              </div>
-</div>
     </form:form>
+ <div id = "page"> 
+ 
+ 
+ </div> 
+
+</div>
 
 <script>
   $(document).ready(function(){
@@ -352,7 +314,26 @@ font-style: italic;
     });  
 });
 </script>
+<script> 
+    $(document).ready(function() {
+    $('#activityType').on('change', function() {
 
+     var ProjID= document.getElementById("projectID");
+     var pid = ProjID.value;
+       var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("page").innerHTML =
+            this.responseText;
+            }
+        };
+        xhttp.open("GET", "/TeamWorkAlpha/LoadScheduleRequestPage.do?page="+this.value+"&pid="+pid, true);
+        //Here param is used to pass the value of selected element
+        //We can also use here POST/PUT/DELETE methods..with some modification.
+        xhttp.send();
+   });
+});
+</script>
 </body>
 </html>
 
