@@ -191,9 +191,9 @@ public class RequestSchedule {
         if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
         ModelAndView model=new ModelAndView("ActivityScheduleRequest");
 	
-            model.addObject("AllTemplates", TS.getAllTemplates());
-            model.addObject("AllLeads", US.GetUsersByRole("lead"));
-            model.addObject("AllTeams",  TeamS.getAllTeams());
+           // model.addObject("AllTemplates", TS.getAllTemplates());
+           // model.addObject("AllLeads", US.GetUsersByRole("lead"));
+           // model.addObject("AllTeams",  TeamS.getAllTeams());
             model.addObject("AllProjects",PS.getAllProjects());  
             return model;
 	}
@@ -210,20 +210,27 @@ public class RequestSchedule {
         String[] authorizedRoles = {"admin","manager","lead","scheduling"};
         if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
         
-        if(page.equalsIgnoreCase("CodeReview")){
+        if(page.equalsIgnoreCase("scr")){
         
         ModelAndView model=new ModelAndView("CRScheduleRequest");
         model.addObject("pid",pid);
         return model;
         }   
-         if(page.equalsIgnoreCase("Grey")){
+         if(page.equalsIgnoreCase("apptest")){
         
         ModelAndView model=new ModelAndView("GreyBoxScheduleRequest");
         model.addObject("pid",pid);
         return model;
         }
-            if(page.equalsIgnoreCase("EPT")){
         
+        if(page.equalsIgnoreCase("nettest")){
+        ModelAndView model=new ModelAndView("EPTScheduleRequest");
+        model.addObject("pid",pid);
+        return model;
+        } 
+         
+         
+        if(page.equalsIgnoreCase("EPT")){
         ModelAndView model=new ModelAndView("EPTScheduleRequest");
         model.addObject("pid",pid);
         return model;

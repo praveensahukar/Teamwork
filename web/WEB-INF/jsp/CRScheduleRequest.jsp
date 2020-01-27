@@ -247,7 +247,7 @@ font-style: italic;
          <input type="hidden" name="AntiCSRFToken" id="token" value="${csrfPreventionSalt}"/>
           <input type="hidden" name="pid" value="${pid}"/>
       <div style="width :60%;margin-left: 100px;"> 
-                <h1>Code Review Activity Schedule </h1>
+                <h1>Schedule Request - Source Code Review</h1>
                 <table align="right" border="0" cellpadding="10" cellspacing="2">
                     <tr>
                         <td>
@@ -255,13 +255,15 @@ font-style: italic;
                             <form:input placeholder="Enter Start Date" id="txtFromDate1" path="prefstartdate" />
                         </td>
                         <td>
-                            <label>Type of Assessment:</label>
+                            <label>Code Review Type:</label>
                             <form:select class="login login-submit" path="assesstype" id="assess">
                                 <form:option class="login login-submit" value="">Select</form:option>
-                                <form:option class="login login-submit" value="WebCR">Web Application Code Review</form:option>
-                                <form:option class="login login-submit" value="AndroidCR">Android Application Code Review</form:option>
-                                <form:option class="login login-submit" value="iOSCR">iOS Application Code Review</form:option>
-                                <form:option class="login login-submit" value="iOSCR">Other</form:option>
+                                <form:option class="login login-submit" value="webcr">Web Application Code Review</form:option>
+                                <form:option class="login login-submit" value="androidcr">Android Application Code Review</form:option>
+                                <form:option class="login login-submit" value="ioscr">iOS Application Code Review</form:option>
+                                <form:option class="login login-submit" value="apicr">Web Service / API Code Review</form:option>
+                                <form:option class="login login-submit" value="apicr">Premium Code Scans</form:option>
+                                <form:option class="login login-submit" value="othercr">Other</form:option>
                             </form:select>
                         </td>
                         

@@ -272,13 +272,14 @@ font-style: italic;
                 </form:select>
                 <form:errors path="projectid" cssClass="error"/>
             </td>
-            <td align="right">Activity Type:</td>
+            <td align="right">Assessment Type:</td>
             <td>
                 <form:select  class="login login-submit" path=""  id="activityType"  >
                     <form:option class="login login-submit" value="">Select</form:option>
-                    <form:option class="login login-submit" value="CodeReview">Code review</form:option>
-                    <form:option class="login login-submit" value="Grey">GrayBox Activity</form:option>
-                    <form:option class="login login-submit" value="EPT">EPT/Exploratory EPT</form:option>
+                    <form:option class="login login-submit" value="scr">Source Code Review</form:option>
+                    <form:option class="login login-submit" value="apptest">Application Tests</form:option>
+                    <form:option class="login login-submit" value="nettest">Network Tests</form:option>
+                    <form:option class="login login-submit" value="EPT">EPT/External PT</form:option>
                     <form:option class="login login-submit" value="IPT">IPT</form:option>
                     <form:option class="login login-submit" value="VAscan">VA Scan</form:option>
                     <form:option class="login login-submit" value="Cplus">Segmentation</form:option>
