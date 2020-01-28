@@ -55,6 +55,30 @@ String timewindow;
  @Column(name = "effort")
 String effort;
 
+ @Column(name = "hosting")
+String hosting;
+
+@Column(name = "pre_req")
+String pre_req;
+
+    public String getHosting() {
+        return hosting;
+    }
+
+    public void setHosting(String hosting) {
+        this.hosting = hosting;
+    }
+
+    public String getPre_req() {
+        return pre_req;
+    }
+
+    public void setPre_req(String pre_req) {
+        this.pre_req = pre_req;
+    }
+
+
+ 
     public int getIpt_scheduleid() {
         return ipt_scheduleid;
     }

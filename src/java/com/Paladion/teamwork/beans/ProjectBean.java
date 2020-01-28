@@ -59,7 +59,39 @@ String region;
 @Column (name = "revenue")
 int revenue;
 
-  
+@Column(name="complaince")
+ String complaince;
+
+@Column(name="reporting")
+String reporting;
+
+@Column(name="clspoc")
+String clspoc;
+
+    public String getComplaince() {
+        return complaince;
+    }
+
+    public void setComplaince(String complaince) {
+        this.complaince = complaince;
+    }
+
+    public String getReporting() {
+        return reporting;
+    }
+
+    public void setReporting(String reporting) {
+        this.reporting = reporting;
+    }
+
+    public String getClspoc() {
+        return clspoc;
+    }
+
+    public void setClspoc(String clspoc) {
+        this.clspoc = clspoc;
+    }
+
 
    public String getProjectname() {
         return projectname;

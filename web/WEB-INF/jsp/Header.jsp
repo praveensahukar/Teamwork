@@ -154,7 +154,7 @@
                     {%>
                     <a href="CreateActivity.do">Schedule Activity</a>
                     
-                    <a href="RequestSchedule.do">Request Schedule</a>
+                    <a href="ActivityRequestSchedule.do">Request Schedule</a>
                     <%}%>
                     <a href="showAllActivity.do">View All Activities</a>
                     

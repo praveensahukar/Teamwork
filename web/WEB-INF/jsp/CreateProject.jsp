@@ -261,17 +261,22 @@ font-style: italic;
 
     <tr>
         <td align="right" >Project Name :</td>
-        <td colspan="3"><form:input placeholder="Enter Project Name" path="projectname"/>
+        <td colspan="1"><form:input placeholder="Enter Project Name" path="projectname"/>
             <span class='red'>*</span>
             <form:errors path="projectname" cssClass="error"/>
         </td>
-    </tr>      
-        
-    <tr>
         <td align="right">OPID :</td>
         
         <td><form:input placeholder="Enter OPID" path="opid" />
             <form:errors path="opid" cssClass="error"/>
+        </td>
+    </tr>      
+        
+    <tr>
+        <td align="right">Regulation Complaince :</td>
+        
+        <td><form:input placeholder="Enter Complaince" path="complaince" />
+            <form:errors path="complaince" cssClass="error"/>
         </td>
     
         <td align="right">Company :</td>
@@ -320,6 +325,19 @@ font-style: italic;
         <td><form:input placeholder="Enter Region" path="region" />
             <span class='red'>*</span>
             <form:errors path="region" cssClass="error"/>
+        </td>
+    </tr>
+    
+     <tr>
+        <td align="right">Reporting Requirement:</td>
+        <td><form:input placeholder="Reporting Requirement" path="reporting"  type="text" maxlength="15"/>
+            <form:errors path="reporting" cssClass="error"/>
+        </td>
+    
+        <td align="right">Client Technical SPOC :</td>
+        <td><form:input placeholder="Enter client spoc" path="clspoc" />
+            <span class='red'>*</span>
+            <form:errors path="clspoc" cssClass="error"/>
         </td>
     </tr>
 

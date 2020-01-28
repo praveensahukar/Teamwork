@@ -281,7 +281,7 @@ public class RequestSchedule {
         int i = Integer.parseInt(req.getParameter("pid"));
         CRSRB.setProjectid(i);
         SS.saveCodeReviewActvitiy(CRSRB);
-        ModelAndView model=new ModelAndView("CreateScheduleRequest");
+        ModelAndView model=new ModelAndView("ActivityScheduleRequest");
         return model;
         }
         catch(Exception ex){
@@ -299,7 +299,7 @@ public class RequestSchedule {
         int i = Integer.parseInt(req.getParameter("pid"));
         ASSRB.setProjectid(i);
         SS.saveAppSecActivity(ASSRB);
-        ModelAndView model=new ModelAndView("CreateScheduleRequest");
+        ModelAndView model=new ModelAndView("ActivityScheduleRequest");
         return model;
         }
         catch(Exception ex){
@@ -319,7 +319,7 @@ public class RequestSchedule {
         int i = Integer.parseInt(req.getParameter("pid"));
         EPTSRB.setProjectid(i);
         SS.EPTActivity(EPTSRB);
-        ModelAndView model=new ModelAndView("CreateScheduleRequest");
+        ModelAndView model=new ModelAndView("ActivityScheduleRequest");
         return model;
         }
         catch(Exception ex){
@@ -339,7 +339,7 @@ public class RequestSchedule {
         int i = Integer.parseInt(req.getParameter("pid"));
         IPTSRB.setProjectid(i);
         SS.IPTActivity(IPTSRB);
-        ModelAndView model=new ModelAndView("CreateScheduleRequest");
+        ModelAndView model=new ModelAndView("ActivityScheduleRequest");
         return model;
         }
         catch(Exception ex){
@@ -358,7 +358,7 @@ public class RequestSchedule {
         int i = Integer.parseInt(req.getParameter("pid"));
         VAscanSRB.setProjectid(i);
         SS.VAscanActivity(VAscanSRB);
-        ModelAndView model=new ModelAndView("CreateScheduleRequest");
+        ModelAndView model=new ModelAndView("ActivityScheduleRequest");
         return model;
         }
         catch(Exception ex){

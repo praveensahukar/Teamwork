@@ -254,7 +254,7 @@ font-style: italic;
           <input type="hidden" name="pid" value="${pid}"/>
    <div style="width :60%;margin-left: 100px;"> 
               
-                   <h1>VA-scan Schedule</h1>
+                   <h1>Schedule Request VA-scan Activity</h1>
                 <table align="right" border="0" cellpadding="10" cellspacing="2">
                     <tr>
                         <td>
@@ -288,12 +288,24 @@ font-style: italic;
                     </tr>
                     <tr>
                         <td>
+                            <label>Hosting Environment:</label>
+                            <form:input type="text" name="eft" id="task1" placeholder="Hosting Environment" path="hosting" />
+                        </td>
+                        <td>
+                             <label>Pre-requisites:</label>
+                            <form:input type="text" name="eft" id="task2" placeholder="Pre-requisites" path="pre_req" />
+                        </td>
+                    </tr>
+                    
+                    
+                    <tr>
+                        <td>
                             <label>VPN Connectivity:</label>
-                            <form:input type="text" name="eft" id="task13" path="vpnConn"/>
+                            <form:input type="text" name="eft" id="task13" placeholder="VPN Connectivity" path="vpnConn"/>
                         </td>
                         <td>
                              <label>Time window:</label>
-                            <form:input type="text" name="eft" id="task14" path="timewindow" />
+                            <form:input type="text" name="eft" id="task14" placeholder="Time window" path="timewindow" />
                         </td>
                     </tr>
                     <tr>

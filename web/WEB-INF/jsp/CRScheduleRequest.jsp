@@ -283,22 +283,34 @@ font-style: italic;
                     </tr>
                     <tr>
                         <td>
+                            <label>Hosting Environment:</label>
+                            <form:input type="text" name="eft" id="task1" placeholder="Hosting Environemnt" path="hosting" />
+                        </td>
+                        <td>
+                             <label>Pre-requisites:</label>
+                            <form:input type="text" name="eft" id="task2" placeholder="Pre-requisites" path="pre_req" />
+                        </td>
+                    </tr>
+                    
+                    
+                    <tr>
+                        <td>
                             <label>Name of application:</label>
-                            <form:input type="text" name="eft" id="task1" path="appname" />
+                            <form:input type="text" name="eft" id="task1" placeholder="Name of application" path="appname" />
                         </td>
                         <td>
                              <label>Lines of codes:</label>
-                            <form:input type="text" name="eft" id="task2" path="scope" />
+                            <form:input type="text" name="eft" id="task2" placeholder="Lines of codes" path="scope" />
                         </td>
                     </tr>
                     <tr>
                         <td>
                             <label>Code access:</label>
-                            <form:input type="text" name="eft" id="task5" path="access" />
+                            <form:input type="text" name="eft" id="task5" placeholder="Code access" path="access" />
                         </td>
                         <td>
                              <label>Technology:</label>
-                            <form:input type="text" name="eft" id="task6" path="technology" />
+                            <form:input type="text" name="eft" id="task6" placeholder="Technology" path="technology" />
                         </td>
                     </tr>
                     <tr>

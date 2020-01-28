@@ -253,7 +253,7 @@ font-style: italic;
          <input type="hidden" name="AntiCSRFToken" id="token" value="${csrfPreventionSalt}"/>
           <input type="hidden" name="pid" value="${pid}"/>
     <div style="width :60%;margin-left: 100px; " > 
-                <h1>GrayBox Activity Schedule</h1>
+                <h1>Schedule Request -GrayBox Activity</h1>
                 <table  align="right"border="0" cellpadding="10" cellspacing="2">
                     <tr>
                         <td>
@@ -286,12 +286,23 @@ font-style: italic;
                     </tr>
                     <tr>
                         <td>
+                            <label>Hosting Environment:</label>
+                            <form:input type="text" name="eft" id="task1" placeholder="Hosting Environment" path="hosting" />
+                        </td>
+                        <td>
+                             <label>Pre-requisites:</label>
+                            <form:input type="text" name="eft" id="task2" placeholder="Pre-requisites" path="pre_req" />
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>
                             <label>Application name:</label>
-                            <form:input type="text" name="eft" id="appname" path="appname" />
+                            <form:input type="text" name="eft" id="appname" placeholder="Application name" path="appname" />
                         </td>
                         <td>
                              <label>Scope of app:</label>
-                            <form:input type="text" name="eft" id="sizeofapp" path="scope" />
+                            <form:input type="text" name="eft" id="sizeofapp" placeholder="Scope of app" path="scope" />
                         </td>
                     </tr>
                     <tr>
