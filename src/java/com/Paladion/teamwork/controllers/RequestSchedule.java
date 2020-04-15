@@ -11,6 +11,7 @@ import com.Paladion.teamwork.beans.AllocationBean;
 import com.Paladion.teamwork.beans.AppSecScheduleRequestBean;
 import com.Paladion.teamwork.beans.CodeReviewScheduleRequestBean;
 import com.Paladion.teamwork.beans.EmailBean;
+import com.Paladion.teamwork.beans.ProjectBean;
 import com.Paladion.teamwork.beans.ProjectScheduleRequestBean;
 import com.Paladion.teamwork.beans.ScheduleBean;
 import com.Paladion.teamwork.beans.TaskBean;
@@ -29,6 +30,7 @@ import com.Paladion.teamwork.services.TemplateService;
 import com.Paladion.teamwork.services.UserService;
 import com.Paladion.teamwork.utils.ActivityValidator;
 import com.Paladion.teamwork.utils.CommonUtil;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -366,4 +368,23 @@ public class RequestSchedule {
         return new ModelAndView("Error");
         }   
     }
+    @RequestMapping(value="/GetAllSchedulerequests",method=RequestMethod.GET)
+public ModelAndView GetAllProjects(HttpServletRequest req)
+{ 
+    String[] authorizedRoles = {"admin","manager","lead","scheduling"};
+    if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
+    try{
+    ModelAndView result=new ModelAndView("DisplayProjects");
+    List<ProjectBean> PBList1= PS.getAllProjects();
+    result.addObject("AllProjects",PBList1);
+    return result;
+    }
+    catch(Exception ex){
+    ex.printStackTrace();
+    return new ModelAndView("Error");
+    }
+}
+    
+    
+    
 }

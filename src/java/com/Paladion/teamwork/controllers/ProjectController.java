@@ -104,7 +104,6 @@ public class ProjectController {
         }
     }
 
-
     @RequestMapping(value="/CreateProject",method=RequestMethod.POST)
     public ModelAndView CreateProject(@ModelAttribute("ProjectM")@Validated ProjectBean PB, BindingResult result, HttpServletRequest req) 
     {
@@ -321,15 +320,7 @@ public ModelAndView EditProjectDetails(@RequestParam int pid, HttpServletRequest
 //           ex.printStackTrace();
 //        }
     
-    
-    
-    
-    
-    
-      
-    
-    
-    
+  
    
     }
 

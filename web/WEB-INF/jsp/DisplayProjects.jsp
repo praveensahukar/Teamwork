@@ -59,8 +59,7 @@ li a:hover:not(.active) {
 @import url(http://fonts.googleapis.com/css?family=Roboto:400,100);
 
 body {
-
-	background-image: url("grey.jpg");
+    background-image: url("grey.jpg");
   background-repeat: repeat-y;
   -webkit-background-size: cover;
   -moz-background-size: cover;

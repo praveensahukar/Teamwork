@@ -75,9 +75,6 @@ String pre_req;
     public void setPre_req(String pre_req) {
         this.pre_req = pre_req;
     }
-
-
-
     public String getEffort() {
         return effort;
     }

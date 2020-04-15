@@ -78,7 +78,6 @@
 .dropdown-content a:hover {
     background-color: #ddd;
 }
-
 .dropdown:hover .dropdown-content {
     display: block;
 }
@@ -101,7 +100,40 @@
   box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
 }
 
+.dropbtn2 {
+  background-color: inherit;
+  color: black;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+}
 
+.dropdown2 {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content2 {
+  display: none;
+  position: absolute;
+  background-color: #999966;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content2 a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content2 a:hover {background-color: #ddd;}
+
+.dropdown2:hover .dropdown-content2 {display: block;}
+
+.dropdown2:hover .dropbtn2 {background-color: inherit;}
 </style>
 </head>
     
@@ -155,6 +187,22 @@
                     <a href="CreateActivity.do">Schedule Activity</a>
                     
                     <a href="ActivityRequestSchedule.do">Request Schedule</a>
+                    
+                    <div class="dropdown2">
+                        <button class="dropbtn2">View All RequestSchedule</button>
+                         <div class="dropdown-content2">
+                            <a href="#">Code review</a>
+                            <a href="#">Appsec</a>
+                            <a href="#">EPT pentest</a>
+                          </div>
+                    </div>
+<!--                    <button class="dropbtn"><a href="GetAllSchedulerequests.do">View All RequestSchedule</a></button>
+                    <div class="dropdown-content" style="right">
+                        <a href="">codereview shedule</a>
+                        <a href="">Appsec shedule</a>
+                        <a href="">EPT shedule</a>
+                        <a href="">IPT shedule</a>
+                    </div>-->
                     <%}%>
                     <a href="showAllActivity.do">View All Activities</a>
                     
