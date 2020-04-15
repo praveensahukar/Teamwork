@@ -291,6 +291,24 @@ public class RequestSchedule {
         return new ModelAndView("Error");
         }   
     }
+    
+    @RequestMapping(value="/GetAllCodereview",method=RequestMethod.GET)
+    public ModelAndView GetAllCodereview(HttpServletRequest req)
+    { 
+        String[] authorizedRoles = {"admin","manager","lead","scheduling"};
+        if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
+        try{
+        ModelAndView result=new ModelAndView("DisplayCodereview");
+        List<CodeReviewScheduleRequestBean> CRList= SS.getAllCodereview();
+        result.addObject("AllCodereview",CRList);
+        return result;
+        }
+        catch(Exception ex){
+        ex.printStackTrace();
+        return new ModelAndView("Error");
+        }
+    }
+    
      @RequestMapping(value="/saveAppSecActivity",method=RequestMethod.POST)
     public ModelAndView saveAppSecActivity(@ModelAttribute("AppSecBean") AppSecScheduleRequestBean ASSRB, HttpServletRequest req )
     {   
@@ -308,6 +326,23 @@ public class RequestSchedule {
         System.out.println("Exception occured. "+ex.getMessage());
         return new ModelAndView("Error");
         }   
+    }
+    
+    @RequestMapping(value="/GetAllAppsec",method=RequestMethod.GET)
+    public ModelAndView GetAllAppsec(HttpServletRequest req)
+    { 
+        String[] authorizedRoles = {"admin","manager","lead","scheduling"};
+        if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
+        try{
+        ModelAndView result=new ModelAndView("DisplayAppsec");
+        List<AppSecScheduleRequestBean> APList= SS.getAllAppsec();
+        result.addObject("AllAppsec",APList);
+        return result;
+        }
+        catch(Exception ex){
+        ex.printStackTrace();
+        return new ModelAndView("Error");
+        }
     }
     @RequestMapping(value="/EPTActivity",method=RequestMethod.POST)
     public ModelAndView EPTActivity(@ModelAttribute("EPTBean") eptScheduleRequestBean EPTSRB, HttpServletRequest req )
@@ -329,6 +364,25 @@ public class RequestSchedule {
         return new ModelAndView("Error");
         }   
     }
+    @RequestMapping(value="/GetAllEpt",method=RequestMethod.GET)
+    public ModelAndView GetAllEpt(HttpServletRequest req)
+    { 
+        String[] authorizedRoles = {"admin","manager","lead","scheduling"};
+        if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
+        try{
+        ModelAndView result=new ModelAndView("DisplayEpt");
+        List<eptScheduleRequestBean> EptList= SS.getAllEpt();
+        result.addObject("AllEpt",EptList);
+        return result;
+        }
+        catch(Exception ex){
+        ex.printStackTrace();
+        return new ModelAndView("Error");
+        }
+    }
+    
+    
+    
     @RequestMapping(value="/IPTActivity",method=RequestMethod.POST)
     public ModelAndView IPTActivity(@ModelAttribute("IPTBean") iptScheduleRequestBean IPTSRB, HttpServletRequest req )
     {   

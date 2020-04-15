@@ -13,6 +13,7 @@ import com.Paladion.teamwork.beans.ProjectScheduleRequestBean;
 import com.Paladion.teamwork.beans.eptScheduleRequestBean;
 import com.Paladion.teamwork.beans.iptScheduleRequestBean;
 import com.Paladion.teamwork.beans.vascanScheduleRequestBean;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -55,6 +56,21 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public void saveprojschedule(ProjectScheduleRequestBean Projschedule) {
         SD.saveprojschedule(Projschedule);
+    }
+
+    @Override
+    public List<CodeReviewScheduleRequestBean> getAllCodereview() {
+        return SD.getAllCodereview(); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<AppSecScheduleRequestBean> getAllAppsec() {
+        return SD.getAllAppsec(); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<eptScheduleRequestBean> getAllEpt() {
+        return SD.getAllEpt(); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

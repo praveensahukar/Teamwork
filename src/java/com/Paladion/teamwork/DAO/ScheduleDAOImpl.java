@@ -7,10 +7,14 @@ package com.Paladion.teamwork.DAO;
 
 import com.Paladion.teamwork.beans.AppSecScheduleRequestBean;
 import com.Paladion.teamwork.beans.CodeReviewScheduleRequestBean;
+import com.Paladion.teamwork.beans.ProjectBean;
 import com.Paladion.teamwork.beans.ProjectScheduleRequestBean;
 import com.Paladion.teamwork.beans.eptScheduleRequestBean;
 import com.Paladion.teamwork.beans.iptScheduleRequestBean;
 import com.Paladion.teamwork.beans.vascanScheduleRequestBean;
+import java.util.ArrayList;
+import java.util.List;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -169,5 +173,80 @@ public class ScheduleDAOImpl implements ScheduleDAO{
                 session1.close();
                 }
             }
+    }
+
+    @Override
+    public List<CodeReviewScheduleRequestBean> getAllCodereview() {
+        Session session=sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        try{
+            List <CodeReviewScheduleRequestBean> Codereviewlist=new ArrayList<CodeReviewScheduleRequestBean>();
+            String projectquery= "from CodeReviewScheduleRequestBean";
+            //System.out.println("Get all projects query");
+            Query query2 = session.createQuery(projectquery);
+            Codereviewlist= query2.list();
+            tx.commit();
+            return Codereviewlist;
+        }
+        catch(Exception e){
+            System.out.println("Exception occured. "+e.getMessage());
+            return null;
+        }
+        finally{
+            if(session.isOpen()){
+            System.out.println("-------------Closing session--------------");
+            session.close();
+            }
+        }
+    }
+
+    @Override
+    public List<AppSecScheduleRequestBean> getAllAppsec() {
+        Session session=sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        try{
+            List <AppSecScheduleRequestBean> Codereviewlist=new ArrayList<AppSecScheduleRequestBean>();
+            String projectquery= "from AppSecScheduleRequestBean";
+            //System.out.println("Get all projects query");
+            Query query2 = session.createQuery(projectquery);
+            Codereviewlist= query2.list();
+            tx.commit();
+            return Codereviewlist;
+        }
+        catch(Exception e){
+            System.out.println("Exception occured. "+e.getMessage());
+            return null;
+        }
+        finally{
+            if(session.isOpen()){
+            System.out.println("-------------Closing session--------------");
+            session.close();
+            }
+        }//To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<eptScheduleRequestBean> getAllEpt() {
+        Session session=sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        try{
+            List <eptScheduleRequestBean> Eptlist=new ArrayList<eptScheduleRequestBean>();
+            String projectquery= "from eptScheduleRequestBean";
+            //System.out.println("Get all projects query");
+            Query query2 = session.createQuery(projectquery);
+            Eptlist= query2.list();
+            tx.commit();
+            return Eptlist;
+        }
+        catch(Exception e){
+            System.out.println("Exception occured. "+e.getMessage());
+            return null;
+        }
+        finally{
+            if(session.isOpen()){
+            System.out.println("-------------Closing session--------------");
+            session.close();
+            }
+        } //To change body of generated methods, choose Tools | Templates.
     }
 }

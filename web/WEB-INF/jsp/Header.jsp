@@ -133,7 +133,7 @@
 
 .dropdown2:hover .dropdown-content2 {display: block;}
 
-.dropdown2:hover .dropbtn2 {background-color: inherit;}
+.dropdown2:hover .dropbtn2 {background-color: #ddd;}
 </style>
 </head>
     
@@ -191,9 +191,9 @@
                     <div class="dropdown2">
                         <button class="dropbtn2">View All RequestSchedule</button>
                          <div class="dropdown-content2">
-                            <a href="#">Code review</a>
-                            <a href="#">Appsec</a>
-                            <a href="#">EPT pentest</a>
+                            <a href="GetAllCodereview.do">Code review</a>
+                            <a href="GetAllAppsec.do">Appsec</a>
+                            <a href="GetAllEpt.do">EPT pentest</a>
                           </div>
                     </div>
 <!--                    <button class="dropbtn"><a href="GetAllSchedulerequests.do">View All RequestSchedule</a></button>

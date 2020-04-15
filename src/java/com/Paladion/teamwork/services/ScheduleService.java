@@ -11,6 +11,7 @@ import com.Paladion.teamwork.beans.ProjectScheduleRequestBean;
 import com.Paladion.teamwork.beans.eptScheduleRequestBean;
 import com.Paladion.teamwork.beans.iptScheduleRequestBean;
 import com.Paladion.teamwork.beans.vascanScheduleRequestBean;
+import java.util.List;
 
 /**
  *
@@ -29,5 +30,11 @@ public interface ScheduleService {
     public void VAscanActivity(vascanScheduleRequestBean VAscanSRB);
 
     public void saveprojschedule(ProjectScheduleRequestBean Projschedule);
+
+    public List<CodeReviewScheduleRequestBean> getAllCodereview();
+
+    public List<AppSecScheduleRequestBean> getAllAppsec();
+
+    public List<eptScheduleRequestBean> getAllEpt();
     
 }
