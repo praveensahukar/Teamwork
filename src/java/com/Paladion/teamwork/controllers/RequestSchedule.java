@@ -403,6 +403,24 @@ public class RequestSchedule {
         return new ModelAndView("Error");
         }   
     }
+    
+    @RequestMapping(value="/GetAllIpt",method=RequestMethod.GET)
+    public ModelAndView GetAllIpt(HttpServletRequest req)
+    { 
+        String[] authorizedRoles = {"admin","manager","lead","scheduling"};
+        if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
+        try{
+        ModelAndView result=new ModelAndView("DisplayIpt");
+        List<iptScheduleRequestBean> IptList= SS.getAllIpt();
+        result.addObject("AllIpt",IptList);
+        return result;
+        }
+        catch(Exception ex){
+        ex.printStackTrace();
+        return new ModelAndView("Error");
+        }
+    }
+    
     @RequestMapping(value="/VAscanActivity",method=RequestMethod.POST)
     public ModelAndView VAscanActivity(@ModelAttribute("VAscanBean") vascanScheduleRequestBean VAscanSRB, HttpServletRequest req )
     {   
@@ -422,6 +440,24 @@ public class RequestSchedule {
         return new ModelAndView("Error");
         }   
     }
+    
+    @RequestMapping(value="/GetAllVascan",method=RequestMethod.GET)
+    public ModelAndView GetAllVascan(HttpServletRequest req)
+    { 
+        String[] authorizedRoles = {"admin","manager","lead","scheduling"};
+        if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
+        try{
+        ModelAndView result=new ModelAndView("DisplayVascan");
+        List<vascanScheduleRequestBean> VascanList= SS.GetAllVascan();
+        result.addObject("AllVascan",VascanList);
+        return result;
+        }
+        catch(Exception ex){
+        ex.printStackTrace();
+        return new ModelAndView("Error");
+        }
+    }
+    
     @RequestMapping(value="/GetAllSchedulerequests",method=RequestMethod.GET)
 public ModelAndView GetAllProjects(HttpServletRequest req)
 { 

@@ -249,4 +249,54 @@ public class ScheduleDAOImpl implements ScheduleDAO{
             }
         } //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public List<iptScheduleRequestBean> getAllIpt() {
+        Session session=sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        try{
+            List <iptScheduleRequestBean> Iptlist=new ArrayList<iptScheduleRequestBean>();
+            String projectquery= "from iptScheduleRequestBean";
+            //System.out.println("Get all projects query");
+            Query query2 = session.createQuery(projectquery);
+            Iptlist= query2.list();
+            tx.commit();
+            return Iptlist;
+        }
+        catch(Exception e){
+            System.out.println("Exception occured. "+e.getMessage());
+            return null;
+        }
+        finally{
+            if(session.isOpen()){
+            System.out.println("-------------Closing session--------------");
+            session.close();
+            }
+        } //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<vascanScheduleRequestBean> GetAllVascan() {
+       Session session=sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        try{
+            List <vascanScheduleRequestBean> Vascanlist=new ArrayList<vascanScheduleRequestBean>();
+            String projectquery= "from vascanScheduleRequestBean";
+            //System.out.println("Get all projects query");
+            Query query2 = session.createQuery(projectquery);
+            Vascanlist= query2.list();
+            tx.commit();
+            return Vascanlist;
+        }
+        catch(Exception e){
+            System.out.println("Exception occured. "+e.getMessage());
+            return null;
+        }
+        finally{
+            if(session.isOpen()){
+            System.out.println("-------------Closing session--------------");
+            session.close();
+            }
+        }//To change body of generated methods, choose Tools | Templates.
+    }
 }

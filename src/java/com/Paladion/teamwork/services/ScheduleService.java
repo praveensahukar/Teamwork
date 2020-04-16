@@ -36,5 +36,9 @@ public interface ScheduleService {
     public List<AppSecScheduleRequestBean> getAllAppsec();
 
     public List<eptScheduleRequestBean> getAllEpt();
+
+    public List<iptScheduleRequestBean> getAllIpt();
+
+    public List<vascanScheduleRequestBean> GetAllVascan();
     
 }

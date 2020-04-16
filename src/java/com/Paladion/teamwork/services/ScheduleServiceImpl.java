@@ -72,5 +72,15 @@ public class ScheduleServiceImpl implements ScheduleService {
     public List<eptScheduleRequestBean> getAllEpt() {
         return SD.getAllEpt(); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public List<iptScheduleRequestBean> getAllIpt() {
+        return SD.getAllIpt();//To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<vascanScheduleRequestBean> GetAllVascan() {
+        return SD.GetAllVascan(); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

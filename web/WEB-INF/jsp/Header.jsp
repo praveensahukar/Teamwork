@@ -191,9 +191,11 @@
                     <div class="dropdown2">
                         <button class="dropbtn2">View All RequestSchedule</button>
                          <div class="dropdown-content2">
-                            <a href="GetAllCodereview.do">Code review</a>
-                            <a href="GetAllAppsec.do">Appsec</a>
-                            <a href="GetAllEpt.do">EPT pentest</a>
+                            <a href="GetAllCodereview.do">CodeReview Requests</a>
+                            <a href="GetAllAppsec.do">Appsec Requests</a>
+                            <a href="GetAllEpt.do">EPT Requests</a>
+                            <a href="GetAllIpt.do">IPT Requests</a>
+                            <a href="GetAllVascan.do">VA scan Requests</a>
                           </div>
                     </div>
 <!--                    <button class="dropbtn"><a href="GetAllSchedulerequests.do">View All RequestSchedule</a></button>
