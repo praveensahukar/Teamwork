@@ -67,6 +67,18 @@ String hosting;
 @Column(name = "pre_req")
 String pre_req;
 
+@Column(name="projectname")
+String projectname;
+
+    public String getProjectname() {
+        return projectname;
+    }
+
+    public void setProjectname(String projectname) {
+        this.projectname = projectname;
+    }
+
+
     public String getHosting() {
         return hosting;
     }

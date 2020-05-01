@@ -256,6 +256,14 @@ font-style: italic;
                 <h1>Schedule Request EPT/Exploratory Activity</h1>
                 <table align="right" border="0" cellpadding="10" cellspacing="2">
                     <tr>
+                        
+                            <td align="right" >Project Name :</td>
+                            <td colspan="1"><form:input placeholder="Enter Project Name" path="projectname"/>
+                            <span class='red'>*</span>
+                            <form:errors path="projectname" cssClass="error"/>
+                            </td>
+                    </tr>
+                    <tr>
                         <td>
                             <label>Preferred start Date:</label>
                             <form:input placeholder="Enter Start Date" id="txtFromDate2" path="prefstartdate" />

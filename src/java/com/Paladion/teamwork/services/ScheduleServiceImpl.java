@@ -82,5 +82,62 @@ public class ScheduleServiceImpl implements ScheduleService {
     public List<vascanScheduleRequestBean> GetAllVascan() {
         return SD.GetAllVascan(); //To change body of generated methods, choose Tools | Templates.
     }
+
+   
+
+    @Override
+    public boolean DeleteRequest(int id) {
+        return SD.DeleteRequest(id); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public CodeReviewScheduleRequestBean EditCodereviewDetails(int crid) {
+       return SD.EditCodereviewDetails(crid); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void UpdateCodeReviewActivity(CodeReviewScheduleRequestBean crBean) {
+        SD.UpdateCodeReviewActivity(crBean); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean DeleteAppRequest(int id) {
+        return SD.DeleteAppRequest(id); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public AppSecScheduleRequestBean EditAppSecDetails(int asid) {
+        return (AppSecScheduleRequestBean) SD.EditAppSecDetails(asid); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean DeleteEptRequest(int id) {
+        return SD.DeleteEptRequest(id); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean DeleteIptRequest(int id) {
+        return SD.DeleteIptRequest(id); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean DeleteVascanRequest(int id) {
+        return SD.DeleteVascanRequest(id); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public eptScheduleRequestBean EditEptDetails(int eptid) {
+        return SD.EditEptDetails(eptid);//To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public iptScheduleRequestBean EditIptDetails(int iptid) {
+        return SD.EditIptDetails(iptid); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public vascanScheduleRequestBean EditVascanDetails(int vascanid) {
+        return SD.EditVascanDetails(vascanid); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

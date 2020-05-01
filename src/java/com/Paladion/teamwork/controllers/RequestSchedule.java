@@ -15,6 +15,8 @@ import com.Paladion.teamwork.beans.ProjectBean;
 import com.Paladion.teamwork.beans.ProjectScheduleRequestBean;
 import com.Paladion.teamwork.beans.ScheduleBean;
 import com.Paladion.teamwork.beans.TaskBean;
+import com.Paladion.teamwork.beans.UserDataBean;
+import com.Paladion.teamwork.beans.Vehiclebean;
 import com.Paladion.teamwork.beans.eptScheduleRequestBean;
 import com.Paladion.teamwork.beans.fileuploadBean;
 import com.Paladion.teamwork.beans.iptScheduleRequestBean;
@@ -30,6 +32,7 @@ import com.Paladion.teamwork.services.TemplateService;
 import com.Paladion.teamwork.services.UserService;
 import com.Paladion.teamwork.utils.ActivityValidator;
 import com.Paladion.teamwork.utils.CommonUtil;
+import java.text.ParseException;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -309,6 +312,78 @@ public class RequestSchedule {
         }
     }
     
+@RequestMapping(value="/EditCodereviewDetails",method=RequestMethod.GET)
+public ModelAndView EditCodereviewDetails(@RequestParam int crid, HttpServletRequest req)
+{ 
+    String[] authorizedRoles = {"admin","manager","lead","scheduling"};
+    if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
+    try{
+    ModelAndView result=new ModelAndView("UpdateCodereviewDetails");
+    if(crid!=0)
+    {
+        result.addObject("CRData",SS.EditCodereviewDetails(crid));
+        return result;
+    }
+    else{
+        result=new ModelAndView("Error");
+    }
+    return result;
+    }
+    catch(Exception ex){
+    ex.printStackTrace();
+    return new ModelAndView("Error");
+    }
+}
+
+@RequestMapping(value="/UpdateCodeReviewActivity",method=RequestMethod.POST)
+    public ModelAndView UpdateCodeReviewActivity(@ModelAttribute("CRBean") CodeReviewScheduleRequestBean crBean,  HttpServletRequest req)
+    {
+        String[] authorizedRoles = {"admin","manager"};
+        if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
+        
+        try{
+        System.out.println("in update vehicle details controller method");
+         int i = Integer.parseInt(req.getParameter("pid"));
+        crBean.setCr_scheduleid(i);
+        SS.UpdateCodeReviewActivity(crBean);
+        List<CodeReviewScheduleRequestBean> CRList=SS.getAllCodereview();
+	ModelAndView result=new ModelAndView("DisplayCodereview");
+        result.addObject("AllCodereview",CRList);
+        result.addObject("Message","request Details Updated Successfully");
+	return result;
+        }
+        catch(Exception ex){
+        ex.printStackTrace();
+        return new ModelAndView("Error");
+        }  
+    } 
+
+@RequestMapping(value="/DeleteRequest",method=RequestMethod.GET)
+    public ModelAndView DeleteRequest(@RequestParam int id, HttpServletRequest req) throws ParseException
+    {
+        String[] authorizedRoles = {"admin","manager"};
+        if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
+        try{
+        ModelAndView result=new ModelAndView("DisplayCodereview");
+        if(id!=0){
+           boolean status =  SS.DeleteRequest(id);
+            List<CodeReviewScheduleRequestBean> CRList= SS.getAllCodereview();
+           
+	    result.addObject("AllCodereview",CRList);
+            result.addObject("Message","request deleted successfully");    
+            }
+            else{
+            result=new ModelAndView("Welcome");
+            }
+            return result;
+        }
+        catch(Exception ex){
+        ex.printStackTrace();
+        return new ModelAndView("Error");
+        }
+    }
+    
+    
      @RequestMapping(value="/saveAppSecActivity",method=RequestMethod.POST)
     public ModelAndView saveAppSecActivity(@ModelAttribute("AppSecBean") AppSecScheduleRequestBean ASSRB, HttpServletRequest req )
     {   
@@ -344,6 +419,57 @@ public class RequestSchedule {
         return new ModelAndView("Error");
         }
     }
+    
+    @RequestMapping(value="/EditAppSecDetails",method=RequestMethod.GET)
+public ModelAndView EditAppSecDetails(@RequestParam int asid, HttpServletRequest req)
+{ 
+    String[] authorizedRoles = {"admin","manager","lead","scheduling"};
+    if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
+    try{
+    ModelAndView result=new ModelAndView("UpdateAppSecDetails");
+    if(asid!=0)
+    {
+        result.addObject("ASData",SS.EditAppSecDetails(asid));
+        return result;
+    }
+    else{
+        result=new ModelAndView("Error");
+    }
+    return result;
+    }
+    catch(Exception ex){
+    ex.printStackTrace();
+    return new ModelAndView("Error");
+    }
+}
+    
+    
+    @RequestMapping(value="/DeleteAppRequest",method=RequestMethod.GET)
+    public ModelAndView DeleteAppRequest(@RequestParam int id, HttpServletRequest req) throws ParseException
+    {
+        String[] authorizedRoles = {"admin","manager"};
+        if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
+        try{
+        ModelAndView result=new ModelAndView("DisplayAppsec");
+        if(id!=0){
+           boolean status =  SS.DeleteAppRequest(id);
+            List<AppSecScheduleRequestBean> AppsecList= SS.getAllAppsec();
+           
+	    result.addObject("AllAppsec",AppsecList);
+            result.addObject("Message","request deleted successfully");    
+            }
+            else{
+            result=new ModelAndView("Welcome");
+            }
+            return result;
+        }
+        catch(Exception ex){
+        ex.printStackTrace();
+        return new ModelAndView("Error");
+        }
+    }
+    
+    
     @RequestMapping(value="/EPTActivity",method=RequestMethod.POST)
     public ModelAndView EPTActivity(@ModelAttribute("EPTBean") eptScheduleRequestBean EPTSRB, HttpServletRequest req )
     {   
@@ -381,6 +507,56 @@ public class RequestSchedule {
         }
     }
     
+    @RequestMapping(value="/EditEptDetails",method=RequestMethod.GET)
+public ModelAndView EditEptDetails(@RequestParam int eptid, HttpServletRequest req)
+{ 
+    String[] authorizedRoles = {"admin","manager","lead","scheduling"};
+    if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
+    try{
+    ModelAndView result=new ModelAndView("UpdateEptDetails");
+    if(eptid!=0)
+    {
+        result.addObject("EPTData",SS.EditEptDetails(eptid));
+        return result;
+    }
+    else{
+        result=new ModelAndView("Error");
+    }
+    return result;
+    }
+    catch(Exception ex){
+    ex.printStackTrace();
+    return new ModelAndView("Error");
+    }
+}
+   
+    
+    @RequestMapping(value="/DeleteEptRequest",method=RequestMethod.GET)
+    public ModelAndView DeleteEptRequest(@RequestParam int id, HttpServletRequest req) throws ParseException
+    {
+        String[] authorizedRoles = {"admin","manager"};
+        if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
+        try{
+        ModelAndView result=new ModelAndView("DisplayEpt");
+        if(id!=0){
+           boolean status =  SS.DeleteEptRequest(id);
+            List<eptScheduleRequestBean> EptList= SS.getAllEpt();
+           
+	    result.addObject("AllEpt",EptList);
+            result.addObject("Message","request deleted successfully");    
+            }
+            else{
+            result=new ModelAndView("Welcome");
+            }
+            return result;
+        }
+        catch(Exception ex){
+        ex.printStackTrace();
+        return new ModelAndView("Error");
+        }
+    }
+    
+    
     
     
     @RequestMapping(value="/IPTActivity",method=RequestMethod.POST)
@@ -414,6 +590,55 @@ public class RequestSchedule {
         List<iptScheduleRequestBean> IptList= SS.getAllIpt();
         result.addObject("AllIpt",IptList);
         return result;
+        }
+        catch(Exception ex){
+        ex.printStackTrace();
+        return new ModelAndView("Error");
+        }
+    }
+    
+    
+    @RequestMapping(value="/EditIptDetails",method=RequestMethod.GET)
+public ModelAndView EditIptDetails(@RequestParam int iptid, HttpServletRequest req)
+{ 
+    String[] authorizedRoles = {"admin","manager","lead","scheduling"};
+    if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
+    try{
+    ModelAndView result=new ModelAndView("UpdateIptDetails");
+    if(iptid!=0)
+    {
+        result.addObject("IPTData",SS.EditIptDetails(iptid));
+        return result;
+    }
+    else{
+        result=new ModelAndView("Error");
+    }
+    return result;
+    }
+    catch(Exception ex){
+    ex.printStackTrace();
+    return new ModelAndView("Error");
+    }
+}
+    
+    @RequestMapping(value="/DeleteIptRequest",method=RequestMethod.GET)
+    public ModelAndView DeleteIptRequest(@RequestParam int id, HttpServletRequest req) throws ParseException
+    {
+        String[] authorizedRoles = {"admin","manager"};
+        if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
+        try{
+        ModelAndView result=new ModelAndView("DisplayIpt");
+        if(id!=0){
+           boolean status =  SS.DeleteIptRequest(id);
+            List<iptScheduleRequestBean> IptList= SS.getAllIpt();
+           
+	    result.addObject("AllIpt",IptList);
+            result.addObject("Message","request deleted successfully");    
+            }
+            else{
+            result=new ModelAndView("Welcome");
+            }
+            return result;
         }
         catch(Exception ex){
         ex.printStackTrace();
@@ -457,6 +682,55 @@ public class RequestSchedule {
         return new ModelAndView("Error");
         }
     }
+    
+    @RequestMapping(value="/EditVascanDetails",method=RequestMethod.GET)
+public ModelAndView EditVascanDetails(@RequestParam int vascanid, HttpServletRequest req)
+{ 
+    String[] authorizedRoles = {"admin","manager","lead","scheduling"};
+    if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
+    try{
+    ModelAndView result=new ModelAndView("UpdateVascanDetails");
+    if(vascanid!=0)
+    {
+        result.addObject("VascanData",SS.EditVascanDetails(vascanid));
+        return result;
+    }
+    else{
+        result=new ModelAndView("Error");
+    }
+    return result;
+    }
+    catch(Exception ex){
+    ex.printStackTrace();
+    return new ModelAndView("Error");
+    }
+}
+    
+    @RequestMapping(value="/DeleteVascanRequest",method=RequestMethod.GET)
+    public ModelAndView DeleteVascanRequest(@RequestParam int id, HttpServletRequest req) throws ParseException
+    {
+        String[] authorizedRoles = {"admin","manager"};
+        if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
+        try{
+        ModelAndView result=new ModelAndView("DisplayVascan");
+        if(id!=0){
+           boolean status =  SS.DeleteVascanRequest(id);
+            List<vascanScheduleRequestBean> VascanList= SS.GetAllVascan();
+           
+	    result.addObject("AllVascan",VascanList);
+            result.addObject("Message","request deleted successfully");    
+            }
+            else{
+            result=new ModelAndView("Welcome");
+            }
+            return result;
+        }
+        catch(Exception ex){
+        ex.printStackTrace();
+        return new ModelAndView("Error");
+        }
+    }
+    
     
     @RequestMapping(value="/GetAllSchedulerequests",method=RequestMethod.GET)
 public ModelAndView GetAllProjects(HttpServletRequest req)

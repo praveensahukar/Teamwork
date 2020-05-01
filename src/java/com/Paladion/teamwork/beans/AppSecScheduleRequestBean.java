@@ -60,6 +60,8 @@ String hosting;
 @Column(name = "pre_req")
 String pre_req;
 
+@Column(name = "projectname")
+String projectname;
     public String getHosting() {
         return hosting;
     }
@@ -137,6 +139,14 @@ String pre_req;
 
     public void setAppname(String appname) {
         this.appname = appname;
+    }
+
+    public String getProjectname() {
+        return projectname;
+    }
+
+    public void setProjectname(String projectname) {
+        this.projectname = projectname;
     }
 
 

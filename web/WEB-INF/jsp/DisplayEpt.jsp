@@ -317,6 +317,7 @@ body {
         <thead>
             <tr bgcolor="#a6a6a6">
                 <th><div label="Assesment Type"></div> </th>
+                <th><div label="Project Name"></div> </th>
             <th><div label="Hosting"></div> </th>
             <th><div label="WhitelistConf"></div> </th>
             <th><div label="TimeWindow"></div> </th>
@@ -334,7 +335,15 @@ body {
            <tr>
                <td> 
                    ${fn:escapeXml(EptActivity.assesstype)}
+                   <a href="EditEptDetails.do?eptid=${EptActivity.ept_scheduleid}" style="float:right;">
+                        <img src="icons8-edit.png" alt="Edit codereview" style="width:18px;height:18px;border:0;">
+                   </a>
+                   <a href="DeleteEptRequest.do?id=${EptActivity.ept_scheduleid}" style="float:right; margin-right: 20px;">
+                        <img  src="delete.png" alt="Delete schedule" style="width:18px;height:18px;border:0;" 
+                              onclick="return confirm('Are you sure you want to delete the request-schedule?')">
+                    </a>
                </td>
+               <td> ${fn:escapeXml(EptActivity.projectname)}</td>
                <td> ${fn:escapeXml(EptActivity.hosting)}</td>
                <td> ${fn:escapeXml(EptActivity.whitelistconf)}</td>
                

@@ -42,6 +42,9 @@ int proj_scheduleid;
 @Column(name = "projectid")
 int projectid;
 
+@Column(name="projectname")
+String projectname;
+
 @Column(name = "assesstype")
 String assesstype;
 
@@ -65,6 +68,7 @@ String hosting;
 
 @Column(name = "pre_req")
 String pre_req;
+
 
     public String getHosting() {
         return hosting;
@@ -159,4 +163,13 @@ String pre_req;
     public void setEffort(String effort) {
         this.effort = effort;
     }
+
+    public String getProjectname() {
+        return projectname;
+    }
+
+    public void setProjectname(String projectname) {
+        this.projectname = projectname;
+    }
+    
 }

@@ -117,19 +117,23 @@
   display: none;
   position: absolute;
   background-color: #999966;
-  min-width: 160px;
+  min-width: 180px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
+  margin-left:215px;
+  margin-top:-50px;
 }
 
 .dropdown-content2 a {
   color: black;
-  padding: 12px 16px;
+  padding: 14px 16px;
   text-decoration: none;
   display: block;
+ 
 }
 
-.dropdown-content2 a:hover {background-color: #ddd;}
+.dropdown-content2 a:hover {background-color: #ddd;
+}
 
 .dropdown2:hover .dropdown-content2 {display: block;}
 

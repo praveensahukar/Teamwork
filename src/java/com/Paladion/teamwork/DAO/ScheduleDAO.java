@@ -40,5 +40,27 @@ public interface ScheduleDAO {
     public List<iptScheduleRequestBean> getAllIpt();
 
     public List<vascanScheduleRequestBean> GetAllVascan();
+
+    public CodeReviewScheduleRequestBean EditCodereviewDetails(int crid);
+
+    public boolean DeleteRequest(int id);
+
+    public void UpdateCodeReviewActivity(CodeReviewScheduleRequestBean crBean);
+
+    public boolean DeleteAppRequest(int id);
+
+    public Object EditAppSecDetails(int asid);
+
+    public boolean DeleteEptRequest(int id);
+
+    public boolean DeleteIptRequest(int id);
+
+    public boolean DeleteVascanRequest(int id);
+
+    public eptScheduleRequestBean EditEptDetails(int eptid);
+
+    public iptScheduleRequestBean EditIptDetails(int iptid);
+
+    public vascanScheduleRequestBean EditVascanDetails(int vascanid);
     
 }

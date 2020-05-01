@@ -1,10 +1,10 @@
-
-
 <%-- 
-    Document   : CreateProject
-    Created on : 24 Apr, 2017, 5:28:38 PM
-    Author     : Administrator
+    Document   : UpdateCodereviewDetails
+    Created on : Apr 20, 2020, 2:58:42 PM
+    Author     : pal
 --%>
+
+
 
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -241,93 +241,38 @@ font-style: italic;
 <title>Request Schedule</title>
 </head>
 <body>
+    <%@include file="Header.jsp"%>
     <div class="login-card" >
 <!--action="getEngineers.do"-->
-    <form:form  method="post" action="saveCodeReviewActivity.do" modelAttribute="CRBean">
+    <form:form  method="post" action="UpdateCodeReviewActivity.do" modelAttribute="CRBean">
          <input type="hidden" name="AntiCSRFToken" id="token" value="${csrfPreventionSalt}"/>
-          <input type="hidden" name="pid" value="${pid}"/>
+          <input type="hidden" name="crid" value="${crid}"/>
       <div style="width :60%;margin-left: 100px;"> 
                 <h1>Schedule Request - Source Code Review</h1>
                 <table align="right" border="0" cellpadding="10" cellspacing="2">
-                    
-                  
-                      <tr>
-                        
-                            <td align="right" >Project Name :</td>
-        <td colspan="1"><form:input placeholder="Enter Project Name" path="projectname"/>
-            <span class='red'>*</span>
-            <form:errors path="projectname" cssClass="error"/>
-        </td>
-                    </tr>
-                        <tr>
+                    <tr>
                         <td>
                             <label>Preferred start Date:</label>
-                            <form:input placeholder="Enter Start Date" id="txtFromDate1" path="prefstartdate" />
-                        </td>
-                        <td>
-                            <label>Code Review Type:</label>
-                            <form:select class="login login-submit" path="assesstype" id="assess">
-                                <form:option class="login login-submit" value="">Select</form:option>
-                                <form:option class="login login-submit" value="webcr">Web Application Code Review</form:option>
-                                <form:option class="login login-submit" value="androidcr">Android Application Code Review</form:option>
-                                <form:option class="login login-submit" value="ioscr">iOS Application Code Review</form:option>
-                                <form:option class="login login-submit" value="apicr">Web Service / API Code Review</form:option>
-                                <form:option class="login login-submit" value="apicr">Premium Code Scans</form:option>
-                                <form:option class="login login-submit" value="othercr">Other</form:option>
-                            </form:select>
-                        </td>
-                        
-                    </tr>
-                    <tr>
-                        <td>
-                            <label>Efforts:</label>
-<!--                        <input type="text" name="eft" id="efrt">-->
-                            <form:input placeholder="Efforts" path="effort" />
-                            <span class='red'>*</span>
-                            <form:errors path="" cssClass="error"/>
-                        </td>
-                        <td>
-                            <a href="/TeamWorkAlpha/uploadfiles.do?pid=${ProjectData.activityid}" 
-  target="popup" 
-  onclick="window.open('/TeamWorkAlpha/uploadfiles.do?pid=${ProjectData.activityid}','popup','width=800,height=600'); return false;">
-    Upload files
-</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label>Hosting Environment:</label>
-                            <form:input type="text" name="eft" id="task1" placeholder="Hosting Environemnt" path="hosting" />
-                        </td>
-                        <td>
-                             <label>Pre-requisites:</label>
-                            <form:input type="text" name="eft" id="task2" placeholder="Pre-requisites" path="pre_req" />
-                        </td>
-                    </tr>
-                    
-                    
-                    <tr>
-                        <td>
-                            <label>Name of application:</label>
-                            <form:input type="text" name="eft" id="task1" placeholder="Name of application" path="appname" />
-                        </td>
-                        <td>
-                             <label>Lines of codes:</label>
-                            <form:input type="text" name="eft" id="task2" placeholder="Lines of codes" path="scope" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label>Code access:</label>
-                            <form:input type="text" name="eft" id="task5" placeholder="Code access" path="access" />
+                            <form:input placeholder="Enter Start Date" id="txtFromDate1" path="prefstartdate" value="${fn:escapeXml(CRData.prefstartdate)}"/>
                         </td>
                         <td>
                              <label>Technology:</label>
-                            <form:input type="text" name="eft" id="task6" placeholder="Technology" path="technology" />
+                            <form:input type="text" name="eft" id="task6" placeholder="Technology" path="technology" value="${fn:escapeXml(CRData.technology)}"/>
+                        </td>
+                        
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Name of application:</label>
+                            <form:input type="text" name="eft" id="task1" placeholder="Name of application" path="appname" value="${fn:escapeXml(CRData.appname)}"/>
+                        </td>
+                        <td>
+                             <label>Lines of codes:</label>
+                            <form:input type="text" name="eft" id="task2" placeholder="Lines of codes" path="scope" value="${fn:escapeXml(CRData.scope)}" />
                         </td>
                     </tr>
                     <tr>
-                            <td colspan="4" align="center"><input type="submit" value="Add Activity Details"  class="login login-submit"/></td>
+                            <td colspan="4" align="center"><input type="submit" value="update Activity Details"  class="login login-submit"/></td>
                     </tr>
                 </table>    
     </form:form>
@@ -352,5 +297,6 @@ font-style: italic;
     
 </body>
 </html>
+
 
 

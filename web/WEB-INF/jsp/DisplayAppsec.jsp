@@ -317,6 +317,7 @@ body {
         <thead>
             <tr bgcolor="#a6a6a6">
                 <th><div label="Assesment Type"></div> </th>
+                <th><div label="Project Name"></div> </th>
             <th><div label="Hosting"></div> </th>
             <th><div label="Scope"></div> </th>
             <th><div label="Application Name"></div> </th>
@@ -333,7 +334,15 @@ body {
            <tr>
                <td> 
                    ${fn:escapeXml(appsec.assesstype)}
+                   <a href="EditAppSecDetails.do?asid=${appsec.as_scheduleid}" style="float:right;">
+                        <img src="icons8-edit.png" alt="Edit codereview" style="width:18px;height:18px;border:0;">
+                   </a>
+                   <a href="DeleteAppRequest.do?id=${appsec.as_scheduleid}" style="float:right; margin-right: 20px;">
+                        <img  src="delete.png" alt="Delete schedule" style="width:18px;height:18px;border:0;" 
+                              onclick="return confirm('Are you sure you want to delete the request-schedule?')">
+                    </a>
                </td>
+               <td>${fn:escapeXml(appsec.projectname)}</td>
                <td> ${fn:escapeXml(appsec.hosting)}</td>
                <td> ${fn:escapeXml(appsec.scope)}</td>
                
