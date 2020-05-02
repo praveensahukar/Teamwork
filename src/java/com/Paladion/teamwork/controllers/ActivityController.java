@@ -605,7 +605,7 @@ public ModelAndView uploaddocstoProject(HttpServletRequest req,@ModelAttribute f
  
                 String fileName = multipartFile.getOriginalFilename();
                 fileNames.add(fileName);
-                String filepath=Aservice.getSystemSettings().getUploadpath();
+                String filepath="E:\\teamworkupload files";
                 File uploadFile = new File(filepath+File.separator+"files"+File.separator+PID, fileName);
                 System.out.println(uploadFile);
                 if(!uploadFile.exists())uploadFile.mkdirs();

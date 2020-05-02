@@ -288,10 +288,10 @@ font-style: italic;
                         </td>
                         <td>
                             <a href="/TeamWorkAlpha/uploadfiles.do?pid=${ProjectData.activityid}" 
-  target="popup" 
-  onclick="window.open('/TeamWorkAlpha/uploadfiles.do?pid=${ProjectData.activityid}','popup','width=800,height=600'); return false;">
-    Upload files
-</a>
+                                target="popup" 
+                                onclick="window.open('/TeamWorkAlpha/uploadfiles.do?pid=${ProjectData.activityid}','popup','width=800,height=600'); return false;">
+                                 Upload files
+                            </a>
                         </td>
                     </tr>
                     <tr>
