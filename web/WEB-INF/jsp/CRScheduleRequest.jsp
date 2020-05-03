@@ -16,176 +16,20 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 <head>
-    
-    <script src="js/getOpidForProject.js" type="text/javascript"></script>
-    
-    <script src="js/addOpidForProject.js" type="text/javascript"></script>
-    
-    
 <script type="text/javascript">
   $(document).ready(function(){
     $("#txtFromDate").datepicker({
         numberOfMonths: 1,
-        onSelect: function(selected) {
-          $("#txtToDate").datepicker("option","minDate", selected)
-        }
-    });
-    $("#txtToDate").datepicker({ 
-        numberOfMonths: 1,
-        onSelect: function(selected) {
-           $("#txtFromDate").datepicker("option","maxDate", selected)
+        onSelect: function() {
+          $("#txtFromDate").datepicker()
         }
     });  
 });
-  </script>
-<style>
-ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #a6a6a6;
-    width:1500px;
-   
-}
-li {
-    float: left;
-}
-li a {
-    display: block;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-}
-li a:hover:not(.active) {
-    background-color: #b30000;
-}
-.active {
-    background-color: #cc0000;
-}
-#1,#2{
-    position: relative;
-      left: 0;
-    top: 0;
-}
-</style>
-<style>
-@import url(http://fonts.googleapis.com/css?family=Roboto:400,100);
-body {
-	background-image: url("grey.jpg");
-  background-repeat: repeat-y;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  font-family: 'Roboto', sans-serif;
-}
-.login-card {
-  padding: 40px;
-  width: 1420px;
-  min-height: 550px;
-  background-color: white;
-  margin: 0 auto 10px;
-  border-radius: 2px;
-  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-  overflow: hidden;
-}
-.login-card h1 {
-  font-weight: 1;
-  text-align: center;
-  font-size: 2.3em;
-}
-.login-card input[type=submit] {
-  width: 60%;
-  display: block;
-  margin-bottom: 10px;
-  position: relative;
-  float: center;
-}
-.login-card input[type=text], input[type=password] {
-  height: 44px;
-  font-size: 16px;
-  width: 90%;
-  margin-bottom: 10px;
-  -webkit-appearance: none;
-  background: #fff;
-  border: 1px solid #d9d9d9;
-  border-top: 1px solid #c0c0c0;
-  /* border-radius: 2px; */
-  padding: 0 8px;
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
-}
-.login-card input[type=text]:hover, input[type=password]:hover {
-  border: 2px solid #b9b9b9;
-  
-  border-top: 5px solid #a0a0a0;
-  -moz-box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
-  -webkit-box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
-  box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
-}
-.login {
-  text-align: center;
-  font-size: 14px;
-  font-family: 'Arial', sans-serif;
-  font-weight: 700;
-  height: 36px;
-  padding: 0 8px;
-/* border-radius: 3px; */
-/* -webkit-user-select: none;
-  user-select: none; */
-}
-.login-submit {
-  /* border: 1px solid #3079ed; */
-  width: 300px;
-  border: 0px;
-  color: #fff;
-  text-shadow: 0 1px rgba(0,0,0,0.1); 
-  background-color: #a6a6a6;
-  /* background-image: -webkit-gradient(linear, 0 0, 0 100%,   from(#4d90fe), to(#4787ed)); */
-}
-.login-submit:hover {
-  /* border: 1px solid #2f5bb7; */
-  border: 0px;
-  text-shadow: 0 1px rgba(0,0,0,0.3);
-  background-color: #ff8080;
-  /* background-image: -webkit-gradient(linear, 0 0, 0 100%,   from(#4d90fe), to(#357ae8)); */
-}
-.login-card a {
-  text-decoration: none;
-  color: #666;
-  font-weight: 400;
-  text-align: center;
-  display: inline-block;
-  opacity: 0.6;
-  transition: opacity ease 0.5s;
-}
-.login-card a:hover {
-  opacity: 1;
-}
-.login-help {
-  width: 100%;
-  text-align: center;
-  font-size: 12px;
-}
-table {
-    border-collapse: collapse;
-    width: 80%;
-    color: #ff0000;
-    border-color: white;
-    align-items: left;
-}
-th {
-    text-align: center;
-}
-.error {
-color: red;
-font-style: italic;
-}
-</style>
+</script>
+<script src="js/getOpidForProject.js" type="text/javascript"></script>
+<script src="js/addOpidForProject.js" type="text/javascript"></script>
 
- <script >  
+<!--<script>  
    function doAjaxPost() {  
     var sdate = $('#date').val();  
     var edate = $('#datepicker').val();  
@@ -237,116 +81,136 @@ font-style: italic;
      }  
     }); 
    }  
- </script>  
-<title>Request Schedule</title>
+ </script>  -->
+
 </head>
 <body>
-    <div class="login-card" >
+<div class="login-card" >
 <!--action="getEngineers.do"-->
     <form:form  method="post" action="saveCodeReviewActivity.do" modelAttribute="CRBean">
-         <input type="hidden" name="AntiCSRFToken" id="token" value="${csrfPreventionSalt}"/>
-          <input type="hidden" name="pid" value="${pid}"/>
-      <div style="width :60%;margin-left: 100px;"> 
-                <h1>Schedule Request - Source Code Review</h1>
-                <table align="right" border="0" cellpadding="10" cellspacing="2">
+    <input type="hidden" name="AntiCSRFToken" id="token" value="${csrfPreventionSalt}"/>
+    <input type="hidden" name="pid" value="${pid}"/>
+    <div style="width :60%;margin-left: 100px;"> 
+        <h2 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">Schedule Request - Source Code Review</h2>
+        <table align="left" border="0" cellpadding="10" cellspacing="2">
                     
-                  
-                      <tr>
-                        
-                            <td align="right" >Project Name :</td>
-        <td colspan="1"><form:input placeholder="Enter Project Name" path="projectname"/>
+        <tr>
+            <td colspan="2" align="left">Project:     
+            <form:select class="login login-submit" id="projectID" path="projectid">
+                <option class="login login-submit"  value="0">Select</option>
+                <c:forEach  items="${AllProjects}" var="project"> 
+                <form:option class="login login-submit"  value="${project.projectid}">${project.projectname}</form:option>    
+                </c:forEach>
+                </form:select>
+                <form:errors path="projectid" cssClass="error"/>
+           </td>
+        </tr>
+        <tr>
+         
+            <td align="left">Start Date :
+            <form:input placeholder="Enter Start Date" id="txtFromDate" path="" />
             <span class='red'>*</span>
-            <form:errors path="projectname" cssClass="error"/>
-        </td>
-                    </tr>
-                        <tr>
-                        <td>
-                            <label>Preferred start Date:</label>
-                            <form:input placeholder="Enter Start Date" id="txtFromDate1" path="prefstartdate" />
-                        </td>
-                        <td>
-                            <label>Code Review Type:</label>
-                            <form:select class="login login-submit" path="assesstype" id="assess">
-                                <form:option class="login login-submit" value="">Select</form:option>
-                                <form:option class="login login-submit" value="webcr">Web Application Code Review</form:option>
-                                <form:option class="login login-submit" value="androidcr">Android Application Code Review</form:option>
-                                <form:option class="login login-submit" value="ioscr">iOS Application Code Review</form:option>
-                                <form:option class="login login-submit" value="apicr">Web Service / API Code Review</form:option>
-                                <form:option class="login login-submit" value="apicr">Premium Code Scans</form:option>
-                                <form:option class="login login-submit" value="othercr">Other</form:option>
-                            </form:select>
-                        </td>
-                        
-                    </tr>
-                    <tr>
-                        <td>
-                            <label>Efforts:</label>
-<!--                        <input type="text" name="eft" id="efrt">-->
-                            <form:input placeholder="Efforts" path="effort" />
-                            <span class='red'>*</span>
-                            <form:errors path="" cssClass="error"/>
-                        </td>
-                        <td>
-                            <a href="/TeamWorkAlpha/uploadfiles.do?pid=${ProjectData.activityid}" 
-  target="popup" 
-  onclick="window.open('/TeamWorkAlpha/uploadfiles.do?pid=${ProjectData.activityid}','popup','width=800,height=600'); return false;">
-    Upload files
-</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label>Hosting Environment:</label>
-                            <form:input type="text" name="eft" id="task1" placeholder="Hosting Environemnt" path="hosting" />
-                        </td>
-                        <td>
-                             <label>Pre-requisites:</label>
-                            <form:input type="text" name="eft" id="task2" placeholder="Pre-requisites" path="pre_req" />
-                        </td>
-                    </tr>
+            <form:errors path="" cssClass="error"/>
+            </td>
+            
+            
+            <td>
+                <label>Type Of Activity:</label>
+                <form:select class="login login-submit" path="assesstype" id="assess">
+                <form:option class="login login-submit" value="">Select</form:option>
+                <form:option class="login login-submit" value="Code Review - Web Application">Code Review - Web Application</form:option>
+                <form:option class="login login-submit" value="Code Review - Android">Code Review - Android</form:option>
+                <form:option class="login login-submit" value="Code Review - iOS">Code Review - iOS</form:option>
+                <form:option class="login login-submit" value="Code Review - Web Service / API">Code Review - Web Service / API</form:option>
+                <form:option class="login login-submit" value="Code Review - Thick Client">Code Review - Thick Client</form:option>
+                <form:option class="login login-submit" value="Premium Code Scans">Premium Code Scans</form:option>
+                <form:option class="login login-submit" value="Others">Others</form:option>
+                </form:select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label>Estimated Efforts:</label>
+<!--            <input type="text" name="eft" id="efrt">-->
+                <form:input placeholder="Efforts" path="effort" />
+                <span class='red'>*</span>
+                <form:errors path="" cssClass="error"/>
+            </td>
+            <td>
+                <a href="/TeamWorkAlpha/uploadfiles.do?pid=${ProjectData.activityid}" 
+                target="popup" 
+                onclick="window.open('/TeamWorkAlpha/uploadfiles.do?pid=${ProjectData.activityid}','popup','width=800,height=600'); return false;">
+                Upload files
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label>Hosting Environment:</label>
+                <form:input type="text" name="eft" id="task1" placeholder="Hosting Environemnt" path="hosting" />
+                </td>
+            <td>
+                <label>Pre-requisites:</label>
+                <form:input type="text" name="eft" id="task2" placeholder="Pre-requisites" path="pre_req" />
+            </td>
+        </tr>
                     
-                    
-                    <tr>
-                        <td>
-                            <label>Name of application:</label>
-                            <form:input type="text" name="eft" id="task1" placeholder="Name of application" path="appname" />
-                        </td>
-                        <td>
-                             <label>Lines of codes:</label>
-                            <form:input type="text" name="eft" id="task2" placeholder="Lines of codes" path="scope" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label>Code access:</label>
-                            <form:input type="text" name="eft" id="task5" placeholder="Code access" path="access" />
-                        </td>
-                        <td>
-                             <label>Technology:</label>
-                            <form:input type="text" name="eft" id="task6" placeholder="Technology" path="technology" />
-                        </td>
-                    </tr>
-                    <tr>
-                            <td colspan="4" align="center"><input type="submit" value="Add Activity Details"  class="login login-submit"/></td>
-                    </tr>
-                </table>    
+        <tr>
+            <td>
+                <label>Name of application:</label>
+                <form:input type="text" name="eft" id="task1" placeholder="Name of application" path="appname" />
+            </td>
+            <td>
+                <label>Lines of codes:</label>
+                <form:input type="text" name="eft" id="task2" placeholder="Lines of codes" path="scope" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label>Code access:</label>
+                <form:select class="login login-submit" path="access" name="eft"> 
+                <form:option class="login login-submit" value="">Select</form:option>
+                <form:option class="login login-submit" value="Remote Access/VPN">Remote Access/VPN</form:option>
+                <form:option class="login login-submit" value="Base Camp">Base Camp</form:option>
+                <form:option class="login login-submit" value="Code Repository Access">Code Repository Access</form:option>
+                <form:option class="login login-submit" value="Offline">Offline</form:option>
+                <form:option class="login login-submit" value="Others">Others</form:option>
+                </form:select>
+            </td>
+            
+            <td>
+                <label>Technology / Language</label>
+                <form:select class="login login-submit" path="technology"> 
+                <form:option class="login login-submit" value="">Select</form:option>
+                <form:option class="login login-submit" value="Java / J2EE">Java / J2EE </form:option>
+                <form:option class="login login-submit" value="ASP.NET / Visual Basic / C#">ASP.NET / Visual Basic / C#</form:option>
+                <form:option class="login login-submit" value="Android / Kotlin">Android / Kotlin</form:option>
+                <form:option class="login login-submit" value="SWIFT / Objective C">SWIFT / Objective C</form:option>
+                <form:option class="login login-submit" value="PHP">PHP</form:option>
+                <form:option class="login login-submit" value="Ruby On Rails">Ruby On Rails</form:option>
+                <form:option class="login login-submit" value="GO Lang">GO Lang</form:option>
+                <form:option class="login login-submit" value="Python / Django">Python / Django</form:option>
+                <form:option class="login login-submit" value="C / C++">C / C++</form:option>
+                <form:option class="login login-submit" value="Others">Others</form:option>
+                </form:select>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4" align="center"><input type="submit" value="Add Activity Details"  class="login login-submit"/></td>
+        </tr>
+    </table>    
     </form:form>
 </div>
 </div>
 <script>
   $(document).ready(function(){
-    $("#txtFromDate1").datepicker({
+    $("#txtFromDate").datepicker({
         numberOfMonths: 1,
-        onSelect: function(selected) {
-          $("#txtToDate1").datepicker("option","minDate", selected)
+        onSelect: function() {
+          $("#txtFromDate").datepicker()
         }
     });
-    $("#txtToDate1").datepicker({ 
-        numberOfMonths: 1,
-        onSelect: function(selected) {
-           $("#txtFromDate1").datepicker("option","maxDate", selected)
-        }
-    });  
+ 
 });
 </script>
     

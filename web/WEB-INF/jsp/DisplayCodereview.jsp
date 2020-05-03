@@ -303,26 +303,28 @@ body {
 
 
 
-<title>All Projects</title>
+<title>Code Review Schedule Request</title>
 </head>
     
 <body>
     <%@include file="Header.jsp" %>        
     <div class="login-card">
-    <div align="left">  <h2 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">All CodeReviewScheduling</h2><br></div>
+    <div align="left">  <h2 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">Code Review Schedule Requests</h2><br></div>
     <div class="scrollingtable">
 		<div>
 			<div>
     <table>
         <thead>
             <tr bgcolor="#a6a6a6">
-                <th><div label="Assesment Type"></div> </th>
-                <th><div label="Project Name"></div> </th>
-            <th><div label="Hosting"></div> </th>
-            <th><div label="Scope"></div> </th>
+            <th><div label="Project Name"></div> </th>
+            <th><div label="Assesment Type"></div> </th>
             <th><div label="Application Name"></div> </th>
-            <th><div label="Acess"></div> </th>
+            <th><div label="Prefered Start Date"></div> </th>
+            <th><div label="Scope"></div> </th>
             <th><div label="Technology"></div> </th>
+            <th><div label="Acess"></div> </th>
+            <th><div label="Hosting"></div> </th>
+            
             
            <%-- <th><div label="Delete"></div> </th> --%>
         </tr>
@@ -333,6 +335,8 @@ body {
             
         <c:forEach  items="${AllCodereview}" var="codereview">     
            <tr>
+               
+               <td>${fn:escapeXml(codereview.projectname)}</td>
                <td> 
                    ${fn:escapeXml(codereview.assesstype)}
                    <a href="EditCodereviewDetails.do?crid=${codereview.cr_scheduleid}" style="float:right;">
@@ -343,13 +347,15 @@ body {
                               onclick="return confirm('Are you sure you want to delete the request-schedule?')">
                     </a>
                </td>
-               <td>${fn:escapeXml(codereview.projectname)}</td>
-               <td> ${fn:escapeXml(codereview.hosting)}</td>
-               <td> ${fn:escapeXml(codereview.scope)}</td>
-               
                <td> ${fn:escapeXml(codereview.appname)}</td>
+               <td> ${fn:escapeXml(codereview.prefstartdate)}</td>
+               <td> ${fn:escapeXml(codereview.scope)}</td>
+               <td> ${fn:escapeXml(codereview.technology)}</td>
                <td> ${fn:escapeXml(codereview.access)}</td>
-            <td> ${fn:escapeXml(codereview.technology)}</td>
+               <td> ${fn:escapeXml(codereview.hosting)}</td>
+               
+               
+               
               <%-- <td><a href="DeleteProject.do?id=${project.projectid}">DELETE</a></td> --%>
            </tr> 
         </c:forEach>

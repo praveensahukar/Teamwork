@@ -309,7 +309,7 @@ body {
 <body>
     <%@include file="Header.jsp" %>        
     <div class="login-card">
-    <div align="left">  <h2 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">All AppsecurityScheduling</h2><br></div>
+    <div align="left">  <h2 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">Application Security Schedule Requests</h2><br></div>
     <div class="scrollingtable">
 		<div>
 			<div>

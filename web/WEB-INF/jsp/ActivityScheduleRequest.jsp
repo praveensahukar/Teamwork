@@ -27,7 +27,7 @@
     
     <script src="js/addOpidForProject.js" type="text/javascript"></script>
     
-    
+<!--    
 <script type="text/javascript">
   $(document).ready(function(){
     $("#txtFromDate").datepicker({
@@ -43,7 +43,7 @@
         }
     });  
 });
-  </script>
+  </script>-->
 <style>
 ul {
     list-style-type: none;
@@ -92,9 +92,9 @@ body {
   width: 1420px;
   min-height: 550px;
   background-color: white;
-  margin: 0 auto 10px;
+  margin: 0 auto 0px;
   border-radius: 2px;
-  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.3);
   overflow: hidden;
 }
 .login-card h1 {
@@ -137,7 +137,7 @@ body {
   font-family: 'Arial', sans-serif;
   font-weight: 700;
   height: 36px;
-  padding: 0 8px;
+  padding: 0 0px;
 /* border-radius: 3px; */
 /* -webkit-user-select: none;
   user-select: none; */
@@ -252,52 +252,52 @@ font-style: italic;
 <%@include file="Header.jsp"%>
 	   
 <div class="login-card">
-	   
-    <div>  <h2 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">Request For Schedule</h2></div>
-<!--action="getEngineers.do"-->
-    <form:form  method="post" commandName="ProjectM">
-    <div>
-        
-        <input type="hidden" name="AntiCSRFToken" id="token" value="${csrfPreventionSalt}"/>
+    <table  border="0" cellpadding="" cellspacing="2">  
+        <tr>
+            <td align="center">
+                <h2 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">Request For Schedule</h2></td>
+                <!--action="getEngineers.do"-->
+                <form:form  method="post" commandName="ProjectM">
+                
+                <input type="hidden" name="AntiCSRFToken" id="token" value="${csrfPreventionSalt}"/>
     
-            <table align="center" border="0" cellpadding="10" cellspacing="2">
-                <tr>
+<!--            <table align="center" border="0" cellpadding="10" cellspacing="2">
+                <tr>-->
                    
-            <td align="right">Project :</td>
-            <td><form:select class="login login-submit" id="projectID" path="projectid" onchange="getOpidForProject(this.${project.projectid})">
+<!--            <td align="right">Project :</td>
+                <td><form:select class="login login-submit" id="projectID" path="projectid" onchange="getOpidForProject(this.${project.projectid})">
                 <option class="login login-submit" value="0">Select</option>
                 <c:forEach  items="${AllProjects}" var="project"> 
                 <form:option class="login login-submit"  value="${project.projectid}">${project.projectname}</form:option>    
                 </c:forEach>
                 </form:select>
                 <form:errors path="projectid" cssClass="error"/>
-            </td>
-            <td align="right">Assessment Type:</td>
-            <td>
+            </td>-->
+<!--            <td align="left">Assessment Type:</td>-->
+                <td align="left">
                 <form:select  class="login login-submit" path=""  id="activityType"  >
                     <form:option class="login login-submit" value="">Select</form:option>
                     <form:option class="login login-submit" value="scr">Source Code Review</form:option>
                     <form:option class="login login-submit" value="apptest">Application Tests</form:option>
                     <form:option class="login login-submit" value="nettest">Network Tests</form:option>
-                    <form:option class="login login-submit" value="EPT">EPT/External PT</form:option>
-                    <form:option class="login login-submit" value="IPT">IPT</form:option>
-                    <form:option class="login login-submit" value="VAscan">VA Scan</form:option>
+     
+                  <!--  <form:option class="login login-submit" value="EPT">External PenTests</form:option>
+                    <form:option class="login login-submit" value="IPT">Internal PenTests</form:option>
+                    <form:option class="login login-submit" value="VAscan">VA Scans</form:option>
                     <form:option class="login login-submit" value="Cplus">Segmentation</form:option>
                     <form:option class="login login-submit" value="Cplus">Firewall Rolebase Audit</form:option>
-                    <form:option class="login login-submit" value="Cplus">Social Engg</form:option>
-                    <form:option class="login login-submit" value="Cplus">Wifi PT</form:option>
+                    <form:option class="login login-submit" value="Cplus">Social Engineering</form:option>
+                    <form:option class="login login-submit" value="Cplus">Wifi PT</form:option> --!>
                 </form:select>
-            </td>
-            </tr>
-</table>
-             </div>
+                </td>
+                </tr>
+    </table>    
     </form:form>
- <div id = "page"> 
+    <div id = "page" border="2"> 
  
  
- </div> 
-
-</div>
+    </div> 
+    </div>
 
 <script>
   $(document).ready(function(){
@@ -319,8 +319,8 @@ font-style: italic;
     $(document).ready(function() {
     $('#activityType').on('change', function() {
 
-     var ProjID= document.getElementById("projectID");
-     var pid = ProjID.value;
+//     var ProjID= document.getElementById("projectID");
+//     var pid = ProjID.value;
        var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
@@ -328,7 +328,7 @@ font-style: italic;
             this.responseText;
             }
         };
-        xhttp.open("GET", "/TeamWorkAlpha/LoadScheduleRequestPage.do?page="+this.value+"&pid="+pid, true);
+        xhttp.open("GET", "/TeamWorkAlpha/LoadScheduleRequestPage.do?page="+this.value+"&pid=0", true);
         //Here param is used to pass the value of selected element
         //We can also use here POST/PUT/DELETE methods..with some modification.
         xhttp.send();

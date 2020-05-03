@@ -176,9 +176,9 @@
                   
                     <a href="GetAllProjects.do">View All Projects</a>
                     
-                    <a href="CreateVehicle.do">Create New Vehicle</a>
+<!--                    <a href="CreateVehicle.do">Create New Vehicle</a>-->
                     
-                    <a href="ViewAllVehicle.do.do">View All Vehicles</a>
+<!--                    <a href="ViewAllVehicle.do.do">View All Vehicles</a>-->
                       <%}%>
                 </div>
         </div>

@@ -219,18 +219,21 @@ public class RequestSchedule {
         
         ModelAndView model=new ModelAndView("CRScheduleRequest");
         model.addObject("pid",pid);
+        model.addObject("AllProjects",PS.getAllProjects()); 
         return model;
         }   
          if(page.equalsIgnoreCase("apptest")){
         
         ModelAndView model=new ModelAndView("GreyBoxScheduleRequest");
         model.addObject("pid",pid);
+        model.addObject("AllProjects",PS.getAllProjects()); 
         return model;
         }
         
         if(page.equalsIgnoreCase("nettest")){
         ModelAndView model=new ModelAndView("EPTScheduleRequest");
         model.addObject("pid",pid);
+        model.addObject("AllProjects",PS.getAllProjects()); 
         return model;
         } 
          
@@ -238,17 +241,20 @@ public class RequestSchedule {
         if(page.equalsIgnoreCase("EPT")){
         ModelAndView model=new ModelAndView("EPTScheduleRequest");
         model.addObject("pid",pid);
+        model.addObject("AllProjects",PS.getAllProjects()); 
         return model;
         }
         if(page.equalsIgnoreCase("IPT")){
             
         ModelAndView model=new ModelAndView("IPTScheduleRequest");
         model.addObject("pid",pid);
+        model.addObject("AllProjects",PS.getAllProjects()); 
         return model;
         }
         if(page.equalsIgnoreCase("VAscan")){
         ModelAndView model=new ModelAndView("VAscanScheduleRequest");
         model.addObject("pid",pid);
+        model.addObject("AllProjects",PS.getAllProjects()); 
         return model;
         }
     ModelAndView model=new ModelAndView("error");
@@ -283,10 +289,13 @@ public class RequestSchedule {
         {
         String[] authorizedRoles = {"admin","manager","lead","scheduling"};
         if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
-        int i = Integer.parseInt(req.getParameter("pid"));
-        CRSRB.setProjectid(i);
+//        int i = Integer.parseInt(req.getParameter("pid"));
+//        CRSRB.setProjectid(i);
+        ProjectBean pb = PS.getProjectDeatails(CRSRB.getProjectid());
+        CRSRB.setProjectname(pb.getProjectname());
         SS.saveCodeReviewActvitiy(CRSRB);
         ModelAndView model=new ModelAndView("ActivityScheduleRequest");
+        model.addObject("Message","Schedule Request Submitted Successfully");
         return model;
         }
         catch(Exception ex){
