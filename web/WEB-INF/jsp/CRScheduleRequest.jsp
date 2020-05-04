@@ -110,50 +110,54 @@
             <td align="left">Start Date :
             <form:input placeholder="Enter Start Date" id="txtFromDate" path="" />
             <span class='red'>*</span>
-            <form:errors path="" cssClass="error"/>
-            </td>
-            
-            
-            <td>
-                <label>Type Of Activity:</label>
-                <form:select class="login login-submit" path="assesstype" id="assess">
-                <form:option class="login login-submit" value="">Select</form:option>
-                <form:option class="login login-submit" value="Code Review - Web Application">Code Review - Web Application</form:option>
-                <form:option class="login login-submit" value="Code Review - Android">Code Review - Android</form:option>
-                <form:option class="login login-submit" value="Code Review - iOS">Code Review - iOS</form:option>
-                <form:option class="login login-submit" value="Code Review - Web Service / API">Code Review - Web Service / API</form:option>
-                <form:option class="login login-submit" value="Code Review - Thick Client">Code Review - Thick Client</form:option>
-                <form:option class="login login-submit" value="Premium Code Scans">Premium Code Scans</form:option>
-                <form:option class="login login-submit" value="Others">Others</form:option>
-                </form:select>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <label>Estimated Efforts:</label>
-<!--            <input type="text" name="eft" id="efrt">-->
-                <form:input placeholder="Efforts" path="effort" />
-                <span class='red'>*</span>
-                <form:errors path="" cssClass="error"/>
-            </td>
-            <td>
-                <a href="/TeamWorkAlpha/uploadfiles.do?pid=${ProjectData.activityid}" 
-                target="popup" 
-                onclick="window.open('/TeamWorkAlpha/uploadfiles.do?pid=${ProjectData.activityid}','popup','width=800,height=600'); return false;">
-                Upload files
-                </a>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <label>Hosting Environment:</label>
-                <form:input type="text" name="eft" id="task1" placeholder="Hosting Environemnt" path="hosting" />
-                </td>
-            <td>
-                <label>Pre-requisites:</label>
-                <form:input type="text" name="eft" id="task2" placeholder="Pre-requisites" path="pre_req" />
-            </td>
-        </tr>
+            <form:errors path="projectname" cssClass="error"/>
+        </td>
+                    </tr>
+                        <tr>
+                        <td>
+                            <label>Preferred start Date:</label>
+                            <form:input placeholder="Enter Start Date" id="txtFromDate1" path="prefstartdate" />
+                        </td>
+                        <td>
+                            <label>Code Review Type:</label>
+                            <form:select class="login login-submit" path="assesstype" id="assess">
+                                <form:option class="login login-submit" value="">Select</form:option>
+                                <form:option class="login login-submit" value="webcr">Web Application Code Review</form:option>
+                                <form:option class="login login-submit" value="androidcr">Android Application Code Review</form:option>
+                                <form:option class="login login-submit" value="ioscr">iOS Application Code Review</form:option>
+                                <form:option class="login login-submit" value="apicr">Web Service / API Code Review</form:option>
+                                <form:option class="login login-submit" value="apicr">Premium Code Scans</form:option>
+                                <form:option class="login login-submit" value="othercr">Other</form:option>
+                            </form:select>
+                        </td>
+                        
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Efforts:</label>
+<!--                        <input type="text" name="eft" id="efrt">-->
+                            <form:input placeholder="Efforts" path="effort" />
+                            <span class='red'>*</span>
+                            <form:errors path="" cssClass="error"/>
+                        </td>
+                        <td>
+                            <a href="/TeamWorkAlpha/uploadfiles.do?pid=${ProjectData.activityid}" 
+                                target="popup" 
+                                onclick="window.open('/TeamWorkAlpha/uploadfiles.do?pid=${ProjectData.activityid}','popup','width=800,height=600'); return false;">
+                                 Upload files
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Hosting Environment:</label>
+                            <form:input type="text" name="eft" id="task1" placeholder="Hosting Environemnt" path="hosting" />
+                        </td>
+                        <td>
+                             <label>Pre-requisites:</label>
+                            <form:input type="text" name="eft" id="task2" placeholder="Pre-requisites" path="pre_req" />
+                        </td>
+                    </tr>
                     
         <tr>
             <td>

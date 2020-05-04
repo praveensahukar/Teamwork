@@ -290,9 +290,12 @@ font-style: italic;
             <form:errors path="" cssClass="error"/>
                         </td>
                         <td>
-                            <label>Upload files:</label>
-                            <form:input id="fileSelect4" type="file"  path="" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
-                        
+                            <a href="/TeamWorkAlpha/uploadfiles.do?pid=${ProjectData.activityid}" 
+                                target="popup" 
+                                onclick="window.open('/TeamWorkAlpha/uploadfiles.do?pid=${ProjectData.activityid}','popup','width=800,height=600'); return false;">
+                                 Upload files
+                            </a>
+                        </td>
                     </tr>
                     <tr>
                         <td>
