@@ -91,8 +91,8 @@
     <input type="hidden" name="AntiCSRFToken" id="token" value="${csrfPreventionSalt}"/>
     <input type="hidden" name="pid" value="${pid}"/>
     <div style="width :60%;margin-left: 100px;"> 
-        <h2 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">Schedule Request - Source Code Review</h2>
-        <table align="left" border="0" cellpadding="10" cellspacing="2">
+        <center><h2 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">Schedule Request - Source Code Review</h2></center>
+        <table align="right" border="0" cellpadding="10" cellspacing="2">
                     
         <tr>
             <td colspan="2" align="left">Project:     
@@ -105,18 +105,11 @@
                 <form:errors path="projectid" cssClass="error"/>
            </td>
         </tr>
-        <tr>
-         
-            <td align="left">Start Date :
-            <form:input placeholder="Enter Start Date" id="txtFromDate" path="" />
-            <span class='red'>*</span>
-            <form:errors path="projectname" cssClass="error"/>
-        </td>
-                    </tr>
+        
                         <tr>
                         <td>
                             <label>Preferred start Date:</label>
-                            <form:input placeholder="Enter Start Date" id="txtFromDate1" path="prefstartdate" />
+                            <form:input placeholder="Enter Start Date" id="txtFromDate" path="prefstartdate" />
                         </td>
                         <td>
                             <label>Code Review Type:</label>
@@ -134,12 +127,10 @@
                     </tr>
                     <tr>
                         <td>
-                            <label>Efforts:</label>
-<!--                        <input type="text" name="eft" id="efrt">-->
-                            <form:input placeholder="Efforts" path="effort" />
-                            <span class='red'>*</span>
-                            <form:errors path="" cssClass="error"/>
-                        </td>
+                <label>Name of application:</label>
+                <form:input type="text" name="eft" id="task1" placeholder="Name of application" path="appname" />
+            </td>
+                        
                         <td>
                             <a href="/TeamWorkAlpha/uploadfiles.do?pid=${ProjectData.activityid}" 
                                 target="popup" 
@@ -161,9 +152,12 @@
                     
         <tr>
             <td>
-                <label>Name of application:</label>
-                <form:input type="text" name="eft" id="task1" placeholder="Name of application" path="appname" />
-            </td>
+                            <label>Efforts:</label>
+<!--                        <input type="text" name="eft" id="efrt">-->
+                            <form:input placeholder="Efforts" path="effort" />
+                            <span class='red'>*</span>
+                            <form:errors path="" cssClass="error"/>
+                        </td>
             <td>
                 <label>Lines of codes:</label>
                 <form:input type="text" name="eft" id="task2" placeholder="Lines of codes" path="scope" />
@@ -210,11 +204,16 @@
   $(document).ready(function(){
     $("#txtFromDate").datepicker({
         numberOfMonths: 1,
-        onSelect: function() {
-          $("#txtFromDate").datepicker()
+        onSelect: function(selected) {
+          $("#txtToDate").datepicker("option","minDate", selected)
         }
     });
- 
+    $("#txtToDate").datepicker({ 
+        numberOfMonths: 1,
+        onSelect: function(selected) {
+           $("#txtFromDate").datepicker("option","maxDate", selected)
+        }
+    });  
 });
 </script>
     

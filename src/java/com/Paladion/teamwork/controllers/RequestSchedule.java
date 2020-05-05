@@ -407,8 +407,10 @@ public ModelAndView EditCodereviewDetails(@RequestParam int crid, HttpServletReq
         {
         String[] authorizedRoles = {"admin","manager","lead","scheduling"};
         if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
-        int i = Integer.parseInt(req.getParameter("pid"));
-        ASSRB.setProjectid(i);
+//        int i = Integer.parseInt(req.getParameter("pid"));
+//        ASSRB.setProjectid(i);
+        ProjectBean pb = PS.getProjectDeatails(ASSRB.getProjectid());
+        ASSRB.setProjectname(pb.getProjectname());
         SS.saveAppSecActivity(ASSRB);
         ModelAndView model=new ModelAndView("ActivityScheduleRequest");
         return model;

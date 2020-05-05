@@ -253,16 +253,19 @@ font-style: italic;
           <input type="hidden" name="AntiCSRFToken" id="token" value="${csrfPreventionSalt}"/>
           <input type="hidden" name="pid" value="${pid}"/>
     <div style="width :60%;margin-left: 100px;"> 
-                <h1>Schedule Request EPT/Exploratory Activity</h1>
+        <center>  <h2 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">Schedule Request Network Activity</h2></center>
                 <table align="right" border="0" cellpadding="10" cellspacing="2">
                     <tr>
-                        
-                            <td align="right" >Project Name :</td>
-                            <td colspan="1"><form:input placeholder="Enter Project Name" path="projectname"/>
-                            <span class='red'>*</span>
-                            <form:errors path="projectname" cssClass="error"/>
-                            </td>
-                    </tr>
+            <td colspan="2" align="left">Project:     
+            <form:select class="login login-submit" id="projectID" path="projectid">
+                <option class="login login-submit"  value="0">Select</option>
+                <c:forEach  items="${AllProjects}" var="project"> 
+                <form:option class="login login-submit"  value="${project.projectid}">${project.projectname}</form:option>    
+                </c:forEach>
+                </form:select>
+                <form:errors path="projectid" cssClass="error"/>
+           </td>
+        </tr>
                     <tr>
                         <td>
                             <label>Preferred start Date:</label>
@@ -272,10 +275,9 @@ font-style: italic;
                             <label>Type of Assessment:</label>
                             <form:select class="login login-submit" path="assesstype" id="assess2">
                 <form:option class="login login-submit" value="">Select</form:option>
-                            <form:option class="login login-submit" value="WebCR">Web Application Code Review</form:option>
-                            <form:option class="login login-submit" value="AndroidCR">Android Application Code Review</form:option>
-                            <form:option class="login login-submit" value="iOSCR">iOS Application Code Review</form:option>
-                            <form:option class="login login-submit" value="iOSCR">Other</form:option>
+                            <form:option class="login login-submit" value="Internal Network Penetration Testing">Internal Network Penetration Testing</form:option>
+                            <form:option class="login login-submit" value="External Network Penetration Testing">External Network Penetration Testing</form:option>
+                           
                     
                 </form:select>
                         </td>
@@ -330,40 +332,39 @@ font-style: italic;
         
             <td colspan="4" align="center"><input type="submit" value="Add Activity Details" class="login login-submit"/></td>
         </tr>
-                </table>    
+                </table>   
+        </form:form>
           </div>
-    </form:form>
-
 </div>
      
 <script>
   $(document).ready(function(){
-    $("#txtFromDate").datepicker({
+    $("#txtFromDate2").datepicker({
         numberOfMonths: 1,
         onSelect: function(selected) {
-          $("#txtToDate").datepicker("option","minDate", selected)
+          $("#txtToDate2").datepicker("option","minDate", selected)
         }
     });
-    $("#txtToDate").datepicker({ 
+    $("#txtToDate2").datepicker({ 
         numberOfMonths: 1,
         onSelect: function(selected) {
-           $("#txtFromDate").datepicker("option","maxDate", selected)
+           $("#txtFromDate2").datepicker("option","maxDate", selected)
         }
     });  
 });
 </script>
 <script>
   $(document).ready(function(){
-    $("#txtFromDate1").datepicker({
+    $("#txtFromDate3").datepicker({
         numberOfMonths: 1,
         onSelect: function(selected) {
-          $("#txtToDate1").datepicker("option","minDate", selected)
+          $("#txtToDate3").datepicker("option","minDate", selected)
         }
     });
-    $("#txtToDate1").datepicker({ 
+    $("#txtToDate3").datepicker({ 
         numberOfMonths: 1,
         onSelect: function(selected) {
-           $("#txtFromDate1").datepicker("option","maxDate", selected)
+           $("#txtFromDate3").datepicker("option","maxDate", selected)
         }
     });  
 });

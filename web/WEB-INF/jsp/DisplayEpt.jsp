@@ -316,8 +316,9 @@ body {
     <table>
         <thead>
             <tr bgcolor="#a6a6a6">
-                <th><div label="Assesment Type"></div> </th>
                 <th><div label="Project Name"></div> </th>
+                <th><div label="Assesment Type"></div> </th>
+                <th><div label="Prefered Start Date"></div> </th>
             <th><div label="Hosting"></div> </th>
             <th><div label="WhitelistConf"></div> </th>
             <th><div label="TimeWindow"></div> </th>
@@ -333,6 +334,7 @@ body {
             
         <c:forEach  items="${AllEpt}" var="EptActivity">     
            <tr>
+               <td> ${fn:escapeXml(EptActivity.projectname)}</td>
                <td> 
                    ${fn:escapeXml(EptActivity.assesstype)}
                    <a href="EditEptDetails.do?eptid=${EptActivity.ept_scheduleid}" style="float:right;">
@@ -343,7 +345,7 @@ body {
                               onclick="return confirm('Are you sure you want to delete the request-schedule?')">
                     </a>
                </td>
-               <td> ${fn:escapeXml(EptActivity.projectname)}</td>
+               <td> ${fn:escapeXml(EptActivity.prefstartdate)}</td>
                <td> ${fn:escapeXml(EptActivity.hosting)}</td>
                <td> ${fn:escapeXml(EptActivity.whitelistconf)}</td>
                

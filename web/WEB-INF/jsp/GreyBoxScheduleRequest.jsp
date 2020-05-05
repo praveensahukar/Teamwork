@@ -253,40 +253,48 @@ font-style: italic;
          <input type="hidden" name="AntiCSRFToken" id="token" value="${csrfPreventionSalt}"/>
           <input type="hidden" name="pid" value="${pid}"/>
     <div style="width :60%;margin-left: 100px; " > 
-                <h1>Schedule Request -GrayBox Activity</h1>
+        <center>  <h2 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">Schedule Request - GrayBox Activity</h2></center>
                 <table  align="right"border="0" cellpadding="10" cellspacing="2">
                     <tr>
-                        
-                            <td align="right" >Project Name :</td>
-                            <td colspan="1"><form:input placeholder="Enter Project Name" path="projectname"/>
-                            <span class='red'>*</span>
-                            <form:errors path="projectname" cssClass="error"/>
-                            </td>
-                    </tr>
+            <td colspan="2" align="left">Project:     
+            <form:select class="login login-submit" id="projectID" path="projectid">
+                <option class="login login-submit"  value="0">Select</option>
+                <c:forEach  items="${AllProjects}" var="project"> 
+                <form:option class="login login-submit"  value="${project.projectid}">${project.projectname}</form:option>    
+                </c:forEach>
+                </form:select>
+                <form:errors path="projectid" cssClass="error"/>
+           </td>
+        </tr>
                     <tr>
                         <td>
                             <label>Preferred start Date:</label>
-                            <form:input placeholder="Enter Start Date" id="txtFromDate" path="prefstartdate" />
+                            <form:input placeholder="Enter Start Date" id="txtFromDate2" path="prefstartdate" />
                         </td>
                         <td>
                             <label>Type of Assessment:</label>
                             <form:select class="login login-submit" path="assesstype" id="assess1" >
                                 <form:option class="login login-submit" value="">Select</form:option>
-                                <form:option class="login login-submit" value="WebCR">Web Application Code Review</form:option>
-                                <form:option class="login login-submit" value="AndroidCR">Android Application Code Review</form:option>
-                                <form:option class="login login-submit" value="iOSCR">iOS Application Code Review</form:option>
-                                <form:option class="login login-submit" value="iOSCR">Other</form:option>
+                                <form:option class="login login-submit" value="Web Application Grey Box Assessment">Web Application Grey Box Assessment</form:option>
+                                <form:option class="login login-submit" value="Web Application Black Box Assessment">Web Application Black Box Assessment</form:option>
+                                <form:option class="login login-submit" value="Android Application Grey Box Assessment">Android Application Grey Box Assessment</form:option>
+                                <form:option class="login login-submit" value="Android Application Black Box Assessment">Android Application Black Box Assessment</form:option>
+                                <form:option class="login login-submit" value="Android Application Black Box Assessment">IOS Application Black Box Assessment</form:option>
+                                <form:option class="login login-submit" value="Android Application Black Box Assessment">IOS Application Black Box Assessment</form:option>
+                                <form:option class="login login-submit" value="Thick Client Application Grey Box Assessment">Thick Client Application Grey Box Assessment</form:option>
+                                <form:option class="login login-submit" value="Thick Client Application Black Box Assessment">Thick Client Application Black Box Assessment</form:option>
+                                <form:option class="login login-submit" value="Android Application Black Box Assessment">API / Web Services Testing</form:option>
+                                <form:option class="login login-submit" value="Android Application Black Box Assessment">Premium Automated Scan Service</form:option>
                             </form:select>
                         </td>
                         
                     </tr>
                     <tr>
                         <td>
-                                <label>Efforts:</label>
-                                <form:input placeholder="Efforts" path="effort" />
-                                <span class='red'>*</span>
-                                <form:errors path="" cssClass="error"/>
+                            <label>Application name:</label>
+                            <form:input type="text" name="eft" id="appname" placeholder="Application name" path="appname" />
                         </td>
+                        
                         <td>
                             <a href="/TeamWorkAlpha/uploadfiles.do?pid=${ProjectData.activityid}" 
                                 target="popup" 
@@ -308,9 +316,12 @@ font-style: italic;
                     
                     <tr>
                         <td>
-                            <label>Application name:</label>
-                            <form:input type="text" name="eft" id="appname" placeholder="Application name" path="appname" />
+                                <label>Efforts:</label>
+                                <form:input placeholder="Efforts" path="effort" />
+                                <span class='red'>*</span>
+                                <form:errors path="" cssClass="error"/>
                         </td>
+                        
                         <td>
                              <label>Scope of app:</label>
                             <form:input type="text" name="eft" id="sizeofapp" placeholder="Scope of app" path="scope" />
@@ -328,16 +339,16 @@ font-style: italic;
      
 <script>
   $(document).ready(function(){
-    $("#txtFromDate").datepicker({
+    $("#txtFromDate2").datepicker({
         numberOfMonths: 1,
         onSelect: function(selected) {
-          $("#txtToDate").datepicker("option","minDate", selected)
+          $("#txtToDate2").datepicker("option","minDate", selected)
         }
     });
-    $("#txtToDate").datepicker({ 
+    $("#txtToDate2").datepicker({ 
         numberOfMonths: 1,
         onSelect: function(selected) {
-           $("#txtFromDate").datepicker("option","maxDate", selected)
+           $("#txtFromDate2").datepicker("option","maxDate", selected)
         }
     });  
 });
