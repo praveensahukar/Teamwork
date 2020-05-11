@@ -120,13 +120,13 @@
   min-width: 180px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
-  margin-left:215px;
+  margin-left:216px;
   margin-top:-50px;
 }
 
 .dropdown-content2 a {
   color: black;
-  padding: 14px 16px;
+  padding: 14px 15px;
   text-decoration: none;
   display: block;
  
@@ -193,9 +193,9 @@
                     <a href="ActivityRequestSchedule.do">Request Schedule</a>
                     
                     <div class="dropdown2">
-                        <button class="dropbtn2">View All RequestSchedule</button>
+                        <button class="dropbtn2">View All Request Schedule</button>
                          <div class="dropdown-content2">
-                            <a href="GetAllCodereview.do">CodeReview Requests</a>
+                            <a href="GetAllCodereview.do">Code-review Requests</a>
                             <a href="GetAllAppsec.do">Appsec Requests</a>
                             <a href="GetAllEpt.do">Network Requests</a>
 <!--                            <a href="GetAllIpt.do">IPT Requests</a>

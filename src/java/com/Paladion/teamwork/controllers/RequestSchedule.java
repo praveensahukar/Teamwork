@@ -213,6 +213,107 @@ public class RequestSchedule {
         return new ModelAndView("Error");
         }   
     }
+    @RequestMapping(value="/GetScheduleAllocation",method=RequestMethod.GET)
+    public ModelAndView GetScheduleAllocation(HttpServletRequest req, @RequestParam int crid)
+    {  
+        try
+        {
+        String[] authorizedRoles = {"admin","manager","lead","scheduling"};
+        if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
+        ModelAndView model=new ModelAndView("CreateScheduleAllocation");
+           
+        CodeReviewScheduleRequestBean crbean = SS.EditCodereviewDetails(crid);
+       
+        String activityname = crbean.getAppname()+crbean.getAssesstype();
+       
+        ActivityBean abean = new ActivityBean();
+        abean.setActivityname(activityname);
+        abean.setAssessmentType("Initial");
+        abean.setProjectid(crbean.getProjectid());
+        abean.setRequirements(crbean.getPre_req());
+        model.addObject("projectname", crbean.getProjectname());
+       
+            model.addObject("CRData",SS.EditCodereviewDetails(crid));
+            model.addObject("AllTemplates", TS.getAllTemplates());
+            model.addObject("AllLeads", US.GetUsersByRole("lead"));
+            model.addObject("AllTeams",  TeamS.getAllTeams());
+            model.addObject("AllProjects",PS.getAllProjects());  
+            return model;
+}
+        catch(Exception ex){
+        System.out.println("Exception occured. "+ex.getMessage());
+        return new ModelAndView("Error");
+        }  
+    }
+    
+    @RequestMapping(value="/GetScheduleAllocationAppSec",method=RequestMethod.GET)
+    public ModelAndView GetScheduleAllocationAppSec(HttpServletRequest req, @RequestParam int asid)
+    {  
+        try
+        {
+        String[] authorizedRoles = {"admin","manager","lead","scheduling"};
+        if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
+        ModelAndView model=new ModelAndView("CreateScheduleAllocationAppSec");
+           
+        AppSecScheduleRequestBean AppSecbean = SS.EditAppSecDetails(asid);
+      // result.addObject("ASData",SS.EditAppSecDetails(asid));
+        String activityname = AppSecbean.getAppname()+AppSecbean.getAssesstype();
+       
+        ActivityBean abean = new ActivityBean();
+        abean.setActivityname(activityname);
+        abean.setAssessmentType("Initial");
+        abean.setProjectid(AppSecbean.getProjectid());
+        abean.setRequirements(AppSecbean.getPre_req());
+        model.addObject("projectname", AppSecbean.getProjectname());
+       
+            model.addObject("ASData",SS.EditAppSecDetails(asid));
+            model.addObject("AllTemplates", TS.getAllTemplates());
+            model.addObject("AllLeads", US.GetUsersByRole("lead"));
+            model.addObject("AllTeams",  TeamS.getAllTeams());
+            model.addObject("AllProjects",PS.getAllProjects());  
+            return model;
+}
+        catch(Exception ex){
+        System.out.println("Exception occured. "+ex.getMessage());
+        return new ModelAndView("Error");
+        }  
+    }
+    
+    @RequestMapping(value="/GetScheduleAllocationNet",method=RequestMethod.GET)
+    public ModelAndView GetScheduleAllocationNet(HttpServletRequest req, @RequestParam int eptid)
+    {  
+        try
+        {
+        String[] authorizedRoles = {"admin","manager","lead","scheduling"};
+        if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
+        ModelAndView model=new ModelAndView("CreateScheduleAllocationNet");
+           
+        eptScheduleRequestBean Netbean;
+            Netbean = (eptScheduleRequestBean) SS.EditEptDetails(eptid);
+      // result.addObject("ASData",SS.EditAppSecDetails(asid));
+        String activityname = Netbean.getAssesstype();
+       
+        ActivityBean abean = new ActivityBean();
+        abean.setActivityname(activityname);
+        abean.setAssessmentType("Initial");
+        abean.setProjectid(Netbean.getProjectid());
+        abean.setRequirements(Netbean.getPre_req());
+        model.addObject("projectname", Netbean.getProjectname());
+       
+            model.addObject("EPTData",SS.EditEptDetails(eptid));
+            model.addObject("AllTemplates", TS.getAllTemplates());
+            model.addObject("AllLeads", US.GetUsersByRole("lead"));
+            model.addObject("AllTeams",  TeamS.getAllTeams());
+            model.addObject("AllProjects",PS.getAllProjects());  
+            return model;
+}
+        catch(Exception ex){
+        System.out.println("Exception occured. "+ex.getMessage());
+        return new ModelAndView("Error");
+        }  
+    }
+    
+    
     @RequestMapping(value="/LoadScheduleRequestPage",method=RequestMethod.GET)
     public ModelAndView loadSchedulePage(HttpServletRequest req, @RequestParam String page, @RequestParam int pid )
     {   
@@ -398,7 +499,6 @@ public ModelAndView EditCodereviewDetails(@RequestParam int crid, HttpServletReq
         return new ModelAndView("Error");
         }
     }
-    
     
      @RequestMapping(value="/saveAppSecActivity",method=RequestMethod.POST)
     public ModelAndView saveAppSecActivity(@ModelAttribute("AppSecBean") AppSecScheduleRequestBean ASSRB, HttpServletRequest req )

@@ -345,7 +345,7 @@ body {
                               onclick="return confirm('Are you sure you want to delete the request-schedule?')">
                     </a>
                </td>
-               <td> ${fn:escapeXml(appsec.appname)}</td>
+               <td> <a href="GetScheduleAllocationAppSec.do?asid=${appsec.as_scheduleid}">${fn:escapeXml(appsec.appname)}</a></td>
                <td> ${fn:escapeXml(appsec.prefstartdate)}</td>
                <td> ${fn:escapeXml(appsec.hosting)}</td>
                <td> ${fn:escapeXml(appsec.scope)}</td>

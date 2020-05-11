@@ -347,7 +347,7 @@ body {
                               onclick="return confirm('Are you sure you want to delete the request-schedule?')">
                     </a>
                </td>
-               <td> ${fn:escapeXml(codereview.appname)}</td>
+               <td><a href="GetScheduleAllocation.do?crid=${codereview.cr_scheduleid}">${fn:escapeXml(codereview.appname)}</a></td>
                <td> ${fn:escapeXml(codereview.prefstartdate)}</td>
                <td> ${fn:escapeXml(codereview.scope)}</td>
                <td> ${fn:escapeXml(codereview.technology)}</td>

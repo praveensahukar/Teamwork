@@ -303,13 +303,13 @@ body {
 
 
 
-<title>All EPTActivity</title>
+<title>Network Schedule Request</title>
 </head>
     
 <body>
     <%@include file="Header.jsp" %>        
     <div class="login-card">
-    <div align="left">  <h2 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">All EPTScheduling</h2><br></div>
+    <div align="left">  <h2 style="color: #a6a6a6; font-family: sans-serif; font-style: normal">Network Schedule Request</h2><br></div>
     <div class="scrollingtable">
 		<div>
 			<div>
@@ -334,7 +334,7 @@ body {
             
         <c:forEach  items="${AllEpt}" var="EptActivity">     
            <tr>
-               <td> ${fn:escapeXml(EptActivity.projectname)}</td>
+               <td><a href="GetScheduleAllocationAppSec.do?asid=${EptActivity.ept_scheduleid}"> ${fn:escapeXml(EptActivity.projectname)}</a></td>
                <td> 
                    ${fn:escapeXml(EptActivity.assesstype)}
                    <a href="EditEptDetails.do?eptid=${EptActivity.ept_scheduleid}" style="float:right;">
