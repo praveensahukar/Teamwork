@@ -242,15 +242,19 @@ font-style: italic;
         
         <input type="hidden" name="AntiCSRFToken" id="token" value="${csrfPreventionSalt}"/>
     
+        <input type="hidden" name="pid" value="${pid}"/>
         <table border="0" cellpadding="10" cellspacing="2" >
 
         <tr>
             <td align="right">Project :</td>
-            <td><form:input path="" value="${fn:escapeXml(projectname)}" />
+            <td><form:input path="" value="${fn:escapeXml(CRData.projectname)}" />
+                
+         
+                
             </td>
         
             <td align="right">Activity Name :</td>
-            <td><form:input placeholder="Enter Activity Name" path="activityname" value="${fn:escapeXml(CRData.assesstype)}"/>
+            <td><form:input placeholder="Enter Activity Name" path="activityname" value="${fn:escapeXml(activityname)}"/>
             <span class='red'>*</span> 
             <form:errors path="activityname" cssClass="error"/>
             </td>

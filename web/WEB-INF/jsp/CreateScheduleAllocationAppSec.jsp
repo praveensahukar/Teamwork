@@ -245,7 +245,14 @@ font-style: italic;
 
         <tr>
             <td align="right">Project :</td>
-            <td><form:input path="" value="${fn:escapeXml(projectname)}" />
+            <td><form:select class="login login-submit" path="projectid">
+                <option class="login login-submit" value="0">Select</option>
+                <c:forEach  items="${AllProjects}" var="project"> 
+                <form:option class="login login-submit" value="${project.projectid}">${fn:escapeXml(projectname)}</form:option>    
+                </c:forEach>
+                </form:select>
+                <form:errors path="projectid" cssClass="error"/>
+                <!-- <form:input path="" value="${fn:escapeXml(projectname)}" /> !-->
             </td>
         
             <td align="right">Activity Name :</td>

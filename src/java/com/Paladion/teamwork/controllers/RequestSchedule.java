@@ -224,14 +224,17 @@ public class RequestSchedule {
            
         CodeReviewScheduleRequestBean crbean = SS.EditCodereviewDetails(crid);
        
-        String activityname = crbean.getAppname()+crbean.getAssesstype();
+        String activityname = crbean.getAppname()+ " - " +crbean.getAssesstype();
        
         ActivityBean abean = new ActivityBean();
-        abean.setActivityname(activityname);
-        abean.setAssessmentType("Initial");
+      //  abean.setActivityname(activityname);
+      //  abean.setAssessmentType("Initial");
         abean.setProjectid(crbean.getProjectid());
         abean.setRequirements(crbean.getPre_req());
-        model.addObject("projectname", crbean.getProjectname());
+        model.addObject("pid",crbean.getProjectid());
+        model.addObject("activityname",activityname);
+       
+        
        
             model.addObject("CRData",SS.EditCodereviewDetails(crid));
             model.addObject("AllTemplates", TS.getAllTemplates());
@@ -288,11 +291,10 @@ public class RequestSchedule {
         if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
         ModelAndView model=new ModelAndView("CreateScheduleAllocationNet");
            
-        eptScheduleRequestBean Netbean;
-            Netbean = (eptScheduleRequestBean) SS.EditEptDetails(eptid);
-      // result.addObject("ASData",SS.EditAppSecDetails(asid));
-        String activityname = Netbean.getAssesstype();
-       
+        eptScheduleRequestBean Netbean= (eptScheduleRequestBean) SS.EditEptDetails(eptid);
+  
+  
+      String activityname = Netbean.getAssesstype();
         ActivityBean abean = new ActivityBean();
         abean.setActivityname(activityname);
         abean.setAssessmentType("Initial");
@@ -597,8 +599,10 @@ public ModelAndView EditAppSecDetails(@RequestParam int asid, HttpServletRequest
         if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
         
         
-        int i = Integer.parseInt(req.getParameter("pid"));
-        EPTSRB.setProjectid(i);
+//        int i = Integer.parseInt(req.getParameter("pid"));
+//        EPTSRB.setProjectid(i);
+        ProjectBean pb = PS.getProjectDeatails(EPTSRB.getProjectid());
+        EPTSRB.setProjectname(pb.getProjectname());
         SS.EPTActivity(EPTSRB);
         ModelAndView model=new ModelAndView("ActivityScheduleRequest");
         return model;

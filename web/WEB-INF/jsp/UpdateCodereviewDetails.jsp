@@ -253,7 +253,7 @@ font-style: italic;
                     <tr>
                         <td>
                             <label>Preferred start Date:</label>
-                            <form:input placeholder="Enter Start Date" id="txtFromDate1" path="prefstartdate" value="${fn:escapeXml(CRData.prefstartdate)}"/>
+                            <form:input type="text" placeholder="Enter Start Date" id="txtFromDate1" path="prefstartdate" value="${fn:escapeXml(CRData.prefstartdate)}"/>
                         </td>
                         <td>
                              <label>Technology:</label>

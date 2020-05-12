@@ -20,16 +20,22 @@
   $(document).ready(function(){
     $("#txtFromDate").datepicker({
         numberOfMonths: 1,
-        onSelect: function() {
-          $("#txtFromDate").datepicker()
+        onSelect: function(selected) {
+          $("#txtToDate").datepicker("option","minDate", selected)
+        }
+    });
+    $("#txtToDate").datepicker({ 
+        numberOfMonths: 1,
+        onSelect: function(selected) {
+           $("#txtFromDate").datepicker("option","maxDate", selected)
         }
     });  
 });
-</script>
+  </script>
 <script src="js/getOpidForProject.js" type="text/javascript"></script>
 <script src="js/addOpidForProject.js" type="text/javascript"></script>
 
-<!--<script>  
+<script>  
    function doAjaxPost() {  
     var sdate = $('#date').val();  
     var edate = $('#datepicker').val();  
@@ -81,7 +87,7 @@
      }  
     }); 
    }  
- </script>  -->
+ </script>  
 
 </head>
 <body>
@@ -109,18 +115,18 @@
                         <tr>
                         <td>
                             <label>Preferred start Date:</label>
-                            <form:input placeholder="Enter Start Date" id="txtFromDate" path="prefstartdate" />
+                            <form:input placeholder="Enter Start Date" id="txtFromDate10" path="prefstartdate" />
                         </td>
                         <td>
                             <label>Code Review Type:</label>
                             <form:select class="login login-submit" path="assesstype" id="assess">
                                 <form:option class="login login-submit" value="">Select</form:option>
-                                <form:option class="login login-submit" value="webcr">Web Application Code Review</form:option>
-                                <form:option class="login login-submit" value="androidcr">Android Application Code Review</form:option>
-                                <form:option class="login login-submit" value="ioscr">iOS Application Code Review</form:option>
-                                <form:option class="login login-submit" value="apicr">Web Service / API Code Review</form:option>
-                                <form:option class="login login-submit" value="apicr">Premium Code Scans</form:option>
-                                <form:option class="login login-submit" value="othercr">Other</form:option>
+                                <form:option class="login login-submit" value="Web Application Code Review">Web Application Code Review</form:option>
+                                <form:option class="login login-submit" value="Android Application Code Review">Android Application Code Review</form:option>
+                                <form:option class="login login-submit" value="iOS Application Code Review">iOS Application Code Review</form:option>
+                                <form:option class="login login-submit" value="Web Service / API Code Review">Web Service / API Code Review</form:option>
+                                <form:option class="login login-submit" value="Premium Code Scans">Premium Code Scans</form:option>
+                                <form:option class="login login-submit" value="other">Other</form:option>
                             </form:select>
                         </td>
                         
@@ -202,16 +208,16 @@
 </div>
 <script>
   $(document).ready(function(){
-    $("#txtFromDate").datepicker({
+    $("#txtFromDate10").datepicker({
         numberOfMonths: 1,
         onSelect: function(selected) {
-          $("#txtToDate").datepicker("option","minDate", selected)
+          $("#txtToDate10").datepicker("option","minDate", selected)
         }
     });
-    $("#txtToDate").datepicker({ 
+    $("#txtToDate10").datepicker({ 
         numberOfMonths: 1,
         onSelect: function(selected) {
-           $("#txtFromDate").datepicker("option","maxDate", selected)
+           $("#txtFromDate10").datepicker("option","maxDate", selected)
         }
     });  
 });

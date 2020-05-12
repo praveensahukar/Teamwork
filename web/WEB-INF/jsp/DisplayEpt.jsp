@@ -334,7 +334,7 @@ body {
             
         <c:forEach  items="${AllEpt}" var="EptActivity">     
            <tr>
-               <td><a href="GetScheduleAllocationAppSec.do?asid=${EptActivity.ept_scheduleid}"> ${fn:escapeXml(EptActivity.projectname)}</a></td>
+               <td><a href="GetScheduleAllocationNet.do?eptid=${EptActivity.ept_scheduleid}"> ${fn:escapeXml(EptActivity.projectname)}</a></td>
                <td> 
                    ${fn:escapeXml(EptActivity.assesstype)}
                    <a href="EditEptDetails.do?eptid=${EptActivity.ept_scheduleid}" style="float:right;">
