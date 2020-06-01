@@ -180,7 +180,7 @@ font-style: italic;
 <form:form action="ScheduleActivity.do" method="post" commandName="ProjectM">
 <div align="left">
     <input type="hidden" name="AntiCSRFToken" id="token" value="${csrfPreventionSalt}"/>
-    
+    <input type="hidden" name="scheReqID" value="${scheReqID}"/>
     <table  align="left" border="0">
 
 <tr><td align="right"><h4>Activity : ${fn:escapeXml(activitybean.activityname)}</td> </tr>

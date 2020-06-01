@@ -93,6 +93,21 @@ public List<UserDataBean> getAvailableEngineers(Date projStartDate, Date projEnd
     public List<UserDataBean> GetUsersByRole(String role){
         return userDAO.GetUsersByRole(role);
     }
+
+    @Override
+    public List<UserDataBean> GetAllCodeReviewUser() {
+        return userDAO.GetAllCodeReviewUser(); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<UserDataBean> GetAllAppSecUser() {
+        return userDAO.GetAllAppSecUser(); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<UserDataBean> GetAllNetUser() {
+        return userDAO.GetAllNetUser(); //To change body of generated methods, choose Tools | Templates.
+    }
     
 
 		

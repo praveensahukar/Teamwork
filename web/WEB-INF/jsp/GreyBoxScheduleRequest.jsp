@@ -16,27 +16,23 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 <head>
-    
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
+
     <script src="js/getOpidForProject.js" type="text/javascript"></script>
     
     <script src="js/addOpidForProject.js" type="text/javascript"></script>
     
     
 <script type="text/javascript">
-  $(document).ready(function(){
-    $("#txtFromDate").datepicker({
-        numberOfMonths: 1,
-        onSelect: function(selected) {
-          $("#txtToDate").datepicker("option","minDate", selected)
-        }
-    });
-    $("#txtToDate").datepicker({ 
-        numberOfMonths: 1,
-        onSelect: function(selected) {
-           $("#txtFromDate").datepicker("option","maxDate", selected)
-        }
-    });  
+  <script>
+  $(document).ready(function() {
+$(function() {
+$("#expenseDate").datepicker();
 });
+});
+</script>
   </script>
 <style>
 ul {
@@ -269,7 +265,7 @@ font-style: italic;
                     <tr>
                         <td>
                             <label>Preferred start Date:</label>
-                            <form:input placeholder="Enter Start Date" id="txtFromDate2" path="prefstartdate" />
+                            <form:input placeholder="Enter Start Date" id="expenseDate" path="prefstartdate" />
                         </td>
                         <td>
                             <label>Type of Assessment:</label>
@@ -312,8 +308,7 @@ font-style: italic;
                              <label>Pre-requisites:</label>
                             <form:input type="text" name="eft" id="task2" placeholder="Pre-requisites" path="pre_req" />
                         </td>
-                    </tr>
-                    
+                    </tr> 
                     <tr>
                         <td>
                                 <label>Efforts:</label>
@@ -321,7 +316,6 @@ font-style: italic;
                                 <span class='red'>*</span>
                                 <form:errors path="" cssClass="error"/>
                         </td>
-                        
                         <td>
                              <label>Scope of app:</label>
                             <form:input type="text" name="eft" id="sizeofapp" placeholder="Scope of app" path="scope" />
@@ -329,7 +323,7 @@ font-style: italic;
                     </tr>
                     <tr>
         
-            <td colspan="4" align="center"><input type="submit" value="Add Activity Details" class="login login-submit"/></td>
+            <td colspan="4" align="center"><input type="submit" value="Raise Schedule Request" class="login login-submit"/></td>
         </tr>
                     
                 </table> 
@@ -338,19 +332,10 @@ font-style: italic;
 </div>
      
 <script>
-  $(document).ready(function(){
-    $("#txtFromDate2").datepicker({
-        numberOfMonths: 1,
-        onSelect: function(selected) {
-          $("#txtToDate2").datepicker("option","minDate", selected)
-        }
-    });
-    $("#txtToDate2").datepicker({ 
-        numberOfMonths: 1,
-        onSelect: function(selected) {
-           $("#txtFromDate2").datepicker("option","maxDate", selected)
-        }
-    });  
+  $(document).ready(function() {
+$(function() {
+$("#expenseDate").datepicker();
+});
 });
 </script>
 </body>

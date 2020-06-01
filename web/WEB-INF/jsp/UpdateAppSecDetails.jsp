@@ -244,7 +244,7 @@ font-style: italic;
 <!--action="getEngineers.do"-->
     <form:form  method="post" action="UpdateAppsecActivity.do" modelAttribute="AppSecBean">
          <input type="hidden" name="AntiCSRFToken" id="token" value="${csrfPreventionSalt}"/>
-          <input type="hidden" name="asid" value="${asid}"/>
+          <input type="hidden" name="as_scheduleid" value="${ASData.as_scheduleid}"/>
       <div style="width :60%;margin-left: 100px;"> 
                 <h1>Schedule Request - AppSec</h1>
                 <table align="right" border="0" cellpadding="10" cellspacing="2">
@@ -255,18 +255,18 @@ font-style: italic;
                         </td>
                         <td>
                             <label>Hosting Environment:</label>
-                            <form:input type="text" name="eft" id="task1" placeholder="Hosting Environment" path="hosting" value="${fn:escapeXml(ASData.hosting)}"/>
+                            <form:input type="text" name="eft" id="task1"  path="hosting" value="${fn:escapeXml(ASData.hosting)}"/>
                         </td>
                         
                     </tr>
                     <tr>
                         <td>
                             <label>Application name:</label>
-                            <form:input type="text" name="eft" id="appname" placeholder="Application name" path="appname" value="${fn:escapeXml(ASData.appname)}" />
+                            <form:input type="text" name="eft" id="appname"  path="appname" value="${fn:escapeXml(ASData.appname)}" />
                         </td>
                         <td>
                              <label>Scope of app:</label>
-                            <form:input type="text" name="eft" id="sizeofapp" placeholder="Scope of app" path="scope" value="${fn:escapeXml(ASData.scope)}" />
+                            <form:input type="text" name="eft" id="sizeofapp"  path="scope" value="${fn:escapeXml(ASData.scope)}" />
                         </td>
                     </tr>
                     <tr>

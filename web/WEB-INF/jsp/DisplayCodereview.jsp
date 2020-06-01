@@ -324,6 +324,7 @@ body {
             <th><div label="Technology"></div> </th>
             <th><div label="Acess"></div> </th>
             <th><div label="Hosting"></div> </th>
+            <th><div label="Status"></div> </th>
             
             
            <%-- <th><div label="Delete"></div> </th> --%>
@@ -353,7 +354,7 @@ body {
                <td> ${fn:escapeXml(codereview.technology)}</td>
                <td> ${fn:escapeXml(codereview.access)}</td>
                <td> ${fn:escapeXml(codereview.hosting)}</td>
-               
+               <td style="color: red;">${fn:escapeXml(codereview.status)}</td>
                
                
               <%-- <td><a href="DeleteProject.do?id=${project.projectid}">DELETE</a></td> --%>

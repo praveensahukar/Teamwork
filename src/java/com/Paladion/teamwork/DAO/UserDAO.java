@@ -35,4 +35,10 @@ public interface UserDAO {
        
        public List<UserDataBean> GetUsersByRole(String role); 
 
+    public List<UserDataBean> GetAllCodeReviewUser();
+
+    public List<UserDataBean> GetAllAppSecUser();
+
+    public List<UserDataBean> GetAllNetUser();
+
 }

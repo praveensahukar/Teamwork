@@ -245,8 +245,7 @@ font-style: italic;
     <div class="login-card" >
 <!--action="getEngineers.do"-->
     <form:form  method="post" action="UpdateCodeReviewActivity.do" modelAttribute="CRBean">
-         <input type="hidden" name="AntiCSRFToken" id="token" value="${csrfPreventionSalt}"/>
-          <input type="hidden" name="crid" value="${crid}"/>
+         
       <div style="width :60%;margin-left: 100px;"> 
                 <h1>Schedule Request - Source Code Review</h1>
                 <table align="right" border="0" cellpadding="10" cellspacing="2">
@@ -274,6 +273,8 @@ font-style: italic;
                     <tr>
                             <td colspan="4" align="center"><input type="submit" value="update Activity Details"  class="login login-submit"/></td>
                     </tr>
+                    <input type="hidden" name="AntiCSRFToken" id="token" value="${csrfPreventionSalt}"/>
+          <input type="hidden" name="cr_scheduleid" value="${CRData.cr_scheduleid}"/>
                 </table>    
     </form:form>
 </div>

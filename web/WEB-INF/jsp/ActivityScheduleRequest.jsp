@@ -27,7 +27,7 @@
     
     <script src="js/addOpidForProject.js" type="text/javascript"></script>
     
-<!--    
+    
 <script type="text/javascript">
   $(document).ready(function(){
     $("#txtFromDate").datepicker({
@@ -43,7 +43,7 @@
         }
     });  
 });
-  </script>-->
+  </script>
 <style>
 ul {
     list-style-type: none;

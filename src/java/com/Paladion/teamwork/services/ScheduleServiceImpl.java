@@ -139,5 +139,30 @@ public class ScheduleServiceImpl implements ScheduleService {
     public vascanScheduleRequestBean EditVascanDetails(int vascanid) {
         return SD.EditVascanDetails(vascanid); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public void UpdateAppsecActivity(AppSecScheduleRequestBean ASBean) {
+        SD.UpdateAppsecActivity(ASBean); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void UpdateCodeReviewActivity1(CodeReviewScheduleRequestBean crBean) {
+        SD.UpdateCodeReviewActivity1(crBean);//To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void UpdateEptActivity(eptScheduleRequestBean EPTBean) {
+        SD.UpdateEptActivity(EPTBean); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void UpdateAppsecActivity1(AppSecScheduleRequestBean ASBean) {
+        SD.UpdateAppsecActivity1(ASBean); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void UpdateEptActivity1(eptScheduleRequestBean EPTBean) {
+        SD.UpdateEptActivity1(EPTBean); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

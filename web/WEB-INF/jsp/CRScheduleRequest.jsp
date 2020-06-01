@@ -115,7 +115,7 @@
                         <tr>
                         <td>
                             <label>Preferred start Date:</label>
-                            <form:input placeholder="Enter Start Date" id="txtFromDate10" path="prefstartdate" />
+                            <form:input placeholder="Enter Start Date" id="txtFromDate" path="prefstartdate" />
                         </td>
                         <td>
                             <label>Code Review Type:</label>
@@ -200,7 +200,7 @@
             </td>
         </tr>
         <tr>
-            <td colspan="4" align="center"><input type="submit" value="Add Activity Details"  class="login login-submit"/></td>
+            <td colspan="4" align="center"><input type="submit" value="Raise Schedule Request"  class="login login-submit"/></td>
         </tr>
     </table>    
     </form:form>
@@ -208,20 +208,21 @@
 </div>
 <script>
   $(document).ready(function(){
-    $("#txtFromDate10").datepicker({
+    $("#txtFromDate").datepicker({
         numberOfMonths: 1,
         onSelect: function(selected) {
-          $("#txtToDate10").datepicker("option","minDate", selected)
+          $("#txtToDate").datepicker("option","minDate", selected)
         }
     });
-    $("#txtToDate10").datepicker({ 
+    $("#txtToDate").datepicker({ 
         numberOfMonths: 1,
         onSelect: function(selected) {
-           $("#txtFromDate10").datepicker("option","maxDate", selected)
+           $("#txtFromDate").datepicker("option","maxDate", selected)
         }
     });  
 });
 </script>
+    
     
 </body>
 </html>

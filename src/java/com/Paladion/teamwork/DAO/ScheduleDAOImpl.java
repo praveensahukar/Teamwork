@@ -367,6 +367,7 @@ public class ScheduleDAOImpl implements ScheduleDAO{
             query.setParameter(1,crBean.getTechnology());
             query.setParameter(2,crBean.getAppname());
            query.setParameter(3,crBean.getScope());
+           query.setParameter(4,crBean.getCr_scheduleid());
             query.executeUpdate();
             tx.commit();
   
@@ -589,5 +590,128 @@ public class ScheduleDAOImpl implements ScheduleDAO{
             }
          //To change body of generated methods, choose Tools | Templates.
     } //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void UpdateAppsecActivity(AppSecScheduleRequestBean ASBean) {
+        Session session = this.sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        try{
+            String sql = "UPDATE appsecschedulereq SET prefstartdate=?,hosting=?,appname=?,scope=? where as_scheduleid=?";
+            SQLQuery query = session.createSQLQuery(sql);
+            query.setParameter(0,ASBean.getPrefstartdate());
+            query.setParameter(1,ASBean.getHosting());
+            query.setParameter(2,ASBean.getAppname());
+           query.setParameter(3,ASBean.getScope());
+           query.setParameter(4,ASBean.getAs_scheduleid());
+            query.executeUpdate();
+            tx.commit();
+        }catch(Exception e){
+        System.out.println("Exception occured. "+e.getMessage());
+        }
+        finally{
+            if(session.isOpen()){
+            System.out.println("-----------Closing session------------");
+            session.close();
+            }
+        }
+    }
+
+    @Override
+    public void UpdateCodeReviewActivity1(CodeReviewScheduleRequestBean crBean) {
+        Session session = this.sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        try{
+            String sql = "UPDATE codereviewschedulereq SET status=? where cr_scheduleid=?";
+            SQLQuery query = session.createSQLQuery(sql);
+            query.setParameter(0,crBean.getStatus());
+            
+           query.setParameter(1,crBean.getCr_scheduleid());
+            query.executeUpdate();
+            tx.commit();
+  
+        }catch(Exception e){
+        System.out.println("Exception occured. "+e.getMessage());
+ 
+        }
+        finally{
+            if(session.isOpen()){
+            System.out.println("-----------Closing session------------");
+            session.close();
+            }
+        } //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void UpdateEptActivity(eptScheduleRequestBean EPTBean) {
+        Session session = this.sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        try{
+            String sql = "UPDATE eptschedulereq SET prefstartdate=?,hosting=?,whitelistconf=?,timewindow=?,domain=?,ipproposal=? where ept_scheduleid=?";
+            SQLQuery query = session.createSQLQuery(sql);
+            query.setParameter(0,EPTBean.getPrefstartdate());
+            query.setParameter(1,EPTBean.getHosting());
+            query.setParameter(2,EPTBean.getWhitelistconf());
+           query.setParameter(3,EPTBean.getDomain());
+           query.setParameter(4,EPTBean.getTimewindow());
+           query.setParameter(5,EPTBean.getIpproposal());
+           query.setParameter(6,EPTBean.getEpt_scheduleid());
+            query.executeUpdate();
+            tx.commit();
+        }catch(Exception e){
+        System.out.println("Exception occured. "+e.getMessage());
+        }
+        finally{
+            if(session.isOpen()){
+            System.out.println("-----------Closing session------------");
+            session.close();
+            }
+        } //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void UpdateAppsecActivity1(AppSecScheduleRequestBean ASBean) {
+        Session session = this.sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        try{
+            String sql = "UPDATE appsecschedulereq SET status=? where as_scheduleid=?";
+            SQLQuery query = session.createSQLQuery(sql);
+            query.setParameter(0,ASBean.getStatus());
+            
+           query.setParameter(1,ASBean.getAs_scheduleid());
+            query.executeUpdate();
+            tx.commit();
+        }catch(Exception e){
+        System.out.println("Exception occured. "+e.getMessage());
+        }
+        finally{
+            if(session.isOpen()){
+            System.out.println("-----------Closing session------------");
+            session.close();
+            }
+        } //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void UpdateEptActivity1(eptScheduleRequestBean EPTBean) {
+        Session session = this.sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        try{
+            String sql = "UPDATE eptschedulereq SET status=? where ept_scheduleid=?";
+            SQLQuery query = session.createSQLQuery(sql);
+            query.setParameter(0,EPTBean.getStatus());
+            
+           query.setParameter(1,EPTBean.getEpt_scheduleid());
+            query.executeUpdate();
+            tx.commit();
+        }catch(Exception e){
+        System.out.println("Exception occured. "+e.getMessage());
+        }
+        finally{
+            if(session.isOpen()){
+            System.out.println("-----------Closing session------------");
+            session.close();
+            }
+        } //To change body of generated methods, choose Tools | Templates.
     }
 }

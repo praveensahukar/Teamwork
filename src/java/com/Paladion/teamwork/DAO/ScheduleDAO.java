@@ -62,5 +62,15 @@ public interface ScheduleDAO {
     public iptScheduleRequestBean EditIptDetails(int iptid);
 
     public vascanScheduleRequestBean EditVascanDetails(int vascanid);
+
+    public void UpdateAppsecActivity(AppSecScheduleRequestBean ASBean);
+
+    public void UpdateCodeReviewActivity1(CodeReviewScheduleRequestBean crBean);
+
+    public void UpdateEptActivity(eptScheduleRequestBean EPTBean);
+
+    public void UpdateAppsecActivity1(AppSecScheduleRequestBean ASBean);
+
+    public void UpdateEptActivity1(eptScheduleRequestBean EPTBean);
     
 }

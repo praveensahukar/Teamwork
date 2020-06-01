@@ -176,9 +176,9 @@
                   
                     <a href="GetAllProjects.do">View All Projects</a>
                     
-<!--                    <a href="CreateVehicle.do">Create New Vehicle</a>-->
+                    <a href="CreateVehicle.do">Create New Vehicle</a>
                     
-<!--                    <a href="ViewAllVehicle.do.do">View All Vehicles</a>-->
+                    <a href="ViewAllVehicle.do.do">View All Vehicles</a>
                       <%}%>
                 </div>
         </div>
@@ -214,6 +214,26 @@
                     
                 </div>
         </div> 
+                    
+        
+        
+         <% if(role.equalsIgnoreCase("Lead")||role.equalsIgnoreCase("Manager"))
+        {%>
+          <div class="dropdown">
+            <button class="dropbtn">Resource Tracker</button>
+                <div class="dropdown-content">
+                <a href="GetAllCodeReviewUser.do">Code Review Team</a>
+                <a href="GetAllAppSecUser.do">Application Security Team</a>
+                <a href="GetAllNetUser.do">Network Team</a>
+                </div>
+        </div> 
+          <%}%> 
+          
+          
+          
+          
+          
+                    
         
         <% if(role.equalsIgnoreCase("Manager")||role.equalsIgnoreCase("Admin")||role.equalsIgnoreCase("Scheduling"))
         {%>

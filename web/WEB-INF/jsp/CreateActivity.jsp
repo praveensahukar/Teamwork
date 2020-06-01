@@ -242,6 +242,7 @@ font-style: italic;
     <div>
         
         <input type="hidden" name="AntiCSRFToken" id="token" value="${csrfPreventionSalt}"/>
+        <input type="hidden" name="pid" value="${pid}"/>
     
         <table border="0" cellpadding="10" cellspacing="2" >
 

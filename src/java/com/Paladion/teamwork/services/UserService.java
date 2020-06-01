@@ -37,4 +37,10 @@ public interface UserService {
                    
                    public List<UserDataBean> getAvailableEngineers(Date projStartDate, Date projEndDate, List<UserDataBean> UDB);
 
+    public List<UserDataBean> GetAllCodeReviewUser();
+
+    public List<UserDataBean> GetAllAppSecUser();
+
+    public List<UserDataBean> GetAllNetUser();
+
 }

@@ -268,6 +268,84 @@ public class UserDAOImpl implements UserDAO{
                 }
             }
     }
+
+    @Override
+    public List<UserDataBean> GetAllCodeReviewUser() {
+        Session session1 = sessionFactory.getCurrentSession();
+        Transaction tx = session1.beginTransaction();
+            try{
+                List<UserDataBean> UserList=new ArrayList<UserDataBean>();
+                Criteria criteria = session1.createCriteria(UserDataBean.class);
+                criteria.add(Restrictions.eq("role", "Engineer"));
+                criteria.add(Restrictions.eq("status", "Active"));
+                criteria.add(Restrictions.eq("team", "Code Review Team"));
+                UserList = criteria.list();
+                tx.commit();
+                return UserList;
+            }
+            catch(Exception e){
+                System.out.println("Exception occured. "+e.getMessage());
+                return null;
+            }
+            finally{
+                if(session1.isOpen()){
+                System.out.println("-----------------Closing session---------------");
+                session1.close();
+                }
+            } //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<UserDataBean> GetAllAppSecUser() {
+        Session session1 = sessionFactory.getCurrentSession();
+        Transaction tx = session1.beginTransaction();
+            try{
+                List<UserDataBean> UserList=new ArrayList<UserDataBean>();
+                Criteria criteria = session1.createCriteria(UserDataBean.class);
+                criteria.add(Restrictions.eq("role", "Engineer"));
+                criteria.add(Restrictions.eq("status", "Active"));
+                criteria.add(Restrictions.eq("team", "Application Security"));
+                UserList = criteria.list();
+                tx.commit();
+                return UserList;
+            }
+            catch(Exception e){
+                System.out.println("Exception occured. "+e.getMessage());
+                return null;
+            }
+            finally{
+                if(session1.isOpen()){
+                System.out.println("-----------------Closing session---------------");
+                session1.close();
+                }
+            } //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<UserDataBean> GetAllNetUser() {
+        Session session1 = sessionFactory.getCurrentSession();
+        Transaction tx = session1.beginTransaction();
+            try{
+                List<UserDataBean> UserList=new ArrayList<UserDataBean>();
+                Criteria criteria = session1.createCriteria(UserDataBean.class);
+                criteria.add(Restrictions.eq("role", "Engineer"));
+                criteria.add(Restrictions.eq("status", "Active"));
+                criteria.add(Restrictions.eq("team", "Network COE Team"));
+                UserList = criteria.list();
+                tx.commit();
+                return UserList;
+            }
+            catch(Exception e){
+                System.out.println("Exception occured. "+e.getMessage());
+                return null;
+            }
+            finally{
+                if(session1.isOpen()){
+                System.out.println("-----------------Closing session---------------");
+                session1.close();
+                }
+            } //To change body of generated methods, choose Tools | Templates.
+    }
 }
 
     

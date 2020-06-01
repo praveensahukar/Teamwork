@@ -241,22 +241,19 @@ font-style: italic;
         
         <input type="hidden" name="AntiCSRFToken" id="token" value="${csrfPreventionSalt}"/>
     
+        <input type="hidden" name="projectid" value="${pid}"/>
+       
+        <input type="hidden" name="scheReqID" value="${scheReqID}"/>
+        
         <table border="0" cellpadding="10" cellspacing="2" >
 
         <tr>
             <td align="right">Project :</td>
-            <td><form:select class="login login-submit" path="projectid">
-                <option class="login login-submit" value="0">Select</option>
-                <c:forEach  items="${AllProjects}" var="project"> 
-                <form:option class="login login-submit" value="${project.projectid}">${fn:escapeXml(projectname)}</form:option>    
-                </c:forEach>
-                </form:select>
-                <form:errors path="projectid" cssClass="error"/>
-                <!-- <form:input path="" value="${fn:escapeXml(projectname)}" /> !-->
+            <td> <form:input path="" value="${fn:escapeXml(ASData.projectname)}" />
             </td>
         
             <td align="right">Activity Name :</td>
-            <td><form:input placeholder="Enter Activity Name" path="activityname" value="${fn:escapeXml(ASData.assesstype)}"/>
+            <td><form:input placeholder="Enter Activity Name" path="activityname" value="${fn:escapeXml(activityname)}"/>
             <span class='red'>*</span> 
             <form:errors path="activityname" cssClass="error"/>
             </td>

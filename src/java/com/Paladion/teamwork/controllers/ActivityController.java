@@ -17,7 +17,10 @@ import com.Paladion.teamwork.beans.TemplateBean;
 import com.Paladion.teamwork.beans.ActivityTransactionBean;
 import com.Paladion.teamwork.beans.ActivityTransactionWrapper;
 import com.Paladion.teamwork.beans.AllocationBean;
+import com.Paladion.teamwork.beans.AppSecScheduleRequestBean;
+import com.Paladion.teamwork.beans.CodeReviewScheduleRequestBean;
 import com.Paladion.teamwork.beans.ProjectBean;
+import com.Paladion.teamwork.beans.eptScheduleRequestBean;
 import com.Paladion.teamwork.beans.fileuploadBean;
 import com.Paladion.teamwork.services.AdminService;
 import com.Paladion.teamwork.services.TeamService;
@@ -56,6 +59,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.Paladion.teamwork.services.ActivityService;
 import com.Paladion.teamwork.services.EmailService;
 import com.Paladion.teamwork.services.ProjectService;
+import com.Paladion.teamwork.services.ScheduleService;
 import com.Paladion.teamwork.services.TaskService;
 import com.google.gson.Gson;
 
@@ -63,6 +67,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 import org.apache.log4j.Logger;
+import org.springframework.http.HttpMethod;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -119,6 +126,16 @@ TeamService TeamS;
 @Autowired()
 @Qualifier(value = "EmailService")
 EmailService EmailS;
+
+@Autowired
+@Qualifier(value="ScheduleService")
+ScheduleService SS;
+
+@ModelAttribute("CRBean")
+    public CodeReviewScheduleRequestBean populateCR()
+    {
+    return new CodeReviewScheduleRequestBean();
+    }
 
 @Autowired
 @Qualifier(value="EmailBean")
@@ -206,11 +223,20 @@ static Logger log = Logger.getLogger(ActivityController.class.getName());
         }
       
 	List<UserDataBean> availableEngineers = US.getAvailableEngineers(AB.getStartdate(),AB.getEnddate(),US.GetUsersByRole("engineer"));
+        System.out.println(req.getParameter("projectid"));
+        String proID = req.getParameter("projectid");
+        System.out.println("Project String Vaue: "+proID);
+        int pid = Integer.parseInt(proID);
+        System.out.println("Project Int Value:" +pid);
+        AB.setProjectid(pid);
+        
+        
         AB.setLead(US.GetUserById(AB.getLeadid()).getUsername());
         List <TemplateBean> TemplateList = TS.getAllTemplates();
         ModelAndView model=new ModelAndView("SelectEngineers");
         model.addObject("engineers",availableEngineers);
         model.addObject("AllTemplates", TemplateList);
+        model.addObject("scheReqID",req.getParameter("scheReqID"));
         model.addObject("activitybean", AB);
         return model;
 	}
@@ -220,10 +246,8 @@ static Logger log = Logger.getLogger(ActivityController.class.getName());
         }
     }
     
-
-    //Schedule a activity
     @RequestMapping(value="/ScheduleActivity",method=RequestMethod.POST)
-    public Object CreateNewProject(@ModelAttribute("ProjectM")@Validated ActivityBean AB, BindingResult result, HttpServletRequest req,Model E) throws Exception
+    public Object CreateNewProject(@ModelAttribute("ProjectM")@Validated ActivityBean AB, BindingResult result, HttpServletRequest req,Model E,@RequestParam int scheReqID) throws Exception
     {
         HttpSession sess= req.getSession(false);
         ModelAndView results = null;
@@ -306,7 +330,41 @@ static Logger log = Logger.getLogger(ActivityController.class.getName());
         for(ActivityTransactionBean PTB : PTBList1){
         AS.insertProjectTransaction(PTB);
         }
-            
+        
+        
+      //  E.addAttribute("scheReqID",scheReqID);
+        String scheduleId=String.valueOf(req.getParameter("scheReqID"));
+            if (!scheduleId.equalsIgnoreCase("null"))
+            {
+
+                    int schedueID = Integer.parseInt(scheduleId);
+
+                    String activityName = AB.getActivityname();
+
+                    if (activityName.contains("Code Review"))
+                    {
+                      CodeReviewScheduleRequestBean CRBEAN = SS.EditCodereviewDetails(schedueID);
+                      CRBEAN.setStatus("Allocated");
+                      SS.UpdateCodeReviewActivity1(CRBEAN);
+                      // Save CRBEan to db
+                    }
+
+                    else if (activityName.contains("Assessment"))
+                    {
+                      AppSecScheduleRequestBean AppSecBEAN = SS.EditAppSecDetails(schedueID);
+                      AppSecBEAN.setStatus("Allocated");
+                      SS.UpdateAppsecActivity1(AppSecBEAN);
+                    }  
+
+                    else if (activityName.contains("Penetration Testing"))
+                    {
+                        eptScheduleRequestBean EptBEAN = (eptScheduleRequestBean) SS.EditEptDetails(schedueID);
+                      EptBEAN.setStatus("Allocated");
+                      SS.UpdateEptActivity1(EptBEAN);
+                    }  
+            }
+
+
 //      results=new ModelAndView("AssignTaskToUsers");
 //      //Engineer Availability Code Starts           
 //      List<UserDataBean> availableEngineers = US.getAvailableEngineers(AB.getStartdate(), AB.getEnddate(),CU.getUsersByRole("engineer", sess));
@@ -1179,10 +1237,7 @@ public ModelAndView Downloadfiles(@RequestParam String pid,HttpServletRequest re
         catch(Exception ex){
            ex.printStackTrace();
         }
-   
     }
-    
-    
     @RequestMapping(value="/updateActivityDetails",method=RequestMethod.POST)
     public ModelAndView updateActivityDetails(@ModelAttribute("ProjectM") ActivityBean AB, BindingResult result, HttpServletRequest req) throws Exception
     {

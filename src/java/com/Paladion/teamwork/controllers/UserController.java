@@ -187,6 +187,66 @@ public ModelAndView ViewAllUser(HttpServletRequest req )
         }
     }
 
+@RequestMapping(value="/GetAllCodeReviewUser",method=RequestMethod.GET)
+public ModelAndView GetAllCodeReviewUser(HttpServletRequest req )
+    {
+        String[] authorizedRoles = {"admin","manager","scheduling"};
+        if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
+        try{
+        System.out.println("ViewAllUser");
+    
+	List<UserDataBean> codereviewuserList=userService.GetAllCodeReviewUser();
+	ModelAndView result=new ModelAndView("ViewAllCodereviewUser");
+        result.addObject("AllCodeReviewUsers",codereviewuserList);
+	return result;
+        }
+        catch(Exception ex){
+        ex.printStackTrace();
+        return new ModelAndView("Error");
+        }
+    }
+
+@RequestMapping(value="/GetAllAppSecUser",method=RequestMethod.GET)
+public ModelAndView GetAllAppSecUser(HttpServletRequest req )
+    {
+        String[] authorizedRoles = {"admin","manager","scheduling"};
+        if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
+        try{
+        System.out.println("ViewAllUser");
+    
+	List<UserDataBean> AppSecuserList=userService.GetAllAppSecUser();
+	ModelAndView result=new ModelAndView("ViewAllAppSecUser");
+        result.addObject("AllAppSecUsers",AppSecuserList);
+	return result;
+        }
+        catch(Exception ex){
+        ex.printStackTrace();
+        return new ModelAndView("Error");
+        }
+    }
+
+
+@RequestMapping(value="/GetAllNetUser",method=RequestMethod.GET)
+public ModelAndView GetAllNetUser(HttpServletRequest req )
+    {
+        String[] authorizedRoles = {"admin","manager","scheduling"};
+        if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
+        try{
+        System.out.println("ViewAllUser");
+    
+	List<UserDataBean> NetList=userService.GetAllNetUser();
+	ModelAndView result=new ModelAndView("ViewAllNetUser");
+        result.addObject("AllNetUsers",NetList);
+	return result;
+        }
+        catch(Exception ex){
+        ex.printStackTrace();
+        return new ModelAndView("Error");
+        }
+    }
+
+
+
 @RequestMapping(value="/DeleteUser",method=RequestMethod.GET)
     public ModelAndView DeleteUser(@RequestParam int id, HttpServletRequest req) throws ParseException
     {

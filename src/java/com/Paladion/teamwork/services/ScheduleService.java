@@ -62,5 +62,15 @@ public interface ScheduleService {
     public Object EditIptDetails(int iptid);
 
     public Object EditVascanDetails(int vascanid);
+
+    public void UpdateAppsecActivity(AppSecScheduleRequestBean ASBean);
+
+    public void UpdateCodeReviewActivity1(CodeReviewScheduleRequestBean crBean);
+
+    public void UpdateEptActivity(eptScheduleRequestBean EPTBean);
+
+    public void UpdateAppsecActivity1(AppSecScheduleRequestBean ASBean);
+
+    public void UpdateEptActivity1(eptScheduleRequestBean EPTBean);
     
 }

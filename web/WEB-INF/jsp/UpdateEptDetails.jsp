@@ -245,7 +245,7 @@ font-style: italic;
 <!--action="getEngineers.do"-->
     <form:form  method="post" action="UpdateEptActivity.do" modelAttribute="EPTBean">
          <input type="hidden" name="AntiCSRFToken" id="token" value="${csrfPreventionSalt}"/>
-          <input type="hidden" name="eptid" value="${eptid}"/>
+          <input type="hidden" name="ept_scheduleid" value="${EPTData.ept_scheduleid}"/>
       <div style="width :60%;margin-left: 100px;"> 
                 <h1>Schedule Request - Source Code Review</h1>
                 <table align="right" border="0" cellpadding="10" cellspacing="2">

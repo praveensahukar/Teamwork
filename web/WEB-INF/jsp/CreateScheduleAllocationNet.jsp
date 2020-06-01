@@ -241,12 +241,16 @@ font-style: italic;
     <div>
         
         <input type="hidden" name="AntiCSRFToken" id="token" value="${csrfPreventionSalt}"/>
+        
+        <input type="hidden" name="projectid" value="${pid}"/>
+       
+        <input type="hidden" name="scheReqID" value="${scheReqID}"/>
     
         <table border="0" cellpadding="10" cellspacing="2" >
 
         <tr>
             <td align="right">Project :</td>
-            <td><form:input path="" value="${fn:escapeXml(projectname)}" />
+            <td><form:input path="" value="${fn:escapeXml(EPTData.projectname)}" />
             </td>
         
             <td align="right">Activity Name :</td>

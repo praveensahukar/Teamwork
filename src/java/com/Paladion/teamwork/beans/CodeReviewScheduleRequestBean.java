@@ -69,7 +69,17 @@ String hosting;
 @Column(name = "pre_req")
 String pre_req;
 
+@Column(name="status")
+String status;
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    
     public String getHosting() {
         return hosting;
     }

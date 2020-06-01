@@ -322,6 +322,7 @@ body {
                 <th><div label="Prefered Start Date"></div> </th>
             <th><div label="Hosting"></div> </th>
             <th><div label="Scope"></div> </th>
+            <th><div label="Status"></div> </th>
             
           
           
@@ -349,7 +350,7 @@ body {
                <td> ${fn:escapeXml(appsec.prefstartdate)}</td>
                <td> ${fn:escapeXml(appsec.hosting)}</td>
                <td> ${fn:escapeXml(appsec.scope)}</td>
-               
+               <td style="color: red;"> ${fn:escapeXml(appsec.status)}</td>
                
           
               <%-- <td><a href="DeleteProject.do?id=${project.projectid}">DELETE</a></td> --%>

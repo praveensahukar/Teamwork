@@ -109,6 +109,8 @@ public class RequestSchedule {
     @Autowired
     @Qualifier(value="EmailBean")
     EmailBean eBean;
+    
+    
 
     @Autowired
     @Qualifier(value="ActivityValidator")
@@ -233,9 +235,9 @@ public class RequestSchedule {
         abean.setRequirements(crbean.getPre_req());
         model.addObject("pid",crbean.getProjectid());
         model.addObject("activityname",activityname);
+      model.addObject("scheReqID",crid);
        
         
-       
             model.addObject("CRData",SS.EditCodereviewDetails(crid));
             model.addObject("AllTemplates", TS.getAllTemplates());
             model.addObject("AllLeads", US.GetUsersByRole("lead"));
@@ -260,14 +262,17 @@ public class RequestSchedule {
            
         AppSecScheduleRequestBean AppSecbean = SS.EditAppSecDetails(asid);
       // result.addObject("ASData",SS.EditAppSecDetails(asid));
-        String activityname = AppSecbean.getAppname()+AppSecbean.getAssesstype();
+        String activityname = AppSecbean.getAppname()+ " - "  +AppSecbean.getAssesstype();
        
         ActivityBean abean = new ActivityBean();
-        abean.setActivityname(activityname);
-        abean.setAssessmentType("Initial");
+     //   abean.setActivityname(activityname);
+      //  abean.setAssessmentType("Initial");
         abean.setProjectid(AppSecbean.getProjectid());
         abean.setRequirements(AppSecbean.getPre_req());
-        model.addObject("projectname", AppSecbean.getProjectname());
+      //  model.addObject("projectname", AppSecbean.getProjectname());
+      model.addObject("pid",AppSecbean.getProjectid());
+        model.addObject("activityname",activityname);
+        model.addObject("scheReqID",asid);
        
             model.addObject("ASData",SS.EditAppSecDetails(asid));
             model.addObject("AllTemplates", TS.getAllTemplates());
@@ -300,7 +305,11 @@ public class RequestSchedule {
         abean.setAssessmentType("Initial");
         abean.setProjectid(Netbean.getProjectid());
         abean.setRequirements(Netbean.getPre_req());
-        model.addObject("projectname", Netbean.getProjectname());
+     //   model.addObject("projectname", Netbean.getProjectname());
+        model.addObject("pid",Netbean.getProjectid());
+        model.addObject("activityname",activityname);
+        model.addObject("scheReqID",eptid);
+       
        
             model.addObject("EPTData",SS.EditEptDetails(eptid));
             model.addObject("AllTemplates", TS.getAllTemplates());
@@ -403,6 +412,7 @@ public class RequestSchedule {
 //        CRSRB.setProjectid(i);
         ProjectBean pb = PS.getProjectDeatails(CRSRB.getProjectid());
         CRSRB.setProjectname(pb.getProjectname());
+        CRSRB.setStatus("Pending");
         SS.saveCodeReviewActvitiy(CRSRB);
         ModelAndView model=new ModelAndView("ActivityScheduleRequest");
         model.addObject("Message","Schedule Request Submitted Successfully");
@@ -422,7 +432,11 @@ public class RequestSchedule {
         try{
         ModelAndView result=new ModelAndView("DisplayCodereview");
         List<CodeReviewScheduleRequestBean> CRList= SS.getAllCodereview();
+       // CodeReviewScheduleRequestBean crbean=new CodeReviewScheduleRequestBean();
+    //    crbean.setStatus("Pending");
         result.addObject("AllCodereview",CRList);
+        
+        
         return result;
         }
         catch(Exception ex){
@@ -462,9 +476,32 @@ public ModelAndView EditCodereviewDetails(@RequestParam int crid, HttpServletReq
         
         try{
         System.out.println("in update vehicle details controller method");
-         int i = Integer.parseInt(req.getParameter("pid"));
-        crBean.setCr_scheduleid(i);
+//        int i = Integer.parseInt(req.getParameter("crid"));
+//        crBean.setCr_scheduleid(i);
         SS.UpdateCodeReviewActivity(crBean);
+        List<CodeReviewScheduleRequestBean> CRList=SS.getAllCodereview();
+	ModelAndView result=new ModelAndView("DisplayCodereview");
+        result.addObject("AllCodereview",CRList);
+        result.addObject("Message","request Details Updated Successfully");
+	return result;
+        }
+        catch(Exception ex){
+        ex.printStackTrace();
+        return new ModelAndView("Error");
+        }  
+    } 
+    
+    @RequestMapping(value="/UpdateCodeReviewActivity1",method=RequestMethod.POST)
+    public ModelAndView UpdateCodeReviewActivity1(@ModelAttribute("CRBean") CodeReviewScheduleRequestBean crBean,  HttpServletRequest req)
+    {
+        String[] authorizedRoles = {"admin","manager"};
+        if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
+        
+        try{
+        System.out.println("in update vehicle details controller method");
+//        int i = Integer.parseInt(req.getParameter("crid"));
+//        crBean.setCr_scheduleid(i);
+        SS.UpdateCodeReviewActivity1(crBean);
         List<CodeReviewScheduleRequestBean> CRList=SS.getAllCodereview();
 	ModelAndView result=new ModelAndView("DisplayCodereview");
         result.addObject("AllCodereview",CRList);
@@ -513,6 +550,7 @@ public ModelAndView EditCodereviewDetails(@RequestParam int crid, HttpServletReq
 //        ASSRB.setProjectid(i);
         ProjectBean pb = PS.getProjectDeatails(ASSRB.getProjectid());
         ASSRB.setProjectname(pb.getProjectname());
+        ASSRB.setStatus("Pending");
         SS.saveAppSecActivity(ASSRB);
         ModelAndView model=new ModelAndView("ActivityScheduleRequest");
         return model;
@@ -563,6 +601,50 @@ public ModelAndView EditAppSecDetails(@RequestParam int asid, HttpServletRequest
     }
 }
     
+@RequestMapping(value="/UpdateAppsecActivity",method=RequestMethod.POST)
+    public ModelAndView UpdateAppsecActivity(@ModelAttribute("AppSecBean") AppSecScheduleRequestBean ASBean,  HttpServletRequest req)
+    {
+        String[] authorizedRoles = {"admin","manager"};
+        if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
+        
+        try{
+        System.out.println("in update Appsec details controller method");
+        SS.UpdateAppsecActivity(ASBean);
+        List<AppSecScheduleRequestBean> ApsecList=SS.getAllAppsec();
+	ModelAndView result=new ModelAndView("DisplayAppsec");
+        result.addObject("AllAppsec",ApsecList);
+        result.addObject("Message","AppSec Details Updated Successfully");
+	return result;
+        }
+        catch(Exception ex){
+        ex.printStackTrace();
+        return new ModelAndView("Error");
+        }  
+    } 
+    
+    @RequestMapping(value="/UpdateAppsecActivity1",method=RequestMethod.POST)
+    public ModelAndView UpdateAppsecActivity1(@ModelAttribute("AppSecBean") AppSecScheduleRequestBean ASBean,  HttpServletRequest req)
+    {
+        String[] authorizedRoles = {"admin","manager"};
+        if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
+        
+        try{
+        System.out.println("in update vehicle details controller method");
+//        int i = Integer.parseInt(req.getParameter("crid"));
+//        crBean.setCr_scheduleid(i);
+        SS.UpdateAppsecActivity1(ASBean);
+        List<AppSecScheduleRequestBean> ApsecList=SS.getAllAppsec();
+	ModelAndView result=new ModelAndView("DisplayAppsec");
+        result.addObject("AllAppsec",ApsecList);
+        result.addObject("Message","request Details Updated Successfully");
+	return result;
+        }
+        catch(Exception ex){
+        ex.printStackTrace();
+        return new ModelAndView("Error");
+        }  
+    } 
+
     
     @RequestMapping(value="/DeleteAppRequest",method=RequestMethod.GET)
     public ModelAndView DeleteAppRequest(@RequestParam int id, HttpServletRequest req) throws ParseException
@@ -603,6 +685,7 @@ public ModelAndView EditAppSecDetails(@RequestParam int asid, HttpServletRequest
 //        EPTSRB.setProjectid(i);
         ProjectBean pb = PS.getProjectDeatails(EPTSRB.getProjectid());
         EPTSRB.setProjectname(pb.getProjectname());
+        EPTSRB.setStatus("Pending");
         SS.EPTActivity(EPTSRB);
         ModelAndView model=new ModelAndView("ActivityScheduleRequest");
         return model;
@@ -652,6 +735,52 @@ public ModelAndView EditEptDetails(@RequestParam int eptid, HttpServletRequest r
     }
 }
    
+
+@RequestMapping(value="/UpdateEptActivity",method=RequestMethod.POST)
+    public ModelAndView UpdateEptActivity(@ModelAttribute("EPTBean") eptScheduleRequestBean EPTBean,  HttpServletRequest req)
+    {
+        String[] authorizedRoles = {"admin","manager"};
+        if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
+        
+        try{
+        System.out.println("in update Appsec details controller method");
+        SS.UpdateEptActivity(EPTBean);
+        List<eptScheduleRequestBean> EptList=SS.getAllEpt();
+	ModelAndView result=new ModelAndView("DisplayEpt");
+        result.addObject("AllEpt",EptList);
+        result.addObject("Message","Network Details Updated Successfully");
+	return result;
+        }
+        catch(Exception ex){
+        ex.printStackTrace();
+        return new ModelAndView("Error");
+        }  
+    } 
+
+
+    @RequestMapping(value="/UpdateEptActivity1",method=RequestMethod.POST)
+    public ModelAndView UpdateEptActivity1(@ModelAttribute("EPTBean") eptScheduleRequestBean EPTBean,  HttpServletRequest req)
+    {
+        String[] authorizedRoles = {"admin","manager"};
+        if(!CU.checkUserAuthorization(authorizedRoles, req)) return new ModelAndView("Error");
+        
+        try{
+        System.out.println("in update vehicle details controller method");
+//        int i = Integer.parseInt(req.getParameter("crid"));
+//        crBean.setCr_scheduleid(i);
+        SS.UpdateEptActivity1(EPTBean);
+        List<eptScheduleRequestBean> EptList=SS.getAllEpt();
+	ModelAndView result=new ModelAndView("DisplayEpt");
+        result.addObject("AllEpt",EptList);
+        result.addObject("Message","request Details Updated Successfully");
+	return result;
+        }
+        catch(Exception ex){
+        ex.printStackTrace();
+        return new ModelAndView("Error");
+        }  
+    } 
+
     
     @RequestMapping(value="/DeleteEptRequest",method=RequestMethod.GET)
     public ModelAndView DeleteEptRequest(@RequestParam int id, HttpServletRequest req) throws ParseException

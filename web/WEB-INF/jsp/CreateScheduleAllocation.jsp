@@ -242,15 +242,18 @@ font-style: italic;
         
         <input type="hidden" name="AntiCSRFToken" id="token" value="${csrfPreventionSalt}"/>
     
-        <input type="hidden" name="pid" value="${pid}"/>
+        <input type="hidden" name="projectid" value="${pid}"/>
+       
+        <input type="hidden" name="scheReqID" value="${scheReqID}"/>
+<!--        <input type="hidden" name="pid" value="${pid}"  />
+        <input type="hidden" name="scheReqID" value="${crid}"/>-->
+        
         <table border="0" cellpadding="10" cellspacing="2" >
 
         <tr>
             <td align="right">Project :</td>
             <td><form:input path="" value="${fn:escapeXml(CRData.projectname)}" />
-                
-         
-                
+              
             </td>
         
             <td align="right">Activity Name :</td>
@@ -273,8 +276,6 @@ font-style: italic;
             <form:errors path="enddate" cssClass="error"/>
             </td>
         </tr>
-        
-        
         
         <tr>
             <td align="right">Team :</td>
