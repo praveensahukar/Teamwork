@@ -1,0 +1,12 @@
+{
+  "summary": {
+    "title": "Test",
+    "owner": "Santosh",
+    "description": "This is an internal application built to manage team allocations."
+  },
+  "detail": {
+    "contributors": [],
+    "diagrams": [],
+    "reviewer": "Varsha"
+  }
+}
